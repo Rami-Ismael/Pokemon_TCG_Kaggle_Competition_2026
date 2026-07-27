@@ -1,0 +1,33 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Data & large artifacts (keep directory structure via .gitkeep)
+data/**
+!data/**/
+!data/**/.gitkeep
+models/**
+!models/
+!models/.gitkeep
+submissions/**
+!submissions/
+!submissions/.gitkeep
+reports/figures/**
+!reports/figures/
+!reports/figures/.gitkeep
+
+# Kaggle credentials
+kaggle.json
+
+# Notebook / IDE artifacts
+.ipynb_checkpoints/
+__marimo__/
+.DS_Store
+.ruff_cache/
