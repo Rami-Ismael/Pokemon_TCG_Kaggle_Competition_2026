@@ -16,7 +16,13 @@ DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 INTERIM_DATA_DIR = DATA_DIR / "interim"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
-EXTERNAL_DATA_DIR = DATA_DIR / "external"
+EXTERNAL_DATA_DIR = DATA_DIR / "external"  # legacy; episodes now live in EPISODES_DIR
+
+# Episodes (behavior-cloning training corpus).
+# Layout: EPISODES_DIR/{train,eval}/<episode_id>.json  +  EPISODES_DIR/manifest.csv
+EPISODES_DIR = DATA_DIR / "episodes"
+EPISODES_TRAIN_DIR = EPISODES_DIR / "train"
+EPISODES_EVAL_DIR = EPISODES_DIR / "eval"
 
 # Artifact directories.
 MODELS_DIR = PROJECT_ROOT / "models"
@@ -25,8 +31,8 @@ REPORTS_DIR = PROJECT_ROOT / "reports"
 FIGURES_DIR = REPORTS_DIR / "figures"
 CONFIGS_DIR = PROJECT_ROOT / "configs"
 
-# Kaggle competition slug (update to match the actual competition).
-COMPETITION = "pokemon-tcg-kaggle-competition-2026"
+# Kaggle competition slug.
+COMPETITION = "pokemon-tcg-ai-battle"
 
 # Reproducibility.
 RANDOM_SEED = 42

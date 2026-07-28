@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "kaggle>=2.2.4",
+    "kaggle-environments>=1.32.2",
     "marimo>=0.23.15",
     "matplotlib>=3.11.1",
     "numpy>=2.5.1",
