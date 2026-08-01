@@ -19,10 +19,12 @@ PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"  # legacy; episodes now live in EPISODES_DIR
 
 # Episodes (behavior-cloning training corpus).
-# Layout: EPISODES_DIR/{train,eval}/<episode_id>.json  +  EPISODES_DIR/manifest.csv
+# Layout: EPISODES_DIR/splits/<train-DATE|eval-DATE>/<episode_id>.json,
+# keyed by EPISODES_DIR/splits/splits.json (see pokemon_tcg.il_dataset.resolve_split_dir,
+# the actual source of truth -- these two constants previously pointed at
+# data/episodes/{train,eval}/, which never existed; fixed to match reality.)
 EPISODES_DIR = DATA_DIR / "episodes"
-EPISODES_TRAIN_DIR = EPISODES_DIR / "train"
-EPISODES_EVAL_DIR = EPISODES_DIR / "eval"
+EPISODES_SPLITS_DIR = EPISODES_DIR / "splits"
 
 # Artifact directories.
 MODELS_DIR = PROJECT_ROOT / "models"
