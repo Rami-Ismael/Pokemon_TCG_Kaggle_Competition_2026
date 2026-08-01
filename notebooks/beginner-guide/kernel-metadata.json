@@ -1,0 +1,25 @@
+{
+  "id": "ichigoe/beginner-guide-from-deck-list-to-first-valid-sub",
+  "id_no": 123256049,
+  "title": "[Beginner Guide] From Deck List to First Valid Sub",
+  "code_file": "beginner-guide-from-deck-list-to-first-valid-sub.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "kiyotah/cg-lib"
+  ],
+  "kernel_sources": [
+    "kiyotah/a-sample-rule-based-agent-mega-lucario-ex-deck"
+  ],
+  "competition_sources": [
+    "pokemon-tcg-ai-battle"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:e5452ce6268c2e8345cfe5141f31ca7ff47032aca46a7ea532bbb87481281d0c",
+  "machine_shape": "None"
+}

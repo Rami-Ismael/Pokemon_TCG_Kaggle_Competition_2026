@@ -70,6 +70,20 @@ AGENT_FILES = {
     # frozen deck. If a trained policy doesn't beat this decisively, its
     # offline accuracy isn't credible evidence it learned anything.
     "random_legal": REPO / "agents" / "random_legal" / "agent_core.py",
+    # Public opponent-pool vetted batch (Q25 / notes/phase0_discovery_report.md
+    # gap: benchmarking only against our own agents was never evidence about
+    # the ladder). Pulled from Kaggle's competition Code tab, individually
+    # reviewed for safety before wiring in -- see notebooks/reference/INDEX.md.
+    "kiyotah_dragapult": REPO / "agents" / "kiyotah_dragapult" / "agent_core.py",
+    "kiyotah_iono": REPO / "agents" / "kiyotah_iono" / "agent_core.py",
+    "kiyotah_abomasnow": REPO / "agents" / "kiyotah_abomasnow" / "agent_core.py",
+    "dedquoc_rule_engine": REPO / "agents" / "dedquoc_rule_engine" / "agent_core.py",
+    "ryotasueyoshi_alakazam": REPO / "agents" / "ryotasueyoshi_alakazam" / "agent_core.py",
+    "makthanithin_improved_prob": REPO / "agents" / "makthanithin_improved_prob" / "agent_core.py",
+    # mechi22's notebook ships main.py as a base64 blob (SHA256-verified, not
+    # encrypted) to deter forking -- decoded to plain source for this repo's
+    # review; see notebooks/reference/mechi22-alakazam/main_decoded.py.
+    "mechi22_alakazam": REPO / "agents" / "mechi22_alakazam" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
