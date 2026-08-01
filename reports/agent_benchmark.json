@@ -1,0 +1,47 @@
+{
+  "agents": [
+    "il_agent",
+    "rule_baseline",
+    "agent_core_improved"
+  ],
+  "games_per_pair": 15,
+  "wins": {
+    "il_agent": {
+      "il_agent": 26,
+      "rule_baseline": 5,
+      "agent_core_improved": 1
+    },
+    "rule_baseline": {
+      "il_agent": 25,
+      "rule_baseline": 28,
+      "agent_core_improved": 12
+    },
+    "agent_core_improved": {
+      "il_agent": 29,
+      "rule_baseline": 17,
+      "agent_core_improved": 28
+    }
+  },
+  "games": {
+    "il_agent": {
+      "il_agent": 54,
+      "rule_baseline": 30,
+      "agent_core_improved": 30
+    },
+    "rule_baseline": {
+      "il_agent": 30,
+      "rule_baseline": 56,
+      "agent_core_improved": 30
+    },
+    "agent_core_improved": {
+      "il_agent": 30,
+      "rule_baseline": 30,
+      "agent_core_improved": 56
+    }
+  },
+  "overall_win_pct": {
+    "il_agent": 28.07017543859649,
+    "rule_baseline": 56.03448275862069,
+    "agent_core_improved": 63.793103448275865
+  }
+}
