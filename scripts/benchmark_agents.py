@@ -20,6 +20,10 @@ We now have several "our" algorithms in the repo:
   * agent_core_improved  -- the faithful, engine-search-verified reimplementation
                             (agents/mega_lucario/agent_core_improved.py)
   * proto                -- the prototype search agent (scripts/_proto_agent.py)
+  * grunt                -- deck-agnostic greedy one-ply agent: always takes
+                            the attack with the highest type-chart-adjusted
+                            damage, and switches to the best type matchup
+                            when forced (agents/grunt/agent_core.py)
 
 This script pits them against each other (and against themselves) so we can
 see whether the search re-ranker actually buys win rate over the pure rule
@@ -66,6 +70,7 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    "grunt": REPO / "agents" / "grunt" / "agent_core.py",
     # Floor test, not a competitor: uniform-random legal moves on the same
     # frozen deck. If a trained policy doesn't beat this decisively, its
     # offline accuracy isn't credible evidence it learned anything.
