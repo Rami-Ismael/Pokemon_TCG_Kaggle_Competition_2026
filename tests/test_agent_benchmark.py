@@ -71,6 +71,10 @@ def test_agents_load_and_play():
             assert src["rd"] > 0
             assert 0 < src["rating"] < 4000  # sane bound, not a tight assertion
 
+        # GXE is only in the report (not persisted glicko_ratings.json), and
+        # is always a well-formed win-probability percentage.
+        assert 0.0 <= data["glicko"][a]["gxe"] <= 100.0
+
 
 if __name__ == "__main__":
     data = _run_small_benchmark()
