@@ -50,6 +50,38 @@ def _e(rating: float, opp_rating: float, opp_rd: float) -> float:
     return 1.0 / (1.0 + 10.0 ** (-_g(opp_rd) * (rating - opp_rating) / 400.0))
 
 
+def gxe(player: Rating, baseline_rating: float = DEFAULT_RATING, baseline_rd: float = DEFAULT_RD) -> float:
+    """Glicko X-act Estimate: win probability (as a %) vs a fixed "average" opponent.
+
+    Pokemon Showdown displays this alongside Elo and Glicko-1 -- see
+    "Human-Level Competitive Pokemon via Scalable Offline RL with Transformers"
+    (Grigsby et al.), Sec 2: "GXE corrects for matchmaking bias to estimate a
+    player's odds of defeating a randomly sampled opponent."
+
+    This isn't plain Glicko E() against a fixed rating: E() only discounts by
+    the *opponent's* RD (a provisional player is still treated as a sure win
+    against a much lower fixed rating). GXE folds the *player's own* RD in
+    too, so a high-RD (provisional) player's GXE stays closer to 50% even
+    against a weak baseline -- reflecting that we don't yet trust the rating
+    that would otherwise predict a blowout. Variances add for independent
+    Gaussian uncertainties, so the two RDs combine as sqrt(rd**2 + rd**2)
+    before going through the usual g() attenuation.
+
+    Reverse-engineered from Pokemon Showdown's ladder library (ntbb-ladder,
+    the same GlickoPlayer/GXE code Smogon's ladder runs):
+        gxe = 100 / (1 + 10**(-(R - 1500) / (400 * sqrt(1 + 3*q**2*(RD**2 + 130**2)/pi**2))))
+    PS hardcodes baseline rating/RD at 1500/130 (their own defaults). This
+    repo's Glicko-1 uses different constants (see DEFAULT_RATING/DEFAULT_RD
+    above), so the baseline here defaults to *this module's* defaults rather
+    than PS's -- GXE values are only comparable to PS/paper GXE in shape, not
+    in absolute number, same caveat as the Glicko-1 ratings themselves.
+    """
+    combined_rd = math.sqrt(player.rd**2 + baseline_rd**2)
+    g_combined = _g(combined_rd)
+    exponent = -g_combined * (player.rating - baseline_rating) / 400.0
+    return 100.0 / (1.0 + 10.0**exponent)
+
+
 def apply_inactivity(r: Rating, idle_periods: int = 1) -> Rating:
     """Widen RD for a player who sat out `idle_periods` rating periods."""
     if idle_periods <= 0:
