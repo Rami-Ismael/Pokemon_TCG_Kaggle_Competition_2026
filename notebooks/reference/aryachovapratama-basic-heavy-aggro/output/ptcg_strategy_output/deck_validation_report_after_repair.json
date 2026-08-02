@@ -1,0 +1,31 @@
+{
+  "errors": [],
+  "warnings": [
+    "Evolution copies (3) outside the 4\u20138 comfort band."
+  ],
+  "composition": {
+    "total": 60,
+    "basic_pokemon": 22,
+    "evolution": 3,
+    "trainer": 24,
+    "energy": 11,
+    "basic_energy": 11,
+    "special_energy": 0,
+    "unknown": 0,
+    "attackers": 23
+  },
+  "opening_metrics": {
+    "P(raw has Basic)": 0.96732,
+    "P(raw has Basic + Energy)": 0.74586,
+    "P(raw has Basic + draw/search)": 0.94154,
+    "P(raw has primary attacker)": 0.94272,
+    "P(raw has mobility/support)": 0.11826,
+    "P(at least one mulligan)": 0.03268000000000004,
+    "Expected mulligans": 0.03388,
+    "P(after mulligan has Basic)": 1.0,
+    "Avg Basic in valid hand": 2.652689906132407,
+    "Avg Energy in valid hand": 1.256833312657652,
+    "Avg Trainer in valid hand": 2.7477980399454163,
+    "Avg search/draw in valid hand": 2.6321589546375552
+  }
+}

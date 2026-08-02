@@ -82,6 +82,23 @@ def gxe(player: Rating, baseline_rating: float = DEFAULT_RATING, baseline_rd: fl
     return 100.0 / (1.0 + 10.0**exponent)
 
 
+def wilson_ci(wins: int, n: int, z: float = 1.96) -> tuple[float, float, float]:
+    """Wilson score interval for a binomial proportion. Returns (p, lo, hi).
+
+    Preferred over the naive normal-approximation interval (p +/- z*sqrt(p(1-p)/n))
+    because it stays inside [0, 1] and doesn't collapse to a zero-width
+    interval at p=0 or p=1 -- both of which come up constantly in a benchmark
+    with n as low as a handful of mirrored pairs.
+    """
+    if n == 0:
+        return (0.0, 0.0, 0.0)
+    p = wins / n
+    denom = 1.0 + z**2 / n
+    center = (p + z**2 / (2 * n)) / denom
+    half = (z * math.sqrt(p * (1 - p) / n + z**2 / (4 * n**2))) / denom
+    return (p, max(0.0, center - half), min(1.0, center + half))
+
+
 def apply_inactivity(r: Rating, idle_periods: int = 1) -> Rating:
     """Widen RD for a player who sat out `idle_periods` rating periods."""
     if idle_periods <= 0:

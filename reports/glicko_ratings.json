@@ -1,98 +1,62 @@
 {
   "rule_baseline": {
-    "rating": 1588.4244233721797,
+    "rating": 1543.1007244712669,
     "rd": 30.0
   },
   "improved_prob_main": {
-    "rating": 1752.9280832640031,
+    "rating": 1658.9752896151024,
     "rd": 30.0
   },
   "agent_core_improved": {
-    "rating": 1743.3745412074343,
+    "rating": 1674.4973128427614,
     "rd": 30.0
   },
   "proto": {
-    "rating": 1721.0941127896056,
+    "rating": 1688.0074575678227,
     "rd": 30.0
   },
   "il_agent": {
-    "rating": 1201.3521449563111,
-    "rd": 30.0
-  },
-  "random_legal": {
-    "rating": 993.5133340041336,
-    "rd": 30.0
-  },
-  "makthanithin_improved_prob": {
-    "rating": 1731.6042369551283,
-    "rd": 30.0
+    "rating": 1267.7788701322268,
+    "rd": 32.65808963215241
   },
   "grunt": {
-    "rating": 1203.1604567248628,
-    "rd": 30.0
+    "rating": 1140.6342043885409,
+    "rd": 34.818742982549544
+  },
+  "random_legal": {
+    "rating": 998.6573450002847,
+    "rd": 38.81780942355723
   },
   "kiyotah_dragapult": {
-    "rating": 1638.6458702784298,
+    "rating": 1650.2708229443017,
     "rd": 30.0
   },
   "kiyotah_iono": {
-    "rating": 1627.124785579013,
+    "rating": 1516.8757223174634,
     "rd": 30.0
   },
   "kiyotah_abomasnow": {
-    "rating": 1601.433345275917,
+    "rating": 1549.6789138456334,
     "rd": 30.0
   },
   "dedquoc_rule_engine": {
-    "rating": 1158.016368775424,
-    "rd": 30.0
+    "rating": 1140.7177877172307,
+    "rd": 34.81874298254954
   },
   "ryotasueyoshi_alakazam": {
-    "rating": 1662.818214568187,
+    "rating": 1620.8165150339346,
+    "rd": 30.0
+  },
+  "makthanithin_improved_prob": {
+    "rating": 1633.4982077664133,
     "rd": 30.0
   },
   "mechi22_alakazam": {
-    "rating": 1754.3853527413296,
+    "rating": 1655.7100569552495,
     "rd": 30.0
   },
-  "tb_archaludon": {
-    "rating": 1739.84271477331,
-    "rd": 30.0
-  },
-  "tb_dragapult": {
-    "rating": 1668.5443048068962,
-    "rd": 30.0
-  },
-  "tb_alakazam": {
-    "rating": 1639.7437890657125,
-    "rd": 30.0
-  },
-  "tb_starmie": {
-    "rating": 1111.2112203863428,
-    "rd": 30.0
-  },
-  "tb_abomasnow": {
-    "rating": 1587.6843876688647,
-    "rd": 30.0
-  },
-  "tb_iono": {
-    "rating": 1633.2868087400984,
-    "rd": 30.0
-  },
-  "tb_search": {
-    "rating": 1396.5788671114256,
-    "rd": 30.0
-  },
-  "tb_heuristic": {
-    "rating": 1179.6008307660609,
-    "rd": 30.0
-  },
-  "tb_rulecore": {
-    "rating": 1482.7710278026045,
-    "rd": 30.0
-  },
-  "tb_lucario": {
-    "rating": 1525.568071862732,
-    "rd": 30.0
+  "plamen06_steel": {
+    "rating": 1762.6930251498836,
+    "rd": 31.131147138235516
   }
 }
