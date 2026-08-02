@@ -89,6 +89,13 @@ AGENT_FILES = {
     "dedquoc_rule_engine": REPO / "agents" / "dedquoc_rule_engine" / "agent_core.py",
     "ryotasueyoshi_alakazam": REPO / "agents" / "ryotasueyoshi_alakazam" / "agent_core.py",
     "makthanithin_improved_prob": REPO / "agents" / "makthanithin_improved_prob" / "agent_core.py",
+    # jek1wantaufik's rule-based Mega Lucario ex agent, recovered from the
+    # Kaggle model `jek1wantaufik/buddy` (main.py + deck.pkl) that its
+    # "Strategy Analysis" notebook only statically analyses -- the notebook
+    # itself ships no runnable agent(). Independent implementation of the
+    # Lucario archetype (its own scoring constants), reviewed for safety
+    # before wiring in -- see notebooks/reference/jek1wantaufik-strategy-analysis/NOTES.md.
+    "jek1wantaufik_lucario": REPO / "agents" / "jek1wantaufik_lucario" / "agent_core.py",
     # mechi22's notebook ships main.py as a base64 blob (SHA256-verified, not
     # encrypted) to deter forking -- decoded to plain source for this repo's
     # review; see notebooks/reference/mechi22-alakazam/main_decoded.py.
