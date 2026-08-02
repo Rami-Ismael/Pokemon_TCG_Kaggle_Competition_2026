@@ -5,9 +5,10 @@ Layout (top-level main.py required by the harness):
     ├── main.py   (agents/improved_probabilistic/main.py, self-contained)
     └── cg/
 
-main.py already writes+reads its own deck.csv relative to cwd (works both
-locally and in the Kaggle sandbox via the /kaggle_simulations/agent/ fallback),
-so no separate deck.csv needs to ship in the bundle.
+main.py has its 60-card deck hardcoded (DECK) and only reads deck.csv as an
+optional override -- falling back to DECK if no deck.csv is present or
+readable, both locally and in the Kaggle sandbox -- so no separate deck.csv
+needs to ship in the bundle.
 
 Run from the repo root with:
     uv run python scripts/build_improved_prob_main_submission.py
