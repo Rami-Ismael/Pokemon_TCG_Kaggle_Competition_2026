@@ -1,0 +1,338 @@
+[
+  {
+    "arm": "control",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": false,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 4,
+    "opp_wins": 6,
+    "draws": 0,
+    "elapsed_sec": 3.0152602195739746,
+    "per_game": [
+      {
+        "steps": 122,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 135,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 145,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 150,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 145,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 119,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 132,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 150,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 137,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 155,
+        "winner": "a",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_noprior",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": false,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 0,
+    "opp_wins": 10,
+    "draws": 0,
+    "elapsed_sec": 157.53645300865173,
+    "per_game": [
+      {
+        "steps": 47,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 30,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 113,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 33,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 109,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 62,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 78,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 67,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 117,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 61,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_prior",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 0,
+    "opp_wins": 10,
+    "draws": 0,
+    "elapsed_sec": 103.27001714706421,
+    "per_game": [
+      {
+        "steps": 66,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 42,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 104,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 48,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 34,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 35,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 86,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 38,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 99,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 56,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "control",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": false,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 3,
+    "n_games": 6,
+    "a0_wins": 3,
+    "opp_wins": 3,
+    "draws": 0,
+    "elapsed_sec": 1.5063421726226807,
+    "per_game": [
+      {
+        "steps": 119,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 114,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 163,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 126,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 166,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 42,
+        "winner": "a",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_noprior",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": false,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 3,
+    "n_games": 6,
+    "a0_wins": 0,
+    "opp_wins": 6,
+    "draws": 0,
+    "elapsed_sec": 60.592297077178955,
+    "per_game": [
+      {
+        "steps": 81,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 41,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 17,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 35,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 100,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 41,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_prior",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 3,
+    "n_games": 6,
+    "a0_wins": 0,
+    "opp_wins": 6,
+    "draws": 0,
+    "elapsed_sec": 83.70097517967224,
+    "per_game": [
+      {
+        "steps": 103,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 74,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 92,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 39,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 104,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 37,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  }
+]

@@ -44,6 +44,16 @@ overall win rate, printed to stdout and saved next to the script.
 
 Note: each match is 2 games (seat A=p0,p1 then A=p1,p0) so first-player bias
 is cancelled. With --games N you get N such mirrored pairs per ordered pair.
+
+NO COMMON RANDOM SEEDS. Checked against the actual engine: `cabt.json`'s
+configuration schema exposes no seed field, `kaggle_environments.make()`'s
+generic `configuration` dict has no seed convention this env reads, and the
+Python-side `cg.game.battle_start(deck0, deck1)` call takes no seed
+parameter -- deck shuffling and opening hands are decided inside the
+compiled native engine (`libcg-arm64.so` / `cg.dll` / `libcg.dylib`), which
+exposes no RNG control from Python. Different runs of the same pairing see
+different shuffles/hands; there is no way to hold that constant with the
+harness as given. Recorded here so this isn't silently assumed later.
 """
 from __future__ import annotations
 
@@ -93,6 +103,12 @@ AGENT_FILES = {
     # encrypted) to deter forking -- decoded to plain source for this repo's
     # review; see notebooks/reference/mechi22-alakazam/main_decoded.py.
     "mechi22_alakazam": REPO / "agents" / "mechi22_alakazam" / "agent_core.py",
+    # Phase 1 archetype-coverage recruitment (notes/phase1_gate1_report.md):
+    # the pool was 9/14 agents on the exact frozen Mega Lucario ex deck before
+    # this. Archaludon ex / Cinderace metal-tempo -- a genuinely different
+    # archetype (Metal-type, not Fighting/Psychic/Dragon/Electric/Grass-Ice
+    # like everything else in the pool).
+    "plamen06_steel": REPO / "agents" / "plamen06_steel" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
@@ -191,6 +207,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     n = len(agents)
     wins = {a: {b: 0 for b in agents} for a in agents}  # wins[a][b] = a beat b
     games = {a: {b: 0 for b in agents} for a in agents}
+    wall_clock = {a: {b: 0.0 for b in agents} for a in agents}  # seconds, symmetric per pairing
     totals = {a: {"w": 0, "g": 0} for a in agents}
     # (player_a, player_b, score_a) triples for the Glicko-1 rating period.
     # Self-play is excluded: an agent playing itself carries no information
@@ -199,6 +216,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
 
     total_pairs = n * (n - 1) // 2 + n  # unordered incl. self-play
     done = 0
+    run_t0 = time.time()
     for i in range(n):
         for j in range(i, n):
             a, b = agents[i], agents[j]
@@ -208,6 +226,8 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
             wins[b][a] += bw
             games[a][b] += aw + bw + dr
             games[b][a] += aw + bw + dr
+            wall_clock[a][b] += secs
+            wall_clock[b][a] += secs
             totals[a]["w"] += aw
             totals[b]["w"] += bw
             totals[a]["g"] += aw + bw + dr
@@ -217,34 +237,52 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
                 glicko_games += [(a, b, 0.0)] * bw
                 glicko_games += [(a, b, 0.5)] * dr
             done += 1
+            n_games_pair = aw + bw + dr
             print(
                 f"[{done}/{total_pairs}] {a} vs {b}: "
                 f"{a} {aw}-{bw}{('-' + str(dr) + 'd') if dr else ''}  "
-                f"({aw+bw+dr} games, {secs:.1f}s)"
+                f"({n_games_pair} games, {secs:.1f}s, {secs/n_games_pair:.2f}s/game)"
             )
+    total_wall_clock = time.time() - run_t0
 
     # ---- report ----
-    print("\n=== Head-to-head win matrix (rows beat cols) ===")
-    header = "agent".ljust(22) + "".join(b[:6].ljust(8) for b in agents) + "win%"
+    print("\n=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===")
+    header = "agent".ljust(22) + "".join(b[:6].ljust(8) for b in agents) + "win% [95% CI]"
     print(header)
     overall = {}
+    overall_ci = {}
     for a in agents:
         row = a.ljust(22)
         w = totals[a]["w"]
         g = totals[a]["g"]
         overall[a] = (100.0 * w / g) if g else 0.0
+        overall_ci[a] = glicko1.wilson_ci(w, g)
         cells = ""
         for b in agents:
             if a == b:
                 cells += "-".ljust(8)
             else:
                 cells += f"{wins[a][b]}".ljust(8)
-        row += cells + f"{overall[a]:5.1f}"
+        lo, hi = overall_ci[a][1] * 100, overall_ci[a][2] * 100
+        row += cells + f"{overall[a]:5.1f}  [{lo:4.1f},{hi:4.1f}]"
         print(row)
 
-    print("\n=== Overall win rate (all games) ===")
+    print("\n=== Per-pairing win rate with Wilson 95% CI (row vs col) ===")
+    for a in agents:
+        for b in agents:
+            if a >= b:
+                continue
+            n_ab = games[a][b]
+            if n_ab == 0:
+                continue
+            p, lo, hi = glicko1.wilson_ci(wins[a][b], n_ab)
+            print(f"  {a} vs {b}: {wins[a][b]}/{n_ab} = {p*100:5.1f}% [{lo*100:4.1f},{hi*100:4.1f}]  "
+                  f"({wall_clock[a][b]:.1f}s, {wall_clock[a][b]/n_ab:.2f}s/game)")
+
+    print("\n=== Overall win rate (all games), Wilson 95% CI ===")
     for a in sorted(agents, key=lambda x: -overall[x]):
-        print(f"  {a:22s} {overall[a]:5.1f}%  ({totals[a]['w']}/{totals[a]['g']})")
+        lo, hi = overall_ci[a][1] * 100, overall_ci[a][2] * 100
+        print(f"  {a:22s} {overall[a]:5.1f}%  [{lo:4.1f},{hi:4.1f}]  ({totals[a]['w']}/{totals[a]['g']})")
 
     # ---- Glicko-1 ratings ----
     # Win-rate is a single-run snapshot; Glicko carries a rating + confidence
@@ -266,9 +304,19 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     result = {
         "agents": agents,
         "games_per_pair": games_per_pair,
+        "seeded": False,
+        "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on "
+                      "battle_start or in cabt.json's configuration schema) -- deck shuffles "
+                      "and opening hands are NOT held constant across runs or pairings.",
         "wins": wins,
         "games": games,
+        "wall_clock_sec": wall_clock,
+        "total_wall_clock_sec": total_wall_clock,
         "overall_win_pct": overall,
+        "overall_win_pct_wilson_ci": {
+            a: {"p": overall_ci[a][0] * 100, "lo": overall_ci[a][1] * 100, "hi": overall_ci[a][2] * 100}
+            for a in agents
+        },
         "glicko": {
             a: {"rating": glicko[a].rating, "rd": glicko[a].rd, "gxe": glicko1.gxe(glicko[a])}
             for a in agents
@@ -277,7 +325,8 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     out_path = REPO / "reports" / "agent_benchmark.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=2))
-    print(f"\nsaved: {out_path}")
+    print(f"\ntotal wall clock: {total_wall_clock:.1f}s")
+    print(f"saved: {out_path}")
     print(f"saved: {GLICKO_PATH}")
     return result
 
