@@ -28,6 +28,7 @@ from __future__ import annotations
 import os
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
@@ -82,6 +83,40 @@ _MAX_DECISION_SECONDS = 5.0
 
 _model = None
 _model_load_attempted = False
+
+# Fallback / provenance diagnostics, same `diag_reset`/`diag_snapshot` contract
+# as agents/mega_lucario/agent_core_improved.py so scripts/benchmark_agents.py
+# picks them up automatically.
+#
+# `weights_loaded` is the one that matters for benchmarking. Every fallback path
+# in `agent()` below is silent by design (never-crash contract): with no
+# checkpoint at MODEL_DIR this agent still plays every game to completion, it
+# just plays them as `_safe_choice` -- first-legal-option -- while still being
+# labelled "il_agent" in the win matrix and the Glicko file. That is a trained
+# model's *name* attached to an untrained policy's *results*. Surfacing it here
+# lets the harness refuse to report such a run as a model comparison.
+_DIAG = defaultdict(int)
+
+
+def diag_reset() -> None:
+    _DIAG.clear()
+
+
+def diag_snapshot() -> dict:
+    total = max(1, _DIAG.get("decisions", 0))
+    out = dict(_DIAG)
+    out["fallback_rate"] = (
+        _DIAG.get("fallback_no_model", 0)
+        + _DIAG.get("fallback_too_many_options", 0)
+        + _DIAG.get("fallback_model_declined", 0)
+        + _DIAG.get("fallback_exception", 0)
+    ) / total
+    # Reported, not asserted: a caller that never played a game still gets a
+    # truthful answer here, because _load_model() is idempotent and wrapped.
+    out["ml_available"] = _ML_AVAILABLE
+    out["model_dir"] = str(MODEL_DIR)
+    out["weights_loaded"] = _load_model() is not None
+    return out
 
 
 def _load_model():
@@ -162,6 +197,7 @@ def _model_choice(model: PTCGImitationPolicy, obs_dict: dict, select) -> list[in
 def agent(obs_dict: dict) -> list[int]:
     """Main Agent Function. Returns a list of option indices (see cg.api.Option)."""
     select = None
+    counted = False
     try:
         if obs_dict.get("select") is None:
             # Initial deck selection: this policy only models move choice, not deck-building
@@ -171,18 +207,30 @@ def agent(obs_dict: dict) -> list[int]:
         select = obs.select
         if not select.option:
             return []
+
+        _DIAG["decisions"] += 1
+        counted = True
         if len(select.option) > MAX_OPTIONS:
+            _DIAG["fallback_too_many_options"] += 1
             return _safe_choice(select)
 
         model = _load_model()
         if model is None:
+            _DIAG["fallback_no_model"] += 1
             return _safe_choice(select)
 
         result = _model_choice(model, obs_dict, select)
         if result is None:
+            _DIAG["fallback_model_declined"] += 1
             return _safe_choice(select)
+        _DIAG["model_decisions"] += 1
         return result
     except Exception:
+        # Count the decision here too when we failed before reaching the
+        # counter above, so `fallback_rate` can never exceed 1.0.
+        if not counted:
+            _DIAG["decisions"] += 1
+        _DIAG["fallback_exception"] += 1
         # Never-crash contract (2.6): any unexpected failure anywhere above
         # falls back to a legal, non-raising choice rather than propagating
         # -- an uncaught exception here is an instant loss, not a retry.

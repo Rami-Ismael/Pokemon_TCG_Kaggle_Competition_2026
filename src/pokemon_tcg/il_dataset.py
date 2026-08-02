@@ -43,9 +43,18 @@ from torch.utils.data import IterableDataset
 
 from . import config
 
-_CG_DIR = config.PROJECT_ROOT / "data" / "external" / "cg-lib"
-if (_CG_DIR / "cg" / "api.py").exists() and str(_CG_DIR) not in sys.path:
-    sys.path.insert(0, str(_CG_DIR))
+# data/external/cg-lib is a gitignored local unpack, so a fresh clone (CI, a
+# container, a remote session) has no cg at all. The in-repo beginner-guide
+# copy ships the same cg/api.py with a Linux libcg.so -- correct on Linux,
+# dlopen-crashes on macOS, hence the platform guard. cg-lib still wins when
+# present, so mac behaviour is unchanged.
+_CG_CANDS = [config.PROJECT_ROOT / "data" / "external" / "cg-lib"]
+if sys.platform != "darwin":
+    _CG_CANDS.append(config.PROJECT_ROOT / "notebooks" / "beginner-guide" / "sample-agent-output")
+for _CG_DIR in _CG_CANDS:
+    if (_CG_DIR / "cg" / "api.py").exists() and str(_CG_DIR) not in sys.path:
+        sys.path.insert(0, str(_CG_DIR))
+        break
 
 from cg.api import AreaType, OptionType, SelectData, State  # noqa: E402
 from cg.utils import to_dataclass  # noqa: E402

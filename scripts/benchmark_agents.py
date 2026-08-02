@@ -103,11 +103,17 @@ OPPONENT_POOL_CSV = REPO / "data" / "opponent_pool.csv"
 # When this script runs from a git worktree, that dir isn't checked out, so we
 # also walk up parent directories to find the primary checkout's cg-lib. The
 # other in-repo cg copies (sample-agent-output, submissions/*) ship only a
-# Linux libcg.so and dlopen-crash on macOS, so they're intentionally not used.
+# Linux libcg.so, which dlopen-crashes on macOS -- so on darwin they stay out
+# of the candidate list entirely. On Linux they are the *correct* build, and
+# data/external/cg-lib is gitignored (a local-only unpack), so a fresh clone --
+# CI, a container, a remote session -- has no cg at all without them. Ordering
+# still prefers cg-lib wherever it exists, so mac behaviour is unchanged.
 # See memory `worktree-cg-lib-symlink`.
 _cg_cands = [REPO / "data" / "external" / "cg-lib"]
 _cg_cands += [p / "data" / "external" / "cg-lib" for p in REPO.parents]
 _cg_cands.append(REPO / "agents" / "mega_lucario")
+if sys.platform != "darwin":
+    _cg_cands.append(REPO / "notebooks" / "beginner-guide" / "sample-agent-output")
 for _cand in _cg_cands:
     if (_cand / "cg" / "api.py").exists():
         sys.path.insert(0, str(_cand))
@@ -442,6 +448,44 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
         if hasattr(mod, "diag_reset"):
             mod.diag_reset()
 
+    # ---- Weight provenance check, BEFORE a single game is played ----
+    # A learned agent whose checkpoint is missing does not crash: its
+    # never-crash fallback plays every game as first-legal-option, and the win
+    # matrix, the report JSON and the persisted Glicko file all still say
+    # "il_agent". That is an untrained policy's results wearing a trained
+    # model's name, and it is invisible after the fact. Any agent that exposes
+    # `weights_loaded` in its diag_snapshot() is checked here and, if the
+    # weights are absent, is named in the banner and recorded in the output
+    # JSON under `unweighted_agents` so downstream readers cannot miss it.
+    # models/ is gitignored, so a fresh clone (CI, container, remote session)
+    # hits this every time -- which is exactly when it is worth catching.
+    unweighted = []
+    for name in agents:
+        mod = _LOADED_MODULES.get(name)
+        if mod is None or not hasattr(mod, "diag_snapshot"):
+            continue
+        try:
+            snap = mod.diag_snapshot()
+        except Exception:
+            continue
+        if snap.get("weights_loaded") is False:
+            unweighted.append({
+                "agent": name,
+                "model_dir": snap.get("model_dir"),
+                "ml_available": snap.get("ml_available"),
+            })
+    if unweighted:
+        print("\n" + "!" * 78)
+        print("!! WEIGHTS MISSING -- these agents are NOT running a trained policy:")
+        for u in unweighted:
+            reason = ("the ML stack failed to import" if u["ml_available"] is False
+                      else f"no checkpoint at {u['model_dir']}")
+            print(f"!!   {u['agent']}: {reason}")
+        print("!! They will still play every game, via their first-legal-option")
+        print("!! fallback. Their numbers below are NOT evidence about the trained")
+        print("!! model -- do not quote them as a model comparison.")
+        print("!" * 78 + "\n")
+
     n = len(agents)
     wins = {a: {b: 0 for b in agents} for a in agents}  # wins[a][b] = a beat b
     games = {a: {b: 0 for b in agents} for a in agents}
@@ -579,6 +623,11 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
             for a in agents
         },
         "fallback_diag": fallback_diag,
+        # Non-empty => at least one agent in `agents` ran without its trained
+        # weights (see the provenance check in run_benchmark). Its row in
+        # `wins`/`overall_win_pct`/`glicko` describes the fallback policy, not
+        # the model.
+        "unweighted_agents": unweighted,
     }
     out_path = out_path or (REPO / "reports" / "agent_benchmark.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)

@@ -13,6 +13,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "data" / "external" / "cg-lib"))
+if sys.platform != "darwin":
+    # cg-lib is gitignored, so on a fresh clone the beginner-guide copy is the
+    # only in-repo cg. Linux-only: its libcg.so dlopen-crashes on macOS.
+    sys.path.append(str(REPO / "notebooks" / "beginner-guide" / "sample-agent-output"))
 
 import torch  # noqa: E402
 

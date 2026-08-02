@@ -28,7 +28,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "agents" / "mega_lucario"))
-for _cand in (REPO / "data" / "external" / "cg-lib", REPO / "agents" / "mega_lucario"):
+_cg_cands = [REPO / "data" / "external" / "cg-lib", REPO / "agents" / "mega_lucario"]
+if sys.platform != "darwin":
+    # cg-lib is gitignored; the beginner-guide copy is the only in-repo cg on a
+    # fresh clone. Its libcg.so is a Linux build (crashes on macOS), so it is a
+    # non-darwin-only last resort.
+    _cg_cands.append(REPO / "notebooks" / "beginner-guide" / "sample-agent-output")
+for _cand in _cg_cands:
     if (_cand / "cg" / "api.py").exists():
         sys.path.insert(0, str(_cand))
         break
