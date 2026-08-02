@@ -1,0 +1,85 @@
+{
+  "note": "deck fingerprint -> agents piloting that exact 60-card list. Head-to-heads within a group are policy comparisons; across groups they are policy+deck and attribute to neither alone.",
+  "groups": {
+    "(no deck.csv)": [
+      "improved_prob_main",
+      "proto"
+    ],
+    "05a3832a": [
+      "pllinas_alakazam"
+    ],
+    "15f3651c": [
+      "mechi22_alakazam"
+    ],
+    "164b63b6": [
+      "kiyotah_abomasnow"
+    ],
+    "19aff592": [
+      "prvsiyan_control_v11"
+    ],
+    "24215511": [
+      "tb_heuristic"
+    ],
+    "38df63fe": [
+      "tb_abomasnow"
+    ],
+    "60833b83": [
+      "tb_dragapult"
+    ],
+    "676849e9": [
+      "kiyotah_dragapult"
+    ],
+    "76812200": [
+      "daniilkrasnovvv_conservative_prob",
+      "grunt",
+      "il_agent",
+      "kojimar_lucario",
+      "makthanithin_1084_baseline",
+      "makthanithin_improved_prob",
+      "random_legal",
+      "romanrozen_strong_start"
+    ],
+    "7c20268d": [
+      "ryotasueyoshi_alakazam",
+      "tb_alakazam"
+    ],
+    "7dc29ba6": [
+      "tb_iono"
+    ],
+    "824100dc": [
+      "kiyotah_iono"
+    ],
+    "9336479f": [
+      "tb_archaludon"
+    ],
+    "a779d17d": [
+      "pixiux_lucario_v63"
+    ],
+    "b3957313": [
+      "tb_lucario",
+      "tb_rulecore",
+      "tb_search"
+    ],
+    "bfc98d97": [
+      "biohack44_day2"
+    ],
+    "c20a8a46": [
+      "prvsiyan_grimbelief_alakazam",
+      "prvsiyan_templates_alakazam"
+    ],
+    "d8e13dc4": [
+      "tb_starmie"
+    ],
+    "da1d56e3": [
+      "plamen06_steel"
+    ],
+    "fed6cd8c": [
+      "agent_core_improved",
+      "avikdas567_heuristic",
+      "dedquoc_rule_engine",
+      "jek1wantaufik_lucario",
+      "makimakiai_rl",
+      "rule_baseline"
+    ]
+  }
+}

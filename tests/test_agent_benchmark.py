@@ -58,10 +58,22 @@ def test_play_match_self_play_does_not_double_count_wins():
     assert a_wins + b_wins == 4, f"expected 4 decisive games, got a_wins={a_wins} b_wins={b_wins}"
 
 
-def _run_small_benchmark() -> dict:
-    """Invoke scripts/benchmark_agents.py with a tiny game count and parse its JSON."""
+def _run_small_benchmark(out_dir: Path) -> tuple[dict, Path]:
+    """Invoke scripts/benchmark_agents.py with a tiny game count and parse its JSON.
+
+    Writes into `out_dir`, NOT into reports/. This test used to run with the
+    script's defaults, which meant a `pytest` invocation silently overwrote the
+    tracked reports/agent_benchmark.json and folded its own 2-game noise into
+    the standing reports/glicko_ratings.json -- ratings that are supposed to
+    compound over real tournament history. Worse, it raced any real benchmark
+    running concurrently: both processes wrote the same two files, and whoever
+    finished last won. Redirecting both outputs keeps the test hermetic.
+    """
+    out_path = out_dir / "agent_benchmark.json"
+    glicko_path = out_dir / "glicko_ratings.json"
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), "--games", "2"],
+        [sys.executable, str(SCRIPT), "--games", "2",
+         "--out", str(out_path), "--glicko-path", str(glicko_path)],
         cwd=str(REPO),
         capture_output=True,
         text=True,
@@ -70,14 +82,13 @@ def _run_small_benchmark() -> dict:
         raise AssertionError(
             f"benchmark script failed (rc={result.returncode}):\n{result.stdout}\n{result.stderr}"
         )
-    out_path = REPO / "reports" / "agent_benchmark.json"
-    assert out_path.exists(), "benchmark did not write reports/agent_benchmark.json"
-    return json.loads(out_path.read_text())
+    assert out_path.exists(), f"benchmark did not write {out_path}"
+    return json.loads(out_path.read_text()), glicko_path
 
 
-def test_agents_load_and_play():
+def test_agents_load_and_play(tmp_path):
     """Every agent participates and the win matrix is well-formed."""
-    data = _run_small_benchmark()
+    data, glicko_path = _run_small_benchmark(tmp_path)
     agents = data["agents"]
     assert agents, "no agents benchmarked"
 
@@ -96,9 +107,10 @@ def test_agents_load_and_play():
         assert 0.0 <= data["overall_win_pct"][a] <= 100.0
 
     # Every agent got a Glicko-1 rating + rating deviation, and the ratings
-    # file was persisted so future runs build on this run's history.
-    glicko_path = REPO / "reports" / "glicko_ratings.json"
-    assert glicko_path.exists(), "benchmark did not write reports/glicko_ratings.json"
+    # file was persisted so future runs build on this run's history. (Persisted
+    # to the tmp path above, so the real reports/glicko_ratings.json history is
+    # untouched -- the persistence *mechanism* is what's under test.)
+    assert glicko_path.exists(), f"benchmark did not write {glicko_path}"
     persisted = json.loads(glicko_path.read_text())
     for a in agents:
         assert a in data["glicko"], f"{a} missing from glicko report"
@@ -113,6 +125,9 @@ def test_agents_load_and_play():
 
 
 if __name__ == "__main__":
-    data = _run_small_benchmark()
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as _tmp:
+        data, _ = _run_small_benchmark(Path(_tmp))
     print("benchmark ran OK for:", data["agents"])
     print("overall win %:", data["overall_win_pct"])
