@@ -1,62 +1,154 @@
 {
   "rule_baseline": {
-    "rating": 1543.1007244712669,
+    "rating": 1562.7262407385228,
     "rd": 30.0
   },
   "improved_prob_main": {
-    "rating": 1658.9752896151024,
+    "rating": 1680.2847968487865,
     "rd": 30.0
   },
   "agent_core_improved": {
-    "rating": 1674.4973128427614,
+    "rating": 1688.777038488962,
     "rd": 30.0
   },
   "proto": {
-    "rating": 1688.0074575678227,
+    "rating": 1686.816250544088,
     "rd": 30.0
   },
   "il_agent": {
     "rating": 1267.7788701322268,
-    "rd": 32.65808963215241
+    "rd": 59.14854874315768
   },
   "grunt": {
-    "rating": 1140.6342043885409,
-    "rd": 34.818742982549544
+    "rating": 1145.377688187569,
+    "rd": 30.0
   },
   "random_legal": {
-    "rating": 998.6573450002847,
-    "rd": 38.81780942355723
+    "rating": 984.1580714333782,
+    "rd": 30.0
   },
   "kiyotah_dragapult": {
-    "rating": 1650.2708229443017,
+    "rating": 1625.974187569234,
     "rd": 30.0
   },
   "kiyotah_iono": {
-    "rating": 1516.8757223174634,
+    "rating": 1546.1806422226796,
     "rd": 30.0
   },
   "kiyotah_abomasnow": {
-    "rating": 1549.6789138456334,
+    "rating": 1538.1435757289062,
     "rd": 30.0
   },
   "dedquoc_rule_engine": {
-    "rating": 1140.7177877172307,
-    "rd": 34.81874298254954
+    "rating": 1150.3310039947326,
+    "rd": 30.0
   },
   "ryotasueyoshi_alakazam": {
-    "rating": 1620.8165150339346,
+    "rating": 1601.7638114574847,
     "rd": 30.0
   },
   "makthanithin_improved_prob": {
-    "rating": 1633.4982077664133,
+    "rating": 1662.6369752707565,
     "rd": 30.0
   },
   "mechi22_alakazam": {
-    "rating": 1655.7100569552495,
+    "rating": 1679.7359530949934,
     "rd": 30.0
   },
   "plamen06_steel": {
-    "rating": 1762.6930251498836,
-    "rd": 31.131147138235516
+    "rating": 1769.9746589303468,
+    "rd": 30.0
+  },
+  "kojimar_lucario": {
+    "rating": 1666.7613587037783,
+    "rd": 30.0
+  },
+  "jek1wantaufik_lucario": {
+    "rating": 1558.3384012021877,
+    "rd": 30.0
+  },
+  "prvsiyan_control_v11": {
+    "rating": 1627.5129848073957,
+    "rd": 30.0
+  },
+  "prvsiyan_grimbelief_alakazam": {
+    "rating": 1219.2835832747724,
+    "rd": 30.0
+  },
+  "prvsiyan_templates_alakazam": {
+    "rating": 1183.4679084463119,
+    "rd": 30.0
+  },
+  "pllinas_alakazam": {
+    "rating": 1856.247367051817,
+    "rd": 30.0
+  },
+  "biohack44_day2": {
+    "rating": 1626.2388810030395,
+    "rd": 30.0
+  },
+  "pixiux_lucario_v63": {
+    "rating": 1703.1088334421554,
+    "rd": 30.0
+  },
+  "makthanithin_1084_baseline": {
+    "rating": 1661.7822170942363,
+    "rd": 30.0
+  },
+  "daniilkrasnovvv_conservative_prob": {
+    "rating": 1688.8362567377217,
+    "rd": 30.0
+  },
+  "romanrozen_strong_start": {
+    "rating": 1668.876623467265,
+    "rd": 30.0
+  },
+  "avikdas567_heuristic": {
+    "rating": 1208.105813284753,
+    "rd": 30.0
+  },
+  "makimakiai_rl": {
+    "rating": 1219.4509533962944,
+    "rd": 30.0
+  },
+  "tb_archaludon": {
+    "rating": 1684.7901004156026,
+    "rd": 30.0
+  },
+  "tb_dragapult": {
+    "rating": 1605.8443991166826,
+    "rd": 30.0
+  },
+  "tb_alakazam": {
+    "rating": 1577.4372849226368,
+    "rd": 30.0
+  },
+  "tb_starmie": {
+    "rating": 1165.0694950832108,
+    "rd": 30.0
+  },
+  "tb_abomasnow": {
+    "rating": 1570.1054294738046,
+    "rd": 30.0
+  },
+  "tb_iono": {
+    "rating": 1618.8021748906722,
+    "rd": 30.0
+  },
+  "tb_search": {
+    "rating": 1343.7245036299123,
+    "rd": 30.0
+  },
+  "tb_heuristic": {
+    "rating": 1177.8786946925245,
+    "rd": 30.0
+  },
+  "tb_rulecore": {
+    "rating": 1464.1701838458216,
+    "rd": 30.0
+  },
+  "tb_lucario": {
+    "rating": 1424.0369234891682,
+    "rd": 30.0
   }
 }

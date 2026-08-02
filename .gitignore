@@ -39,8 +39,3 @@ __marimo__/
 # Personal Claude Code overrides (project-shared config lives in .claude/settings.json)
 .claude/settings.local.json
 
-# Live benchmark stdout, while a tournament is still running. A multi-hour
-# round-robin appends to this on every pairing, so tracking it mid-run makes
-# the tree dirty continuously and produces a commit per snapshot. The finished
-# log is committed with `git add -f` once the run ends.
-reports/benchmark_full_pool_run.txt
