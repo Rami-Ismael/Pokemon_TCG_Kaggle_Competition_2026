@@ -1,145 +1,41 @@
 {
   "agents": [
-    "rule_baseline",
-    "improved_prob_main",
     "agent_core_improved",
-    "proto",
-    "il_agent",
-    "random_legal"
+    "makthanithin_improved_prob"
   ],
-  "games_per_pair": 15,
+  "games_per_pair": 8,
   "wins": {
-    "rule_baseline": {
-      "rule_baseline": 28,
-      "improved_prob_main": 11,
-      "agent_core_improved": 6,
-      "proto": 12,
-      "il_agent": 22,
-      "random_legal": 27
-    },
-    "improved_prob_main": {
-      "rule_baseline": 19,
-      "improved_prob_main": 28,
-      "agent_core_improved": 20,
-      "proto": 14,
-      "il_agent": 30,
-      "random_legal": 30
-    },
     "agent_core_improved": {
-      "rule_baseline": 24,
-      "improved_prob_main": 10,
-      "agent_core_improved": 28,
-      "proto": 15,
-      "il_agent": 29,
-      "random_legal": 30
+      "agent_core_improved": 16,
+      "makthanithin_improved_prob": 9
     },
-    "proto": {
-      "rule_baseline": 18,
-      "improved_prob_main": 16,
-      "agent_core_improved": 15,
-      "proto": 28,
-      "il_agent": 29,
-      "random_legal": 30
-    },
-    "il_agent": {
-      "rule_baseline": 8,
-      "improved_prob_main": 0,
-      "agent_core_improved": 1,
-      "proto": 1,
-      "il_agent": 28,
-      "random_legal": 26
-    },
-    "random_legal": {
-      "rule_baseline": 3,
-      "improved_prob_main": 0,
-      "agent_core_improved": 0,
-      "proto": 0,
-      "il_agent": 4,
-      "random_legal": 28
+    "makthanithin_improved_prob": {
+      "agent_core_improved": 7,
+      "makthanithin_improved_prob": 16
     }
   },
   "games": {
-    "rule_baseline": {
-      "rule_baseline": 56,
-      "improved_prob_main": 30,
-      "agent_core_improved": 30,
-      "proto": 30,
-      "il_agent": 30,
-      "random_legal": 30
-    },
-    "improved_prob_main": {
-      "rule_baseline": 30,
-      "improved_prob_main": 56,
-      "agent_core_improved": 30,
-      "proto": 30,
-      "il_agent": 30,
-      "random_legal": 30
-    },
     "agent_core_improved": {
-      "rule_baseline": 30,
-      "improved_prob_main": 30,
-      "agent_core_improved": 56,
-      "proto": 30,
-      "il_agent": 30,
-      "random_legal": 30
+      "agent_core_improved": 32,
+      "makthanithin_improved_prob": 16
     },
-    "proto": {
-      "rule_baseline": 30,
-      "improved_prob_main": 30,
-      "agent_core_improved": 30,
-      "proto": 56,
-      "il_agent": 30,
-      "random_legal": 30
-    },
-    "il_agent": {
-      "rule_baseline": 30,
-      "improved_prob_main": 30,
-      "agent_core_improved": 30,
-      "proto": 30,
-      "il_agent": 56,
-      "random_legal": 30
-    },
-    "random_legal": {
-      "rule_baseline": 30,
-      "improved_prob_main": 30,
-      "agent_core_improved": 30,
-      "proto": 30,
-      "il_agent": 30,
-      "random_legal": 56
+    "makthanithin_improved_prob": {
+      "agent_core_improved": 16,
+      "makthanithin_improved_prob": 32
     }
   },
   "overall_win_pct": {
-    "rule_baseline": 51.45631067961165,
-    "improved_prob_main": 68.44660194174757,
-    "agent_core_improved": 66.01941747572816,
-    "proto": 66.01941747572816,
-    "il_agent": 31.067961165048544,
-    "random_legal": 16.990291262135923
+    "agent_core_improved": 52.083333333333336,
+    "makthanithin_improved_prob": 47.916666666666664
   },
   "glicko": {
-    "rule_baseline": {
-      "rating": 1520.470862999723,
-      "rd": 42.09146259357869
-    },
-    "improved_prob_main": {
-      "rating": 1759.2975979964917,
-      "rd": 42.09146259357869
-    },
     "agent_core_improved": {
-      "rating": 1725.1794929969533,
-      "rd": 42.09146259357869
+      "rating": 1726.410310140157,
+      "rd": 37.57623115283846
     },
-    "proto": {
-      "rating": 1725.1794929969533,
-      "rd": 42.09146259357869
-    },
-    "il_agent": {
-      "rating": 1233.8787810036006,
-      "rd": 42.09146259357869
-    },
-    "random_legal": {
-      "rating": 1035.993772006278,
-      "rd": 42.09146259357869
+    "makthanithin_improved_prob": {
+      "rating": 1696.0935757034147,
+      "rd": 72.1984994262252
     }
   }
 }

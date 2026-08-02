@@ -39,6 +39,10 @@ def check_selfplay():
 def check_search_path():
     print("== search-path smoke test ==")
     assert ag._SEARCH_OK, "cg search API unavailable in this env"
+    # USE_SEARCH defaults off (see agent_core_improved.py) since live search
+    # currently loses to the pure heuristic -- force it on here regardless,
+    # since this check's purpose is verifying the search *mechanism* works.
+    ag.USE_SEARCH = True
     env = make("cabt")
     trace = env.run([ag.agent, ag.agent])
     # Find the first agent-0 observation whose decision context is MAIN.
