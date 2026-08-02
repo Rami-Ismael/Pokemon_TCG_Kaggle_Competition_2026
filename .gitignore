@@ -13,6 +13,9 @@ wheels/
 data/**
 !data/**/
 !data/**/.gitkeep
+# Rung-2 opponent-pool registry: small, curated, version-worthy provenance
+# (built by scripts/build_opponent_pool.py, consumed by benchmark_agents.py).
+!data/opponent_pool.csv
 models/**
 !models/
 !models/.gitkeep
