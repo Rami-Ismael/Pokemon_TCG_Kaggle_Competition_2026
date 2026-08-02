@@ -8,7 +8,11 @@ equally and forgets everything once you rerun the script. Glicko-1 (see
 scripts/glicko1.py) instead tracks a rating + rating deviation (RD) per
 agent, persisted in reports/glicko_ratings.json across runs, so ratings
 compound over the agent's *full* battle history and carry a confidence
-interval that narrows as more evidence comes in.
+interval that narrows as more evidence comes in. GXE (also from
+scripts/glicko1.py) folds rating + RD into a single win-probability-%
+against a fixed average opponent -- the same pair of stats Pokemon
+Showdown itself reports, and what the Metamon paper cites for its own
+agent evaluations.
 
 WHY THIS EXISTS
 ---------------
@@ -20,6 +24,10 @@ We now have several "our" algorithms in the repo:
   * agent_core_improved  -- the faithful, engine-search-verified reimplementation
                             (agents/mega_lucario/agent_core_improved.py)
   * proto                -- the prototype search agent (scripts/_proto_agent.py)
+  * grunt                -- deck-agnostic greedy one-ply agent: always takes
+                            the attack with the highest type-chart-adjusted
+                            damage, and switches to the best type matchup
+                            when forced (agents/grunt/agent_core.py)
 
 This script pits them against each other (and against themselves) so we can
 see whether the search re-ranker actually buys win rate over the pure rule
@@ -66,6 +74,7 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    "grunt": REPO / "agents" / "grunt" / "agent_core.py",
     # Floor test, not a competitor: uniform-random legal moves on the same
     # frozen deck. If a trained policy doesn't beat this decisively, its
     # offline accuracy isn't credible evidence it learned anything.
@@ -249,7 +258,10 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     ranked = sorted(agents, key=lambda x: -glicko[x].rating)
     for a in ranked:
         r = glicko[a]
-        print(f"  {a:22s} {r.rating:7.1f}  (RD {r.rd:5.1f}, 95% CI +/-{2*r.rd:5.1f})")
+        print(
+            f"  {a:22s} {r.rating:7.1f}  (RD {r.rd:5.1f}, 95% CI +/-{2*r.rd:5.1f})  "
+            f"GXE {glicko1.gxe(r):5.1f}%"
+        )
 
     result = {
         "agents": agents,
@@ -257,7 +269,10 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
         "wins": wins,
         "games": games,
         "overall_win_pct": overall,
-        "glicko": {a: {"rating": glicko[a].rating, "rd": glicko[a].rd} for a in agents},
+        "glicko": {
+            a: {"rating": glicko[a].rating, "rd": glicko[a].rd, "gxe": glicko1.gxe(glicko[a])}
+            for a in agents
+        },
     }
     out_path = REPO / "reports" / "agent_benchmark.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)

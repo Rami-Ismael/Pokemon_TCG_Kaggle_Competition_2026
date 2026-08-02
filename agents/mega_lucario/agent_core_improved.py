@@ -88,6 +88,12 @@ try:
 except Exception:  # pragma: no cover - depends on environment
     pass
 
+# Printed at import time (not just under __main__) so this shows up in real
+# match stdout/logs -- the only way to tell after the fact whether a given
+# submission's BC prior actually loaded, vs. silently degrading to plain
+# UCB1 per the except-and-pass above.
+print(f"bc_prior available: {_BC_PRIOR_OK}")
+
 
 # ---------------------------------------------------------------------------
 # 1. Deck configuration (the exact 60-card Mega Lucario ex list)
@@ -988,3 +994,4 @@ if __name__ == "__main__":
     print(f"deck loaded: {len(my_deck)} cards")
     print(f"card table: {len(card_table)} cards")
     print(f"search available: {_SEARCH_OK}")
+    print(f"bc_prior available: {_BC_PRIOR_OK}")
