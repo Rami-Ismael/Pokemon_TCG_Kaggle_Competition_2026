@@ -85,6 +85,7 @@ GLICKO_PATH = REPO / "reports" / "glicko_ratings.json"
 # also walk up parent directories to find the primary checkout's cg-lib. The
 # other in-repo cg copies (sample-agent-output, submissions/*) ship only a
 # Linux libcg.so and dlopen-crash on macOS, so they're intentionally not used.
+# See memory `worktree-cg-lib-symlink`.
 _cg_cands = [REPO / "data" / "external" / "cg-lib"]
 _cg_cands += [p / "data" / "external" / "cg-lib" for p in REPO.parents]
 _cg_cands.append(REPO / "agents" / "mega_lucario")
@@ -156,6 +157,31 @@ AGENT_FILES = {
     #     notebook's DEFAULT (untrained) weights -- a legal, distinct-method
     #     opponent, but NOT the tuned agent. Labeled untrained in INDEX.md.
     "makimakiai_rl": REPO / "agents" / "makimakiai_rl" / "agent_core.py",
+    # ------------------------------------------------------------------
+    # TomBombadyl pool (github.com/TomBombadyl/kaggle_pokemon) -- a solo
+    # competitor's decoded ladder submissions with real public mu scores.
+    # His rule-based brains ported here as opponents to test our trained
+    # model against (checklist: "Add all the rule base algorithm to my
+    # internal ladder"). Each tb_* agent is a thin shim / wrapper over his
+    # verbatim source, vendored once under agents/tb_shared/agent. Every
+    # file was safety-reviewed (no eval/exec/network/subprocess) -- see
+    # notebooks/reference/tombombadyl/INDEX.md for provenance, the mu each
+    # scored on the real Kaggle ladder, and the deck each carries.
+    #
+    # Six self-contained per-deck rule pilots (his bench-guard-wrapped
+    # standalone tarballs):
+    "tb_archaludon": REPO / "agents" / "tb_archaludon" / "agent_core.py",  # mu 1196.1 (his leader)
+    "tb_dragapult": REPO / "agents" / "tb_dragapult" / "agent_core.py",    # mu 880.9
+    "tb_alakazam": REPO / "agents" / "tb_alakazam" / "agent_core.py",      # mu 659.0
+    "tb_starmie": REPO / "agents" / "tb_starmie" / "agent_core.py",        # mu 277.5
+    "tb_abomasnow": REPO / "agents" / "tb_abomasnow" / "agent_core.py",    # not on his ladder
+    "tb_iono": REPO / "agents" / "tb_iono" / "agent_core.py",              # not on his ladder
+    # Four deck-agnostic scorer brains (build_agent(scorer=...) over his
+    # shared agent/ package; deck each is paired with per his catalog):
+    "tb_search": REPO / "agents" / "tb_search" / "agent_core.py",          # mu 660.5 (his best home-grown)
+    "tb_heuristic": REPO / "agents" / "tb_heuristic" / "agent_core.py",    # mu 633.0 archetype
+    "tb_rulecore": REPO / "agents" / "tb_rulecore" / "agent_core.py",      # mu 535.6
+    "tb_lucario": REPO / "agents" / "tb_lucario" / "agent_core.py",        # LucarioScorer
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
