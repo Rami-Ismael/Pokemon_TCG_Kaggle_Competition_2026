@@ -9,6 +9,31 @@ follow `deck-selection`'s ①→②→③→④ ordering exactly. The ordering i
 task: run ③ before ② and the result measures my training distribution instead of the
 decks.
 
+**Why this is happening now (context from the session that queued this task, 2026-08-02).**
+A local 15-agent benchmark round-robin (`--games 6`) had `plamen06_steel` (a newly
+recruited Archaludon ex / Metal-type agent, see `notebooks/reference/INDEX.md`) finish
+#1 by Glicko (1762.7, GXE 73.3%), ahead of `agent_core_improved`. Before reading that as
+"switch decks," I found a confound: `plamen06_steel`'s own code defaults `USE_SEARCH=1`
+(real, working multi-candidate search), while `agent_core_improved` defaults
+`USE_SEARCH=0` in that same benchmark run (per Gate 0's finding that real search loses to
+pure heuristic on the Lucario deck). So that #1 finish is at least partly "agent with
+search on vs. agent with search off," not "deck A vs deck B" — and separately, the two
+agents' Wilson 95% CIs overlap ([66.2,78.7] vs [59.7,73.0] for `proto`), so it wasn't even
+statistically resolved. This task exists to actually disentangle deck from
+implementation/policy-familiarity, which is exactly the trap `plamen06_steel`'s result
+fell into. Full writeup: search this session's transcript / `notes/` for
+"plamen06_steel" if more detail is needed; not re-derived here.
+
+**Checkpoint to hold fixed across all deck arms (per ③'s explicit requirement).** Use
+whatever `models/il_agent/` is at task-start time UNLESS a Phase 2 checkpoint sweep
+(`models/il_agent_sweep/{0.5,1,2,4,8}ep/`, see `notes/phase2_report.md`) has since
+concluded with an explicit winner recorded in `notes/` — if so, use that one instead and
+say which. Do not silently pick a different checkpoint without checking.
+
+**Deck.csv count is now 11, not the older "9" some earlier notes may reference** — see
+`find agents -name deck.csv` for the live count before trusting any stale number in a
+note.
+
 **Goal.** Decide which deck my agent pilots on the ladder, and produce the evidence that
 justifies it. Not a vibe, not a markdown table — a defensible sentence backed by a matrix
 with uncertainty on it.
@@ -35,7 +60,8 @@ Then build two separate tables:
   deck identity. Note whether decks are directly recoverable from episode JSON or must be
   reconstructed from played cards; if reconstructed, state the reconstruction rule and its
   failure modes.
-- **Field decks** — the 9 `agents/*/deck.csv` files plus the repo-root `deck.csv`, mapped
+- **Field decks** — the `agents/*/deck.csv` files (count them fresh, don't trust a cached
+  number — 11 as of 2026-08-02) plus the repo-root `deck.csv`, mapped
   to which pool agent pilots each.
 
 Also answer the 5-minute question: **which deck does the existing rule-based agent

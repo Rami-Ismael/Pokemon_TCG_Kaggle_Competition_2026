@@ -7,6 +7,8 @@ per the project's held-out-DAY rule.
 
 Usage:
     uv run python scripts/train_il.py --epochs 3
+    uv run python scripts/train_il.py --epochs 0.5   # sub-epoch: a fraction
+        # of one pass, schedule still anneals fully to the requested length.
     uv run python scripts/train_il.py --dry-run
         # 50 train / 20 eval episodes, a tiny 2-layer/32-dim model, 1 epoch.
         # Verifies the pipeline end-to-end in ~1-2 minutes on CPU.
@@ -14,6 +16,17 @@ Usage:
 Full-split runtime: see notes/phase6_projection.md for a measured
 steps/sec -> wall-clock projection; per the project's own stop condition,
 do not launch anything projected over 1 hour without checking that note.
+
+STEP-DRIVEN, NOT EPOCH-DRIVEN. `--epochs` (a float now, not int) only sets
+the SCHEDULE LENGTH (est_total_steps = n_episodes * ROWS_PER_EPISODE /
+batch_size * epochs) -- the training loop itself runs by step count against
+a repeatedly re-iterated streaming loader, not `for epoch in
+range(args.epochs)`. This is what makes a genuine 0.5-epoch run possible
+(a fractional pass through the data with a schedule that still anneals to
+zero exactly at that length) instead of "epochs" only ever meaning whole
+passes. A run stopped before its own schedule's total_steps is undertrained
+by construction (the LR never annealed) -- always let a run finish, don't
+Ctrl-C it expecting a usable partial checkpoint.
 
 Checkpoints are written to models/il_agent/ via
 PTCGImitationPolicy.save_pretrained(), which agents/il_agent/agent_core.py
@@ -57,6 +70,16 @@ from pokemon_tcg.logging_utils import TensorBoardLogger  # noqa: E402
 # it, not just in isolation.
 MAJORITY_BASELINE = 0.381
 
+# named top-level submodules to group by for the ||dW||/||W|| report --
+# embeddings and the trunk/head converge at different rates (Gate 2), a
+# single global norm ratio hides that.
+PARAM_GROUPS = [
+    "card_emb", "attack_emb", "special_emb", "select_type_emb",
+    "select_context_emb", "option_type_emb", "slot_scalar_proj",
+    "global_scalar_proj", "opt_scalar_proj", "opt_ref_scalar_proj",
+    "cls_param", "slot_pos_emb", "opt_pos_emb", "encoder", "score_head",
+]
+
 
 def set_seed(seed: int) -> None:
     random.seed(seed)
@@ -73,8 +96,28 @@ def git_sha() -> str:
         return "unknown"
 
 
-def accuracy(logits: torch.Tensor, label: torch.Tensor) -> float:
-    return (logits.argmax(dim=-1) == label).float().mean().item()
+def accuracy(logits: torch.Tensor, label: torch.Tensor, k: int = 1) -> float:
+    if k == 1:
+        return (logits.argmax(dim=-1) == label).float().mean().item()
+    topk = logits.topk(k=min(k, logits.shape[-1]), dim=-1).indices
+    return (topk == label.unsqueeze(-1)).any(dim=-1).float().mean().item()
+
+
+def policy_entropy(logits: torch.Tensor, opt_mask: torch.Tensor) -> float:
+    """Mean entropy over legal actions, normalized by log(n_legal).
+
+    Rows with <=1 legal option are trivial (entropy is 0 by construction,
+    log(n_legal) would be 0 too) -- excluded from the mean rather than
+    counted as a spurious 0/0.
+    """
+    probs = torch.softmax(logits, dim=-1)
+    ent = -(probs * torch.log(probs.clamp_min(1e-12))).sum(dim=-1)
+    n_legal = opt_mask.sum(dim=-1).float()
+    valid = n_legal > 1
+    if not valid.any():
+        return 0.0
+    norm_ent = ent[valid] / torch.log(n_legal[valid])
+    return norm_ent.mean().item()
 
 
 def cosine_warmup_lr(step: int, warmup_steps: int, total_steps: int, base_lr: float) -> float:
@@ -85,6 +128,29 @@ def cosine_warmup_lr(step: int, warmup_steps: int, total_steps: int, base_lr: fl
     return base_lr * 0.5 * (1 + math.cos(math.pi * progress))
 
 
+def snapshot_param_norms(model: PTCGImitationPolicy) -> dict[str, tuple[torch.Tensor, float]]:
+    """One flat detached copy + its norm per top-level submodule, for the dW/W report."""
+    groups: dict[str, list[torch.Tensor]] = defaultdict(list)
+    for name, p in model.named_parameters():
+        top = name.split(".")[0]
+        groups[top].append(p.detach().flatten().clone())
+    out = {}
+    for top, tensors in groups.items():
+        flat = torch.cat(tensors)
+        out[top] = (flat, flat.norm().item())
+    return out
+
+
+def weight_delta_ratios(model: PTCGImitationPolicy, initial: dict[str, tuple[torch.Tensor, float]]) -> dict[str, float]:
+    current = snapshot_param_norms(model)
+    ratios = {}
+    for top, (init_flat, init_norm) in initial.items():
+        cur_flat, _ = current[top]
+        dw = (cur_flat - init_flat).norm().item()
+        ratios[top] = dw / max(init_norm, 1e-12)
+    return ratios
+
+
 @torch.no_grad()
 def evaluate(
     model: PTCGImitationPolicy,
@@ -93,24 +159,54 @@ def evaluate(
     max_batches: int | None = None,
 ) -> dict:
     model.eval()
-    total_loss, total_acc, n = 0.0, 0.0, 0
+    total_loss, total_acc, total_acc3, total_ent, n = 0.0, 0.0, 0.0, 0.0, 0
     per_ctx_correct: dict[int, int] = defaultdict(int)
     per_ctx_total: dict[int, int] = defaultdict(int)
+    # ECE accumulators: 10 equal-width confidence bins over the model's own
+    # top-1 softmax probability, aggregated across the whole eval pass (not
+    # averaged per-batch -- ECE is not a linear function of its inputs).
+    n_bins = 10
+    bin_conf_sum = np.zeros(n_bins)
+    bin_correct_sum = np.zeros(n_bins)
+    bin_count = np.zeros(n_bins)
+
     for i, batch in enumerate(loader):
         if max_batches and i >= max_batches:
             break
         batch = {k: v.to(device) for k, v in batch.items()}
         out = model(**batch)
+        logits, label = out["logits"], batch["label"]
         total_loss += out["loss"].item()
-        total_acc += accuracy(out["logits"], batch["label"])
+        total_acc += accuracy(logits, label, k=1)
+        total_acc3 += accuracy(logits, label, k=3)
+        total_ent += policy_entropy(logits, batch["opt_mask"])
         n += 1
 
-        pred = out["logits"].argmax(dim=-1)
-        correct = (pred == batch["label"]).cpu().numpy()
+        probs = torch.softmax(logits, dim=-1)
+        conf, pred = probs.max(dim=-1)
+        correct = (pred == label).float()
+        conf_np, correct_np = conf.cpu().numpy(), correct.cpu().numpy()
+        bin_idx = np.clip((conf_np * n_bins).astype(int), 0, n_bins - 1)
+        for b, c, ok in zip(bin_idx, conf_np, correct_np, strict=True):
+            bin_conf_sum[b] += c
+            bin_correct_sum[b] += ok
+            bin_count[b] += 1
+
         ctx = batch["select_context"].cpu().numpy()
-        for c, ok in zip(ctx, correct, strict=True):
+        correct_ctx = (pred == label).cpu().numpy()
+        for c, ok in zip(ctx, correct_ctx, strict=True):
             per_ctx_total[int(c)] += 1
             per_ctx_correct[int(c)] += int(ok)
+
+    ece = 0.0
+    n_total = bin_count.sum()
+    if n_total > 0:
+        for b in range(n_bins):
+            if bin_count[b] == 0:
+                continue
+            avg_conf = bin_conf_sum[b] / bin_count[b]
+            avg_acc = bin_correct_sum[b] / bin_count[b]
+            ece += (bin_count[b] / n_total) * abs(avg_conf - avg_acc)
 
     per_ctx_acc = {
         c: per_ctx_correct[c] / per_ctx_total[c] for c in per_ctx_total if per_ctx_total[c] > 0
@@ -119,6 +215,9 @@ def evaluate(
     return {
         "loss": total_loss / max(n, 1),
         "accuracy": total_acc / max(n, 1),
+        "top3_accuracy": total_acc3 / max(n, 1),
+        "entropy_normalized": total_ent / max(n, 1),
+        "ece": ece,
         "per_context_accuracy": per_ctx_acc,
         "per_context_n": dict(per_ctx_total),
     }
@@ -130,7 +229,12 @@ def main() -> None:
     )
     ap.add_argument("--train-split", default="train", help="key into splits.json")
     ap.add_argument("--eval-split", default="eval", help="key into splits.json")
-    ap.add_argument("--epochs", type=int, default=3)
+    ap.add_argument("--epochs", type=float, default=3,
+                     help="schedule length in passes over the train split; fractional "
+                          "values (e.g. 0.5) run a genuine sub-epoch schedule, not a "
+                          "truncated one -- see module docstring")
+    ap.add_argument("--total-steps", type=int, default=None,
+                     help="override the epochs->steps estimate directly")
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--warmup-steps", type=int, default=200)
@@ -141,6 +245,8 @@ def main() -> None:
     ap.add_argument(
         "--eval-batches", type=int, default=100, help="cap eval batches (streamed too)"
     )
+    ap.add_argument("--eval-every-steps", type=int, default=None,
+                     help="eval+checkpoint at this step interval (default: once, at the end)")
     ap.add_argument("--hidden-size", type=int, default=192)
     ap.add_argument("--num-layers", type=int, default=6)
     ap.add_argument("--num-heads", type=int, default=6)
@@ -196,39 +302,114 @@ def main() -> None:
     n_params = sum(p.numel() for p in model.parameters())
     print(f"model params: {n_params:,} ({n_params/1e6:.2f}M)")
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    initial_param_norms = snapshot_param_norms(model)
 
     args.out.mkdir(parents=True, exist_ok=True)
-    step = 0
-    best_eval_acc = -1.0
+
     # total_steps for the cosine schedule: ILDataset is a streaming
     # IterableDataset (no __len__), so estimate it rather than block on a
     # full pre-count pass. ROWS_PER_EPISODE is the measured rate from
     # notes/phase6_projection.md (181.3 rows/episode, incl. declines and
     # the multi-select unroll); n_episodes is a cheap glob, not a parse.
-    # BUG FIXED HERE: a prior placeholder (`max(warmup_steps*10, 2000)`)
-    # hardcoded total_steps=2000 regardless of the real epoch length, so
-    # the cosine schedule decayed LR to exactly 0 at step 2000 and stayed
-    # there -- a 12,854-step run only actually trained for its first ~2000
-    # steps; the remaining ~10,850 were zero-gradient no-ops that still
-    # cost wall-clock time. Confirmed from runs/full_epoch1's own log
-    # (lr=0.00e+00 from step 2500 through step 12500).
     ROWS_PER_EPISODE = 181.3
     n_episodes = len(list(train_dir.glob("*.json")))
     if args.max_train_episodes:
         n_episodes = min(n_episodes, args.max_train_episodes)
-    est_total_steps = max(
-        int(n_episodes * ROWS_PER_EPISODE / args.batch_size) * args.epochs,
-        args.warmup_steps + 1,
-    )
-    print(f"estimated total steps for LR schedule: {est_total_steps} "
-          f"({n_episodes} episodes x {ROWS_PER_EPISODE} rows/ep / batch {args.batch_size} x {args.epochs} epochs)")
+    if args.total_steps is not None:
+        total_steps = args.total_steps
+    else:
+        total_steps = max(
+            int(n_episodes * ROWS_PER_EPISODE / args.batch_size * args.epochs),
+            args.warmup_steps + 1,
+        )
+    eval_every_steps = args.eval_every_steps or total_steps  # default: once, at the very end
+    print(f"total steps for this schedule: {total_steps} "
+          f"({n_episodes} episodes x {ROWS_PER_EPISODE} rows/ep / batch {args.batch_size} "
+          f"x {args.epochs} epochs-equivalent)")
+
+    step = 0
+    best_eval_acc = -1.0
+    running_loss, running_acc, running_n = 0.0, 0.0, 0
     t0 = time.time()
-    for epoch in range(args.epochs):
-        running_loss, running_acc, running_n = 0.0, 0.0, 0
-        epoch_step0 = step
-        epoch_t0 = time.time()
+    pass_t0 = time.time()
+
+    def save_checkpoint(eval_result: dict, is_final: bool) -> None:
+        nonlocal best_eval_acc
+        is_best = eval_result["accuracy"] > best_eval_acc
+        if not (is_best or is_final):
+            return
+        best_eval_acc = max(best_eval_acc, eval_result["accuracy"])
+        # Device-agnostic checkpoint: state_dict moved to CPU before save, so
+        # an MPS-trained checkpoint still loads on a CPU-only evaluator via
+        # .from_pretrained() + map_location handling in agent_core.py's
+        # _load_model().
+        model.to("cpu").save_pretrained(args.out)
+        model.to(device)
+        dw_ratios = weight_delta_ratios(model, initial_param_norms)
+        (args.out / "train_metadata.json").write_text(
+            json.dumps(
+                {
+                    "step": step,
+                    "total_steps": total_steps,
+                    "epochs_equivalent": args.epochs,
+                    "is_final_checkpoint": is_final,
+                    "eval_loss": eval_result["loss"],
+                    "eval_accuracy": eval_result["accuracy"],
+                    "eval_top3_accuracy": eval_result["top3_accuracy"],
+                    "eval_entropy_normalized": eval_result["entropy_normalized"],
+                    "eval_ece": eval_result["ece"],
+                    "majority_baseline": MAJORITY_BASELINE,
+                    "weight_delta_ratios": dw_ratios,
+                    "git_sha": git_sha(),
+                    "device_trained_on": device,
+                    "run_dir": str(run_dir),
+                    "n_params": n_params,
+                    "config": vars(args) | {"out": str(args.out), "run_dir": str(run_dir)},
+                },
+                indent=2,
+                default=str,
+            )
+        )
+        tag = "final" if is_final else "best"
+        print(f"checkpoint saved to {args.out} ({tag}, eval_acc={eval_result['accuracy']:.4f})")
+
+    def run_eval_and_log(is_final: bool) -> None:
+        eval_result = evaluate(model, eval_loader, device, max_batches=args.eval_batches)
+        print(
+            f"step {step}/{total_steps} eval -- loss={eval_result['loss']:.4f} "
+            f"acc={eval_result['accuracy']:.4f} top3={eval_result['top3_accuracy']:.4f} "
+            f"entropy_norm={eval_result['entropy_normalized']:.4f} ece={eval_result['ece']:.4f} "
+            f"(majority baseline {MAJORITY_BASELINE:.3f})"
+        )
+        logger.log_scalars(
+            {
+                "eval/loss": eval_result["loss"],
+                "eval/accuracy": eval_result["accuracy"],
+                "eval/top3_accuracy": eval_result["top3_accuracy"],
+                "eval/entropy_normalized": eval_result["entropy_normalized"],
+                "eval/ece": eval_result["ece"],
+                "reference/majority_baseline": MAJORITY_BASELINE,
+            },
+            step,
+        )
+        for ctx, acc in sorted(eval_result["per_context_accuracy"].items()):
+            n_ctx = eval_result["per_context_n"][ctx]
+            logger.log_scalar(f"eval_per_context/ctx_{ctx}_accuracy", acc, step)
+            logger.log_scalar(f"eval_per_context/ctx_{ctx}_n", n_ctx, step)
+        dw_ratios = weight_delta_ratios(model, initial_param_norms)
+        for group, ratio in dw_ratios.items():
+            logger.log_scalar(f"weight_delta_ratio/{group}", ratio, step)
+        save_checkpoint(eval_result, is_final=is_final)
+
+    # Step-driven training loop: re-iterate the streaming loader as many
+    # times as needed to reach total_steps, instead of `for epoch in
+    # range(args.epochs)` -- this is what makes a fractional-epoch schedule
+    # (a genuine sub-epoch pass, not a truncated multi-epoch one) possible.
+    while step < total_steps:
         for batch in train_loader:
-            lr = cosine_warmup_lr(step, args.warmup_steps, est_total_steps, args.lr)
+            if step >= total_steps:
+                break
+            lr = cosine_warmup_lr(step, args.warmup_steps, total_steps, args.lr)
             for g in optimizer.param_groups:
                 g["lr"] = lr
 
@@ -245,13 +426,15 @@ def main() -> None:
             running_acc += accuracy(out["logits"], batch["label"])
             running_n += 1
             step += 1
+
             if step % args.log_every == 0:
                 elapsed = time.time() - t0
-                steps_per_sec = (step - epoch_step0) / max(time.time() - epoch_t0, 1e-9)
+                steps_per_sec = args.log_every / max(time.time() - pass_t0, 1e-9)
+                pass_t0 = time.time()
                 train_loss = running_loss / running_n
                 train_acc = running_acc / running_n
                 print(
-                    f"epoch {epoch} step {step} "
+                    f"step {step}/{total_steps} "
                     f"train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
                     f"lr={lr:.2e} grad_norm={grad_norm:.3f} "
                     f"({steps_per_sec:.2f} steps/s, {elapsed:.1f}s)"
@@ -269,56 +452,8 @@ def main() -> None:
                 )
                 running_loss, running_acc, running_n = 0.0, 0.0, 0
 
-        eval_result = evaluate(model, eval_loader, device, max_batches=args.eval_batches)
-        msg = (
-            f"epoch {epoch} done -- eval_loss={eval_result['loss']:.4f} "
-            f"eval_acc={eval_result['accuracy']:.4f} (majority baseline {MAJORITY_BASELINE:.3f})"
-        )
-        print(msg)
-        logger.log_scalars(
-            {
-                "eval/loss": eval_result["loss"],
-                "eval/accuracy": eval_result["accuracy"],
-                "reference/majority_baseline": MAJORITY_BASELINE,
-            },
-            step,
-        )
-        for ctx, acc in sorted(eval_result["per_context_accuracy"].items()):
-            n_ctx = eval_result["per_context_n"][ctx]
-            logger.log_scalar(f"eval_per_context/ctx_{ctx}_accuracy", acc, step)
-            logger.log_scalar(f"eval_per_context/ctx_{ctx}_n", n_ctx, step)
-
-        # Checkpoint-on-best-val: only overwrite the shipped checkpoint when
-        # eval accuracy improves: val loss/accuracy/Rung-2 win-rate can
-        # disagree (Phase 4), but val accuracy is the cheapest signal
-        # available inside the training loop itself.
-        if eval_result["accuracy"] > best_eval_acc:
-            best_eval_acc = eval_result["accuracy"]
-            # Device-agnostic checkpoint: state_dict moved to CPU before
-            # save, so an MPS-trained checkpoint still loads on a CPU-only
-            # evaluator via .from_pretrained() + map_location handling in
-            # agent_core.py's _load_model().
-            model.to("cpu").save_pretrained(args.out)
-            model.to(device)
-            (args.out / "train_metadata.json").write_text(
-                json.dumps(
-                    {
-                        "epoch": epoch,
-                        "step": step,
-                        "eval_loss": eval_result["loss"],
-                        "eval_accuracy": eval_result["accuracy"],
-                        "majority_baseline": MAJORITY_BASELINE,
-                        "git_sha": git_sha(),
-                        "device_trained_on": device,
-                        "run_dir": str(run_dir),
-                        "n_params": n_params,
-                        "config": vars(args) | {"out": str(args.out), "run_dir": str(run_dir)},
-                    },
-                    indent=2,
-                    default=str,
-                )
-            )
-            print(f"checkpoint saved to {args.out} (new best eval_acc={best_eval_acc:.4f})")
+            if step % eval_every_steps == 0 or step >= total_steps:
+                run_eval_and_log(is_final=(step >= total_steps))
 
     logger.close()
     print(f"total training time: {time.time() - t0:.1f}s")
