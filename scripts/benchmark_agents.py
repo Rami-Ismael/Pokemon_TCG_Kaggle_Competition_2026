@@ -39,6 +39,12 @@ USAGE
     uv run python scripts/benchmark_agents.py --games 12
     uv run python scripts/benchmark_agents.py --agents rule_baseline,agent_core_improved
 
+    # Deck-arm sweep: same il_agent policy/weights, different submitted deck
+    # (configs/deck_lists/<tag>.csv), isolated from the standing Glicko file:
+    uv run python scripts/benchmark_agents.py \
+        --agents il_agent@dragapult_ex,il_agent@alakazam,kiyotah_dragapult \
+        --no-glicko-persist --out reports/deck_selection_benchmark.json
+
 Output: a win-rate table (rows = player A, cols = player B) and per-agent
 overall win rate, printed to stdout and saved next to the script.
 
@@ -112,14 +118,26 @@ AGENT_MAIN = {
 _LOADED_MODULES: dict[str, object] = {}
 
 
+DECK_LISTS_DIR = REPO / "configs" / "deck_lists"
+
+
 def load_agent(name: str):
     """Load an agent's `agent` callable.
 
     Prefers the bundle `main.py` (real entry point, deck wired up). Falls back
     to the bare module — for bare modules that need `my_deck` injected (e.g.
     the sample rule baseline), we read it from the matching deck.csv.
+
+    `name` may carry a deck override as `<agent>@<deck-tag>` (e.g.
+    `il_agent@dragapult_ex`), where `<deck-tag>.csv` must exist under
+    configs/deck_lists/. The base agent loads and runs completely unmodified;
+    only its module-level `my_deck` is overwritten after loading, so the SAME
+    policy/weights can be benchmarked piloting a different 60-card deck. Each
+    call builds a fresh module object (no caching), so distinct deck-tagged
+    labels for the same base agent never share state.
     """
-    main_py = AGENT_MAIN.get(name)
+    base_name, _, deck_tag = name.partition("@")
+    main_py = AGENT_MAIN.get(base_name)
     if main_py and main_py.exists():
         spec = importlib.util.spec_from_file_location(f"_bench_{name}", main_py)
         mod = importlib.util.module_from_spec(spec)
@@ -128,24 +146,31 @@ def load_agent(name: str):
         fn = getattr(mod, "agent", None)
         if not callable(fn):
             raise AttributeError(f"{name} bundle has no callable `agent`")
-        _LOADED_MODULES[name] = mod
-        return fn
+    else:
+        path = AGENT_FILES[base_name]
+        if not path.exists():
+            raise FileNotFoundError(f"no agent file for {base_name}: {path}")
+        spec = importlib.util.spec_from_file_location(f"_bench_{name}", path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.path.insert(0, str(path.parent))
+        spec.loader.exec_module(mod)
+        # Bare modules that reference a module-level `my_deck` (e.g. the sample
+        # rule baseline) have it injected by their main.py; wire it here from deck.csv.
+        if not hasattr(mod, "my_deck") and (path.parent / "deck.csv").exists():
+            deck = [int(x) for x in (path.parent / "deck.csv").read_text().splitlines() if x.strip()][:60]
+            mod.my_deck = deck
+        fn = getattr(mod, "agent", None)
+        if not callable(fn):
+            raise AttributeError(f"{base_name} has no callable `agent`")
 
-    path = AGENT_FILES[name]
-    if not path.exists():
-        raise FileNotFoundError(f"no agent file for {name}: {path}")
-    spec = importlib.util.spec_from_file_location(f"_bench_{name}", path)
-    mod = importlib.util.module_from_spec(spec)
-    sys.path.insert(0, str(path.parent))
-    spec.loader.exec_module(mod)
-    # Bare modules that reference a module-level `my_deck` (e.g. the sample
-    # rule baseline) have it injected by their main.py; wire it here from deck.csv.
-    if not hasattr(mod, "my_deck") and (path.parent / "deck.csv").exists():
-        deck = [int(x) for x in (path.parent / "deck.csv").read_text().splitlines() if x.strip()][:60]
-        mod.my_deck = deck
-    fn = getattr(mod, "agent", None)
-    if not callable(fn):
-        raise AttributeError(f"{name} has no callable `agent`")
+    if deck_tag:
+        if not hasattr(mod, "my_deck"):
+            raise AttributeError(f"{base_name} has no `my_deck` to override (not deck-injectable)")
+        deck_csv = DECK_LISTS_DIR / f"{deck_tag}.csv"
+        if not deck_csv.exists():
+            raise FileNotFoundError(f"deck override '{deck_tag}' not found: {deck_csv}")
+        mod.my_deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+
     _LOADED_MODULES[name] = mod
     return fn
 
@@ -202,7 +227,9 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
     return a_wins, b_wins, draws, time.time() - t0
 
 
-def run_benchmark(agents: list[str], games_per_pair: int = 8):
+def run_benchmark(agents: list[str], games_per_pair: int = 8,
+                   glicko_path: Path = GLICKO_PATH, out_path: Path | None = None,
+                   persist_glicko: bool = True):
     from kaggle_environments import make
 
     print(f"Loading {len(agents)} agents: {', '.join(agents)}")
@@ -274,9 +301,10 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     # Win-rate is a single-run snapshot; Glicko carries a rating + confidence
     # (RD) forward across every benchmark run, weighted by opponent strength,
     # so it's a better estimate of true skill than this run's win% alone.
-    prior_ratings = load_glicko_ratings()
+    prior_ratings = load_glicko_ratings(glicko_path) if persist_glicko else {}
     glicko = glicko1.run_rating_period(prior_ratings, glicko_games)
-    save_glicko_ratings(glicko)
+    if persist_glicko:
+        save_glicko_ratings(glicko, glicko_path)
 
     print("\n=== Glicko-1 ratings (persisted across runs, higher = stronger) ===")
     ranked = sorted(agents, key=lambda x: -glicko[x].rating)
@@ -317,11 +345,11 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
         },
         "fallback_diag": fallback_diag,
     }
-    out_path = REPO / "reports" / "agent_benchmark.json"
+    out_path = out_path or (REPO / "reports" / "agent_benchmark.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=2))
     print(f"\nsaved: {out_path}")
-    print(f"saved: {GLICKO_PATH}")
+    print(f"saved: {glicko_path}" if persist_glicko else "\nglicko: not persisted (isolated run)")
     return result
 
 
@@ -331,12 +359,21 @@ def main():
                     help="comma-separated subset of: " + ", ".join(AGENT_FILES))
     ap.add_argument("--games", type=int, default=8, dest="games_per_pair",
                     help="mirrored game pairs per ordered agent pair")
+    ap.add_argument("--glicko-path", type=Path, default=GLICKO_PATH,
+                    help="where to load/persist Glicko ratings (default: reports/glicko_ratings.json)")
+    ap.add_argument("--out", type=Path, default=None,
+                    help="where to save the result JSON (default: reports/agent_benchmark.json)")
+    ap.add_argument("--no-glicko-persist", action="store_true",
+                    help="score Glicko for this run's printout but don't read/write --glicko-path "
+                         "(use for isolated runs, e.g. deck-arm sweeps, that shouldn't pollute "
+                         "the standing ratings)")
     args = ap.parse_args()
     agents = [a.strip() for a in args.agents.split(",") if a.strip()]
-    unknown = [a for a in agents if a not in AGENT_FILES]
+    unknown = [a for a in agents if a.partition("@")[0] not in AGENT_FILES]
     if unknown:
         sys.exit(f"unknown agent(s): {unknown}. Available: {list(AGENT_FILES)}")
-    run_benchmark(agents, args.games_per_pair)
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+                  out_path=args.out, persist_glicko=not args.no_glicko_persist)
 
 
 if __name__ == "__main__":
