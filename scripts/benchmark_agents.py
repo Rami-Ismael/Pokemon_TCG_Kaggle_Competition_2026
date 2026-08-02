@@ -176,8 +176,14 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
     t0 = time.time()
     a_wins = b_wins = draws = 0
     for _ in range(pairs):
-        for seat0 in (agent_a, agent_b):
-            seat1 = agent_b if seat0 is agent_a else agent_a
+        # a_in_seat0 tracks which *role* (a or b) sits in seat 0, independent
+        # of object identity -- true self-play passes the same callable as
+        # both agent_a and agent_b, so `is` checks can't distinguish the
+        # roles (both "seat0 is agent_a" and "seat0 is agent_b" are true on
+        # every game, double-counting every decisive result).
+        for a_in_seat0 in (True, False):
+            seat0 = agent_a if a_in_seat0 else agent_b
+            seat1 = agent_b if a_in_seat0 else agent_a
             env = env_factory()
             trace = env.run([seat0, seat1])
             final = trace[-1]
@@ -186,19 +192,20 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
             # a comparable score (its exception ends the episode early) --
             # treat that seat as an outright loss instead of letting the
             # `None > int` comparison below take the whole tournament down.
-            for seat_idx, seat_agent in ((0, seat0), (1, seat1)):
+            seat_role = ("a", "b") if a_in_seat0 else ("b", "a")
+            for seat_idx, role in enumerate(seat_role):
                 if r[seat_idx] is None:
-                    who = name_a if seat_agent is agent_a else name_b
+                    who = name_a if role == "a" else name_b
                     print(f"  [WARN] {who} crashed (status={final[seat_idx].get('status')}); scoring as a loss")
                     r[seat_idx] = -float("inf")
             if r[0] == r[1]:
                 draws += 1
-            elif r[0] > r[1]:
-                a_wins += 1 if seat0 is agent_a else 0
-                b_wins += 1 if seat0 is agent_b else 0
             else:
-                a_wins += 1 if seat0 is agent_b else 0
-                b_wins += 1 if seat0 is agent_a else 0
+                winner_role = seat_role[0] if r[0] > r[1] else seat_role[1]
+                if winner_role == "a":
+                    a_wins += 1
+                else:
+                    b_wins += 1
     return a_wins, b_wins, draws, time.time() - t0
 
 
