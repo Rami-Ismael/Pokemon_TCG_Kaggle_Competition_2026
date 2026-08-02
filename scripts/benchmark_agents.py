@@ -104,6 +104,14 @@ AGENT_MAIN = {
 }
 
 
+# Populated by load_agent as a side effect, keyed by the same `name` passed
+# in. Lets callers that only kept the `agent` callable (e.g. eval_rung3_sanity.py)
+# stay on the unchanged load_agent(name) -> fn signature, while run_benchmark
+# can still reach each module's diag_snapshot()/diag_reset() (see "Fallback
+# diagnostics" below) if the agent exposes the fallback-tracking pattern.
+_LOADED_MODULES: dict[str, object] = {}
+
+
 def load_agent(name: str):
     """Load an agent's `agent` callable.
 
@@ -120,6 +128,7 @@ def load_agent(name: str):
         fn = getattr(mod, "agent", None)
         if not callable(fn):
             raise AttributeError(f"{name} bundle has no callable `agent`")
+        _LOADED_MODULES[name] = mod
         return fn
 
     path = AGENT_FILES[name]
@@ -137,6 +146,7 @@ def load_agent(name: str):
     fn = getattr(mod, "agent", None)
     if not callable(fn):
         raise AttributeError(f"{name} has no callable `agent`")
+    _LOADED_MODULES[name] = mod
     return fn
 
 
@@ -155,7 +165,8 @@ def save_glicko_ratings(ratings: dict[str, glicko1.Rating], path: Path = GLICKO_
     ))
 
 
-def play_match(agent_a, agent_b, env_factory, pairs: int = 1) -> tuple[int, int, int, float]:
+def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
+               name_a: str = "agent_a", name_b: str = "agent_b") -> tuple[int, int, int, float]:
     """Play `pairs` mirrored game pairs (both seat orders each). Returns (a_wins, b_wins, draws, seconds).
 
     Each mirrored pair cancels first-player advantage: game 1 has A in seat 0,
@@ -171,6 +182,15 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1) -> tuple[int, int,
             trace = env.run([seat0, seat1])
             final = trace[-1]
             r = [final[i]["reward"] for i in range(2)]
+            # kaggle_environments gives a crashed agent reward=None instead of
+            # a comparable score (its exception ends the episode early) --
+            # treat that seat as an outright loss instead of letting the
+            # `None > int` comparison below take the whole tournament down.
+            for seat_idx, seat_agent in ((0, seat0), (1, seat1)):
+                if r[seat_idx] is None:
+                    who = name_a if seat_agent is agent_a else name_b
+                    print(f"  [WARN] {who} crashed (status={final[seat_idx].get('status')}); scoring as a loss")
+                    r[seat_idx] = -float("inf")
             if r[0] == r[1]:
                 draws += 1
             elif r[0] > r[1]:
@@ -186,7 +206,11 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     from kaggle_environments import make
 
     print(f"Loading {len(agents)} agents: {', '.join(agents)}")
+    _LOADED_MODULES.clear()  # drop any modules from a prior run_benchmark() call in this process
     fns = {name: load_agent(name) for name in agents}
+    for mod in _LOADED_MODULES.values():
+        if hasattr(mod, "diag_reset"):
+            mod.diag_reset()
 
     n = len(agents)
     wins = {a: {b: 0 for b in agents} for a in agents}  # wins[a][b] = a beat b
@@ -203,7 +227,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
         for j in range(i, n):
             a, b = agents[i], agents[j]
             pairs = games_per_pair if a != b else max(1, games_per_pair // 2)
-            aw, bw, dr, secs = play_match(fns[a], fns[b], lambda: make("cabt"), pairs)
+            aw, bw, dr, secs = play_match(fns[a], fns[b], lambda: make("cabt"), pairs, name_a=a, name_b=b)
             wins[a][b] += aw
             wins[b][a] += bw
             games[a][b] += aw + bw + dr
@@ -263,6 +287,24 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
             f"GXE {glicko1.gxe(r):5.1f}%"
         )
 
+    # ---- Fallback diagnostics ----
+    # Agents that expose the _DIAG/diag_snapshot pattern (see
+    # agents/mega_lucario/agent_core_improved.py, agents/improved_probabilistic/main.py,
+    # agents/mechi22_alakazam/agent_core.py) count how often their never-crash
+    # fallback layers actually fire across every game just played. A nonzero
+    # fallback_rate here means search or the heuristic is silently failing on
+    # real inputs -- worth investigating even though the agent never crashed.
+    fallback_diag = {}
+    for a in agents:
+        mod = _LOADED_MODULES.get(a)
+        if mod is not None and hasattr(mod, "diag_snapshot"):
+            fallback_diag[a] = mod.diag_snapshot()
+    if fallback_diag:
+        print("\n=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===")
+        for a, snap in fallback_diag.items():
+            print(f"  {a:22s} fallback_rate={snap.get('fallback_rate', 0.0):6.2%}  "
+                  f"decisions={snap.get('decisions', 0)}  raw={dict(snap)}")
+
     result = {
         "agents": agents,
         "games_per_pair": games_per_pair,
@@ -273,6 +315,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
             a: {"rating": glicko[a].rating, "rd": glicko[a].rd, "gxe": glicko1.gxe(glicko[a])}
             for a in agents
         },
+        "fallback_diag": fallback_diag,
     }
     out_path = REPO / "reports" / "agent_benchmark.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)

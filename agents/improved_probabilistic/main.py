@@ -38,7 +38,6 @@ import os
 import random
 import time
 from collections import defaultdict
-from pathlib import Path
 
 from cg.api import (
     AreaType, Card, CardType, EnergyType, Observation, OptionType,
@@ -76,7 +75,6 @@ DECK = [
     6, 6, 6, 6, 6, 6, 6, 6,
     6, 1182, 677, 1252,
 ]
-Path("deck.csv").write_text("\n".join(map(str, DECK)) + "\n")
 
 
 class C:
@@ -92,12 +90,20 @@ class C:
     LUMIOSE_CITY, LILLIES_PEARL, LEGACY_ENERGY = 1267, 1172, 12
 
 
-# Load our deck (works both locally and in the Kaggle sim sandbox).
+# Load our deck: prefer a real deck.csv (local dev convenience / actual
+# Kaggle sandbox file) if one exists, otherwise the hardcoded DECK above --
+# never write to cwd just to read the same data back, and never crash import
+# just because no deck.csv happens to be sitting next to us.
 DECK_PATH = "deck.csv"
 if not os.path.exists(DECK_PATH):
     DECK_PATH = "/kaggle_simulations/agent/deck.csv"
-with open(DECK_PATH, "r", encoding="utf-8") as f:
-    my_deck = [int(line) for line in f.read().splitlines() if line.strip()]
+try:
+    with open(DECK_PATH, "r", encoding="utf-8") as f:
+        my_deck = [int(line) for line in f.read().splitlines() if line.strip()]
+    if len(my_deck) != 60:
+        my_deck = list(DECK)
+except Exception:
+    my_deck = list(DECK)
 
 # card_table[id] -> static CardData (weakness, ex/megaEx flags, stage, ...)
 card_table = {card.cardId: card for card in all_card_data()}
@@ -122,6 +128,27 @@ class AttackPlan:
 plan = AttackPlan()
 pre_turn = -1
 ability_used = False
+
+# Fallback-layer diagnostics: counts how often each of the three never-crash
+# layers actually triggers, so a silently-broken search or heuristic shows up
+# as a nonzero rate instead of vanishing into "the agent didn't crash."
+_DIAG = defaultdict(int)
+
+
+def diag_reset() -> None:
+    _DIAG.clear()
+
+
+def diag_snapshot() -> dict:
+    total = max(1, _DIAG.get("decisions", 0))
+    out = dict(_DIAG)
+    out["fallback_rate"] = (
+        _DIAG.get("search_fallback", 0)
+        + _DIAG.get("empty_ordered_fallback", 0)
+        + _DIAG.get("heuristic_fallback", 0)
+        + _DIAG.get("parse_fallback", 0)
+    ) / total
+    return out
 
 
 def get_card(obs: Observation, area: AreaType, index: int, player_index: int):
@@ -837,6 +864,8 @@ def agent(obs_dict: dict) -> list[int]:
     try:
         obs = to_observation_class(obs_dict)
     except Exception:
+        _DIAG["decisions"] += 1
+        _DIAG["parse_fallback"] += 1
         return my_deck if obs_dict.get("select") is None else [0]
     if obs.select is None:
         return my_deck  # deck-submission phase
@@ -847,16 +876,20 @@ def agent(obs_dict: dict) -> list[int]:
         ability_used = False
         plan = AttackPlan()
 
+    _DIAG["decisions"] += 1
     try:
         ordered = flat_monte_carlo_search(obs)
         if ordered is None:
+            _DIAG["search_fallback"] += 1
             ordered = HeuristicPolicy(obs).choose()
         n = len(obs.select.option)
         ordered = [i for i in ordered if 0 <= i < n]
         if not ordered:
+            _DIAG["empty_ordered_fallback"] += 1
             return list(range(min(max(1, obs.select.minCount), n)))
         k = max(min(obs.select.maxCount, n), min(max(1, obs.select.minCount), n))
         return ordered[:k]
     except Exception:
+        _DIAG["heuristic_fallback"] += 1
         n = len(obs.select.option)
         return list(range(min(max(1, obs.select.minCount), n)))
