@@ -14,10 +14,10 @@ Each folder holds the verbatim `.ipynb`. For code-heavy single-cell/long noteboo
 
 | Folder | Kaggle ref | Votes | Method | Status |
 |--------|-----------|-------|--------|--------|
-| avikdas567-heuristic-agent | [avikdas567/ptcg-ai-battle-heuristic-agent-data-pipeline](https://www.kaggle.com/code/avikdas567/ptcg-ai-battle-heuristic-agent-data-pipeline) | 23 | Heuristic agent + data pipeline | ADDED |
+| avikdas567-heuristic-agent | [avikdas567/ptcg-ai-battle-heuristic-agent-data-pipeline](https://www.kaggle.com/code/avikdas567/ptcg-ai-battle-heuristic-agent-data-pipeline) | 23 | Heuristic agent + data pipeline | ADDED, wired as `avikdas567_heuristic` (weak: str(option) substring scoring) |
 | lucifer19-battlecore-agent | [lucifer19/battlecore-compact-agent](https://www.kaggle.com/code/lucifer19/battlecore-compact-agent) | 22 | Payload-wrapped agent + falsification/validation protocol (no plain-text agent() source) | ADDED |
-| romanrozen-strong-start-agent | [romanrozen/strong-start-baseline-agent-v10-lb-950](https://www.kaggle.com/code/romanrozen/strong-start-baseline-agent-v10-lb-950) | 142 | Probabilistic Expectimax baseline agent (LB 950+) | ADDED |
-| makimakiai-tiny-rl-baseline | [makimakiai/ptcg-tiny-rl-to-submission-baseline-guide](https://www.kaggle.com/code/makimakiai/ptcg-tiny-rl-to-submission-baseline-guide) | 49 | Beginner RL -> submission baseline guide | ADDED |
+| romanrozen-strong-start-agent | [romanrozen/strong-start-baseline-agent-v10-lb-950](https://www.kaggle.com/code/romanrozen/strong-start-baseline-agent-v10-lb-950) | 142 | Probabilistic Expectimax baseline + UCB1/MCTS re-ranker over real cg engine search rollouts (LB 950+) | ADDED, wired as `romanrozen_strong_start`; **byte-identical to `aristophanivan`** (same lineage), only this copy wired |
+| makimakiai-tiny-rl-baseline | [makimakiai/ptcg-tiny-rl-to-submission-baseline-guide](https://www.kaggle.com/code/makimakiai/ptcg-tiny-rl-to-submission-baseline-guide) | 49 | Beginner RL -> submission baseline guide | ADDED, wired as `makimakiai_rl` (**UNTRAINED default weights** — bake not reproduced; plays near-random) |
 | dovhan | [dovhan/code-pokemon-ai](https://www.kaggle.com/code/dovhan/code-pokemon-ai) | n/a | EDA + Bayesian/heuristic scoring walkthrough | pre-existing |
 | aristophanivan | [aristophanivan/improved-probabilistic-agent](https://www.kaggle.com/code/aristophanivan/improved-probabilistic-agent) | 172 | Probabilistic Expectimax agent (multi-part) | pre-existing |
 | kiyotah-rl-mcts | [kiyotah/reinforcement-learning-and-mcts-sample-code](https://www.kaggle.com/code/kiyotah/reinforcement-learning-and-mcts-sample-code) | 935 | Host: RL + MCTS sample code (single 689-line cell) | pre-existing |
@@ -97,6 +97,48 @@ The 17 clean agents span only **9 distinct decks** (deck = archetype = the confo
 - `mechi22-alakazam`: `main.py` is embedded as a **base64 blob, SHA256-integrity-checked, not encrypted** — decoded locally (`notebooks/reference/mechi22-alakazam/main_decoded.py`) to a plain-text `agent()` with no red flags (no eval/exec/network/subprocess). Unlike `lucifer19-battlecore-agent`, full source recovery was possible here, so it's marked ADDED rather than excluded. Obfuscation appears to be an anti-fork measure, not a security concern.
 - `dovhan`, `aristophanivan`, `kiyotah-*` were already present before this crawl (pre-existing mirror).
 - Live leaderboard check (browser-rendered, 2026-08-01): #1 = 1298.5, top-8 cutoff = 1141.0, top-50 ≈ 1055.7 — all higher than the vault note's 2026-08-01 capture (1280.8 / 1122.0 / 1050.7), and no visible team in the top 49 matches the claimed 1208 score under any recognizable name. Ladder is live and moving; treat any stated score as time-stamped, not current.
+
+## Benchmark-wiring wave (2026-08-02, consolidated) — widening the pool's strength range
+
+Goal (vault note `Rule Base Agent in pokemon TCG` + Q25): make the local pool span a
+wider strength range so it predicts the ladder, not just rank our own agents. Three
+net-new, source-reviewed, cabt-compatible agents wired into `scripts/benchmark_agents.py`
+(pool 17 → 20):
+
+- **`romanrozen_strong_start`** — wired. LB ~950 Expectimax + UCB1/MCTS re-ranker over
+  real cg engine search rollouts; strongest public opponent in the pool. Smoke: ~71% in a
+  6-agent run (2nd behind kojimar_lucario).
+- **`avikdas567_heuristic`** — wired. Weak (str(option) substring scoring); fills the tier
+  between `random_legal` and the real policies (~29%).
+- **`makimakiai_rl`** — wired, **UNTRAINED**. The upstream notebook ships only the RL
+  *training harness*; its `LEARNED_WEIGHTS` bake is nondeterministic and was **not**
+  reproduced, so this runs on the notebook's default weights. A legal, distinct-method
+  (linear-weights-over-option-types) opponent, but **not** the tuned agent — it plays
+  near-random (~29%, ≈ avikdas567/random tier). Kept for method diversity; drop it if the
+  pool wants only faithful agents.
+
+Reviewed but **deliberately not wired** (so this isn't mistaken for full coverage):
+
+- **`aristophanivan`** — `main.py` is **byte-identical** to `romanrozen` (verified by diff);
+  represented by `romanrozen_strong_start`.
+- **kojimar `simple-baseline-matchup-tests`** — same notebook already wired on `main` as
+  **`kojimar_lucario`** (which is the more faithful port: it uses the notebook's own literal
+  `DECK`, not the generic sample deck). The freshly-pulled `kojimar_simple_baseline` port
+  was a duplicate and was dropped.
+- **`aryachovapratama-basic-heavy-aggro`** — `agent()` is safe and cabt-correct, but its
+  generated `deck.csv` is **illegal in the cg engine** (9 ACE SPEC copies — Master Ball ×4,
+  Amulet of Hope ×4… where the rule allows 1). Not wired; mirror kept for the trail
+  (`notebooks/reference/aryachovapratama-basic-heavy-aggro/`).
+- **`ahmedabdelhmed-bayesian-heuristic`** — invents a fake observation API; would crash in
+  `make("cabt")` (already flagged in the Phase 1 section above).
+- **`lucifer19-battlecore-agent`** (note's 860.2 BattleCore) — payload-wrapped, no plaintext
+  `agent()` (first honesty flag).
+
+Also fixed here: `benchmark_agents.py` couldn't find `cg` when run from a git worktree
+(`data/external/cg-lib` isn't checked out there, and the other in-repo `cg` copies ship a
+Linux-only `libcg.so` that dlopen-crashes on macOS). The cg-path resolver now walks
+`REPO.parents` to find the primary checkout's `cg-lib` (whose `libcg.dylib` is the arm64
+build).
 
 ## Files per folder
 

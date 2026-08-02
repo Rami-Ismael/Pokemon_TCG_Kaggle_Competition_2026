@@ -75,6 +75,10 @@ SOURCE_REF_TO_LOCAL_AGENT = {
     "pixiux/ptcg-mega-lucario-ex-v63": "pixiux_lucario_v63",         # Mega Lucario variant (new deck)
     "makthanithin/pokemon-tcg-ai-battle-1084-5-baseline": "makthanithin_1084_baseline",  # scored target LB 1084.5
     "daniilkrasnovvv/pokemon-conservative-probabilistic-agent": "daniilkrasnovvv_conservative_prob",  # distinct policy
+    # Wired by origin/main's benchmark-pool consolidation (strongest public
+    # opponent, LB ~950); my batch-pull had held it back as a redundant-deck
+    # clone, but since it's wired it maps here as runnable.
+    "romanrozen/strong-start-baseline-agent-v10-lb-950": "romanrozen_strong_start",
 }
 
 

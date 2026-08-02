@@ -23,7 +23,7 @@ biohack44_meta_snapshot_20260707,biohack44/pok-mon-tcg-ai-battle-meta-snapshot-0
 lucifer19_battlecore_compact,lucifer19/battlecore-compact-agent,https://www.kaggle.com/code/lucifer19/battlecore-compact-agent,Lucifer19 BattleCore Compact Agent,,false
 pilkwang_meta_snapshot_20260708,pilkwang/pok-mon-tcg-ai-battle-meta-snapshot-08-july,https://www.kaggle.com/code/pilkwang/pok-mon-tcg-ai-battle-meta-snapshot-08-july,Pilkwang Meta Snapshot 2026-07-08,,false
 llccqq624_crustle_attackfix_v1,llccqq624/ptcg-meta-a-crustle-attackfix-v1,https://www.kaggle.com/code/llccqq624/ptcg-meta-a-crustle-attackfix-v1,LLCCQQ624 Meta A Crustle AttackFix V1,,false
-romanrozen_strong_start_baseline_v10_20260709,romanrozen/strong-start-baseline-agent-v10-lb-950,https://www.kaggle.com/code/romanrozen/strong-start-baseline-agent-v10-lb-950,RomanRozen Strong Start Baseline V10 2026-07-09,,false
+romanrozen_strong_start_baseline_v10_20260709,romanrozen/strong-start-baseline-agent-v10-lb-950,https://www.kaggle.com/code/romanrozen/strong-start-baseline-agent-v10-lb-950,RomanRozen Strong Start Baseline V10 2026-07-09,romanrozen_strong_start,true
 dedquoc_rule_based_engine,dedquoc/the-pok-mon-rule-based-engine,https://www.kaggle.com/code/dedquoc/the-pok-mon-rule-based-engine,Dedquoc Rule-Based Engine,dedquoc_rule_engine,true
 makthanithin_improved_probabilistic_20260714,makthanithin/improved-probabilistic-agent,https://www.kaggle.com/code/makthanithin/improved-probabilistic-agent,Makthanithin Improved Probabilistic Agent 2026-07-14,makthanithin_improved_prob,true
 ferozahmedds_competition_solution_20260716,ferozahmedds/pokemon-tcg-ai-competition-solution,https://www.kaggle.com/code/ferozahmedds/pokemon-tcg-ai-competition-solution,FerozAhmedDS Competition Solution 2026-07-16,,false
