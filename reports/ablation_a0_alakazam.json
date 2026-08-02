@@ -1,0 +1,203 @@
+[
+  {
+    "arm": "control",
+    "deck": "agents/ryotasueyoshi_alakazam/deck.csv",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": false,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 2,
+    "opp_wins": 8,
+    "draws": 0,
+    "elapsed_sec": 3.3689870834350586,
+    "per_game": [
+      {
+        "steps": 154,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 141,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 171,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 174,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 151,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 132,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 136,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 147,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 134,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 158,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_noprior",
+    "deck": "agents/ryotasueyoshi_alakazam/deck.csv",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": false,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 0,
+    "opp_wins": 10,
+    "draws": 0,
+    "elapsed_sec": 35.30871605873108,
+    "per_game": [
+      {
+        "steps": 39,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 54,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 25,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 39,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 48,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 68,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 29,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 17,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 30,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 51,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "arm": "search_prior",
+    "deck": "agents/ryotasueyoshi_alakazam/deck.csv",
+    "opponent": "makthanithin_improved_prob",
+    "use_search": true,
+    "use_bc_prior": true,
+    "bc_prior_c": 0.75,
+    "bc_prior_available": true,
+    "pairs": 5,
+    "n_games": 10,
+    "a0_wins": 1,
+    "opp_wins": 9,
+    "draws": 0,
+    "elapsed_sec": 195.1029782295227,
+    "per_game": [
+      {
+        "steps": 153,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 113,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 24,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 55,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 134,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 35,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 42,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 25,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 67,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 40,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  }
+]

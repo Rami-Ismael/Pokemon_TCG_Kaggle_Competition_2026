@@ -1,0 +1,21 @@
+{
+  "_comment": "Provenance + runtime knobs for Kaggle submission 55162376 (2026-08-01, public score 827.8). scripts/build_winning_submission.py reads this file so the next submission's provenance is a diff against this file, not archaeology. Do not hand-edit the checkpoint fields without re-verifying sha256.",
+  "kaggle_submission_ref": "55162376",
+  "kaggle_submitted_at": "2026-08-01T12:42:51",
+  "public_score": 827.8,
+  "checkpoint_dir": "models/il_agent_winning_827.8",
+  "checkpoint_sha256": "758dd7bc55fbda7a119eb7071b42e6744dd0f83f03365f0b85b0d55d0884a67a",
+  "agent_source_git_sha": "e42f3bb",
+  "agent_source_note": "agent_core_improved.py in checkpoint_dir is NOT byte-identical to e42f3bb HEAD's agents/mega_lucario/agent_core_improved.py -- HEAD has since diverged (candidate-truncation fix, deck-out penalty regrade, global-state leak fix; see notes/phase0_gate0_report.md). The winning build must use the copy preserved in checkpoint_dir, not agents/mega_lucario/. bc_prior.py IS byte-identical between the two.",
+  "env": {
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "model"
+  },
+  "hardcoded_in_source": {
+    "SEARCH_TIME_BUDGET": 1.5,
+    "SEARCH_MAX_CANDIDATES": 8,
+    "BC_PRIOR_C": 0.75
+  },
+  "known_dead_path_warning": "USE_SEARCH=1 and USE_BC_PRIOR=1 are the literal values baked into the winning source, but SEARCH_ALGO only runs at SelectContext.MAIN, where AdvancedPolicy.choose() truncates its candidate list to maxCount before SEARCH_ALGO sees it -- and maxCount==1 at every real MAIN decision (confirmed on 23,166/23,166 train-day MAIN decisions). SEARCH_ALGO's len(candidates)==1 branch therefore always returns before bc_probs is computed or simulate_action is ever called. Net effect: the winning submission's observed behavior is architecturally identical to plain AdvancedPolicy.choose() -- the search/UCB1/BC-prior pipeline never executed. See notes/phase0_gate0_report.md for the full trace. These env values are preserved here for exact reproduction, not because they were behaviorally load-bearing."
+}
