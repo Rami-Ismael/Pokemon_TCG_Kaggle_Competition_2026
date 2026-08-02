@@ -1,0 +1,50 @@
+==============================================================================
+AXIS 1 - archetype robustness under teching / hybrids (offline)
+==============================================================================
+visible board                             prediction  margin  scores
+------------------------------------------------------------------------------
+minimal: lone Riolu (basic)               lucario     1       lucario:1
+minimal: lone Snover (basic)              abomasnow   1       abomasnow:1
+clean lucario board                       lucario     4       lucario:4
+clean dragapult board                     dragapult   3       dragapult:3
+clean alakazam board                      alakazam    3       alakazam:3
+lucario + 1 dragapult tech (Latias)       lucario     2       lucario:3, dragapult:1
+lucario + 1 water tech (Snover)           lucario     2       lucario:3, abomasnow:1
+50/50 hybrid lucario|dragapult            dragapult   0       dragapult:2, lucario:2  <-- TIE (argmax arbitrary)
+50/50 hybrid alakazam|abomasnow           abomasnow   0       abomasnow:2, alakazam:2  <-- TIE (argmax arbitrary)
+only shared tech visible (Fezandipiti)    None        0         (no signal)
+
+  Reading: margin 0 = the classifier is guessing between tied archetypes. The
+  live pool never hits this because no pool deck splashes a rival's Pokemon line;
+  a genuinely teched opponent (rows above) collapses the margin and can flip the call.
+
+==============================================================================
+AXIS 2 - exact-deck fingerprinting from public tells (in-game)
+==============================================================================
+
+  lucario pair -- derived public tell cards (present in one deck, no sibling):
+     dedquoc_rule_engine          board-visible: none
+                                  discard-only:  none
+     makthanithin_improved_prob   board-visible: none
+                                  discard-only:  none
+
+  alakazam pair -- derived public tell cards (present in one deck, no sibling):
+     ryotasueyoshi_alakazam       board-visible: ['Genesect', 'Dunsparce', 'Shaymin', 'Psyduck']
+                                  discard-only:  ['Sacred Ash', 'Lucky Helmet', 'Battle Cage']
+     mechi22_alakazam             board-visible: ['Dunsparce']
+                                  discard-only:  ['Lana’s Aid', 'Xerosic’s Machinations']
+
+  Piloting kojimar_lucario, 20 games vs each sibling deck. A game is PINNED to
+  a deck iff exactly one sibling's tells appeared in the opponent's public zones.
+
+opponent                    archetype  pinned-correct  unresolved   mispinned  errors
+-------------------------------------------------------------------------------------
+dedquoc_rule_engine         lucario    0.00±0.00       20/20        0/20       0
+makthanithin_improved_prob  lucario    0.00±0.00       20/20        0/20       0
+ryotasueyoshi_alakazam      alakazam   1.00±0.00       0/20         0/20       0
+mechi22_alakazam            alakazam   1.00±0.00       0/20         0/20       0
+
+  Reading: 'pinned-correct' = fraction of games we named the exact deck from public
+  tells. High for Alakazam (distinct tell cards surface); near-zero + all-unresolved
+  for Lucario (siblings share every card type, so no tell can ever fire).
+

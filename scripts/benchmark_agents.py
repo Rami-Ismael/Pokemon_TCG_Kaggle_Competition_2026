@@ -74,6 +74,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
+    # bare module (literal DECK -> my_deck). Distinct 60-card list from
+    # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
+    "kojimar_lucario": REPO / "agents" / "kojimar_lucario" / "agent_core.py",
     "grunt": REPO / "agents" / "grunt" / "agent_core.py",
     # Floor test, not a competitor: uniform-random legal moves on the same
     # frozen deck. If a trained policy doesn't beat this decisively, its
