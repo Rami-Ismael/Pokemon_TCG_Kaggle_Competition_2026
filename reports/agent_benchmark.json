@@ -3,39 +3,41 @@
     "agent_core_improved",
     "makthanithin_improved_prob"
   ],
-  "games_per_pair": 10,
+  "games_per_pair": 8,
   "wins": {
     "agent_core_improved": {
-      "agent_core_improved": 20,
-      "makthanithin_improved_prob": 1
+      "agent_core_improved": 16,
+      "makthanithin_improved_prob": 4
     },
     "makthanithin_improved_prob": {
-      "agent_core_improved": 19,
-      "makthanithin_improved_prob": 20
+      "agent_core_improved": 12,
+      "makthanithin_improved_prob": 16
     }
   },
   "games": {
     "agent_core_improved": {
-      "agent_core_improved": 40,
-      "makthanithin_improved_prob": 20
+      "agent_core_improved": 32,
+      "makthanithin_improved_prob": 16
     },
     "makthanithin_improved_prob": {
-      "agent_core_improved": 20,
-      "makthanithin_improved_prob": 40
+      "agent_core_improved": 16,
+      "makthanithin_improved_prob": 32
     }
   },
   "overall_win_pct": {
-    "agent_core_improved": 35.0,
-    "makthanithin_improved_prob": 65.0
+    "agent_core_improved": 41.666666666666664,
+    "makthanithin_improved_prob": 58.333333333333336
   },
   "glicko": {
     "agent_core_improved": {
-      "rating": 1670.0644436914874,
-      "rd": 37.27750133300941
+      "rating": 1694.903893794118,
+      "rd": 34.64259274551071,
+      "gxe": 67.88832236808463
     },
     "makthanithin_improved_prob": {
-      "rating": 2192.8900210256475,
-      "rd": 72.46773561740721
+      "rating": 1779.4884854558811,
+      "rd": 55.766407195921246,
+      "gxe": 74.44016935048235
     }
   }
 }

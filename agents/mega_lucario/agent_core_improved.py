@@ -713,7 +713,17 @@ class AdvancedPolicy:
 # ---------------------------------------------------------------------------
 # 5. Search layer — flat UCB1 bandit over the heuristic head
 # ---------------------------------------------------------------------------
-USE_SEARCH = True
+# Disabled by default: SEARCH_ALGO used to be dead code (AdvancedPolicy.choose()
+# truncated its candidate list to maxCount, always 1 at real MAIN decisions --
+# see rank_all() below). Fixing that and actually running the bandit live was
+# benchmarked at 10 games/pair vs makthanithin_improved_prob and lost 1/20
+# (35.0% overall win%, Glicko 1670+/-37 vs 2193+/-72) against the pure-heuristic
+# 50/50 baseline. Root cause: the bandit trusts evaluate_state's shallow
+# one-turn board scorer over AdvancedPolicy's domain-tuned heuristic whenever
+# they disagree, and that trade currently loses. Keep search off until
+# evaluate_state is reworked to match the heuristic's logic; env-var override
+# lets scripts/benchmark_agents.py-style runs turn it back on for that A/B.
+USE_SEARCH = os.environ.get("USE_SEARCH", "0") != "0"
 SEARCH_TIME_BUDGET = 1.5
 SEARCH_MAX_CANDIDATES = 8
 
@@ -781,10 +791,13 @@ def rollout_turn(sid, cur_obs, your_index):
 def _predict(obs):
     """Build the six card-ID predictions `search_begin` requires.
 
-    We cannot see hidden opponent cards, so we predict from our own known deck
-    list (padded to the required lengths). This is a *prediction*, not a
-    belief model — the engine only needs the right lengths and a Basic Pokémon
-    somewhere on the opponent side at setup. (Adapted local-cg call.)
+    `your_deck` is randomly sampled (not just padded) so repeated UCB1 visits
+    to the same candidate action see different plausible draws -- that's the
+    "Monte" in this flat Monte-Carlo search. We cannot see hidden opponent
+    cards, so those five fields predict from our own known deck list padded
+    to the required lengths. This is a *prediction*, not a belief model --
+    the engine only needs the right lengths and a Basic Pokémon somewhere on
+    the opponent side at setup. (Adapted local-cg call.)
     """
     st = obs.current
     me = st.players[st.yourIndex]
@@ -800,7 +813,7 @@ def _predict(obs):
     if op.active and op.active[0] is None:
         opp_active = [673]  # a known Basic (Makuhita) stand-in prediction
     return dict(
-        your_deck=pad(my_deck, getattr(me, "deckCount", 60)),
+        your_deck=random.sample(my_deck, getattr(me, "deckCount", 60)),
         your_prize=pad(my_deck, len(me.prize)),
         opponent_deck=pad(my_deck, getattr(op, "deckCount", 60)),
         opponent_prize=pad(my_deck, len(op.prize)),
