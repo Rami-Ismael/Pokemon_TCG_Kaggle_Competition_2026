@@ -28,6 +28,35 @@ Each folder holds the verbatim `.ipynb`. For code-heavy single-cell/long noteboo
 | makthanithin-improved-probabilistic | [makthanithin/improved-probabilistic-agent](https://www.kaggle.com/code/makthanithin/improved-probabilistic-agent) | n/a | Probabilistic Expectimax agent, Mega Lucario ex deck variant. Upstream of `aristophanivan`'s notebook and of `agents/improved_probabilistic/main.py` — **not** the ancestor of `agent_core_improved` (three separate lineages; see `Agent Teardown — Improved Probabilistic (967.7)` in the yakumsi vault) | ADDED, wired into benchmark_agents.py |
 | mechi22-alakazam | [mechi22/ptcg-1070-9-alakazam-rule-based-skeleton](https://www.kaggle.com/code/mechi22/ptcg-1070-9-alakazam-rule-based-skeleton) | n/a | Rule-based Alakazam, author-claimed LB 1070.9 | ADDED (decoded), wired into benchmark_agents.py |
 
+## Phase 1 archetype-coverage recruitment (2026-08-02)
+
+Sourced from `makimakiai/ptcg-public-23-plus-sample-4-roster-update`'s referenced-notebooks
+list (pulled via `kaggle kernels pull`, not the browser — Kaggle notebook pages are
+client-rendered and the browser tool couldn't reliably extract cell content).
+
+| Folder | Kaggle ref | Archetype | Status |
+|--------|-----------|-----------|--------|
+| plamen06-steel | [plamen06/pokemon-steel](https://www.kaggle.com/code/plamen06/pokemon-steel) | Archaludon ex / Duraludon / Cinderace, Metal-type ("metal-tempo") | **ADDED**, wired as `agents/plamen06_steel/agent_core.py` — first non-Lucario/Alakazam/Dragapult/Bellibolt/Abomasnow archetype in the pool |
+| aman5153684-crustle-fighting | [aman5153684/a-crustle-aware-fighting-agent](https://www.kaggle.com/code/aman5153684/a-crustle-aware-fighting-agent) | Mega Lucario ex (Crustle-matchup tuning, same deck IDs 673-678 as the frozen deck) | checked, NOT added — same archetype we already have 9 copies of, adds no diversity |
+| seokjeongeum-psychic-v8 | seokjeongeum/strong-start-psychic-anti-meta-v8-lb-1100 | unknown (Psychic, per label) | **403 Forbidden on pull** — private/unavailable, same pattern as the already-noted seokjeongeum 1208 notebook |
+
+`plamen06-steel`'s `main.py` cell was adapted (not copied verbatim) before wiring in: its
+`read_deck_csv()` read a relative `"deck.csv"` path, which under this repo's benchmark
+harness (cwd = repo root, which has its own `deck.csv` for a *different* agent's frozen
+deck) would have silently loaded the wrong deck instead of erroring. Changed to `return
+my_deck`, matching every other bare-module agent's convention (external injection from a
+sibling `deck.csv`, see `kiyotah_dragapult`). Safety-scanned (no subprocess/eval/exec/
+network calls) and card-ID-verified against `cg.api.all_card_data()` before wiring in.
+
+Also investigated and rejected as non-functional: `ahmedabdelhmed-bayesian-heuristic`
+(this crawl's original seed notebook) references observation fields that do not exist in
+this competition's real API (`obs.active`, `obs.bench`, `obs.initial_deck_composition`,
+`obs.observed_discards`, `obs.estimated_opp_damage` — none of these are real; the actual
+schema is `obs_dict['select']`/`obs_dict['current']`, see `notes/phase0_discovery_report.md`
+§0.1) and never imports `cg.api` at all. Its claimed "78% win rate" and "Bayesian tracking
+improves opponent prediction by 23%" are unverifiable against a fictional API and are very
+likely fabricated/decorative rather than measured. Not wired into the benchmark pool.
+
 ## Honesty flags
 
 - `lucifer19-battlecore-agent`: real agent, but its `.ipynb` embeds the agent as a compressed+base64 payload with an integrity gate — **no plain-text `agent()` in source**. No `source_with_linenumbers.py` export (would be the payload blob). Kept and flagged, not dropped.

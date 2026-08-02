@@ -1,0 +1,374 @@
+[
+  {
+    "deck": "lucario",
+    "deck_tag": "agents/il_agent/deck.csv (Mega Lucario ex, default)",
+    "opponent": "makthanithin_improved_prob",
+    "pairs": 8,
+    "n_games": 16,
+    "il_agent_wins": 0,
+    "opp_wins": 16,
+    "draws": 0,
+    "elapsed_sec": 7.016611099243164,
+    "per_game": [
+      {
+        "steps": 111,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 128,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 124,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 61,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 108,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 119,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 115,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 129,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 176,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 155,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 131,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 88,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 151,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 62,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 112,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 140,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "deck": "lucario",
+    "deck_tag": "agents/il_agent/deck.csv (Mega Lucario ex, default)",
+    "opponent": "rule_baseline",
+    "pairs": 8,
+    "n_games": 16,
+    "il_agent_wins": 5,
+    "opp_wins": 11,
+    "draws": 0,
+    "elapsed_sec": 6.297696113586426,
+    "per_game": [
+      {
+        "steps": 136,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 128,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 122,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 141,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 113,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 121,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 84,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 106,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 103,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 141,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 131,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 119,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 117,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 116,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 124,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 136,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "deck": "alakazam",
+    "deck_tag": "agents/ryotasueyoshi_alakazam/deck.csv",
+    "opponent": "makthanithin_improved_prob",
+    "pairs": 8,
+    "n_games": 16,
+    "il_agent_wins": 10,
+    "opp_wins": 6,
+    "draws": 0,
+    "elapsed_sec": 8.301949977874756,
+    "per_game": [
+      {
+        "steps": 125,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 71,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 123,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 130,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 120,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 126,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 142,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 94,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 129,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 136,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 140,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 163,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 149,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 136,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 144,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 41,
+        "winner": "b",
+        "a_seat": 1
+      }
+    ]
+  },
+  {
+    "deck": "alakazam",
+    "deck_tag": "agents/ryotasueyoshi_alakazam/deck.csv",
+    "opponent": "rule_baseline",
+    "pairs": 8,
+    "n_games": 16,
+    "il_agent_wins": 10,
+    "opp_wins": 6,
+    "draws": 0,
+    "elapsed_sec": 8.59795093536377,
+    "per_game": [
+      {
+        "steps": 141,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 127,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 161,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 153,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 131,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 111,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 139,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 154,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 149,
+        "winner": "a",
+        "a_seat": 0
+      },
+      {
+        "steps": 48,
+        "winner": "b",
+        "a_seat": 1
+      },
+      {
+        "steps": 129,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 59,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 156,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 143,
+        "winner": "a",
+        "a_seat": 1
+      },
+      {
+        "steps": 152,
+        "winner": "b",
+        "a_seat": 0
+      },
+      {
+        "steps": 140,
+        "winner": "a",
+        "a_seat": 1
+      }
+    ]
+  }
+]
