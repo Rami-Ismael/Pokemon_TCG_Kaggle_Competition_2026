@@ -315,7 +315,13 @@ def evaluate_state(obs) -> float:
         val += getattr(me, "handCount", len(me.hand)) * 10.0
 
     if deck_c < 5:
-        val -= 10000.0
+        # Graded, not a cliff: -10000 flat here used to equal a full prize
+        # swing regardless of how close to actually decking out (0 cards)
+        # the state was, so a one-turn rollout landing at deck_c=4 read as
+        # catastrophic as deck_c=0 and swamped every other signal in this
+        # function -- which made UCB1 flee otherwise-correct plays late
+        # game. Scale with actual proximity to the real deck-out loss.
+        val -= (5 - deck_c) * 300.0
     return val
 
 
@@ -514,7 +520,15 @@ class AdvancedPolicy:
         return score
 
     # -- the dispatcher ---------------------------------------------------
-    def choose(self) -> list[int]:
+    def rank_all(self) -> list[int]:
+        """Full heuristic ranking of every legal option, untruncated.
+
+        `choose()` truncates this to `maxCount` for its callers (the game
+        engine expects at most `maxCount` picks); SEARCH_ALGO needs the
+        full ranking to draw its top-N candidates from, since at MAIN
+        decisions maxCount is always 1 and truncating first would leave
+        it only one candidate to "search" over.
+        """
         if not self.select.option or self.select.maxCount == 0:
             return []
         if self.context == SelectContext.MAIN:
@@ -522,7 +536,10 @@ class AdvancedPolicy:
         scores = [self._score_option(option) for option in self.select.option]
         ranked = [i for i, _ in sorted(enumerate(scores), key=lambda item: item[1], reverse=True)]
         self._remember_lunatone_ability(ranked)
-        return ranked[: self.select.maxCount]
+        return ranked
+
+    def choose(self) -> list[int]:
+        return self.rank_all()[: self.select.maxCount]
 
     def _score_option(self, option) -> float:
         if option.type == OptionType.NUMBER:
@@ -800,21 +817,35 @@ def simulate_action(obs, action):
     the teardown: the strongest public agent does no opponent belief sampling.
     The opponent predictions here are placeholders built from our known deck;
     they are NOT a belief model (see teardown "Layer 4").
+
+    `rollout_turn` below scores its steps by instantiating `AdvancedPolicy` on
+    *hypothetical* simulated observations, which mutates the module-global
+    `plan`/`ability_used` (they're turn-scoped globals, not instance state) as
+    a side effect of scoring. Left alone, that overwrites the real values
+    computed for the actual current decision with values from a board state
+    that never happens, corrupting the next real MAIN sub-decision this turn.
+    Save/restore them around the rollout so simulation never leaks into
+    real play.
     """
-    preds = _predict(obs)
-    sbi = search_begin(agent_observation=obs, **preds)
-    sb_state = _state_of(sbi)
-    if not _ok(sbi) or sb_state is None:
-        return -float("inf")
-    ar = search_step(sb_state.searchId, [action])
-    ar_state = _state_of(ar)
-    if not _ok(ar) or ar_state is None:
+    global plan, ability_used
+    saved_plan, saved_ability_used = plan, ability_used
+    try:
+        preds = _predict(obs)
+        sbi = search_begin(agent_observation=obs, **preds)
+        sb_state = _state_of(sbi)
+        if not _ok(sbi) or sb_state is None:
+            return -float("inf")
+        ar = search_step(sb_state.searchId, [action])
+        ar_state = _state_of(ar)
+        if not _ok(ar) or ar_state is None:
+            search_end()
+            return -float("inf")
+        cur = rollout_turn(ar_state.searchId, ar_state.observation, obs.current.yourIndex)
+        result = evaluate_state(cur)
         search_end()
-        return -float("inf")
-    cur = rollout_turn(ar_state.searchId, ar_state.observation, obs.current.yourIndex)
-    result = evaluate_state(cur)
-    search_end()
-    return result
+        return result
+    finally:
+        plan, ability_used = saved_plan, saved_ability_used
 
 
 def SEARCH_ALGO(obs_dict, obs):
@@ -834,7 +865,7 @@ def SEARCH_ALGO(obs_dict, obs):
         return None
     t0 = time.time()
 
-    base_order = AdvancedPolicy(obs).choose()
+    base_order = AdvancedPolicy(obs).rank_all()
     candidates = base_order[:SEARCH_MAX_CANDIDATES]
     if not candidates:
         return None
