@@ -1,43 +1,331 @@
 {
   "agents": [
-    "agent_core_improved",
-    "makthanithin_improved_prob"
+    "kojimar_lucario",
+    "rule_baseline",
+    "random_legal",
+    "kiyotah_dragapult",
+    "kiyotah_iono",
+    "kiyotah_abomasnow",
+    "dedquoc_rule_engine",
+    "ryotasueyoshi_alakazam",
+    "makthanithin_improved_prob",
+    "mechi22_alakazam"
   ],
-  "games_per_pair": 8,
+  "games_per_pair": 4,
   "wins": {
-    "agent_core_improved": {
-      "agent_core_improved": 16,
-      "makthanithin_improved_prob": 4
+    "kojimar_lucario": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 5,
+      "random_legal": 8,
+      "kiyotah_dragapult": 6,
+      "kiyotah_iono": 5,
+      "kiyotah_abomasnow": 5,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 4,
+      "makthanithin_improved_prob": 6,
+      "mechi22_alakazam": 3
+    },
+    "rule_baseline": {
+      "kojimar_lucario": 3,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 4,
+      "kiyotah_iono": 7,
+      "kiyotah_abomasnow": 2,
+      "dedquoc_rule_engine": 6,
+      "ryotasueyoshi_alakazam": 2,
+      "makthanithin_improved_prob": 6,
+      "mechi22_alakazam": 3
+    },
+    "random_legal": {
+      "kojimar_lucario": 0,
+      "rule_baseline": 0,
+      "random_legal": 8,
+      "kiyotah_dragapult": 0,
+      "kiyotah_iono": 0,
+      "kiyotah_abomasnow": 0,
+      "dedquoc_rule_engine": 2,
+      "ryotasueyoshi_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "mechi22_alakazam": 1
+    },
+    "kiyotah_dragapult": {
+      "kojimar_lucario": 2,
+      "rule_baseline": 4,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 5,
+      "kiyotah_abomasnow": 6,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 5,
+      "makthanithin_improved_prob": 6,
+      "mechi22_alakazam": 7
+    },
+    "kiyotah_iono": {
+      "kojimar_lucario": 3,
+      "rule_baseline": 1,
+      "random_legal": 8,
+      "kiyotah_dragapult": 3,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 6,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 4,
+      "makthanithin_improved_prob": 1,
+      "mechi22_alakazam": 6
+    },
+    "kiyotah_abomasnow": {
+      "kojimar_lucario": 3,
+      "rule_baseline": 6,
+      "random_legal": 8,
+      "kiyotah_dragapult": 2,
+      "kiyotah_iono": 2,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 7,
+      "ryotasueyoshi_alakazam": 2,
+      "makthanithin_improved_prob": 3,
+      "mechi22_alakazam": 1
+    },
+    "dedquoc_rule_engine": {
+      "kojimar_lucario": 0,
+      "rule_baseline": 2,
+      "random_legal": 6,
+      "kiyotah_dragapult": 0,
+      "kiyotah_iono": 0,
+      "kiyotah_abomasnow": 1,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 1,
+      "makthanithin_improved_prob": 1,
+      "mechi22_alakazam": 1
+    },
+    "ryotasueyoshi_alakazam": {
+      "kojimar_lucario": 4,
+      "rule_baseline": 6,
+      "random_legal": 8,
+      "kiyotah_dragapult": 3,
+      "kiyotah_iono": 4,
+      "kiyotah_abomasnow": 6,
+      "dedquoc_rule_engine": 7,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 2,
+      "mechi22_alakazam": 1
     },
     "makthanithin_improved_prob": {
-      "agent_core_improved": 12,
-      "makthanithin_improved_prob": 16
+      "kojimar_lucario": 2,
+      "rule_baseline": 2,
+      "random_legal": 8,
+      "kiyotah_dragapult": 2,
+      "kiyotah_iono": 7,
+      "kiyotah_abomasnow": 5,
+      "dedquoc_rule_engine": 7,
+      "ryotasueyoshi_alakazam": 6,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 2
+    },
+    "mechi22_alakazam": {
+      "kojimar_lucario": 5,
+      "rule_baseline": 5,
+      "random_legal": 7,
+      "kiyotah_dragapult": 1,
+      "kiyotah_iono": 2,
+      "kiyotah_abomasnow": 7,
+      "dedquoc_rule_engine": 7,
+      "ryotasueyoshi_alakazam": 7,
+      "makthanithin_improved_prob": 6,
+      "mechi22_alakazam": 8
     }
   },
   "games": {
-    "agent_core_improved": {
-      "agent_core_improved": 32,
-      "makthanithin_improved_prob": 16
+    "kojimar_lucario": {
+      "kojimar_lucario": 16,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "rule_baseline": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 16,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "random_legal": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 16,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "kiyotah_dragapult": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 16,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "kiyotah_iono": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 16,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "kiyotah_abomasnow": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 16,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "dedquoc_rule_engine": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 16,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
+    },
+    "ryotasueyoshi_alakazam": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 16,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 8
     },
     "makthanithin_improved_prob": {
-      "agent_core_improved": 16,
-      "makthanithin_improved_prob": 32
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 16,
+      "mechi22_alakazam": 8
+    },
+    "mechi22_alakazam": {
+      "kojimar_lucario": 8,
+      "rule_baseline": 8,
+      "random_legal": 8,
+      "kiyotah_dragapult": 8,
+      "kiyotah_iono": 8,
+      "kiyotah_abomasnow": 8,
+      "dedquoc_rule_engine": 8,
+      "ryotasueyoshi_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "mechi22_alakazam": 16
     }
   },
   "overall_win_pct": {
-    "agent_core_improved": 41.666666666666664,
-    "makthanithin_improved_prob": 58.333333333333336
+    "kojimar_lucario": 65.9090909090909,
+    "rule_baseline": 55.68181818181818,
+    "random_legal": 12.5,
+    "kiyotah_dragapult": 67.04545454545455,
+    "kiyotah_iono": 54.54545454545455,
+    "kiyotah_abomasnow": 47.72727272727273,
+    "dedquoc_rule_engine": 22.727272727272727,
+    "ryotasueyoshi_alakazam": 55.68181818181818,
+    "makthanithin_improved_prob": 55.68181818181818,
+    "mechi22_alakazam": 62.5
   },
   "glicko": {
-    "agent_core_improved": {
-      "rating": 1694.903893794118,
-      "rd": 34.64259274551071,
-      "gxe": 67.88832236808463
+    "kojimar_lucario": {
+      "rating": 1711.133546486239,
+      "rd": 57.809290917846866,
+      "gxe": 69.14947875882724
+    },
+    "rule_baseline": {
+      "rating": 1575.0551687705952,
+      "rd": 51.88493619360697,
+      "gxe": 57.134341153181005
+    },
+    "random_legal": {
+      "rating": 936.7630929182352,
+      "rd": 65.8314291134019,
+      "gxe": 10.448058887766585
+    },
+    "kiyotah_dragapult": {
+      "rating": 1718.4611080933867,
+      "rd": 57.809290917846866,
+      "gxe": 69.74382356029062
+    },
+    "kiyotah_iono": {
+      "rating": 1529.8861504285164,
+      "rd": 57.809290917846866,
+      "gxe": 52.85310095811343
+    },
+    "kiyotah_abomasnow": {
+      "rating": 1492.5208711583202,
+      "rd": 57.809290917846866,
+      "gxe": 49.28527228232537
+    },
+    "dedquoc_rule_engine": {
+      "rating": 1163.9462395143723,
+      "rd": 57.809290917846866,
+      "gxe": 21.675816219119604
+    },
+    "ryotasueyoshi_alakazam": {
+      "rating": 1576.5480057889424,
+      "rd": 57.809290917846866,
+      "gxe": 57.263892478702275
     },
     "makthanithin_improved_prob": {
-      "rating": 1779.4884854558811,
-      "rd": 55.766407195921246,
-      "gxe": 74.44016935048235
+      "rating": 1654.1650977860716,
+      "rd": 43.817096176558614,
+      "gxe": 64.36425474643168
+    },
+    "mechi22_alakazam": {
+      "rating": 1666.9759394697603,
+      "rd": 57.809290917846894,
+      "gxe": 65.43718098358269
+    }
+  },
+  "fallback_diag": {
+    "mechi22_alakazam": {
+      "deck_returns": 80,
+      "decisions": 5262,
+      "policy_ok": 5262,
+      "fallback_rate": 0.0
     }
   }
 }
