@@ -72,7 +72,17 @@ import glicko1  # noqa: E402
 GLICKO_PATH = REPO / "reports" / "glicko_ratings.json"
 
 # Make `cg` importable (packaged engine) before importing any agent module.
-for _cand in (REPO / "data" / "external" / "cg-lib", REPO / "agents" / "mega_lucario"):
+# Agents import `from cg.api import ...`, so we need a cg package that ships
+# api.py (the agent-facing wrapper) *and* a native lib for this platform. The
+# canonical copy is data/external/cg-lib (its libcg.dylib is the arm64 build).
+# When this script runs from a git worktree, that dir isn't checked out, so we
+# also walk up parent directories to find the primary checkout's cg-lib. The
+# other in-repo cg copies (sample-agent-output, submissions/*) ship only a
+# Linux libcg.so and dlopen-crash on macOS, so they're intentionally not used.
+_cg_cands = [REPO / "data" / "external" / "cg-lib"]
+_cg_cands += [p / "data" / "external" / "cg-lib" for p in REPO.parents]
+_cg_cands.append(REPO / "agents" / "mega_lucario")
+for _cand in _cg_cands:
     if (_cand / "cg" / "api.py").exists():
         sys.path.insert(0, str(_cand))
         break
@@ -120,6 +130,26 @@ AGENT_FILES = {
     # archetype (Metal-type, not Fighting/Psychic/Dragon/Electric/Grass-Ice
     # like everything else in the pool).
     "plamen06_steel": REPO / "agents" / "plamen06_steel" / "agent_core.py",
+    # Second wave of public-pool opponents, wired to widen the pool's *strength*
+    # range so it predicts the ladder, not just rank our own agents. Each was
+    # individually source-reviewed; see the "Benchmark-wiring wave" section of
+    # notebooks/reference/INDEX.md.
+    #   romanrozen_strong_start -- Kaggle LB ~950 Probabilistic Expectimax with a
+    #     UCB1/MCTS re-ranker over *real* cg engine search rollouts. Strongest
+    #     public opponent in the pool. Byte-identical to aristophanivan's
+    #     improved-probabilistic-agent (same lineage), so only one copy is wired.
+    #     NB: also a near-duplicate policy of kojimar_lucario is NOT re-added --
+    #     kojimar's "Simple Baseline" is already wired above as kojimar_lucario.
+    "romanrozen_strong_start": REPO / "agents" / "romanrozen_strong_start" / "agent_core.py",
+    #   avikdas567_heuristic -- weak: scores options by substring-matching
+    #     str(option). Fills the tier between random_legal and the real policies.
+    "avikdas567_heuristic": REPO / "agents" / "avikdas567_heuristic" / "agent_core.py",
+    #   makimakiai_rl -- RL-tuned linear-weights policy over option types. The
+    #     upstream notebook only ships the *training harness*; its LEARNED_WEIGHTS
+    #     bake is nondeterministic and wasn't reproduced, so this runs on the
+    #     notebook's DEFAULT (untrained) weights -- a legal, distinct-method
+    #     opponent, but NOT the tuned agent. Labeled untrained in INDEX.md.
+    "makimakiai_rl": REPO / "agents" / "makimakiai_rl" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
