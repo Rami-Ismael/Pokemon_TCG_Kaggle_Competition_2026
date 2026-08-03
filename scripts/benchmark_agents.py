@@ -219,6 +219,30 @@ AGENT_FILES = {
     "tb_heuristic": REPO / "agents" / "tb_heuristic" / "agent_core.py",    # mu 633.0 archetype
     "tb_rulecore": REPO / "agents" / "tb_rulecore" / "agent_core.py",      # mu 535.6
     "tb_lucario": REPO / "agents" / "tb_lucario" / "agent_core.py",        # LucarioScorer
+    # Stage-2 REWEIGHT arms (rl_pipeline_v1.md §2.1): il_agent's inference core
+    # pointed at each fine-tuned checkpoint via thin wrappers (agents/s2_arms/).
+    # One entry per (arm, seed) -- distinct names on purpose, because Glicko
+    # history compounds by name and these are genuinely different policies.
+    "s2_e0_s42": REPO / "agents" / "s2_arms" / "e0_seed42" / "agent_core.py",
+    "s2_e0_s43": REPO / "agents" / "s2_arms" / "e0_seed43" / "agent_core.py",
+    "s2_e0_s44": REPO / "agents" / "s2_arms" / "e0_seed44" / "agent_core.py",
+    "s2_e1_s42": REPO / "agents" / "s2_arms" / "e1_seed42" / "agent_core.py",
+    "s2_e1_s43": REPO / "agents" / "s2_arms" / "e1_seed43" / "agent_core.py",
+    "s2_e1_s44": REPO / "agents" / "s2_arms" / "e1_seed44" / "agent_core.py",
+    "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
+    "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
+    "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
+    # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
+    # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
+    "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",
+    "ppo_u120832": REPO / "agents" / "ppo_arms" / "u120832" / "agent_core.py",
+    "ppo_g2_u107520": REPO / "agents" / "ppo_arms" / "g2_u107520" / "agent_core.py",
+    # 2x2 size-x-data BC grid (notes/adr_rl_objective_progression.md, Option B):
+    # il_agent core pointed at each cell's checkpoint, all sharing il_agent's
+    # deck. The 4th cell is il_agent itself (Small @ 07-26, the PRIOR).
+    "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
+    "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
+    "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.

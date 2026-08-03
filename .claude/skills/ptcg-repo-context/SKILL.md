@@ -54,8 +54,13 @@ Use the function.
 `data/episodes/manifest.csv` carries per-episode
 `episode_id, create_time, avg_score, min_score, sum_score, agent_count, size_bytes`.
 **`avg_score`/`min_score` are the player-rating field** — relevant to any experiment
-about filtering the training corpus by skill; it exists, so that experiment is not
-blocked on proxies.
+about filtering the training corpus by skill. ⚠️ Coverage measured 2026-08-02
+(`scripts/check_weight_plumbing.py`): the manifest holds only **2026-07-01 (5,266
+eps) and 2026-07-27 (the eval day, 100%)** — the **train day 2026-07-26 has ZERO
+manifest rows**, so skill-filtering the training corpus is blocked until a
+train-day manifest is fetched from the Kaggle episodes dataset.
+`il_dataset.load_manifest_scores()` is the loader; missing episodes get a −1.0
+sentinel in `ILDataset(with_meta=True)`.
 
 `data/episodes/local/` holds 2 hand-captured battles (`local_battle.json`,
 `local_battle_envrun.json`) for smoke tests — not a corpus.

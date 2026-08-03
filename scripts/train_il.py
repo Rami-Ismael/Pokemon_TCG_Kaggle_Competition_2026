@@ -229,6 +229,31 @@ def main() -> None:
     )
     ap.add_argument("--train-split", default="train", help="key into splits.json")
     ap.add_argument("--eval-split", default="eval", help="key into splits.json")
+    ap.add_argument("--winner-only", action="store_true",
+                    help="clone only the winning seat of each training episode "
+                         "(drops loser-side and drawn-game decisions; ~halves rows). "
+                         "Applies to the train split only; eval stays both-seats.")
+    ap.add_argument("--weight-arm", choices=["none", "outcome", "adv-exp", "adv-binary"],
+                    default="none",
+                    help="per-row loss weighting (S2-E2/E4, rl_pipeline_v1.md §2.1): "
+                         "'outcome' weights each row by exp(beta*(outcome-0.5)) -- "
+                         "wins upweighted, losses downweighted, draws neutral; rows "
+                         "with unknown outcome get weight 0. 'none' is plain BC. "
+                         "'adv-exp'/'adv-binary' (S2-E4) replace the constant 0.5 "
+                         "baseline with a trained critic V(s) (--critic-dir): "
+                         "exp(beta*(outcome-V)) clipped, or 1[outcome-V>0].")
+    ap.add_argument("--critic-dir", type=Path, default=None,
+                    help="saved critic from scripts/train_critic.py; required for "
+                         "the adv-* weight arms, ignored otherwise")
+    ap.add_argument("--adv-weight-clip", type=float, default=20.0,
+                    help="max per-row weight for adv-exp (guards a badly "
+                         "calibrated critic handing one row the whole gradient)")
+    ap.add_argument("--beta", type=float, default=1.0,
+                    help="outcome-weighting temperature: win/loss weight ratio is e^beta")
+    ap.add_argument("--init-from", type=Path, default=None,
+                    help="warm-start from a saved checkpoint dir (e.g. models/il_agent, "
+                         "the frozen Stage-1 PRIOR); architecture comes from its config, "
+                         "so --hidden-size/--num-layers/--num-heads are ignored")
     ap.add_argument("--epochs", type=float, default=3,
                      help="schedule length in passes over the train split; fractional "
                           "values (e.g. 0.5) run a genuine sub-epoch schedule, not a "
@@ -288,17 +313,31 @@ def main() -> None:
     print(f"train split: {train_dir}")
     print(f"eval split:  {eval_dir}")
 
-    train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed)
+    weighted = args.weight_arm != "none"
+    critic = None
+    if args.weight_arm.startswith("adv-"):
+        if args.critic_dir is None:
+            raise SystemExit(f"--weight-arm {args.weight_arm} requires --critic-dir "
+                             "(train one with scripts/train_critic.py)")
+        from pokemon_tcg.offline_critic import load_critic  # noqa: E402
+        critic = load_critic(args.critic_dir, device=device)
+        print(f"critic loaded from {args.critic_dir} (frozen, train-time only)")
+    train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed,
+                         winner_only=args.winner_only, with_meta=weighted)
     eval_ds = ILDataset(eval_dir, max_episodes=args.max_eval_episodes, shuffle_buffer=1)
     train_loader = DataLoader(train_ds, batch_size=args.batch_size)
     eval_loader = DataLoader(eval_ds, batch_size=args.batch_size)
 
-    model_config = PTCGILConfig(
-        hidden_size=args.hidden_size,
-        num_hidden_layers=args.num_layers,
-        num_attention_heads=args.num_heads,
-    )
-    model = PTCGImitationPolicy(model_config).to(device)
+    if args.init_from is not None:
+        model = PTCGImitationPolicy.from_pretrained(args.init_from).to(device)
+        print(f"warm-started from {args.init_from}")
+    else:
+        model_config = PTCGILConfig(
+            hidden_size=args.hidden_size,
+            num_hidden_layers=args.num_layers,
+            num_attention_heads=args.num_heads,
+        )
+        model = PTCGImitationPolicy(model_config).to(device)
     n_params = sum(p.numel() for p in model.parameters())
     print(f"model params: {n_params:,} ({n_params/1e6:.2f}M)")
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
@@ -414,8 +453,33 @@ def main() -> None:
                 g["lr"] = lr
 
             batch = {k: v.to(device) for k, v in batch.items()}
+            # Meta fields (outcome/seat/...) ride along for weighting but are
+            # not model inputs -- pop them before the forward pass.
+            meta = {k: batch.pop(k) for k in ILDataset.META_KEYS if k in batch}
             out = model(**batch)
-            loss = out["loss"]
+            if weighted:
+                # exp(beta*(outcome-0.5)): win = e^{+b/2}, draw = 1, loss = e^{-b/2}.
+                # Unknown outcome (-1 sentinel) gets weight 0 -- excluded, never
+                # treated as "a bit worse than a loss". Normalizing by sum(w)
+                # keeps the loss scale (and thus the effective LR) comparable
+                # across arms and beta values instead of drifting with e^beta.
+                # The adv-* arms (S2-E4) are the same shapes with the constant
+                # 0.5 baseline replaced by the frozen critic's V(s).
+                per_row = torch.nn.functional.cross_entropy(
+                    out["logits"], batch["label"], reduction="none"
+                )
+                outcome = meta["outcome"]
+                if critic is not None:
+                    from pokemon_tcg.offline_critic import advantage_weights
+                    with torch.no_grad():
+                        v = critic(**{k: t for k, t in batch.items() if k != "label"})
+                    w = advantage_weights(args.weight_arm, outcome, v,
+                                          beta=args.beta, clip=args.adv_weight_clip)
+                else:
+                    w = torch.exp(args.beta * (outcome - 0.5)) * (outcome >= 0.0)
+                loss = (w * per_row).sum() / w.sum().clamp_min(1e-8)
+            else:
+                loss = out["loss"]
 
             optimizer.zero_grad()
             loss.backward()

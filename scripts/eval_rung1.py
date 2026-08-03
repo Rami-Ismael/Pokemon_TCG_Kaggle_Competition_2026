@@ -49,7 +49,7 @@ def main() -> None:
 
     n = 0
     with torch.no_grad():
-        for obs, label, exclude in iter_decisions(eval_dir, args.max_episodes):
+        for obs, label, exclude, _meta in iter_decisions(eval_dir, args.max_episodes):
             feats = encode_observation(obs, exclude=exclude)
             if feats is None:
                 continue

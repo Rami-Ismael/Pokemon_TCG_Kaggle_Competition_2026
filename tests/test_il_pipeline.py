@@ -23,6 +23,7 @@ from pokemon_tcg.il_dataset import (  # noqa: E402
     OPTION_TYPE_VOCAB_SIZE,
     encode_observation,
     iter_decisions,
+    winning_agent,
 )
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 
@@ -97,7 +98,7 @@ def test_iter_decisions_yields_declines_and_multiselect_rows():
     n_decline = 0
     n_multiselect_step = 0
     n_total = 0
-    for obs, label, exclude in iter_decisions(TRAIN_DIR, max_episodes=15):
+    for obs, label, exclude, _meta in iter_decisions(TRAIN_DIR, max_episodes=15):
         n_total += 1
         sel = obs["select"]
         n_opts = len(sel["option"])
@@ -118,7 +119,7 @@ def test_every_label_points_at_an_unmasked_slot():
     instead of accounting for picks already made in this unroll step.)
     """
     n_checked = 0
-    for obs, label, exclude in iter_decisions(TRAIN_DIR, max_episodes=40):
+    for obs, label, exclude, _meta in iter_decisions(TRAIN_DIR, max_episodes=40):
         feats = encode_observation(obs, exclude=exclude)
         assert feats is not None
         assert feats["opt_mask"][label].item() is True, (
@@ -227,6 +228,73 @@ def test_option_type_vocab_includes_decline():
     assert DECLINE_OPTION_TYPE == 17
 
 
+def test_winning_agent_resolves_every_reward_shape():
+    # unique max -> that seat; None counts as a loss; ties (draws) -> no winner
+    assert winning_agent({"rewards": [1, -1]}) == 0
+    assert winning_agent({"rewards": [-1, 1]}) == 1
+    assert winning_agent({"rewards": [1, None]}) == 0
+    assert winning_agent({"rewards": [None, 1]}) == 1
+    assert winning_agent({"rewards": [0, 0]}) is None       # draw
+    assert winning_agent({"rewards": [None, None]}) is None  # both errored
+    assert winning_agent({"rewards": []}) is None
+    assert winning_agent({}) is None
+
+
+def test_decision_meta_outcomes_are_consistent():
+    """Stage-2 plumbing: every row's meta must carry a valid outcome, and the
+    two seats of one episode must have complementary outcomes (win+loss or
+    draw+draw both sum to 1.0). This is the field that was previously absent
+    entirely -- both seats were cloned with zero reference to `rewards`."""
+    per_seat: dict[tuple[int, int], float] = {}
+    n = 0
+    for _obs, _label, _exclude, meta in iter_decisions(TRAIN_DIR, max_episodes=20):
+        assert meta.outcome in (0.0, 0.5, 1.0), f"bad outcome {meta.outcome}"
+        assert meta.seat in (0, 1)
+        assert meta.episode_id > 0, "train split filenames are numeric episode ids"
+        assert meta.turn >= -1
+        prev = per_seat.setdefault((meta.episode_id, meta.seat), meta.outcome)
+        assert prev == meta.outcome, "outcome must be constant within one (episode, seat)"
+        n += 1
+    assert n > 0
+    episodes = {ep for ep, _ in per_seat}
+    n_pairs = 0
+    for ep in episodes:
+        if (ep, 0) in per_seat and (ep, 1) in per_seat:
+            total = per_seat[(ep, 0)] + per_seat[(ep, 1)]
+            assert total == 1.0, f"episode {ep}: seat outcomes {total} != 1.0"
+            n_pairs += 1
+    assert n_pairs > 0, "expected at least one episode with both seats present"
+    print(f"  {n} rows, {n_pairs} episodes with both seats, outcomes complementary")
+
+
+def test_ildataset_with_meta_batches_through_dataloader():
+    """with_meta=True must survive default collate and deliver the manifest
+    join: outcome/seat/episode_id/turn/avg_score stacked as [B]-shaped
+    tensors alongside the model features."""
+    from torch.utils.data import DataLoader
+
+    from pokemon_tcg.il_dataset import ILDataset
+
+    ds = ILDataset(TRAIN_DIR, max_episodes=3, shuffle_buffer=1, with_meta=True)
+    batch = next(iter(DataLoader(ds, batch_size=16)))
+    for key in ILDataset.META_KEYS:
+        assert key in batch, f"missing meta key {key}"
+        assert batch[key].shape[0] == batch["label"].shape[0]
+    assert batch["outcome"].min() >= 0.0, "sampled episodes should all have known outcomes"
+    n_scored = int((batch["avg_score"] > 0).sum())
+    print(f"  batch of {batch['label'].shape[0]}: meta keys present, "
+          f"{n_scored} rows matched to manifest avg_score")
+
+
+def test_winner_only_drops_losing_seat_decisions():
+    # both-seats clones winner+loser; winner_only clones only the winning seat,
+    # so it must yield strictly fewer (but non-zero) decisions on real episodes.
+    both = sum(1 for _ in iter_decisions(TRAIN_DIR, max_episodes=40, winner_only=False))
+    win = sum(1 for _ in iter_decisions(TRAIN_DIR, max_episodes=40, winner_only=True))
+    assert win > 0, "winner_only produced no decisions -- filter is dropping everything"
+    assert win < both, "winner_only must drop loser-side rows, so it cannot equal both-seats"
+
+
 if __name__ == "__main__":
     tests = [
         test_resolve_device,
@@ -234,6 +302,10 @@ if __name__ == "__main__":
         test_agent_degrades_gracefully_when_torch_unavailable,
         test_lr_schedule_does_not_prematurely_decay_to_zero,
         test_option_type_vocab_includes_decline,
+        test_winning_agent_resolves_every_reward_shape,
+        test_winner_only_drops_losing_seat_decisions,
+        test_decision_meta_outcomes_are_consistent,
+        test_ildataset_with_meta_batches_through_dataloader,
         test_oov_card_id_does_not_crash_model,
         test_decline_slot_present_when_min_count_zero,
         test_multiselect_unroll_masks_prior_picks,
