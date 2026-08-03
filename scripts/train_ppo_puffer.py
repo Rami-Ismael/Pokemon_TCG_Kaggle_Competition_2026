@@ -11,16 +11,30 @@ on MPS, and (b) periodically save the actor in save_pretrained format so env
 workers' mirror opponents can hot-reload it (LatestCheckpointOpponent) and so
 snapshots drop straight into the benchmark harness.
 
-Known deliberate differences from the plan noted in rl_pipeline_v1.md §3.2:
-stock PuffeRL loss has an entropy bonus, not a KL-to-prior anchor. v1 runs
-stock (small ent_coef); if eval shows prior-forgetting, the KL term gets
-patched into a PuffeRL subclass next.
+KL-regularized self-play stabilization (Orbit Wars 1st place / Lux AI S1),
+both pieces ON by default:
+
+1. Frozen-reference anchor -- continual, on for the whole run: the loss
+   carries kl_coef * KL(pi_theta || pi_ref) over LEGAL actions only
+   (PuffeRLPriorKL, pokemon_tcg/pufferl_kl.py), with pi_ref frozen and
+   forward-only. --kl-coef 0 falls back to stock PuffeRL (that arm is the
+   throughput/ablation baseline; it also disables the gate below, which
+   needs the reference policy).
+2. Checkpoint promotion (the ratchet): every --promote-every updates, the
+   live actor plays mirrored-pair eval matches against pi_ref
+   (pokemon_tcg/promotion.py). Win >70% of decisive games -> pi_ref becomes
+   a frozen copy of the live policy (saved under <out>/refs/), else the old
+   reference stands. Every decision lands in <out>/promotion_log.jsonl; the
+   KL pull stays on throughout -- continual anchoring, not a warm start.
+
+Per-update losses (incl. kl_to_prior) append to <out>/train_metrics.jsonl.
 """
 from __future__ import annotations
 
 import argparse
 import contextlib
 import json
+import math
 import os
 import sys
 import time
@@ -30,6 +44,8 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
+from pokemon_tcg.device import resolve_device  # noqa: E402
+from pokemon_tcg.promotion import evaluate_gate  # noqa: E402
 from pokemon_tcg.puffer_env import make_puffer_env  # noqa: E402
 from pokemon_tcg.puffer_policy import PTCGPufferPolicy  # noqa: E402
 
@@ -105,11 +121,33 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-5)
     ap.add_argument("--ent-coef", type=float, default=0.001)
     ap.add_argument("--gamma", type=float, default=1.0)
-    ap.add_argument("--kl-coef", type=float, default=0.0,
-                    help="KL-to-prior anchor coefficient; 0 = stock pufferl loss. "
+    ap.add_argument("--kl-coef", type=float, default=0.05,
+                    help="beta for the frozen-reference anchor "
+                         "beta*KL(pi_theta||pi_ref); sweepable. 0 = stock "
+                         "pufferl loss (no anchor forward pass, promotion "
+                         "gate disabled) -- the ablation/throughput baseline. "
                          ">0 uses PuffeRLPriorKL (pokemon_tcg/pufferl_kl.py)")
-    ap.add_argument("--kl-prior", type=Path, default=config.MODELS_DIR / "s2" / "e1_seed43",
-                    help="frozen reference policy for the anchor (the BC lineage prior)")
+    ap.add_argument("--kl-prior", type=Path, default=None,
+                    help="initial frozen reference policy pi_ref for the anchor "
+                         "(default: --init-from, i.e. the IL-lineage checkpoint "
+                         "training starts from, so the anchor and the init "
+                         "always match unless deliberately overridden)")
+    ap.add_argument("--promote-every", type=int, default=20,
+                    help="run the promotion gate every N updates (0 = never). "
+                         "Needs --kl-coef > 0: the gate plays live vs the "
+                         "anchor reference and ratchets it forward on a win")
+    ap.add_argument("--promote-pairs", type=int, default=50,
+                    help="mirrored pairs per gate (2x this many games); keep "
+                         ">=50 for real runs, lower only for smoke tests")
+    ap.add_argument("--promote-threshold", type=float, default=0.70,
+                    help="promote when live wins STRICTLY more than this "
+                         "fraction of decisive (non-draw) gate games")
+    ap.add_argument("--promote-workers", type=int, default=8,
+                    help="spawned eval-game processes per gate (cg engine is "
+                         "a per-process singleton, so parallelism = processes)")
+    ap.add_argument("--run-tag", default=time.strftime("ppo_%Y%m%d_%H%M%S"),
+                    help="tag stamped into snapshots, promoted-ref metadata, "
+                         "and every metrics/promotion log row")
     ap.add_argument("--max-seconds", type=float, default=None,
                     help="internal wall-clock budget: stop cleanly (with a final "
                          "snapshot) once exceeded -- replaces external kill timers")
@@ -124,7 +162,9 @@ def main() -> None:
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
                          "--init-from still sets the KL prior/architecture)")
-    ap.add_argument("--device", default="mps")
+    ap.add_argument("--device", default=None,
+                    help="mps|cpu; default resolves via pokemon_tcg.device."
+                         "resolve_device (PTCG_DEVICE env var, then auto)")
     ap.add_argument("--snapshot-every-s", type=float, default=300.0,
                     help="actor save_pretrained cadence (mirror hot-reload + benchmark)")
     ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "ppo_puffer")
@@ -140,6 +180,12 @@ def main() -> None:
         args.bptt_horizon, args.minibatch_size = 32, 64
         args.total_timesteps = 3 * args.num_envs * args.bptt_horizon
         args.device = "cpu"
+    args.device = resolve_device(args.device)
+    if args.kl_prior is None:
+        args.kl_prior = args.init_from
+    if args.promote_every > 0 and args.kl_coef <= 0:
+        print("NOTE: --kl-coef 0 runs stock PuffeRL (no reference policy), "
+              "so the promotion gate is disabled for this run")
 
     # HARD CONSTRAINT (verified 2026-08-03): the cg/cabt native engine keeps ONE
     # battle state per process; two live envs in one process corrupt each other
@@ -223,34 +269,107 @@ def main() -> None:
         # with fp32 that context is at best a no-op, at worst an error.
         trainer.amp_context = contextlib.nullcontext()
 
+        epoch = 0
+
+        def save_actor(snap: Path, **extra) -> Path:
+            """save_pretrained snapshot + run/step-tagged metadata.
+
+            The cpu round-trip is the established pattern here: Module.to()
+            swaps param data in place, so the optimizer's device-resident
+            state survives (prior generations g2/g3 trained through it).
+            """
+            policy.actor.to("cpu").save_pretrained(snap)
+            policy.actor.to(args.device)
+            (snap / "ppo_metadata.json").write_text(json.dumps(
+                {"global_step": trainer.global_step, "epoch": epoch,
+                 "run_tag": args.run_tag, "init_from": str(args.init_from),
+                 "kl_coef": args.kl_coef, "trainer": "pufferl-3.0", **extra},
+                indent=2))
+            return snap
+
+        def append_jsonl(path: Path, row: dict) -> None:
+            with path.open("a") as fh:
+                fh.write(json.dumps(row) + "\n")
+
+        metrics_path = args.out / "train_metrics.jsonl"
+        promo_path = args.out / "promotion_log.jsonl"
+        # Current frozen reference ON DISK: starts as the anchor prior, moves
+        # forward only when the gate promotes. Eval workers load from disk,
+        # never from the MPS learner.
+        ref_dir = str(args.kl_prior)
+        gate_on = args.kl_coef > 0 and args.promote_every > 0
+
         # Seed snapshot so mirror opponents have something to load from step 0.
-        policy.actor.to("cpu").save_pretrained(args.out / "u0")
-        policy.actor.to(args.device)
+        save_actor(args.out / "u0")
 
         last_snap = time.time()
         t_run = time.time()
-        epoch = 0
         while trainer.global_step < train_config["total_timesteps"]:
             if args.max_seconds and time.time() - t_run > args.max_seconds:
                 print(f"wall-clock budget {args.max_seconds:.0f}s reached at "
                       f"step {trainer.global_step} -- stopping cleanly")
                 break
             trainer.evaluate()
-            logs = trainer.train()
+            trainer.train()
             epoch += 1
-            if time.time() - last_snap >= args.snapshot_every_s:
-                snap = args.out / f"u{trainer.global_step}"
-                policy.actor.to("cpu").save_pretrained(snap)
-                policy.actor.to(args.device)
-                (snap / "ppo_metadata.json").write_text(json.dumps(
-                    {"global_step": trainer.global_step, "epoch": epoch,
-                     "init_from": str(args.init_from), "trainer": "pufferl-3.0"},
-                    indent=2))
+
+            # Per-update metrics (kl_to_prior included when the anchor is on).
+            sps = trainer.global_step / max(time.time() - t_run, 1e-9)
+            row = {"ts": round(time.time(), 3), "run_tag": args.run_tag,
+                   "global_step": int(trainer.global_step), "epoch": epoch,
+                   "sps": round(sps, 2), "ref": ref_dir}
+            row.update({k: (float(v) if math.isfinite(v) else None)
+                        for k, v in dict(getattr(trainer, "losses", {})).items()
+                        if isinstance(v, (int, float))})
+            append_jsonl(metrics_path, row)
+
+            if gate_on and epoch % args.promote_every == 0:
+                # Promotion gate (the ratchet): mirrored pairs of live vs the
+                # frozen reference; training is paused for its duration.
+                live_snap = save_actor(args.out / f"u{trainer.global_step}")
+                print(f"promotion gate at update {epoch} (step "
+                      f"{trainer.global_step}): live vs {ref_dir}, "
+                      f"{args.promote_pairs} mirrored pairs...")
+                verdict = evaluate_gate(
+                    live_snap, ref_dir, pairs=args.promote_pairs,
+                    workers=args.promote_workers,
+                    threshold=args.promote_threshold)
+                if verdict["promote"]:
+                    ref_snap = save_actor(
+                        args.out / "refs" / f"u{trainer.global_step}",
+                        promoted_from=str(live_snap), gate=verdict)
+                    trainer.retarget_prior(policy)
+                    ref_dir = str(ref_snap)
+                verdict.update({"global_step": int(trainer.global_step),
+                                "epoch": epoch, "run_tag": args.run_tag,
+                                "new_ref": ref_dir})
+                append_jsonl(promo_path, verdict)
+                outcome = (f"PROMOTED -> {ref_dir}" if verdict["promote"]
+                           else f"kept {ref_dir}")
+                print(f"  gate: {verdict['wins']}W/{verdict['losses']}L/"
+                      f"{verdict['draws']}D of {verdict['games']} "
+                      f"win_rate={verdict['win_rate']:.3f} vs "
+                      f">{args.promote_threshold:.2f} -- {outcome} "
+                      f"[{verdict['seconds']:.0f}s]")
+                # The gate's live snapshot doubles as the periodic one.
+                last_snap = time.time()
+            elif time.time() - last_snap >= args.snapshot_every_s:
+                snap = save_actor(args.out / f"u{trainer.global_step}")
                 last_snap = time.time()
                 print(f"  snapshot -> {snap}")
 
+        elapsed = time.time() - t_run
+        print(f"throughput: {trainer.global_step} steps in {elapsed:.0f}s = "
+              f"{trainer.global_step / max(elapsed, 1e-9):.1f} steps/s "
+              f"(kl_coef={args.kl_coef}, includes gate pauses)")
+
         snap = args.out / f"u{trainer.global_step}_final"
         policy.actor.to("cpu").save_pretrained(snap)
+        (snap / "ppo_metadata.json").write_text(json.dumps(
+            {"global_step": trainer.global_step, "epoch": epoch,
+             "run_tag": args.run_tag, "init_from": str(args.init_from),
+             "kl_coef": args.kl_coef, "final_ref": ref_dir,
+             "trainer": "pufferl-3.0"}, indent=2))
         # Full policy (actor + warmed critic) for the next generation's
         # --init-policy-full; ~26 MB, well inside the disk budget.
         policy.to("cpu")

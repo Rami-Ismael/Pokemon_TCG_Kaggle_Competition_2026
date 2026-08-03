@@ -2,11 +2,21 @@
 
 `PuffeRLPriorKL.train()` is a VERBATIM COPY of pufferlib 3.0's
 `pufferl.PuffeRL.train` (installed at .venv-ppo/.../pufferlib/pufferl.py,
-lines 312-451) with exactly ONE addition, fenced by `>>> KL ANCHOR` markers:
-a penalty `kl_coef * KL(pi_current || pi_prior)` added to the loss, where the
-prior is the frozen BC/REWEIGHT checkpoint from before any PPO. Their clip
-constrains each update step; this constrains total drift across the run —
-the term stock pufferl does not have (its approx_kl is logged only).
+lines 312-451) with additions fenced by `>>> KL ANCHOR` markers:
+a penalty `kl_coef * KL(pi_current || pi_prior)` added to the loss (plus a
+per-update `self.losses` export so the driver can log the KL every update),
+where the prior starts as the frozen BC/REWEIGHT checkpoint from before any
+PPO. Their clip constrains each update step; this constrains total drift
+across the run — the term stock pufferl does not have (its approx_kl is
+logged only).
+
+The prior is not necessarily static: `retarget_prior()` implements the
+checkpoint-promotion ratchet (Orbit Wars 1st place / Lux AI S1) — when the
+live policy decisively beats the reference in mirrored eval matches
+(pokemon_tcg.promotion.evaluate_gate), the reference becomes a frozen copy
+of the live policy and the KL pull continues against the NEW anchor. The
+pull itself is continual: it stays on for the entire run, before and after
+every promotion.
 
 If pufferlib is upgraded, re-diff this copy against upstream train().
 
@@ -26,9 +36,21 @@ import torch
 import pufferlib.pytorch
 from pufferlib.pufferl import PuffeRL, compute_puff_advantage
 
+from .puffer_policy import NEG
+
 
 def masked_kl(cur_logits: torch.Tensor, prior_logits: torch.Tensor) -> torch.Tensor:
-    """KL(pi_cur || pi_prior) over the (finite-)masked option distribution."""
+    """KL(pi_cur || pi_prior) over the (finite-)masked option distribution.
+
+    Only valid when BOTH logit tensors were masked with the IDENTICAL legal-
+    action mask (PTCGPufferPolicy applies opt_mask from the same packed obs,
+    so this holds by construction; PuffeRLPriorKL.train() asserts it once per
+    prior). A mismatched mask would put probability mass on actions one side
+    considers illegal and silently corrupt the anchor gradient. Illegal slots
+    contribute exactly 0 to the sum: their p underflows to 0 through softmax
+    of NEG, and logp - logq stays finite (both sides offset by NEG), so the
+    KL is NaN-free with no torch.where gating.
+    """
     logp = torch.log_softmax(cur_logits, dim=-1)
     logq = torch.log_softmax(prior_logits, dim=-1)
     return (logp.exp() * (logp - logq)).sum(dim=-1).mean()
@@ -43,6 +65,19 @@ class PuffeRLPriorKL(PuffeRL):
         for p in self.kl_prior_policy.parameters():
             p.requires_grad_(False)
         self.kl_coef = kl_coef
+        self._mask_checked = False
+
+    @torch.no_grad()
+    def retarget_prior(self, live_policy) -> None:
+        """Promotion (the ratchet): pi_ref <- frozen copy of the live policy.
+
+        ``load_state_dict`` copies VALUES into the existing frozen
+        Parameters -- requires_grad stays False, eval mode stays, and the
+        optimizer never held these tensors. The KL pull continues unchanged,
+        now anchored to the new reference.
+        """
+        self.kl_prior_policy.load_state_dict(live_policy.state_dict())
+        self._mask_checked = False  # re-verify mask agreement on the next minibatch
 
     def train(self):
         profile = self.profile
@@ -132,9 +167,22 @@ class PuffeRLPriorKL(PuffeRL):
 
             loss = pg_loss + config['vf_coef']*v_loss - config['ent_coef']*entropy_loss
 
-            # >>> KL ANCHOR (the only change vs upstream train()) >>>
+            # >>> KL ANCHOR (fenced change vs upstream train()) >>>
             with torch.no_grad():
                 prior_logits, _ = self.kl_prior_policy(mb_obs, state)
+            if not self._mask_checked:
+                # One-time (per prior) guard: both distributions must be
+                # softmaxed over the IDENTICAL legal-action mask. Structurally
+                # guaranteed today (both forwards mask from the same mb_obs's
+                # opt_mask), but a future prior that masks differently -- or
+                # not at all -- would silently corrupt the anchor gradient
+                # with probability mass on illegal actions. NEG/10 separates
+                # masked (-1e9) from any reachable real logit.
+                assert torch.equal(logits.detach() < NEG / 10,
+                                   prior_logits < NEG / 10), (
+                    "KL anchor mask mismatch: current and prior policies "
+                    "disagree on which options are illegal for the same obs")
+                self._mask_checked = True
             kl_prior = masked_kl(logits, prior_logits)
             loss = loss + self.kl_coef * kl_prior
             losses['kl_to_prior'] += kl_prior.item() / self.total_minibatches
@@ -173,6 +221,13 @@ class PuffeRLPriorKL(PuffeRL):
         var_y = y_true.var()
         explained_var = torch.nan if var_y == 0 else 1 - (y_true - y_pred).var() / var_y
         losses['explained_variance'] = explained_var.item()
+
+        # >>> KL ANCHOR (fenced change vs upstream train()) >>>
+        # Upstream only publishes self.losses on the rate-limited dashboard
+        # path; publish every update so the driver can log kl_to_prior per
+        # update (same values the dashboard would show, just not throttled).
+        self.losses = losses
+        # <<< KL ANCHOR <<<
 
         profile.end()
         logs = None
