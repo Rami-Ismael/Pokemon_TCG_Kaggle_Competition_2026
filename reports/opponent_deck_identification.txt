@@ -1,0 +1,29 @@
+Piloting kojimar_lucario (60 cards, 17 unique) vs 7 opponents, 20 games each.
+Sniffer uses ONLY opponent public zones (active+bench+discard+stadium).
+
+opponent                    true       ID rate         median turn  ever-wrong  exact-deck? my winrate  errors
+--------------------------------------------------------------------------------------------------------------
+kiyotah_dragapult           dragapult  0.95±0.05       1            0/20        unique      0.75±0.10   0
+kiyotah_iono                iono       1.00±0.00       2            0/20        unique      0.90±0.07   0
+kiyotah_abomasnow           abomasnow  1.00±0.00       2            0/20        unique      0.65±0.11   0
+dedquoc_rule_engine         lucario    1.00±0.00       2            0/20        1 of 2      1.00±0.00   0
+ryotasueyoshi_alakazam      alakazam   1.00±0.00       2            0/20        1 of 2      0.20±0.09   0
+makthanithin_improved_prob  lucario    1.00±0.00       2            0/20        1 of 2      0.40±0.11   0
+mechi22_alakazam            alakazam   1.00±0.00       2            0/20        1 of 2      0.35±0.11   0
+
+Confusion matrix (true \ predicted):
+            abomasnow   alakazam    dragapult   iono        lucario     unknown     
+abomasnow   20          0           0           0           0           0           
+alakazam    0           40          0           0           0           0           
+dragapult   0           0           19          0           0           1           
+iono        0           0           0           20          0           0           
+lucario     0           0           0           0           40          0           
+
+Interpretation:
+  * 'ID rate' = fraction of games whose final sniffer prediction matches the
+    opponent's true archetype. 'median turn' = when that call first becomes
+    stable-correct. 'exact-deck?' = whether the archetype pins a single pool
+    deck ('unique') or is shared by several identical-looking lists.
+  * Archetype is recoverable; the exact 60-card list is not, wherever
+    'exact-deck?' says '1 of N' -- those decks share their visible Pokemon and
+    differ only in hidden-zone trainers.

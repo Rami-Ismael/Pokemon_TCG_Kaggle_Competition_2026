@@ -33,11 +33,32 @@ This script pits them against each other (and against themselves) so we can
 see whether the search re-ranker actually buys win rate over the pure rule
 baseline, and whether the two "improved probabilistic" variants differ.
 
+THE RUNG-2 OPPONENT POOL (Q25)
+------------------------------
+Beating our own baselines was never evidence about the ladder; a round-robin
+against a curated field of *public* agents is. data/opponent_pool.csv is that
+field -- makimakiai's public roster of 65 public + 4 official sample agents (69
+total), harvested by scripts/build_opponent_pool.py. It is a *registry*: most
+rows are reference-only (a notebook URL we have not mirrored). The subset with a
+`local_agent` value has been pulled, safety-reviewed, and wired as a real agent
+here -- those form the `rung2` group below. Run `--list-pool` to see the roster
+and how much of it is actually runnable locally.
+
+Named groups usable anywhere `--agents` is: `ours`, `rung2`, `floor`, `all`.
+
 USAGE
 -----
     uv run python scripts/benchmark_agents.py            # default 8 games/pair
     uv run python scripts/benchmark_agents.py --games 12
     uv run python scripts/benchmark_agents.py --agents rule_baseline,agent_core_improved
+    uv run python scripts/benchmark_agents.py --agents ours,rung2   # us vs the public field
+    uv run python scripts/benchmark_agents.py --list-pool           # show the roster, then exit
+
+    # Deck-arm sweep: same il_agent policy/weights, different submitted deck
+    # (configs/deck_lists/<tag>.csv), isolated from the standing Glicko file:
+    uv run python scripts/benchmark_agents.py \
+        --agents il_agent@dragapult_ex,il_agent@alakazam,kiyotah_dragapult \
+        --no-glicko-persist --out reports/deck_selection_benchmark.json
 
 Output: a win-rate table (rows = player A, cols = player B) and per-agent
 overall win rate, printed to stdout and saved next to the script.
@@ -58,6 +79,7 @@ harness as given. Recorded here so this isn't silently assumed later.
 from __future__ import annotations
 
 import argparse
+import csv
 import importlib.util
 import json
 import sys
@@ -70,9 +92,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import glicko1  # noqa: E402
 
 GLICKO_PATH = REPO / "reports" / "glicko_ratings.json"
+# The Rung-2 opponent-pool registry (scripts/build_opponent_pool.py). Source of
+# truth for which public agents are in the field and which are runnable locally.
+OPPONENT_POOL_CSV = REPO / "data" / "opponent_pool.csv"
 
 # Make `cg` importable (packaged engine) before importing any agent module.
-for _cand in (REPO / "data" / "external" / "cg-lib", REPO / "agents" / "mega_lucario"):
+# Agents import `from cg.api import ...`, so we need a cg package that ships
+# api.py (the agent-facing wrapper) *and* a native lib for this platform. The
+# canonical copy is data/external/cg-lib (its libcg.dylib is the arm64 build).
+# When this script runs from a git worktree, that dir isn't checked out, so we
+# also walk up parent directories to find the primary checkout's cg-lib. The
+# other in-repo cg copies (sample-agent-output, submissions/*) ship only a
+# Linux libcg.so and dlopen-crash on macOS, so they're intentionally not used.
+# See memory `worktree-cg-lib-symlink`.
+_cg_cands = [REPO / "data" / "external" / "cg-lib"]
+_cg_cands += [p / "data" / "external" / "cg-lib" for p in REPO.parents]
+_cg_cands.append(REPO / "agents" / "mega_lucario")
+for _cand in _cg_cands:
     if (_cand / "cg" / "api.py").exists():
         sys.path.insert(0, str(_cand))
         break
@@ -84,6 +120,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
+    # bare module (literal DECK -> my_deck). Distinct 60-card list from
+    # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
+    "kojimar_lucario": REPO / "agents" / "kojimar_lucario" / "agent_core.py",
     "grunt": REPO / "agents" / "grunt" / "agent_core.py",
     # Floor test, not a competitor: uniform-random legal moves on the same
     # frozen deck. If a trained policy doesn't beat this decisively, its
@@ -129,6 +169,69 @@ AGENT_FILES = {
     "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
     "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
     "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
+    # Rung-2 roster batch-pull (2026-08-02): pulled all 61 reference-only
+    # roster notebooks, static-safety-scanned (capability audit: stdlib + cg
+    # only, no network/subprocess/exec/eval/dynamic-import, read-only file I/O),
+    # and wired the subset that adds a NEW deck (= archetype, the confound axis
+    # here) or a distinct policy -- not raw count. Relative "deck.csv" reads
+    # were made module-relative so they can't pick up the repo-root deck (same
+    # fix as plamen06). Same-deck clones stay reference-only in
+    # data/opponent_pool.csv. See notebooks/reference/INDEX.md.
+    "prvsiyan_control_v11": REPO / "agents" / "prvsiyan_control_v11" / "agent_core.py",           # Fighting/Great Tusk/Crustle (new deck)
+    "prvsiyan_grimbelief_alakazam": REPO / "agents" / "prvsiyan_grimbelief_alakazam" / "agent_core.py",  # Alakazam belief (new deck)
+    "prvsiyan_templates_alakazam": REPO / "agents" / "prvsiyan_templates_alakazam" / "agent_core.py",    # Alakazam templates (same deck, diff policy)
+    "pllinas_alakazam": REPO / "agents" / "pllinas_alakazam" / "agent_core.py",                   # Alakazam rising-tide (new deck)
+    "biohack44_day2": REPO / "agents" / "biohack44_day2" / "agent_core.py",                       # new deck
+    "pixiux_lucario_v63": REPO / "agents" / "pixiux_lucario_v63" / "agent_core.py",               # Mega Lucario variant (new deck)
+    "makthanithin_1084_baseline": REPO / "agents" / "makthanithin_1084_baseline" / "agent_core.py",  # scored target LB 1084.5
+    "daniilkrasnovvv_conservative_prob": REPO / "agents" / "daniilkrasnovvv_conservative_prob" / "agent_core.py",  # distinct conservative-probabilistic policy
+    # Second wave of public-pool opponents (from origin/main's benchmark-pool
+    # consolidation), wired to widen the pool's *strength* range so it predicts
+    # the ladder, not just rank our own agents. Each was individually
+    # source-reviewed; see the "Benchmark-wiring wave" section of
+    # notebooks/reference/INDEX.md.
+    #   romanrozen_strong_start -- Kaggle LB ~950 Probabilistic Expectimax with a
+    #     UCB1/MCTS re-ranker over *real* cg engine search rollouts. Strongest
+    #     public opponent in the pool. Byte-identical to aristophanivan's
+    #     improved-probabilistic-agent (same lineage), so only one copy is wired.
+    #     (This is the same romanrozen notebook my batch-pull held back as a
+    #     redundant-deck clone; origin/main wired it for strength coverage, so it
+    #     stays -- its opponent_pool.csv row now maps here as runnable.)
+    "romanrozen_strong_start": REPO / "agents" / "romanrozen_strong_start" / "agent_core.py",
+    #   avikdas567_heuristic -- weak: scores options by substring-matching
+    #     str(option). Fills the tier between random_legal and the real policies.
+    "avikdas567_heuristic": REPO / "agents" / "avikdas567_heuristic" / "agent_core.py",
+    #   makimakiai_rl -- RL-tuned linear-weights policy over option types. The
+    #     upstream notebook only ships the *training harness*; its LEARNED_WEIGHTS
+    #     bake is nondeterministic and wasn't reproduced, so this runs on the
+    #     notebook's DEFAULT (untrained) weights -- a legal, distinct-method
+    #     opponent, but NOT the tuned agent. Labeled untrained in INDEX.md.
+    "makimakiai_rl": REPO / "agents" / "makimakiai_rl" / "agent_core.py",
+    # ------------------------------------------------------------------
+    # TomBombadyl pool (github.com/TomBombadyl/kaggle_pokemon) -- a solo
+    # competitor's decoded ladder submissions with real public mu scores.
+    # His rule-based brains ported here as opponents to test our trained
+    # model against (checklist: "Add all the rule base algorithm to my
+    # internal ladder"). Each tb_* agent is a thin shim / wrapper over his
+    # verbatim source, vendored once under agents/tb_shared/agent. Every
+    # file was safety-reviewed (no eval/exec/network/subprocess) -- see
+    # notebooks/reference/tombombadyl/INDEX.md for provenance, the mu each
+    # scored on the real Kaggle ladder, and the deck each carries.
+    #
+    # Six self-contained per-deck rule pilots (his bench-guard-wrapped
+    # standalone tarballs):
+    "tb_archaludon": REPO / "agents" / "tb_archaludon" / "agent_core.py",  # mu 1196.1 (his leader)
+    "tb_dragapult": REPO / "agents" / "tb_dragapult" / "agent_core.py",    # mu 880.9
+    "tb_alakazam": REPO / "agents" / "tb_alakazam" / "agent_core.py",      # mu 659.0
+    "tb_starmie": REPO / "agents" / "tb_starmie" / "agent_core.py",        # mu 277.5
+    "tb_abomasnow": REPO / "agents" / "tb_abomasnow" / "agent_core.py",    # not on his ladder
+    "tb_iono": REPO / "agents" / "tb_iono" / "agent_core.py",              # not on his ladder
+    # Four deck-agnostic scorer brains (build_agent(scorer=...) over his
+    # shared agent/ package; deck each is paired with per his catalog):
+    "tb_search": REPO / "agents" / "tb_search" / "agent_core.py",          # mu 660.5 (his best home-grown)
+    "tb_heuristic": REPO / "agents" / "tb_heuristic" / "agent_core.py",    # mu 633.0 archetype
+    "tb_rulecore": REPO / "agents" / "tb_rulecore" / "agent_core.py",      # mu 535.6
+    "tb_lucario": REPO / "agents" / "tb_lucario" / "agent_core.py",        # LucarioScorer
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
@@ -139,6 +242,82 @@ AGENT_MAIN = {
     "agent_core_improved": REPO / "submissions" / "mega_lucario_improved" / "main.py",
 }
 
+# Our own algorithms + the random floor. Everything here is authored/adopted in
+# this repo, as opposed to the public opponent field pulled from Kaggle.
+OUR_AGENTS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
+              "proto", "il_agent", "grunt"]
+FLOOR_AGENTS = ["random_legal"]
+
+
+def load_opponent_pool(path: Path = OPPONENT_POOL_CSV) -> list[dict]:
+    """Return the Rung-2 roster rows from data/opponent_pool.csv (empty if absent).
+
+    Each row: key, source_ref, url, label, local_agent, runnable. `local_agent`
+    is the AGENT_FILES key when the notebook has been mirrored and wired here;
+    otherwise the row is a reference-only watchlist entry we cannot run.
+    """
+    if not path.exists():
+        return []
+    with path.open(newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def rung2_pool() -> list[str]:
+    """AGENT_FILES keys for the runnable *public* opponents in the roster.
+
+    Data-driven from opponent_pool.csv: every runnable row's local_agent that is
+    (a) actually registered in AGENT_FILES and (b) not one of OUR_AGENTS -- the
+    sample Mega Lucario, for instance, maps to our own `rule_baseline`, so it is
+    excluded here to keep `rung2` meaning "the external field, not us".
+    """
+    seen: dict[str, None] = {}  # dict preserves insertion order, dedupes
+    for row in load_opponent_pool():
+        local = row.get("local_agent", "").strip()
+        if (row.get("runnable", "").strip().lower() == "true"
+                and local in AGENT_FILES and local not in OUR_AGENTS):
+            seen.setdefault(local, None)
+    return list(seen)
+
+
+def agent_groups() -> dict[str, list[str]]:
+    """Named agent selections usable anywhere `--agents` accepts a name."""
+    return {
+        "ours": [a for a in OUR_AGENTS if a in AGENT_FILES],
+        "rung2": rung2_pool(),
+        "floor": [a for a in FLOOR_AGENTS if a in AGENT_FILES],
+        "all": list(AGENT_FILES),
+    }
+
+
+def resolve_agent_selection(tokens: list[str]) -> list[str]:
+    """Expand group names in a --agents token list; keep order, drop duplicates."""
+    groups = agent_groups()
+    resolved: dict[str, None] = {}
+    for tok in tokens:
+        for name in (groups[tok] if tok in groups else [tok]):
+            resolved.setdefault(name, None)
+    return list(resolved)
+
+
+def print_pool_report() -> None:
+    """Print the Rung-2 roster and how much of it is runnable locally."""
+    rows = load_opponent_pool()
+    if not rows:
+        print(f"no opponent pool at {OPPONENT_POOL_CSV} -- run "
+              f"scripts/build_opponent_pool.py to build it.")
+        return
+    runnable = [r for r in rows if r.get("runnable", "").strip().lower() == "true"]
+    print(f"Rung-2 opponent pool: {len(rows)} roster entries, "
+          f"{len(runnable)} runnable locally ({OPPONENT_POOL_CSV.name})\n")
+    print(f"  rung2 group (public field, us excluded): {rung2_pool()}\n")
+    print("  RUNNABLE (mirrored + safety-reviewed + wired):")
+    for r in runnable:
+        print(f"    {r['key']:48s} -> {r['local_agent']}")
+    print("\n  REFERENCE-ONLY (notebook URL in roster; not pulled/reviewed here):")
+    for r in rows:
+        if r.get("runnable", "").strip().lower() != "true":
+            print(f"    {r['key']:48s}    {r['source_ref']}")
+
 
 # Populated by load_agent as a side effect, keyed by the same `name` passed
 # in. Lets callers that only kept the `agent` callable (e.g. eval_rung3_sanity.py)
@@ -148,14 +327,26 @@ AGENT_MAIN = {
 _LOADED_MODULES: dict[str, object] = {}
 
 
+DECK_LISTS_DIR = REPO / "configs" / "deck_lists"
+
+
 def load_agent(name: str):
     """Load an agent's `agent` callable.
 
     Prefers the bundle `main.py` (real entry point, deck wired up). Falls back
     to the bare module — for bare modules that need `my_deck` injected (e.g.
     the sample rule baseline), we read it from the matching deck.csv.
+
+    `name` may carry a deck override as `<agent>@<deck-tag>` (e.g.
+    `il_agent@dragapult_ex`), where `<deck-tag>.csv` must exist under
+    configs/deck_lists/. The base agent loads and runs completely unmodified;
+    only its module-level `my_deck` is overwritten after loading, so the SAME
+    policy/weights can be benchmarked piloting a different 60-card deck. Each
+    call builds a fresh module object (no caching), so distinct deck-tagged
+    labels for the same base agent never share state.
     """
-    main_py = AGENT_MAIN.get(name)
+    base_name, _, deck_tag = name.partition("@")
+    main_py = AGENT_MAIN.get(base_name)
     if main_py and main_py.exists():
         spec = importlib.util.spec_from_file_location(f"_bench_{name}", main_py)
         mod = importlib.util.module_from_spec(spec)
@@ -164,24 +355,31 @@ def load_agent(name: str):
         fn = getattr(mod, "agent", None)
         if not callable(fn):
             raise AttributeError(f"{name} bundle has no callable `agent`")
-        _LOADED_MODULES[name] = mod
-        return fn
+    else:
+        path = AGENT_FILES[base_name]
+        if not path.exists():
+            raise FileNotFoundError(f"no agent file for {base_name}: {path}")
+        spec = importlib.util.spec_from_file_location(f"_bench_{name}", path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.path.insert(0, str(path.parent))
+        spec.loader.exec_module(mod)
+        # Bare modules that reference a module-level `my_deck` (e.g. the sample
+        # rule baseline) have it injected by their main.py; wire it here from deck.csv.
+        if not hasattr(mod, "my_deck") and (path.parent / "deck.csv").exists():
+            deck = [int(x) for x in (path.parent / "deck.csv").read_text().splitlines() if x.strip()][:60]
+            mod.my_deck = deck
+        fn = getattr(mod, "agent", None)
+        if not callable(fn):
+            raise AttributeError(f"{base_name} has no callable `agent`")
 
-    path = AGENT_FILES[name]
-    if not path.exists():
-        raise FileNotFoundError(f"no agent file for {name}: {path}")
-    spec = importlib.util.spec_from_file_location(f"_bench_{name}", path)
-    mod = importlib.util.module_from_spec(spec)
-    sys.path.insert(0, str(path.parent))
-    spec.loader.exec_module(mod)
-    # Bare modules that reference a module-level `my_deck` (e.g. the sample
-    # rule baseline) have it injected by their main.py; wire it here from deck.csv.
-    if not hasattr(mod, "my_deck") and (path.parent / "deck.csv").exists():
-        deck = [int(x) for x in (path.parent / "deck.csv").read_text().splitlines() if x.strip()][:60]
-        mod.my_deck = deck
-    fn = getattr(mod, "agent", None)
-    if not callable(fn):
-        raise AttributeError(f"{name} has no callable `agent`")
+    if deck_tag:
+        if not hasattr(mod, "my_deck"):
+            raise AttributeError(f"{base_name} has no `my_deck` to override (not deck-injectable)")
+        deck_csv = DECK_LISTS_DIR / f"{deck_tag}.csv"
+        if not deck_csv.exists():
+            raise FileNotFoundError(f"deck override '{deck_tag}' not found: {deck_csv}")
+        mod.my_deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+
     _LOADED_MODULES[name] = mod
     return fn
 
@@ -245,7 +443,9 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
     return a_wins, b_wins, draws, time.time() - t0
 
 
-def run_benchmark(agents: list[str], games_per_pair: int = 8):
+def run_benchmark(agents: list[str], games_per_pair: int = 8,
+                   glicko_path: Path = GLICKO_PATH, out_path: Path | None = None,
+                   persist_glicko: bool = True):
     from kaggle_environments import make
 
     print(f"Loading {len(agents)} agents: {', '.join(agents)}")
@@ -339,9 +539,10 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
     # Win-rate is a single-run snapshot; Glicko carries a rating + confidence
     # (RD) forward across every benchmark run, weighted by opponent strength,
     # so it's a better estimate of true skill than this run's win% alone.
-    prior_ratings = load_glicko_ratings()
+    prior_ratings = load_glicko_ratings(glicko_path) if persist_glicko else {}
     glicko = glicko1.run_rating_period(prior_ratings, glicko_games)
-    save_glicko_ratings(glicko)
+    if persist_glicko:
+        save_glicko_ratings(glicko, glicko_path)
 
     print("\n=== Glicko-1 ratings (persisted across runs, higher = stronger) ===")
     ranked = sorted(agents, key=lambda x: -glicko[x].rating)
@@ -392,27 +593,48 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8):
         },
         "fallback_diag": fallback_diag,
     }
-    out_path = REPO / "reports" / "agent_benchmark.json"
+    out_path = out_path or (REPO / "reports" / "agent_benchmark.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=2))
     print(f"\ntotal wall clock: {total_wall_clock:.1f}s")
     print(f"saved: {out_path}")
-    print(f"saved: {GLICKO_PATH}")
+    print(f"saved: {glicko_path}" if persist_glicko else "glicko: not persisted (isolated run)")
     return result
 
 
 def main():
     ap = argparse.ArgumentParser(description="Benchmark agent vs agent performance.")
     ap.add_argument("--agents", default=",".join(AGENT_FILES.keys()),
-                    help="comma-separated subset of: " + ", ".join(AGENT_FILES))
+                    help="comma-separated agents or group names (ours, rung2, "
+                         "floor, all). Agents: " + ", ".join(AGENT_FILES))
     ap.add_argument("--games", type=int, default=8, dest="games_per_pair",
                     help="mirrored game pairs per ordered agent pair")
+    ap.add_argument("--list-pool", action="store_true",
+                    help="print the Rung-2 opponent-pool roster and exit")
+    ap.add_argument("--glicko-path", type=Path, default=GLICKO_PATH,
+                    help="where to load/persist Glicko ratings (default: reports/glicko_ratings.json)")
+    ap.add_argument("--out", type=Path, default=None,
+                    help="where to save the result JSON (default: reports/agent_benchmark.json)")
+    ap.add_argument("--no-glicko-persist", action="store_true",
+                    help="score Glicko for this run's printout but don't read/write --glicko-path "
+                         "(use for isolated runs, e.g. deck-arm sweeps, that shouldn't pollute "
+                         "the standing ratings)")
     args = ap.parse_args()
-    agents = [a.strip() for a in args.agents.split(",") if a.strip()]
-    unknown = [a for a in agents if a not in AGENT_FILES]
+    if args.list_pool:
+        print_pool_report()
+        return
+    # Expand group names (ours/rung2/floor/all); deck-arm tokens like
+    # `il_agent@dragapult_ex` aren't groups and pass through untouched.
+    tokens = [a.strip() for a in args.agents.split(",") if a.strip()]
+    agents = resolve_agent_selection(tokens)
+    unknown = [a for a in agents if a.partition("@")[0] not in AGENT_FILES]
     if unknown:
-        sys.exit(f"unknown agent(s): {unknown}. Available: {list(AGENT_FILES)}")
-    run_benchmark(agents, args.games_per_pair)
+        sys.exit(f"unknown agent(s): {unknown}. Available: {list(AGENT_FILES)}; "
+                 f"groups: {list(agent_groups())}")
+    if not agents:
+        sys.exit("no agents selected")
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+                  out_path=args.out, persist_glicko=not args.no_glicko_persist)
 
 
 if __name__ == "__main__":

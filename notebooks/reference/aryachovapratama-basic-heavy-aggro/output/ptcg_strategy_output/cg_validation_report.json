@@ -1,0 +1,11 @@
+{
+  "status": "SKIPPED",
+  "rows": [
+    {
+      "check": "cg import",
+      "status": "SKIPPED",
+      "detail": "Official cg engine unavailable in this runtime; static validation only."
+    }
+  ],
+  "note": "Official cg engine unavailable in this runtime; static validation only."
+}
