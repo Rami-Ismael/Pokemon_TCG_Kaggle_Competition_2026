@@ -82,6 +82,7 @@ import argparse
 import csv
 import importlib.util
 import json
+import os
 import sys
 import time
 from dataclasses import dataclass, field
@@ -319,6 +320,34 @@ def print_pool_report() -> None:
             print(f"    {r['key']:48s}    {r['source_ref']}")
 
 
+def _write_fallback_tb(fallback_diag: dict, tb_dir: Path, step: int) -> None:
+    """One TensorBoard scalar per agent per fallback stat, under fallback/.
+
+    `step` is the run's epoch-seconds timestamp so successive benchmark runs
+    append points to the same curves. Lazy import: torch's SummaryWriter is
+    heavyweight and the benchmark must still run where it's absent -- skipping
+    is announced on stderr, never silent.
+    """
+    try:
+        if str(REPO / "src") not in sys.path:
+            sys.path.insert(0, str(REPO / "src"))
+        from pokemon_tcg.logging_utils import TensorBoardLogger
+    except Exception as e:
+        print(f"[fallback-diag] TensorBoard scalars skipped ({e!r}); "
+              f"the JSON report still has everything", file=sys.stderr)
+        return
+    logger = TensorBoardLogger(tb_dir)
+    for a, snap in fallback_diag.items():
+        for k, v in snap.items():
+            if k == "enabled" or not isinstance(v, (int, float)):
+                continue
+            # ':' in reason names (policy_exception:ValueError) breaks TB tag
+            # grouping; '.' keeps one chart per variant under the same agent.
+            logger.log_scalar(f"fallback/{a}/{k.replace(':', '.')}", float(v), step)
+    logger.close()
+    print(f"[fallback-diag] TensorBoard scalars -> {tb_dir}", file=sys.stderr)
+
+
 # Populated by load_agent as a side effect, keyed by the same `name` passed
 # in. Lets callers that only kept the `agent` callable (e.g. eval_rung3_sanity.py)
 # stay on the unchanged load_agent(name) -> fn signature, while run_benchmark
@@ -445,8 +474,15 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
 
 def run_benchmark(agents: list[str], games_per_pair: int = 8,
                    glicko_path: Path = GLICKO_PATH, out_path: Path | None = None,
-                   persist_glicko: bool = True):
+                   persist_glicko: bool = True, tb_dir: Path | None = None):
     from kaggle_environments import make
+
+    # The benchmark IS the diagnostic surface: turn on fallback tracking for
+    # agents that read PTCG_FALLBACK_TRACK at import (agents/il_agent/
+    # agent_core.py and the s2_arms wrappers). setdefault, not assignment, so
+    # PTCG_FALLBACK_TRACK=0 in the caller's env still disables it. The
+    # submission bundle never sets this, so Kaggle runs stay a genuine no-op.
+    os.environ.setdefault("PTCG_FALLBACK_TRACK", "1")
 
     print(f"Loading {len(agents)} agents: {', '.join(agents)}")
     _LOADED_MODULES.clear()  # drop any modules from a prior run_benchmark() call in this process
@@ -556,20 +592,42 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
     # ---- Fallback diagnostics ----
     # Agents that expose the _DIAG/diag_snapshot pattern (see
     # agents/mega_lucario/agent_core_improved.py, agents/improved_probabilistic/main.py,
-    # agents/mechi22_alakazam/agent_core.py) count how often their never-crash
-    # fallback layers actually fire across every game just played. A nonzero
-    # fallback_rate here means search or the heuristic is silently failing on
-    # real inputs -- worth investigating even though the agent never crashed.
+    # agents/mechi22_alakazam/agent_core.py, agents/il_agent/agent_core.py and
+    # the agents/s2_arms wrappers) count how often their never-crash fallback
+    # layers actually fire across every game just played. A nonzero
+    # fallback_rate here means the policy is silently being bypassed on real
+    # inputs -- worth investigating even though the agent never crashed. The
+    # rate alone is not the story: read it against `decisions` (the
+    # denominator) and the per-reason counts in `raw`.
     fallback_diag = {}
+    fallback_first = {}
     for a in agents:
         mod = _LOADED_MODULES.get(a)
         if mod is not None and hasattr(mod, "diag_snapshot"):
             fallback_diag[a] = mod.diag_snapshot()
+            first_fn = getattr(mod, "diag_first", None)
+            if callable(first_fn) and first_fn():
+                fallback_first[a] = first_fn()
     if fallback_diag:
         print("\n=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===")
         for a, snap in fallback_diag.items():
             print(f"  {a:22s} fallback_rate={snap.get('fallback_rate', 0.0):6.2%}  "
                   f"decisions={snap.get('decisions', 0)}  raw={dict(snap)}")
+        # Also to stderr: survives `> results.txt` redirection, and is the
+        # channel the smoke test / CI reads without parsing the full report.
+        print("[fallback-diag] end-of-run summary "
+              "(fallbacks/decisions; first occurrences in the result JSON):",
+              file=sys.stderr)
+        for a, snap in fallback_diag.items():
+            reasons = {k: v for k, v in sorted(snap.items())
+                       if k not in ("enabled", "decisions", "fallbacks", "fallback_rate")
+                       and isinstance(v, int) and v > 0}
+            print(f"[fallback-diag] {a}: {snap.get('fallbacks', 0)}"
+                  f"/{snap.get('decisions', 0)} = "
+                  f"{snap.get('fallback_rate', 0.0):.2%}  by_reason={reasons}",
+                  file=sys.stderr)
+        if tb_dir is not None:
+            _write_fallback_tb(fallback_diag, tb_dir, step=int(time.time()))
 
     result = {
         "agents": agents,
@@ -592,6 +650,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
             for a in agents
         },
         "fallback_diag": fallback_diag,
+        "fallback_first": fallback_first,
     }
     out_path = out_path or (REPO / "reports" / "agent_benchmark.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -619,6 +678,11 @@ def main():
                     help="score Glicko for this run's printout but don't read/write --glicko-path "
                          "(use for isolated runs, e.g. deck-arm sweeps, that shouldn't pollute "
                          "the standing ratings)")
+    ap.add_argument("--tb-dir", type=Path, default=REPO / "runs" / "benchmark_fallbacks",
+                    help="TensorBoard log dir for fallback-diagnostic scalars "
+                         "(default: runs/benchmark_fallbacks)")
+    ap.add_argument("--no-tb", action="store_true",
+                    help="skip writing fallback TensorBoard scalars")
     args = ap.parse_args()
     if args.list_pool:
         print_pool_report()
@@ -634,7 +698,8 @@ def main():
     if not agents:
         sys.exit("no agents selected")
     run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
-                  out_path=args.out, persist_glicko=not args.no_glicko_persist)
+                  out_path=args.out, persist_glicko=not args.no_glicko_persist,
+                  tb_dir=None if args.no_tb else args.tb_dir)
 
 
 if __name__ == "__main__":

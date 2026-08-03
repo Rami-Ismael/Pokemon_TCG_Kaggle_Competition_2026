@@ -28,3 +28,10 @@ finally:
 my_deck = [int(x) for x in (_REPO / "agents" / "il_agent" / "deck.csv").read_text().split() if x.strip()]
 _mod.my_deck = my_deck
 agent = _mod.agent
+
+# Re-export the core's fallback-tracking hooks (agents/il_agent/agent_core.py,
+# PTCG_FALLBACK_TRACK=1) so the benchmark harness collects per-arm diagnostics
+# -- each wrapper holds a private module instance, so counters are per-arm.
+diag_reset = _mod.diag_reset
+diag_snapshot = _mod.diag_snapshot
+diag_first = _mod.diag_first
