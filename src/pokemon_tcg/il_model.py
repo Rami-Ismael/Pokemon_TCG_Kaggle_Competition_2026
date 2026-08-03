@@ -36,16 +36,19 @@ from transformers import BertConfig, BertModel, PretrainedConfig, PreTrainedMode
 from .il_dataset import (
     ATTACK_VOCAB_SIZE,
     CARD_VOCAB_SIZE,
+    GLOBAL_FEATURE_SPECS,
     MAX_OPTIONS,
     N_GLOBAL_SCALARS,
     N_OPT_SCALARS,
     N_REF_SCALARS,
     N_SLOT_SCALARS,
     N_STATE_SLOTS,
+    OPT_FEATURE_SPECS,
     OPTION_TYPE_VOCAB_SIZE,
     SELECT_CONTEXT_VOCAB_SIZE,
     SELECT_TYPE_VOCAB_SIZE,
     SPECIAL_VOCAB_SIZE,
+    feature_columns,
 )
 
 
@@ -59,6 +62,8 @@ class PTCGILConfig(PretrainedConfig):
         num_attention_heads: int = 4,
         intermediate_size: int | None = None,
         dropout: float = 0.1,
+        global_features: list[str] | None = None,
+        opt_features: list[str] | None = None,
         **kwargs,
     ) -> None:
         super().__init__(**kwargs)
@@ -67,6 +72,13 @@ class PTCGILConfig(PretrainedConfig):
         self.num_attention_heads = num_attention_heads
         self.intermediate_size = intermediate_size or hidden_size * 4
         self.dropout = dropout
+        # Deterministic-future feature groups this checkpoint consumes
+        # (il_dataset.GLOBAL_FEATURE_SPECS / OPT_FEATURE_SPECS names). The
+        # encoder always emits every group; these lists select columns, so
+        # a checkpoint is self-describing and legacy checkpoints (fields
+        # absent -> empty) ignore the extra tensors entirely.
+        self.global_features = list(global_features or [])
+        self.opt_features = list(opt_features or [])
 
 
 class PTCGImitationPolicy(PreTrainedModel):
@@ -89,6 +101,20 @@ class PTCGImitationPolicy(PreTrainedModel):
         self.global_scalar_proj = nn.Linear(N_GLOBAL_SCALARS, h)
         self.opt_scalar_proj = nn.Linear(N_OPT_SCALARS, h)
         self.opt_ref_scalar_proj = nn.Linear(2 * N_REF_SCALARS, h)  # ref1 + ref2
+
+        # Deterministic-future features: column-select from the always-emitted
+        # extra_global / extra_opt tensors, per this checkpoint's config.
+        # feature_columns raises on unknown names (fail loudly, standing rule).
+        g_cols = feature_columns(config.global_features, GLOBAL_FEATURE_SPECS)
+        o_cols = feature_columns(config.opt_features, OPT_FEATURE_SPECS)
+        self.extra_global_proj = nn.Linear(len(g_cols), h) if g_cols else None
+        self.extra_opt_proj = nn.Linear(len(o_cols), h) if o_cols else None
+        self.register_buffer(
+            "extra_global_cols", torch.tensor(g_cols, dtype=torch.long), persistent=False
+        )
+        self.register_buffer(
+            "extra_opt_cols", torch.tensor(o_cols, dtype=torch.long), persistent=False
+        )
 
         self.cls_param = nn.Parameter(torch.zeros(h))
         self.slot_pos_emb = nn.Embedding(N_STATE_SLOTS, h)
@@ -126,6 +152,8 @@ class PTCGImitationPolicy(PreTrainedModel):
         opt_ref_scalar: torch.Tensor,
         opt_mask: torch.Tensor,
         label: torch.Tensor | None = None,
+        extra_global: torch.Tensor | None = None,
+        extra_opt: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor | None]:
         batch_size = slot_card_id.shape[0]
         device = slot_card_id.device
@@ -157,6 +185,15 @@ class PTCGImitationPolicy(PreTrainedModel):
             + self.select_context_emb(select_context)
             + self.global_scalar_proj(global_scalar)
         ).unsqueeze(1)
+        if self.extra_global_proj is not None:
+            if extra_global is None:
+                raise ValueError(
+                    f"checkpoint consumes global features {self.config.global_features} "
+                    "but no extra_global tensor was passed -- encoder/model mismatch"
+                )
+            cls_embed = cls_embed + self.extra_global_proj(
+                extra_global.index_select(-1, self.extra_global_cols)
+            ).unsqueeze(1)
 
         # [B, MAX_OPTIONS, H]: sum over ref1 + ref2 (zero-padded when a ref is absent)
         ref_embed = self.card_emb(opt_ref_card_id).sum(dim=2)
@@ -169,6 +206,15 @@ class PTCGImitationPolicy(PreTrainedModel):
             + self.opt_ref_scalar_proj(opt_ref_scalar)
             + self.opt_pos_emb(torch.arange(MAX_OPTIONS, device=device)).unsqueeze(0)
         )
+        if self.extra_opt_proj is not None:
+            if extra_opt is None:
+                raise ValueError(
+                    f"checkpoint consumes option features {self.config.opt_features} "
+                    "but no extra_opt tensor was passed -- encoder/model mismatch"
+                )
+            opt_embed = opt_embed + self.extra_opt_proj(
+                extra_opt.index_select(-1, self.extra_opt_cols)
+            )
 
         seq = torch.cat([cls_embed, slot_embed, opt_embed], dim=1)
         cls_mask = torch.ones(batch_size, 1, dtype=torch.bool, device=device)

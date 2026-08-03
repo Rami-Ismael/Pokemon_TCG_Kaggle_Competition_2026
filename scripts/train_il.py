@@ -266,6 +266,12 @@ def main() -> None:
                           "single-process loader, which was 56%% data-wait on MPS")
     ap.add_argument("--eval-every-steps", type=int, default=None,
                      help="eval+checkpoint at this step interval (default: once, at the end)")
+    ap.add_argument("--features", default="",
+                     help="comma-separated deterministic-future feature groups the model "
+                          "consumes (names from il_dataset.GLOBAL_FEATURE_SPECS / "
+                          "OPT_FEATURE_SPECS, e.g. 'ko_race,attack_tactical'). The "
+                          "encoder always computes every group; this only selects which "
+                          "columns the model sees. Empty = baseline architecture.")
     ap.add_argument("--hidden-size", type=int, default=192)
     ap.add_argument("--num-layers", type=int, default=6)
     ap.add_argument("--num-heads", type=int, default=6)
@@ -347,10 +353,21 @@ def main() -> None:
     )
     eval_loader = DataLoader(eval_ds, batch_size=args.batch_size)
 
+    feature_names = [f for f in args.features.split(",") if f]
+    from pokemon_tcg.il_dataset import GLOBAL_FEATURE_SPECS, OPT_FEATURE_SPECS
+    unknown_features = [
+        f for f in feature_names
+        if f not in GLOBAL_FEATURE_SPECS and f not in OPT_FEATURE_SPECS
+    ]
+    if unknown_features:
+        sys.exit(f"unknown feature group(s) {unknown_features}; known: "
+                 f"{list(GLOBAL_FEATURE_SPECS) + list(OPT_FEATURE_SPECS)}")
     model_config = PTCGILConfig(
         hidden_size=args.hidden_size,
         num_hidden_layers=args.num_layers,
         num_attention_heads=args.num_heads,
+        global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
+        opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
     )
     model = PTCGImitationPolicy(model_config).to(device)
     n_params = sum(p.numel() for p in model.parameters())
