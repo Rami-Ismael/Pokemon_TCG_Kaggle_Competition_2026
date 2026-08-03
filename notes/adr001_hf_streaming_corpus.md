@@ -1,6 +1,6 @@
 # ADR-001: Host the behavior-cloning episode corpus on Hugging Face Hub and stream it during training
 
-**Status:** Proposed
+**Status:** Accepted (implemented 2026-08-03)
 **Date:** 2026-08-03
 **Deciders:** Rami Ismael
 
@@ -255,20 +255,51 @@ local cache layer for free.
    Measured on train-2026-07-01: 5,266 episodes, 21.47 GB → 2 shards, 266.5 MB
    (**80.6×**) in 44 s (487 MB/s); verify passed — all rows hash-checked, id set
    exact, 50-row byte-identical sample; unpack reconstructs originals bit-for-bit.
-2. [~] Private repo `Rami/ptcg-episodes` created (done); day 2026-07-01 uploaded
-   in 40 s and confirmed streamable from the Hub (2 shards, manifest scores
-   intact). Remaining: pack+upload train-2026-07-26 and eval-2026-07-27, then
-   delete verified local raw folders.
-3. [ ] Rolling ingest loop: Kaggle episode download → pack → upload → verify →
-   prune raw, keeping local raw buffer under ~10 GB.
-4. [ ] Add a streaming source to [il_dataset.py](../src/pokemon_tcg/il_dataset.py):
-   `load_dataset("parquet", data_files=..., streaming=True)` → episode rows →
-   existing `iter_decisions`/`encode_observation`; keep the local-shard path as the
-   default when the cache exists. Wire `set_epoch`, shuffle buffers, and
-   `StatefulDataLoader` resume into [train_il.py](../scripts/train_il.py).
-5. [ ] Smoke test: one epoch over the 3-day subset from the Hub stream; compare
-   examples/sec and loss curve vs the current local-JSON loader; confirm MPS
-   utilization is unchanged.
+2. [x] Private repo `Rami/ptcg-episodes` (done 2026-08-03): all three days
+   uploaded and Hub-verified (every row's sha256 re-checked by streaming the
+   shards back down, id sets exact, byte-identical samples) — 07-01 (2 shards,
+   266.5 MB), 07-26 (4 shards, 253.0 MB, 84.9×), 07-27 (packed+uploaded the
+   same day). ⚠️ one upload ran at only ~3.5 Mbps effective (579 s / 253 MB)
+   vs the 57 Mbps measured uplink — single sample, confounded by concurrent
+   traffic; watch, don't panic, uploads are ~daily 250 MB either way.
+3. [x] Rolling ingest loop (done 2026-08-03): `scripts/ingest_episodes.py` —
+   `status` / `run` (pack → local verify → upload → **hub verify**) /
+   `download` / `backfill-manifest` / `verify-hub`. The download stage uses the
+   official kaggle CLI's episode support (`team-submissions` → `episodes` →
+   `replay`), verified to return files **byte-identical** to the existing
+   archive (episode 88453216). Raw-folder deletion is deliberately NOT
+   automated: the script prints what became safe to delete after hub-verify
+   and stops there (concurrent sessions read `data/episodes/`).
+   Per-episode rating fields for NEW days are approximated from each
+   submission's current `publicScore` (the CLI does not expose the historical
+   per-episode ratings the original manifest had); blank means unknown.
+4. [x] Streaming source (done 2026-08-03): `ShardILDataset` in
+   [il_dataset.py](../src/pokemon_tcg/il_dataset.py) — reads episode rows from
+   the Hub (per-shard `hf_hub_download` into the standard HF cache: first pass
+   pays network, later passes read at SSD speed) or a local shard dir, shares
+   `iter_episode_decisions`/`encode_observation` with the raw-JSON path,
+   splits shards across DataLoader workers, reshuffles per `set_epoch`.
+   [train_il.py](../scripts/train_il.py) gained `--data-source {auto,local,hub}`,
+   `--hub-days`, `--num-workers`; hub schedule length comes from parquet
+   footers. `StatefulDataLoader` mid-epoch resume: deferred (torchdata is not
+   a dependency; runs are restartable at pass granularity as before).
+5. [x] Equality + smoke (2026-08-03): with shuffling off, the Hub-shard stream
+   and the local raw-JSON stream produce IDENTICAL example sequences (30
+   episodes → 4,324 examples, same labels, same feature checksums);
+   tests/test_privacy_no_leak.py + test_il_pipeline.py pass (15/15), full
+   suite 24/24 after the worktree models/ symlink fix.
+   Measured throughput (default 192h/6L model, batch 64, MPS, 150 steps,
+   steady-state windows, shards pre-cached):
+   | source | workers | steps/s |
+   |---|---|---|
+   | local raw JSON (old path) | 0 | 11.35 |
+   | hub shards | 0 | 11.4 |
+   | hub shards | 4 | **14.1** (+24%) |
+   | hub shards | 6 | 14.15 (plateau) |
+   Cached shard streaming costs nothing vs raw local files; 4 workers is the
+   recommended default; beyond 4 the bottleneck is MPS compute + collation,
+   not shard parallelism. (The earlier "56% data-wait" single-worker note is
+   partially, not fully, recoverable via workers.)
 6. [ ] Revisit pricing only on triggers: >80 GB private used → PRO ($9/mo); encoder
    stabilized and loader CPU-bound → emit derived decision-level Parquet (v2).
 7. [ ] Post-competition teardown: once training no longer needs the corpus, delete

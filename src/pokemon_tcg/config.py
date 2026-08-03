@@ -26,6 +26,12 @@ EXTERNAL_DATA_DIR = DATA_DIR / "external"  # legacy; episodes now live in EPISOD
 EPISODES_DIR = DATA_DIR / "episodes"
 EPISODES_SPLITS_DIR = EPISODES_DIR / "splits"
 
+# Packed corpus on Hugging Face Hub (ADR-001): private dataset repo holding
+# zstd-Parquet episode shards, layout {split}/day=YYYY-MM-DD/shard-NNN.parquet.
+# EPISODES_PACKED_DIR is the local staging/cache dir mirroring that layout.
+HF_EPISODES_REPO = "Rami/ptcg-episodes"
+EPISODES_PACKED_DIR = DATA_DIR / "episodes_packed"
+
 # Artifact directories.
 MODELS_DIR = PROJECT_ROOT / "models"
 SUBMISSIONS_DIR = PROJECT_ROOT / "submissions"

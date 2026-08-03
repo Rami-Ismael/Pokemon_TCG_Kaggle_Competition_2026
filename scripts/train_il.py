@@ -1,9 +1,11 @@
 """Train the Pokemon TCG imitation-learning (behavior cloning) policy.
 
-Reads training decisions directly from the on-disk episode split named in
-data/episodes/splits/splits.json (train-2026-07-26) and validates on the
-held-out calendar day (eval-2026-07-27) -- no download, no re-splitting,
-per the project's held-out-DAY rule.
+Training decisions come from one of two interchangeable sources
+(--data-source): the on-disk episode splits named in
+data/episodes/splits/splits.json, or the packed zstd-Parquet corpus in the
+private Hugging Face repo (ADR-001) streamed shard-by-shard with optional
+DataLoader workers (--num-workers). Validation is always the held-out
+calendar day(s), per the project's held-out-DAY rule -- no re-splitting.
 
 Usage:
     uv run python scripts/train_il.py --epochs 3
@@ -60,7 +62,7 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
 from pokemon_tcg.device import log_device_info, resolve_device  # noqa: E402
-from pokemon_tcg.il_dataset import ILDataset, resolve_split_dir  # noqa: E402
+from pokemon_tcg.il_dataset import ILDataset, ShardILDataset, resolve_split_dir  # noqa: E402
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 from pokemon_tcg.logging_utils import TensorBoardLogger  # noqa: E402
 
@@ -245,6 +247,23 @@ def main() -> None:
     ap.add_argument(
         "--eval-batches", type=int, default=100, help="cap eval batches (streamed too)"
     )
+    ap.add_argument("--data-source", choices=["auto", "local", "hub"], default="auto",
+                     help="'local' = raw JSON split folders (original path); 'hub' = "
+                          "zstd Parquet shards from the private HF repo (ADR-001; each "
+                          "shard is cached after first use, so pass 2+ reads from "
+                          "disk); 'auto' = local if the split folder exists, else hub. "
+                          "NOTE: hub trains on ALL train days in the repo (the growing "
+                          "corpus), not just splits.json's single day -- restrict with "
+                          "--hub-days for a like-for-like comparison")
+    ap.add_argument("--hub-days", default=None,
+                     help="comma-separated YYYY-MM-DD list restricting TRAIN days when "
+                          "--data-source hub (eval always uses the repo's eval days)")
+    ap.add_argument("--hub-repo", default=None,
+                     help=f"dataset repo id (default {config.HF_EPISODES_REPO})")
+    ap.add_argument("--num-workers", type=int, default=0,
+                     help="DataLoader workers for the train stream (hub source only; "
+                          "needs >= that many shards). 0 reproduces the old "
+                          "single-process loader, which was 56%% data-wait on MPS")
     ap.add_argument("--eval-every-steps", type=int, default=None,
                      help="eval+checkpoint at this step interval (default: once, at the end)")
     ap.add_argument("--hidden-size", type=int, default=192)
@@ -283,14 +302,49 @@ def main() -> None:
     logger = TensorBoardLogger(run_dir)
     print(f"run dir: {run_dir}  device: {device}  git sha: {git_sha()[:12]}")
 
-    train_dir = resolve_split_dir(args.train_split)
-    eval_dir = resolve_split_dir(args.eval_split)
-    print(f"train split: {train_dir}")
-    print(f"eval split:  {eval_dir}")
+    source = args.data_source
+    if source == "auto":
+        try:
+            source = "local" if resolve_split_dir(args.train_split).exists() else "hub"
+        except (FileNotFoundError, KeyError):
+            source = "hub"
+    if args.num_workers > 0 and source != "hub":
+        sys.exit(
+            "--num-workers > 0 requires --data-source hub: ILDataset over raw JSON "
+            "has no worker sharding, so every worker would duplicate the data."
+        )
 
-    train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed)
-    eval_ds = ILDataset(eval_dir, max_episodes=args.max_eval_episodes, shuffle_buffer=1)
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size)
+    if source == "hub":
+        hub_days = args.hub_days.split(",") if args.hub_days else None
+        train_ds = ShardILDataset(
+            "train", days=hub_days, repo_id=args.hub_repo,
+            max_episodes=args.max_train_episodes, seed=args.seed,
+        )
+        eval_ds = ShardILDataset(
+            "eval", repo_id=args.hub_repo,
+            max_episodes=args.max_eval_episodes, shuffle_buffer=1,
+        )
+        n_episodes = train_ds.n_episodes()  # parquet footers only, no downloads
+        if args.num_workers > train_ds.n_shards:
+            print(f"warning: --num-workers {args.num_workers} > {train_ds.n_shards} "
+                  f"train shards; clamping to {train_ds.n_shards}")
+            args.num_workers = train_ds.n_shards
+        print(f"train source: hub {train_ds.repo_id} ({train_ds.n_shards} shards, "
+              f"{n_episodes} episodes{', days ' + args.hub_days if hub_days else ''}, "
+              f"{args.num_workers} workers)")
+        print(f"eval source:  hub {eval_ds.repo_id} ({eval_ds.n_shards} shards)")
+    else:
+        train_dir = resolve_split_dir(args.train_split)
+        eval_dir = resolve_split_dir(args.eval_split)
+        print(f"train split: {train_dir}")
+        print(f"eval split:  {eval_dir}")
+        train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed)
+        eval_ds = ILDataset(eval_dir, max_episodes=args.max_eval_episodes, shuffle_buffer=1)
+        n_episodes = len(list(train_dir.glob("*.json")))
+
+    train_loader = DataLoader(
+        train_ds, batch_size=args.batch_size, num_workers=args.num_workers
+    )
     eval_loader = DataLoader(eval_ds, batch_size=args.batch_size)
 
     model_config = PTCGILConfig(
@@ -306,13 +360,13 @@ def main() -> None:
 
     args.out.mkdir(parents=True, exist_ok=True)
 
-    # total_steps for the cosine schedule: ILDataset is a streaming
-    # IterableDataset (no __len__), so estimate it rather than block on a
+    # total_steps for the cosine schedule: both dataset types are streaming
+    # IterableDatasets (no __len__), so estimate it rather than block on a
     # full pre-count pass. ROWS_PER_EPISODE is the measured rate from
     # notes/phase6_projection.md (181.3 rows/episode, incl. declines and
-    # the multi-select unroll); n_episodes is a cheap glob, not a parse.
+    # the multi-select unroll); n_episodes came from a glob (local) or the
+    # shard footers (hub) above.
     ROWS_PER_EPISODE = 181.3
-    n_episodes = len(list(train_dir.glob("*.json")))
     if args.max_train_episodes:
         n_episodes = min(n_episodes, args.max_train_episodes)
     if args.total_steps is not None:
@@ -405,7 +459,14 @@ def main() -> None:
     # times as needed to reach total_steps, instead of `for epoch in
     # range(args.epochs)` -- this is what makes a fractional-epoch schedule
     # (a genuine sub-epoch pass, not a truncated multi-epoch one) possible.
+    pass_idx = 0
     while step < total_steps:
+        # Reshuffle the shard order + shuffle rng each pass. No-op for
+        # ILDataset, which has no set_epoch and keeps its original
+        # fixed-seed behavior.
+        if hasattr(train_ds, "set_epoch"):
+            train_ds.set_epoch(pass_idx)
+        pass_idx += 1
         for batch in train_loader:
             if step >= total_steps:
                 break
