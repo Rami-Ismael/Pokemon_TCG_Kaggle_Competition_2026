@@ -50,6 +50,17 @@ except Exception:
 
 MODEL_DIR = os.environ.get("IL_MODEL_DIR", str(_HERE / "model"))
 if not Path(MODEL_DIR).exists():
+    if os.environ.get("IL_MODEL_DIR"):
+        # An EXPLICIT override that doesn't exist must fail loudly, not
+        # silently resolve to the dev checkpoint (that would run a prior
+        # from the WRONG model under the requested checkpoint's name) --
+        # same fix as agents/il_agent/agent_core.py, 2026-08-03. Safe for
+        # submissions: the Kaggle evaluator never sets IL_MODEL_DIR.
+        raise FileNotFoundError(
+            f"IL_MODEL_DIR={os.environ['IL_MODEL_DIR']} does not exist; "
+            f"refusing to fall back to the dev checkpoint. In a git "
+            f"worktree, symlink the checkpoint dir from the main checkout."
+        )
     # Local dev checkout: agents/mega_lucario/ has no bundled `model/`, the
     # checkpoint lives at the repo-level models/il_agent/ instead. A real
     # submission bundle ships its own sibling `model/` dir (built the same

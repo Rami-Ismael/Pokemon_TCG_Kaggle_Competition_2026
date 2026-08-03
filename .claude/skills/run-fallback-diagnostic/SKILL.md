@@ -25,8 +25,12 @@ first symlink the untracked model/episode dirs from the main checkout, or
 every decision silently counts as `model_unavailable`:
 
 ```bash
-MAIN=$(dirname "$(git rev-parse --git-common-dir)"); [ -e models/il_agent ] || ln -s "$MAIN/models/il_agent" models/il_agent; [ -e data/episodes ] || ln -s "$MAIN/data/episodes" data/episodes
+MAIN=$(dirname "$(git rev-parse --git-common-dir)"); [ -e models/il_agent ] || ln -s "$MAIN/models/il_agent" models/il_agent; [ -e models/s2 ] || ln -s "$MAIN/models/s2" models/s2; [ -e data/episodes ] || ln -s "$MAIN/data/episodes" data/episodes
 ```
+
+(`models/s2` is required for any `--agent s2_*` run: those wrappers set an
+explicit `IL_MODEL_DIR`, and a missing checkpoint now raises
+`FileNotFoundError` at load instead of silently running Stage-1 weights.)
 
 ## Run (agent path)
 
@@ -60,9 +64,9 @@ Other knobs: `--agent s2_e0_s42` (any `AGENT_FILES` key, `@deck-tag` ok),
 Reason key: `model_unavailable:*`, `policy_exception:<ExcClass>`,
 `step_timeout`, `encode_none`, `model_action_illegal`, `min_count_unmet`,
 `no_legal_actions`, `too_many_options` are fallbacks (counted in the rate);
-`unknown_card`, `unknown_attack`, `nan_logits`, `model_load_error`,
-`model_dir_redirect` are silent-degradation signals (reported, never in
-the rate — the model still chose).
+`unknown_card`, `unknown_attack`, `nan_logits`, `model_load_error` are
+silent-degradation signals (reported, never in the rate — the model still
+chose).
 
 ## Verify the tracker itself (negative control)
 
@@ -104,14 +108,19 @@ budget. Nothing to strip at build time.
 - **The flag is read at import.** Setting `PTCG_FALLBACK_TRACK=1` after an
   agent module is loaded does nothing. The driver and benchmark set it
   before `load_agent`; do the same in any new harness.
-- **A nonexistent `IL_MODEL_DIR` does not fail** — it silently redirects to
-  `models/il_agent` and benchmarks the wrong checkpoint. This defeated the
-  first negative control this session. It now surfaces as
-  `model_dir_redirect` in the snapshot; to force a load failure use an
-  *existing but empty* dir (see negative control above).
-- **`diag_reset()` wipes import-time events**, which is why
-  `model_dir_redirect` is a snapshot property, not a counter. Don't convert
-  it back.
+- **A nonexistent explicit `IL_MODEL_DIR` raises `FileNotFoundError` at
+  import** (fixed 2026-08-03 in `agents/il_agent/agent_core.py` and
+  `agents/mega_lucario/bc_prior.py`). It used to silently redirect to
+  `models/il_agent` and benchmark the wrong checkpoint — that defeated this
+  diagnostic's first negative control. The unset-env dev fallback to
+  `models/il_agent` is unchanged and intentional. To force a *load* failure
+  for the negative control, use an existing-but-empty dir (above), not a
+  nonexistent one.
+- **`diag_reset()` wipes import-time events.** Both harnesses call it right
+  after loading agents, so anything counted during module import is lost.
+  If you ever add an import-time signal, surface it as a computed snapshot
+  property, not a counter (a removed `model_dir_redirect` signal learned
+  this the hard way before being superseded by the fail-fast above).
 - **`decisions` counts every select-carrying `agent()` call**, including
   the cabt interpreter's stale-echo re-asks of the inactive player. Rates
   are comparable across runs; don't equate the denominator with "turns".
@@ -138,5 +147,9 @@ budget. Nothing to strip at build time.
 - Every decision is `model_unavailable:no_ml_stack` → torch/pokemon_tcg
   import failed (check `uv run python -c "import torch"`); `:load_failed`
   → read the `model_load_error` traceback in `diag_first` / the JSON.
+- `FileNotFoundError: IL_MODEL_DIR=... does not exist` at agent load →
+  the explicit checkpoint override points nowhere (fresh worktree, s2 arm
+  without the `models/s2` symlink). Symlink it (Prerequisites above) —
+  this loud failure replaced a silent wrong-model redirect on purpose.
 - `OpenSpiel environments: 41` INFO lines at startup → kaggle_environments
   noise, harmless.

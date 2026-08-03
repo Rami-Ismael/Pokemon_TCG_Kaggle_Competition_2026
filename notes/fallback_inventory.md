@@ -16,7 +16,7 @@ decisions. Rates, not counts: read every number against `decisions`.
 | Site | Catches / condition | Returns / effect |
 |---|---|---|
 | `agents/il_agent/agent_core.py:66` | `except Exception` on torch/pokemon_tcg import | `_ML_AVAILABLE=False` → EVERY decision `_safe_choice` (`model_unavailable:no_ml_stack`) |
-| `agents/il_agent/agent_core.py:71-74` | explicit `IL_MODEL_DIR` doesn't exist | silently resolves to `models/il_agent` — the WRONG checkpoint for a sweep (`model_dir_redirect` signal; defeated this session's first negative control) |
+| `agents/il_agent/agent_core.py:71-89` | explicit `IL_MODEL_DIR` doesn't exist | **FIXED 2026-08-03: raises `FileNotFoundError` at import.** Previously resolved silently to `models/il_agent` — the WRONG checkpoint for a sweep; defeated this session's first negative control. Unset-env dev fallback to `models/il_agent` unchanged (by design). Same fix applied to the twin site `agents/mega_lucario/bc_prior.py:51`. |
 | `agents/il_agent/agent_core.py:189` | `except Exception` in `_load_model` | `_model=None` → every decision `_safe_choice` (`model_unavailable:load_failed`; traceback kept as `model_load_error`) |
 | `agents/il_agent/agent_core.py:298` | `select.option` empty | `[]` (`no_legal_actions`) |
 | `agents/il_agent/agent_core.py:301` | >48 options (`MAX_OPTIONS`) | `_safe_choice` (`too_many_options`) |
@@ -30,8 +30,10 @@ decisions. Rates, not counts: read every number against `decisions`.
 | (nowhere) | NaN logits | argmax still yields an in-range index — garbage-but-legal choice (`nan_logits` signal; count-only, behavior unchanged) |
 
 `s2_arms/*/agent_core.py` (9 wrappers): all of the above via a private module
-instance; diag hooks re-exported per-arm. Note the `model_dir_redirect` row —
-an arm checkpoint missing in a worktree silently benchmarks Stage-1 weights.
+instance; diag hooks re-exported per-arm. An arm checkpoint missing in a
+worktree used to silently benchmark Stage-1 weights under the arm's name;
+since the `IL_MODEL_DIR` fix above it raises at load — symlink `models/s2`
+from the main checkout (see the run-fallback-diagnostic skill).
 
 ## Other agents of ours (own coarse `_DIAG` or none)
 

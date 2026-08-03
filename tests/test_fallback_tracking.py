@@ -39,6 +39,32 @@ def _load_core(track: bool, tag: str):
     return mod
 
 
+def test_explicit_missing_model_dir_fails_loudly():
+    """An explicit IL_MODEL_DIR that doesn't exist must raise at import.
+
+    The old behavior silently resolved to the dev checkpoint, so a
+    checkpoint sweep (e.g. an s2_arms wrapper in a fresh worktree) would
+    benchmark Stage-1 weights under the arm's name -- it defeated this
+    diagnostic's own first negative control. The unset-env dev fallback to
+    models/il_agent stays allowed (exercised by every other test here).
+    """
+    os.environ["IL_MODEL_DIR"] = "/nonexistent_model_dir_for_test"
+    try:
+        spec = importlib.util.spec_from_file_location("_fbtest_core_missdir", CORE)
+        mod = importlib.util.module_from_spec(spec)
+        try:
+            spec.loader.exec_module(mod)
+        except FileNotFoundError as e:
+            assert "IL_MODEL_DIR" in str(e)
+        else:
+            raise AssertionError(
+                "importing agent_core with a nonexistent explicit IL_MODEL_DIR "
+                "should raise FileNotFoundError, not silently redirect"
+            )
+    finally:
+        os.environ.pop("IL_MODEL_DIR", None)
+
+
 def test_disabled_is_a_genuine_noop():
     """Flag unset (the Kaggle-bundle case): hooks count nothing, keep nothing."""
     mod = _load_core(track=False, tag="off")
@@ -108,6 +134,8 @@ def test_smoke_game_masking_is_clean():
 
 
 if __name__ == "__main__":
+    test_explicit_missing_model_dir_fails_loudly()
+    print("explicit missing IL_MODEL_DIR fails loudly: OK")
     test_disabled_is_a_genuine_noop()
     print("disabled no-op: OK")
     test_rate_math_and_reason_classification()

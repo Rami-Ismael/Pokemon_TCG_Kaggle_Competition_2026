@@ -70,6 +70,21 @@ except Exception:
 _ENV_MODEL_DIR = os.environ.get("IL_MODEL_DIR")
 MODEL_DIR = _ENV_MODEL_DIR or str(_HERE / "model")
 if not Path(MODEL_DIR).exists():
+    if _ENV_MODEL_DIR:
+        # An EXPLICIT override that doesn't exist must fail loudly, not
+        # silently resolve to the dev checkpoint: an s2_arms wrapper whose
+        # arm dir is missing (fresh git worktree, models/s2 not symlinked)
+        # would otherwise benchmark Stage-1 weights under the arm's name --
+        # this defeated a negative control on 2026-08-03. Import-time and
+        # dev/benchmark-only, so the never-crash contract is intact: the
+        # Kaggle evaluator never sets IL_MODEL_DIR (a submission bundle
+        # ships its own sibling model/ dir, which exists).
+        raise FileNotFoundError(
+            f"IL_MODEL_DIR={_ENV_MODEL_DIR} does not exist; refusing to fall "
+            f"back to the dev checkpoint (that would run the WRONG model). "
+            f"In a git worktree, symlink the checkpoint dir from the main "
+            f"checkout -- see .claude/skills/run-fallback-diagnostic/SKILL.md."
+        )
     # Local dev checkout: agents/il_agent/ has no bundled `model/`, the
     # checkpoint lives at the repo-level models/il_agent/ instead. A real
     # submission bundle (submissions/il_agent/) ships its own sibling
@@ -148,27 +163,12 @@ def diag_snapshot() -> dict:
     out["enabled"] = _TRACK
     out["fallbacks"] = fallbacks
     out["fallback_rate"] = fallbacks / max(1, decisions)
-    # An EXPLICIT IL_MODEL_DIR that didn't exist was silently redirected to
-    # the dev checkpoint -- a checkpoint sweep (e.g. an s2_arms wrapper whose
-    # arm dir is missing in a worktree) would silently benchmark the WRONG
-    # model. A static property, not a counter: the redirect happened at
-    # import, so a counter would be lost to the harness's post-load
-    # diag_reset(). The default dev-path resolution (no env var) stays
-    # silent: falling back to models/il_agent/ is by design there.
-    if _ENV_MODEL_DIR and MODEL_DIR != _ENV_MODEL_DIR:
-        out["model_dir_redirect"] = 1
     return out
 
 
 def diag_first() -> dict[str, dict]:
     """Full context (obs / chosen action / traceback) for occurrence #1 per reason."""
-    out = dict(_DIAG_FIRST)
-    if _ENV_MODEL_DIR and MODEL_DIR != _ENV_MODEL_DIR:
-        out.setdefault("model_dir_redirect", {
-            "reason": "model_dir_redirect",
-            "requested": _ENV_MODEL_DIR, "resolved": MODEL_DIR,
-        })
-    return out
+    return dict(_DIAG_FIRST)
 
 
 _model = None
