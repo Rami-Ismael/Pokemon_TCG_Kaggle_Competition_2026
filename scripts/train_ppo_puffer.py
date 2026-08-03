@@ -113,7 +113,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--init-from", type=Path, default=config.MODELS_DIR / "s2" / "e1_seed43")
     ap.add_argument("--total-timesteps", type=int, default=500_000)
-    ap.add_argument("--num-envs", type=int, default=16)
+    # One env per worker, always (cg per-process singleton, asserted below);
+    # 8x8 is the measured real-run topology (rl_pipeline_v1.md ~61 steps/s).
+    ap.add_argument("--num-envs", type=int, default=8)
     ap.add_argument("--num-workers", type=int, default=8)
     ap.add_argument("--bptt-horizon", type=int, default=128)
     ap.add_argument("--minibatch-size", type=int, default=512)
