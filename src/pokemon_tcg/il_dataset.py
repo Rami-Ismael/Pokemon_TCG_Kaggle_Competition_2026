@@ -1,10 +1,14 @@
 """Streaming behavior-cloning dataset for the Pokemon TCG imitation-learning agent.
 
-Reads episodes directly from the on-disk split folders named in
-``data/episodes/splits/splits.json`` -- no downloading, no re-splitting.
-Train uses ``train-2026-07-26/``, validation uses the held-out calendar day
-``eval-2026-07-27/`` (see splits.json's "held-out-DAY rule": distinct days
-avoid within-match leakage, so never shuffle across them).
+Two interchangeable episode sources produce the identical example stream:
+``ILDataset`` reads raw ``{episode_id}.json`` files from the on-disk split
+folders named in ``data/episodes/splits/splits.json``; ``ShardILDataset``
+reads the same episodes from the zstd Parquet shards of ADR-001 (private
+Hugging Face repo ``config.HF_EPISODES_REPO``, or a local shard directory),
+so the corpus no longer has to fit on this laptop raw. Either way the split
+discipline is the "held-out-DAY rule": train and eval are distinct calendar
+days (never shuffle across them), enforced by folder naming locally and by
+the ``{split}/day=YYYY-MM-DD/`` layout on the Hub.
 
 Each decision (one step, one agent POV) becomes one fixed-size training
 example:
@@ -45,8 +49,9 @@ from __future__ import annotations
 
 import json
 import random
+import re
 import sys
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from pathlib import Path
 
 import torch
@@ -440,9 +445,17 @@ def iter_decisions(
             episode = json.loads(path.read_text())
         except (json.JSONDecodeError, OSError):
             continue
-        steps = episode.get("steps") if isinstance(episode, dict) else episode
-        if not steps:
-            continue
+        yield from iter_episode_decisions(episode)
+
+
+def iter_episode_decisions(episode: dict | list) -> Iterator[tuple[dict, int, frozenset]]:
+    """Yield (obs_dict, chosen_index, exclude) for every real decision in ONE
+    parsed episode -- the shared core behind ``iter_decisions`` (raw JSON
+    folders) and ``ShardILDataset`` (packed Parquet shards, ADR-001). Label
+    and unrolling semantics are documented on ``iter_decisions``.
+    """
+    steps = episode.get("steps") if isinstance(episode, dict) else episode
+    if steps:
         for agent_idx in (0, 1):
             decisions: list[tuple[dict, list[int] | None]] = []
             for step in steps:
@@ -496,6 +509,41 @@ def iter_decisions(
                         yield obs, n_opts, frozenset(excluded)
 
 
+def _decisions_to_features(
+    decisions: Iterable[tuple[dict, int, frozenset]],
+) -> Iterator[dict[str, torch.Tensor]]:
+    """Encode a decision stream into training examples, dropping non-decisions."""
+    for obs, label, exclude in decisions:
+        feats = encode_observation(obs, exclude=exclude)
+        if feats is None:
+            continue
+        feats.pop("n_real_options", None)
+        feats["label"] = torch.tensor(label, dtype=torch.long)
+        yield feats
+
+
+def _shuffled(examples: Iterator, buffer_size: int, rng: random.Random) -> Iterator:
+    """Pass-through when buffer_size <= 1; otherwise pool-and-drain shuffling.
+
+    Same scheme ILDataset has always used: fill a pool of ``buffer_size``
+    examples, shuffle it, emit it all, repeat -- decorrelates neighbors
+    (same episode / same match) without holding the whole split in memory.
+    """
+    if buffer_size <= 1:
+        yield from examples
+        return
+    buf: list = []
+    for ex in examples:
+        buf.append(ex)
+        if len(buf) >= buffer_size:
+            rng.shuffle(buf)
+            yield from buf
+            buf = []
+    if buf:
+        rng.shuffle(buf)
+        yield from buf
+
+
 class ILDataset(IterableDataset):
     """Streams (features, label) examples from a split folder.
 
@@ -519,21 +567,143 @@ class ILDataset(IterableDataset):
 
     def __iter__(self):
         rng = random.Random(self.seed)
-        buf: list[dict] = []
-        for obs, label, exclude in iter_decisions(self.split_dir, self.max_episodes):
-            feats = encode_observation(obs, exclude=exclude)
-            if feats is None:
-                continue
-            feats.pop("n_real_options", None)
-            feats["label"] = torch.tensor(label, dtype=torch.long)
-            if self.shuffle_buffer <= 1:
-                yield feats
-                continue
-            buf.append(feats)
-            if len(buf) >= self.shuffle_buffer:
-                rng.shuffle(buf)
-                yield from buf
-                buf = []
-        if buf:
-            rng.shuffle(buf)
-            yield from buf
+        decisions = iter_decisions(self.split_dir, self.max_episodes)
+        yield from _shuffled(_decisions_to_features(decisions), self.shuffle_buffer, rng)
+
+
+def _resolve_hub_shards(repo_id: str, split: str, days: list[str] | None) -> list[str]:
+    """Sorted repo-relative shard paths for a split on the Hub.
+
+    The held-out-DAY discipline lives in the repo layout
+    (``{split}/day=YYYY-MM-DD/shard-NNN.parquet``), so restricting training
+    to specific days is a pure path filter -- days never mix across splits.
+    """
+    from huggingface_hub import HfApi  # lazy: only the Hub path needs it
+
+    pat = re.compile(
+        rf"^{re.escape(split)}/day=(\d{{4}}-\d{{2}}-\d{{2}})/shard-\d+\.parquet$"
+    )
+    return sorted(
+        f
+        for f in HfApi().list_repo_files(repo_id, repo_type="dataset")
+        if (m := pat.match(f)) and (days is None or m.group(1) in days)
+    )
+
+
+class ShardILDataset(IterableDataset):
+    """Same (features, label) stream as ILDataset, but read from the zstd
+    Parquet episode shards of ADR-001 instead of raw JSON folders.
+
+    Shards come from the private Hub repo (``config.HF_EPISODES_REPO``) or a
+    local directory with the same layout (``{split}/day=YYYY-MM-DD/
+    shard-NNN.parquet``). Hub shards are fetched one file at a time with
+    ``hf_hub_download`` into the standard huggingface_hub cache: the first
+    pass over the corpus pays the network cost, every later pass reads the
+    cached file at SSD speed. Rows are decompressed in memory, encoded, and
+    discarded -- the raw corpus never lands on disk.
+
+    With ``DataLoader(num_workers=N)`` the shard list is split evenly across
+    workers (worker w reads shards w, w+N, ...), so full parallelism needs
+    at least as many shards as workers (see ``n_shards``). ``max_episodes``
+    caps episodes PER WORKER in that case. Call ``set_epoch(e)`` before each
+    re-iteration so the shard order and shuffle rng differ per pass; with
+    ``shuffle_buffer <= 1`` iteration is deterministic (sorted shards, pack
+    order) for eval.
+    """
+
+    def __init__(
+        self,
+        split: str,
+        days: list[str] | None = None,
+        repo_id: str | None = None,
+        local_root: Path | None = None,
+        max_episodes: int | None = None,
+        shuffle_buffer: int = 2000,
+        seed: int = 0,
+    ) -> None:
+        self.split = split
+        self.repo_id = repo_id or config.HF_EPISODES_REPO
+        self.local_root = local_root
+        self.max_episodes = max_episodes
+        self.shuffle_buffer = shuffle_buffer
+        self.seed = seed
+        self._epoch = 0
+        if local_root is not None:
+            self.files = sorted(
+                str(p.relative_to(local_root))
+                for p in (local_root / split).glob("day=*/shard-*.parquet")
+                if days is None or p.parent.name.removeprefix("day=") in days
+            )
+        else:
+            self.files = _resolve_hub_shards(self.repo_id, split, days)
+        if not self.files:
+            raise FileNotFoundError(
+                f"no parquet shards for split {split!r}"
+                + (f", days {days}" if days else "")
+                + (f" under {local_root}" if local_root else f" in {self.repo_id}")
+            )
+
+    @property
+    def n_shards(self) -> int:
+        return len(self.files)
+
+    def set_epoch(self, epoch: int) -> None:
+        self._epoch = int(epoch)
+
+    def _local_path(self, rel: str) -> str:
+        if self.local_root is not None:
+            return str(self.local_root / rel)
+        from huggingface_hub import hf_hub_download  # lazy: only the Hub path needs it
+
+        return hf_hub_download(self.repo_id, rel, repo_type="dataset")
+
+    def n_episodes(self) -> int:
+        """Total episode rows, read from shard footers only (no full downloads)."""
+        import pyarrow.parquet as pq  # lazy: keep the evaluator bundle pyarrow-free
+
+        if self.local_root is not None:
+            return sum(
+                pq.ParquetFile(self.local_root / f).metadata.num_rows for f in self.files
+            )
+        from huggingface_hub import HfFileSystem
+
+        fs = HfFileSystem()
+        total = 0
+        for f in self.files:
+            with fs.open(f"datasets/{self.repo_id}/{f}", "rb") as fh:
+                total += pq.ParquetFile(fh).metadata.num_rows
+        return total
+
+    def __iter__(self):
+        import pyarrow.parquet as pq  # lazy: keep the evaluator bundle pyarrow-free
+
+        worker = torch.utils.data.get_worker_info()
+        wid, n_workers = (worker.id, worker.num_workers) if worker else (0, 1)
+
+        files = list(self.files)
+        if self.shuffle_buffer > 1:
+            # Integer arithmetic, NOT hash(tuple): spawned worker processes get
+            # different PYTHONHASHSEEDs, and every worker must derive the SAME
+            # permutation for the strided split below to stay disjoint.
+            random.Random(self.seed * 1_000_003 + self._epoch).shuffle(files)
+        files = files[wid::n_workers]
+        rng = random.Random((self.seed * 1_000_003 + self._epoch) * 64 + wid)
+
+        def episodes() -> Iterator[dict]:
+            n = 0
+            for rel in files:
+                pf = pq.ParquetFile(self._local_path(rel))
+                # row groups are small by construction (pack_episodes.py uses
+                # ~32 rows), so this holds a few MB decompressed at a time
+                for rb in pf.iter_batches(batch_size=8, columns=["episode_json"]):
+                    for raw in rb.column(0).to_pylist():
+                        if self.max_episodes is not None and n >= self.max_episodes:
+                            return
+                        n += 1
+                        yield json.loads(raw)
+
+        def features() -> Iterator[dict[str, torch.Tensor]]:
+            for episode in episodes():
+                yield from _decisions_to_features(iter_episode_decisions(episode))
+
+        yield from _shuffled(features(), self.shuffle_buffer, rng)
