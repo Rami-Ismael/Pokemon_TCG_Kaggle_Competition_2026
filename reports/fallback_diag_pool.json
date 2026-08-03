@@ -1,0 +1,148 @@
+{
+  "agent": "il_agent",
+  "opponents": [
+    "biohack44_day2",
+    "makthanithin_1084_baseline",
+    "pixiux_lucario_v63",
+    "plamen06_steel",
+    "ryotasueyoshi_alakazam",
+    "romanrozen_strong_start",
+    "dedquoc_rule_engine",
+    "makthanithin_improved_prob",
+    "daniilkrasnovvv_conservative_prob",
+    "prvsiyan_control_v11",
+    "prvsiyan_templates_alakazam",
+    "pllinas_alakazam",
+    "prvsiyan_grimbelief_alakazam",
+    "mechi22_alakazam",
+    "kiyotah_dragapult",
+    "kiyotah_iono",
+    "kiyotah_abomasnow"
+  ],
+  "pairs_per_opponent": 1,
+  "games": 34,
+  "record": {
+    "wins": 7,
+    "losses": 27,
+    "draws": 0
+  },
+  "per_opponent": {
+    "biohack44_day2": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 7.3
+    },
+    "makthanithin_1084_baseline": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 7.5
+    },
+    "pixiux_lucario_v63": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 4.7
+    },
+    "plamen06_steel": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 6.1
+    },
+    "ryotasueyoshi_alakazam": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 1.4
+    },
+    "romanrozen_strong_start": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 1.2
+    },
+    "dedquoc_rule_engine": {
+      "wins": 1,
+      "losses": 1,
+      "draws": 0,
+      "seconds": 1.1
+    },
+    "makthanithin_improved_prob": {
+      "wins": 1,
+      "losses": 1,
+      "draws": 0,
+      "seconds": 1.2
+    },
+    "daniilkrasnovvv_conservative_prob": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 1.1
+    },
+    "prvsiyan_control_v11": {
+      "wins": 1,
+      "losses": 1,
+      "draws": 0,
+      "seconds": 0.9
+    },
+    "prvsiyan_templates_alakazam": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "seconds": 4.6
+    },
+    "pllinas_alakazam": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 17.0
+    },
+    "prvsiyan_grimbelief_alakazam": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "seconds": 8.0
+    },
+    "mechi22_alakazam": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 3.5
+    },
+    "kiyotah_dragapult": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 6.7
+    },
+    "kiyotah_iono": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 12.6
+    },
+    "kiyotah_abomasnow": {
+      "wins": 0,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 6.6
+    }
+  },
+  "fallback": {
+    "decisions": 1882,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {
+    "mechi22_alakazam": {
+      "deck_returns": 2,
+      "decisions": 152,
+      "policy_ok": 152,
+      "fallback_rate": 0.0
+    }
+  }
+}
