@@ -116,6 +116,19 @@ AGENT_FILES = {
     # archetype (Metal-type, not Fighting/Psychic/Dragon/Electric/Grass-Ice
     # like everything else in the pool).
     "plamen06_steel": REPO / "agents" / "plamen06_steel" / "agent_core.py",
+    # Stage-2 REWEIGHT arms (rl_pipeline_v1.md §2.1): il_agent's inference core
+    # pointed at each fine-tuned checkpoint via thin wrappers. One entry per
+    # (arm, seed) -- distinct names on purpose, because Glicko history compounds
+    # by name and these are genuinely different policies.
+    "s2_e0_s42": REPO / "agents" / "s2_arms" / "e0_seed42" / "agent_core.py",
+    "s2_e0_s43": REPO / "agents" / "s2_arms" / "e0_seed43" / "agent_core.py",
+    "s2_e0_s44": REPO / "agents" / "s2_arms" / "e0_seed44" / "agent_core.py",
+    "s2_e1_s42": REPO / "agents" / "s2_arms" / "e1_seed42" / "agent_core.py",
+    "s2_e1_s43": REPO / "agents" / "s2_arms" / "e1_seed43" / "agent_core.py",
+    "s2_e1_s44": REPO / "agents" / "s2_arms" / "e1_seed44" / "agent_core.py",
+    "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
+    "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
+    "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
