@@ -1,0 +1,23 @@
+{
+  "retrieved_at_utc": "2026-08-03T17:07:22+00:00",
+  "competition": "pokemon-tcg-ai-battle",
+  "username": "hashhakim",
+  "rank": 5409,
+  "total_teams": 6203,
+  "team_score": 395.0,
+  "team_submission_count": 2,
+  "top_score": 1254.3,
+  "top8_cutoff": 1127.5,
+  "best_ever": {
+    "ref": "55162376",
+    "score": 804.0,
+    "date": "2026-08-01 12:42:51.233000"
+  },
+  "newest": {
+    "ref": "55215267",
+    "score": 299.1,
+    "date": "2026-08-03 15:11:45.097000",
+    "status": "SubmissionStatus.COMPLETE"
+  },
+  "pending_refs": []
+}
