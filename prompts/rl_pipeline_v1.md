@@ -238,6 +238,25 @@ once by the PPO update and freed. Disk sees only checkpoints and logs.
   unless a deck axis is deliberately added first. Stage 3 improves *this
   deck's* policy; say so in reports rather than implying general strength.
 
+**STATUS 2026-08-03 — trainer switched to PufferLib's PPO (user direction).**
+The custom loop (`train_ppo.py`, snapshots `models/ppo/u0010-30`, league win
+71% vs PRIOR at update 20) is retained as baseline only. Mainline:
+`scripts/train_ppo_puffer.py` = PufferLib 3.0 `PuffeRL` (their buffers,
+puff-advantage, losses, annealing — zero custom PPO math) over
+`puffer_env.PTCGGym` + `puffer_policy.PTCGPufferPolicy`, in the py3.12 side
+venv `.venv-ppo` (PufferLib 4.0 is C-env-only; 3.0 pins numpy<2 → can't share
+the py3.13 main venv). Hard-won integration facts, all guarded in code now:
+**cg engine is a per-process singleton (one env per worker, always)**;
+`encode_observation`'s `opt_ref_scalar` is `[48, 6]` not `[48, 2, 3]`;
+mask with −1e9 not −inf (torch Categorical.entropy NaNs); PuffeRL's CUDA
+autocast + non-daemon Utilization thread + unclosed vecenv each deadlock
+exit on failure paths (try/finally covers all three). Smoke green (192
+steps, entropy 0.90, 0 illegal picks). Measured real-run throughput:
+**~61 agent-steps/sec** (8×8, MPS learner, league mix) — 3.5× below the bare
+topology test (215/s); snapshots every 5 min to `models/ppo_puffer/` feed
+the mirror hot-reload. v1 runs stock pufferl loss (entropy bonus, no
+KL-to-prior anchor yet — patch as a subclass if forgetting appears).
+
 ### 3.2 PPO specifics — the bc_pipeline_v2 §8 RL-readiness notes, now due
 
 - **Init**: actor from the Stage-2 winner. Critic head fresh (or from S2-E4's
@@ -261,7 +280,51 @@ once by the PPO update and freed. Disk sees only checkpoints and logs.
   flat-dict config from work item 2 is its interface, and the sweep objective
   is the Rung-2 proxy signal, not val loss.
 
-### 3.3 Promotion gate (per candidate checkpoint)
+**RESULT 2026-08-03 — first PufferLib-PPO run (~121k steps, 8×8, stopped at
+the 1-hour gate):** local promotion gate MET by `ppo_u120832`. Rung 2
+(`s3_ppo_promotion_gate.png`): beats `s2_e1_s43` head-to-head **87.5%
+[69.0,95.7]**, PRIOR 79.2%, own mid-run snapshot 62.5% (monotone through
+training); Glicko 1478±71 vs 1300±71 — non-overlapping. Still loses to the
+strong public trio (0–21%) — lineage climbing, league table unchanged.
+Rung-3 transcripts: wins fast (11 turns), losses drag (29) — no stalling
+pathology; the late-run throughput collapse (70→3 steps/s) was PPO-vs-PPO
+mirror games lengthening, a throughput cost, not a behavior bug.
+Ladder: submitted 2026-08-03 (55215267, 14 MiB, CPU rehearsal 3.9 ms/dec) —
+**first read 532.2**, vs s2_e1_s43's 516.7 and PRIOR's settled 400.0. The
+lineage now reads 400 → 517 → 532 on the real ladder in first-read terms;
+both later scores need ~3 days of games to settle before the gate is
+formally confirmed and u120832 joins the league as generation 1.
+
+**GEN 2 LAUNCHED 2026-08-03** (init `ppo_puffer/u120832`, out `ppo_puffer_g2/`,
+45-min internal budget). Changes vs gen 1, each with a reason: **γ = 0.997**
+(Rami's call — adds the time preference gen 1 lacked, against the observed
+game-dragging; γ=1 remains theoretically legal for this episodic
+terminal-reward setting, this is an engineering fix); **KL-to-prior anchor
+ON** (coef 0.05, prior = s2_e1_s43, via `pokemon_tcg/pufferl_kl.py` — a
+verbatim vendored copy of pufferl 3.0's train() with one fenced addition;
+smoke-verified, `kl_to_prior` logs in the pufferl dashboard) — targets the
+top-end regression vs mechi22/plamen06; **league grown** to il_agent +
+s2_e1_s43 + u120832; **internal `--max-seconds` budget** replaces external
+kill timers (one stalled and overran the 1-hour gate by 18 min in gen 1).
+Rami's PPO notes (yakumsi-vault) cross-checked: pufferl already logs his
+full debug-variable list incl. both Schulman KL estimators; entropy bonus
+kept small per his decay note since the anchor now owns drift control.
+
+**GEN 2 GATE RESULT (2026-08-03): NOT PROMOTED — non-promotion #1 of 2
+allowed.** Stopped cleanly at 107,520 steps (internal budget worked). Rung 2
+(`s3_gen2_gate.png`): vs gen 1 head-to-head 45.8% [27.9,64.9] — tie, gate
+requires non-overlapping separation; Glicko 1471±71 vs 1486±60 — overlap.
+Fine structure: crushes s2 harder (91.7% vs 83.3%), **first-ever plamen06
+wins (2/24)** and mechi22 up (16.7% vs 12.5%) — the anchor's assignment
+directionally worked at the very top — but kiyotah gave back the gains
+(12.5% vs 37.5%). Training-log diagnosis of the sideways result: clipfrac
+~0.5% / approx_kl ~0.002 (updates far inside the trust region → little net
+movement per budget), value head re-initialized fresh (explained_var −0.9
+early), anchor drag (KL pulled 0.60→0.37). Gen-3 levers, in order: persist
+the critic across generations; LR 3e-5→~1e-4 targeting clipfrac 5–10% (safe
+now that the anchor guards the prior); consider kl_coef 0.05→0.02; PFSP-style
+frontier weighting (overweight kiyotah, the strongest often-beaten opponent).
+No ladder slot spent on gen 2 (fails the local gate).
 
 Snapshot a candidate every N updates (N set from the measured steps/sec so
 candidates arrive a few times per day, not per minute). A candidate is

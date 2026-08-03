@@ -47,12 +47,14 @@ tests/test_privacy_no_leak.py; re-run it when touching this module.
 
 from __future__ import annotations
 
+import csv
 import json
 import random
 import re
 import sys
 from collections.abc import Iterable, Iterator
 from pathlib import Path
+from typing import NamedTuple
 
 import torch
 from torch.utils.data import IterableDataset
@@ -102,6 +104,61 @@ N_SLOT_SCALARS = 4  # hp_frac, energy_norm, tool_norm, present
 N_GLOBAL_SCALARS = 13
 N_OPT_SCALARS = 2  # number_norm, has_ref
 N_REF_SCALARS = 3  # hp_frac, energy_norm, tool_norm (per referenced card)
+
+
+class DecisionMeta(NamedTuple):
+    """Per-row provenance for outcome weighting / filtering (Stage 2, REWEIGHT).
+
+    ``outcome`` is the ACTING seat's terminal result remapped to
+    0.0 = loss, 0.5 = draw, 1.0 = win, or -1.0 when the episode carries no
+    usable ``rewards`` pair (crashed/truncated dumps -- callers that weight
+    by outcome must treat -1.0 as "exclude", never as a weight). The raw
+    cabt -1/0/1 value deliberately never leaves this module: negative
+    terminal rewards are a known pathology magnet (bc_pipeline_v2 §8.4).
+    """
+
+    episode_id: int  # int(filename stem); -1 if the stem is not numeric
+    seat: int  # agent_idx: 0 or 1
+    outcome: float  # 0.0 loss / 0.5 draw / 1.0 win / -1.0 unknown
+    turn: int  # obs["current"]["turn"] at this decision; -1 if absent
+
+
+def _seat_outcome(rewards: object, seat: int) -> float:
+    """Remap the episode-level rewards pair to this seat's {0, 0.5, 1} outcome.
+
+    A ``None`` reward means this seat errored out -- a loss, matching
+    ``winning_agent``'s treatment of the same case (None = lowest value).
+    """
+    if not isinstance(rewards, list) or len(rewards) != 2:
+        return -1.0
+    r = rewards[seat]
+    if r is None:
+        return 0.0
+    if not isinstance(r, (int, float)):
+        return -1.0
+    if r > 0:
+        return 1.0
+    if r < 0:
+        return 0.0
+    return 0.5
+
+
+def load_manifest_scores(manifest_path: Path | None = None) -> dict[int, float]:
+    """episode_id -> avg_score (the player-rating field) from manifest.csv.
+
+    Loaded once and held as a plain dict -- never re-read per row. Episodes
+    absent from the manifest simply have no entry; ILDataset substitutes a
+    -1.0 sentinel (avg_score is always positive in the real manifest).
+    """
+    path = manifest_path or (config.EPISODES_DIR / "manifest.csv")
+    scores: dict[int, float] = {}
+    with path.open(newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                scores[int(row["episode_id"])] = float(row["avg_score"])
+            except (KeyError, ValueError):
+                continue
+    return scores
 
 
 def resolve_split_dir(split: str) -> Path:
@@ -408,10 +465,34 @@ def _decision_signature(obs: dict) -> tuple:
     )
 
 
+def winning_agent(episode: dict) -> int | None:
+    """Return the agent index that won `episode`, or None if there is no winner.
+
+    Winner = the unique-largest entry in `episode["rewards"]`. A `None` reward
+    (opponent errored out) is treated as the lowest possible value, so the other
+    seat still counts as the winner. Draws and any tie for the max (e.g. the
+    single `(0, 0)` game in 2026-07-01) return None -- no seat is clonable.
+    """
+    rewards = episode.get("rewards") if isinstance(episode, dict) else None
+    if not rewards:
+        return None
+    scored = [float("-inf") if r is None else r for r in rewards]
+    top = max(scored)
+    winners = [i for i, v in enumerate(scored) if v == top]
+    return winners[0] if len(winners) == 1 else None
+
+
 def iter_decisions(
-    split_dir: Path, max_episodes: int | None = None
-) -> Iterator[tuple[dict, int, frozenset]]:
-    """Yield (obs_dict, chosen_index, exclude) for every real decision in a split.
+    split_dir: Path, max_episodes: int | None = None, winner_only: bool = False
+) -> Iterator[tuple[dict, int, frozenset, DecisionMeta]]:
+    """Yield (obs_dict, chosen_index, exclude, meta) for every real decision in a split.
+
+    `meta` is a `DecisionMeta` carrying the acting seat, episode id, turn, and
+    the seat's terminal `outcome` from the episode-level `rewards` pair -- the
+    Stage-2 (REWEIGHT) fields this iterator previously dropped: both seats of
+    every match used to be cloned identically with zero reference to who won.
+    `winner_only=True` is the hard-filter special case (S2-E1); `meta.outcome`
+    is what the soft-weighting arms (S2-E2/E3) consume.
 
     `chosen_index` indexes into `select.option`, EXCEPT it equals
     `len(select.option)` (the synthetic DECLINE slot, see `encode_observation`)
@@ -445,18 +526,32 @@ def iter_decisions(
             episode = json.loads(path.read_text())
         except (json.JSONDecodeError, OSError):
             continue
-        yield from iter_episode_decisions(episode)
+        episode_id = int(path.stem) if path.stem.isdigit() else -1
+        yield from iter_episode_decisions(
+            episode, episode_id=episode_id, winner_only=winner_only
+        )
 
 
-def iter_episode_decisions(episode: dict | list) -> Iterator[tuple[dict, int, frozenset]]:
-    """Yield (obs_dict, chosen_index, exclude) for every real decision in ONE
-    parsed episode -- the shared core behind ``iter_decisions`` (raw JSON
-    folders) and ``ShardILDataset`` (packed Parquet shards, ADR-001). Label
-    and unrolling semantics are documented on ``iter_decisions``.
+def iter_episode_decisions(
+    episode: dict | list, episode_id: int = -1, winner_only: bool = False
+) -> Iterator[tuple[dict, int, frozenset, DecisionMeta]]:
+    """Yield (obs_dict, chosen_index, exclude, meta) for every real decision in
+    ONE parsed episode -- the shared core behind ``iter_decisions`` (raw JSON
+    folders) and ``ShardILDataset`` (packed Parquet shards, ADR-001). Label,
+    meta, and unrolling semantics are documented on ``iter_decisions``.
     """
     steps = episode.get("steps") if isinstance(episode, dict) else episode
     if steps:
-        for agent_idx in (0, 1):
+        rewards = episode.get("rewards") if isinstance(episode, dict) else None
+        if winner_only:
+            w = winning_agent(episode)
+            if w is None:
+                return  # draw / no unique winner -- nothing to clone
+            seats: tuple[int, ...] = (w,)
+        else:
+            seats = (0, 1)
+        for agent_idx in seats:
+            outcome = _seat_outcome(rewards, agent_idx)
             decisions: list[tuple[dict, list[int] | None]] = []
             for step in steps:
                 if agent_idx >= len(step):
@@ -485,16 +580,24 @@ def iter_episode_decisions(episode: dict | list) -> Iterator[tuple[dict, int, fr
                 if action is None:
                     continue
 
+                turn = (obs.get("current") or {}).get("turn")
+                meta = DecisionMeta(
+                    episode_id=episode_id,
+                    seat=agent_idx,
+                    outcome=outcome,
+                    turn=turn if isinstance(turn, int) else -1,
+                )
+
                 if max_count == 1:
                     if len(action) == 1:
                         label = action[0]
                         if label >= n_opts or label >= MAX_OPTIONS:
                             continue
-                        yield obs, label, frozenset()
+                        yield obs, label, frozenset(), meta
                     elif len(action) == 0 and min_count == 0:
                         if n_opts >= MAX_OPTIONS:
                             continue  # no room for the synthetic DECLINE slot
-                        yield obs, n_opts, frozenset()
+                        yield obs, n_opts, frozenset(), meta
                     # else: anomalous length for a maxCount==1 response -- drop
                     continue
 
@@ -503,22 +606,37 @@ def iter_episode_decisions(episode: dict | list) -> Iterator[tuple[dict, int, fr
                         continue
                     excluded: set[int] = set()
                     for picked in action:
-                        yield obs, picked, frozenset(excluded)
+                        yield obs, picked, frozenset(excluded), meta
                         excluded.add(picked)
                     if len(action) < max_count and min_count <= len(action) and n_opts < MAX_OPTIONS:
-                        yield obs, n_opts, frozenset(excluded)
+                        yield obs, n_opts, frozenset(excluded), meta
 
 
 def _decisions_to_features(
-    decisions: Iterable[tuple[dict, int, frozenset]],
+    decisions: Iterable[tuple[dict, int, frozenset, DecisionMeta]],
+    with_meta: bool = False,
+    scores: dict[int, float] | None = None,
 ) -> Iterator[dict[str, torch.Tensor]]:
-    """Encode a decision stream into training examples, dropping non-decisions."""
-    for obs, label, exclude in decisions:
+    """Encode a decision stream into training examples, dropping non-decisions.
+
+    ``with_meta=True`` attaches the ``ILDataset.META_KEYS`` weighting fields
+    (see that docstring); ``scores`` is the ``load_manifest_scores()`` dict
+    backing the ``avg_score`` field.
+    """
+    for obs, label, exclude, meta in decisions:
         feats = encode_observation(obs, exclude=exclude)
         if feats is None:
             continue
         feats.pop("n_real_options", None)
         feats["label"] = torch.tensor(label, dtype=torch.long)
+        if with_meta:
+            feats["outcome"] = torch.tensor(meta.outcome, dtype=torch.float32)
+            feats["seat"] = torch.tensor(meta.seat, dtype=torch.long)
+            feats["episode_id"] = torch.tensor(meta.episode_id, dtype=torch.long)
+            feats["turn"] = torch.tensor(meta.turn, dtype=torch.long)
+            feats["avg_score"] = torch.tensor(
+                (scores or {}).get(meta.episode_id, -1.0), dtype=torch.float32
+            )
         yield feats
 
 
@@ -551,7 +669,17 @@ class ILDataset(IterableDataset):
     (which otherwise come from the same episode / same match) without
     loading the whole split into memory -- 4,554 + 4,430 episodes is large.
     Use ``shuffle_buffer=1`` for the eval split (deterministic order).
+
+    ``with_meta=True`` (Stage 2, REWEIGHT) additionally attaches per-row
+    weighting fields: ``outcome`` (0/0.5/1, -1 unknown), ``seat``,
+    ``episode_id``, ``turn``, and ``avg_score`` (the manifest player-rating
+    field; -1.0 when the episode is not in the manifest). ⚠️ The existing
+    train loop calls ``model(**batch)`` with the whole batch dict, so a
+    weighted trainer must pop these five keys before the forward pass --
+    which is why the flag defaults to False instead of always-on.
     """
+
+    META_KEYS = ("outcome", "seat", "episode_id", "turn", "avg_score")
 
     def __init__(
         self,
@@ -559,16 +687,24 @@ class ILDataset(IterableDataset):
         max_episodes: int | None = None,
         shuffle_buffer: int = 2000,
         seed: int = 0,
+        winner_only: bool = False,
+        with_meta: bool = False,
     ) -> None:
         self.split_dir = split_dir
         self.max_episodes = max_episodes
         self.shuffle_buffer = shuffle_buffer
         self.seed = seed
+        self.winner_only = winner_only
+        self.with_meta = with_meta
 
     def __iter__(self):
         rng = random.Random(self.seed)
-        decisions = iter_decisions(self.split_dir, self.max_episodes)
-        yield from _shuffled(_decisions_to_features(decisions), self.shuffle_buffer, rng)
+        scores = load_manifest_scores() if self.with_meta else None
+        decisions = iter_decisions(
+            self.split_dir, self.max_episodes, winner_only=self.winner_only
+        )
+        feats = _decisions_to_features(decisions, with_meta=self.with_meta, scores=scores)
+        yield from _shuffled(feats, self.shuffle_buffer, rng)
 
 
 def _resolve_hub_shards(repo_id: str, split: str, days: list[str] | None) -> list[str]:

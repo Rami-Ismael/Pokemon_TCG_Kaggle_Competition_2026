@@ -63,7 +63,7 @@ def main():
     n_rows = 0
     shard_idx = 0
     encoded_bytes = 0
-    for obs, label, exclude in iter_decisions(split_dir, args.max_episodes):
+    for obs, label, exclude, _meta in iter_decisions(split_dir, args.max_episodes):
         feats = encode_observation(obs, exclude=exclude)
         if feats is None:
             continue
