@@ -16,6 +16,11 @@ data/**
 # Rung-2 opponent-pool registry: small, curated, version-worthy provenance
 # (built by scripts/build_opponent_pool.py, consumed by benchmark_agents.py).
 !data/opponent_pool.csv
+# Vendored `cg` engine (3.8 MB: 3 prebuilt libcg binaries + ~30 KB of Python).
+# Tracked so `git worktree add` checkouts get it for free -- ~15 call sites
+# resolve PROJECT_ROOT/data/external/cg-lib with no fallback and fail without it.
+!data/external/cg-lib/**
+data/external/cg-lib/**/__pycache__/
 models/**
 !models/
 !models/.gitkeep
