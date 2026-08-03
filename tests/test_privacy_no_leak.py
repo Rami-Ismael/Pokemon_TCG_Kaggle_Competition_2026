@@ -1,0 +1,150 @@
+"""Regression tests for standing rule #2: no opponent-private info in the encoder.
+
+The agent may only see what a real player sees: the board (both sides'
+in-play Pokemon), its OWN hand, and public counts (deckCount, handCount,
+prize count). Opponent hand / either deck's contents / facedown prizes must
+be null in the per-agent observation. The full hidden state DOES exist in
+every episode file -- steps[0][0]["visualize"] carries both players' decks,
+hands, and prizes per frame -- and must never be read by the pipeline.
+
+These tests pin the two halves of that guarantee:
+  1. the recorded per-agent observations are POV-filtered (an engine or
+     serialization change that starts leaking fails loudly here), and
+  2. the encoder's output is bit-identical with the visualize blob deleted,
+     so no code path can be depending on it.
+
+Audit that established these invariants (2026-08-03): 550 episodes /
+~192k observations across train + eval, zero violations.
+
+Run directly: uv run python tests/test_privacy_no_leak.py
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "data" / "external" / "cg-lib"))
+
+import torch  # noqa: E402
+
+from cg.api import AreaType  # noqa: E402
+from pokemon_tcg.il_dataset import (  # noqa: E402
+    encode_observation,
+    iter_decisions,
+    resolve_split_dir,
+)
+
+# Enough episodes to hit multi-select, deck-search, and looking states
+# without making the suite slow (~7k observations, a few seconds).
+N_EPISODES = 20
+
+OPP_PRIVATE_AREAS = {int(AreaType.DECK), int(AreaType.HAND), int(AreaType.PRIZE)}
+
+
+def _episode_files():
+    files = sorted(resolve_split_dir("train").glob("*.json"))[:N_EPISODES]
+    assert files, "no train episodes found -- expected local data on disk"
+    return files
+
+
+def _iter_pov_observations():
+    for path in _episode_files():
+        episode = json.loads(path.read_text())
+        steps = episode.get("steps") if isinstance(episode, dict) else episode
+        for step in steps or []:
+            for agent_step in step:
+                obs = agent_step.get("observation") or {}
+                cur = obs.get("current")
+                if cur:
+                    yield obs, cur
+
+
+def test_recorded_observations_are_pov_filtered():
+    n = 0
+    for _, cur in _iter_pov_observations():
+        n += 1
+        my = cur["yourIndex"]
+        me, opp = cur["players"][my], cur["players"][1 - my]
+        assert opp.get("hand") is None, "opponent hand serialized into observation"
+        for side in (me, opp):
+            assert side.get("deck") is None, "deck contents serialized into observation"
+            for prize_card in side.get("prize") or []:
+                assert prize_card is None, "facedown prize card serialized into observation"
+    assert n > 1000, f"only {n} observations scanned -- sample too small to trust"
+
+
+def test_opponent_option_refs_never_resolve_private_cards():
+    for obs, cur in _iter_pov_observations():
+        my = cur["yourIndex"]
+        for option in (obs.get("select") or {}).get("option") or []:
+            pi = option.get("playerIndex")
+            if pi is None or pi == my:
+                continue
+            if option.get("area") in OPP_PRIVATE_AREAS:
+                # A ref into an opponent private zone is only tolerable if the
+                # zone is null in this POV obs, so _get_card resolves to zeros.
+                area = option["area"]
+                if area == int(AreaType.HAND):
+                    assert cur["players"][pi].get("hand") is None
+                elif area == int(AreaType.PRIZE):
+                    idx = option.get("index")
+                    prize = cur["players"][pi].get("prize") or []
+                    assert idx is None or idx >= len(prize) or prize[idx] is None
+                else:
+                    raise AssertionError("option references opponent DECK contents")
+
+
+def test_encoder_output_identical_without_visualize_blob():
+    path = _episode_files()[0]
+    episode = json.loads(path.read_text())
+    assert "visualize" in episode["steps"][0][0], (
+        "expected the full-hidden-state visualize blob at steps[0][0] -- "
+        "if the episode format changed, re-audit privacy before removing this"
+    )
+
+    import copy
+    import tempfile
+
+    scrubbed = copy.deepcopy(episode)
+    scrubbed["steps"][0][0].pop("visualize")
+
+    def encode_all(ep_dict, tmpdir):
+        p = Path(tmpdir) / path.name
+        p.write_text(json.dumps(ep_dict))
+        out = []
+        for obs, label, exclude in iter_decisions(Path(tmpdir)):
+            feats = encode_observation(obs, exclude=exclude)
+            if feats is not None:
+                out.append((label, feats))
+        return out
+
+    with tempfile.TemporaryDirectory() as d1, tempfile.TemporaryDirectory() as d2:
+        original = encode_all(episode, d1)
+        without_blob = encode_all(scrubbed, d2)
+
+    assert len(original) == len(without_blob) > 0
+    for (label_a, feats_a), (label_b, feats_b) in zip(original, without_blob):
+        assert label_a == label_b
+        assert feats_a.keys() == feats_b.keys()
+        for key in feats_a:
+            a, b = feats_a[key], feats_b[key]
+            if isinstance(a, torch.Tensor):
+                assert torch.equal(a, b), f"feature {key} depends on the visualize blob"
+            else:
+                assert a == b
+
+
+if __name__ == "__main__":
+    tests = [
+        test_recorded_observations_are_pov_filtered,
+        test_opponent_option_refs_never_resolve_private_cards,
+        test_encoder_output_identical_without_visualize_blob,
+    ]
+    for t in tests:
+        print(f"running {t.__name__}...")
+        t()
+        print("  OK")
+    print("\nall privacy tests passed")

@@ -28,6 +28,17 @@ e.g. "discard 2 of these cards") are handled by unrolling them
 autoregressively into one training example per pick, re-masking prior picks
 via ``exclude`` (see ``iter_decisions``), rather than by a second model or a
 combinatorial loss -- see notes/phase1_decisions.md §1.3 for why.
+
+Privacy invariant (standing rule #2): the agent may only see what a real
+player sees -- the board (both sides' in-play Pokemon), its OWN hand, and
+public counts (deckCount, handCount, prize count). The per-agent
+``observation.current`` is POV-filtered by the engine (opponent hand is
+None, deck contents absent, facedown prizes None), so encoding from it is
+safe. The full hidden state -- both players' decks, hands, and prizes per
+frame -- DOES exist in every episode file at ``steps[0][0]["visualize"]``
+and must never be read: features mined from it would be unavailable live,
+which is invisible offline and fatal on the ladder. Enforced by
+tests/test_privacy_no_leak.py; re-run it when touching this module.
 """
 
 from __future__ import annotations
