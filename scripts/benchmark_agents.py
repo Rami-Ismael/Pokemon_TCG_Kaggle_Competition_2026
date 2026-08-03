@@ -121,6 +121,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # il_agent policy + deterministic-future features (same deck.csv as
+    # il_agent, so the pairing isolates the feature effect); requires
+    # models/il_agent_features -- see agents/il_feature/agent_core.py.
+    "il_feature": REPO / "agents" / "il_feature" / "agent_core.py",
     # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
     # bare module (literal DECK -> my_deck). Distinct 60-card list from
     # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
@@ -246,7 +250,7 @@ AGENT_MAIN = {
 # Our own algorithms + the random floor. Everything here is authored/adopted in
 # this repo, as opposed to the public opponent field pulled from Kaggle.
 OUR_AGENTS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
-              "proto", "il_agent", "grunt"]
+              "proto", "il_agent", "il_feature", "grunt"]
 FLOOR_AGENTS = ["random_legal"]
 
 
