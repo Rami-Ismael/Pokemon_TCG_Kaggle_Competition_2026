@@ -10,6 +10,13 @@ amended here carries forward unchanged — in particular the reward remap
 mix, the critic being train-time only, no opponent-private information in the
 encoder, and the deck-confound warning.
 
+Terminology (per Rami, 2026-08-04 — the old "Rung 1/2/3" ladder jargon
+is retired in prose): **offline accuracy check** = held-out action-match vs
+the majority baseline (`eval_rung1.py`); **local tournament** = the
+`benchmark_agents.py` round-robin of real games with Glicko±RD; **replay
+review** = reading full game transcripts (`eval_rung3_sanity.py`). Script
+filenames keep their historical names.
+
 **Why v2 exists — Stage 2 is being restarted from scratch (user direction,
 2026-08-03).** The previously-run Stage 2 has two strikes against it:
 
@@ -74,7 +81,7 @@ are comparable and the rating fields are (after §B0) fully real.
   (55224682 → 670.4, 55228113 → 512→600, both 08-04, still early-read).
 - Consequence, binding: **an experimental submission costs an active slot
   for days.** A Stage-2/3 candidate is submitted only when (a) its local
-  gate is decisively met (non-overlapping intervals, all three rungs) and
+  gate is decisively met (non-overlapping intervals, all three local checks) and
   (b) the calendar leaves ≥3 days of settle time. Ladder closes
   **2026-08-16**; ratings settle over hundreds of games (~48/day) — the
   **last confident submission slot is ~2026-08-13**, computed backward.
@@ -110,7 +117,7 @@ are comparable and the rating fields are (after §B0) fully real.
 - Disk budget: measured 81.9 GB free, but **no stage may write an episode
   corpus** — allowed persistent artifacts are checkpoints (~13 MB fp32 at
   3.32M params; `policy_full.pt` ~26 MB), TB/JSONL logs, figures, and a
-  handful of Rung-3 transcripts.
+  handful of replay-review transcripts.
 - **Every "better" claim passes the ladder ritual** (§Measurement protocol).
   Local Glicko alone never declares improvement — it has now been wrong
   twice with non-overlapping intervals.
@@ -273,18 +280,19 @@ collapse exactly to the old winners-only/outcome arms
 for the whole weight path). E3 = a skill-gate multiplier composed on top of
 the winning advantage arm. Unknown-outcome rows get weight 0 in every arm.
 
-**Selection rule:** Rung 2 (round-robin vs PRIOR + public pool, mirrored
-pairs, pooled seeds, Glicko with RD quoted) and the ladder only. Rung-1
-offline accuracy is a pipeline check, never a selection metric (it already
-failed to separate arms once — expected). **If arms do not separate
+**Selection rule:** the local tournament (round-robin vs PRIOR + public
+pool, mirrored pairs, pooled seeds, Glicko with RD quoted) and the ladder
+only. The offline accuracy check is a pipeline check, never a selection
+metric (it already failed to separate arms once — expected). **If arms do not separate
 (overlapping CIs), say so plainly and pick by the pre-registered tiebreak:
 fewest training rows** (E1 ties beat E2 ties, a skill-gated arm beats an
 ungated one), rather than narrating a winner.
 
 ### 2.B3 Stage-2 gate (v1 §2.2 unchanged, with the v2 bar)
 
-1. Rung 1 vs the 0.381 majority line (pipeline check only).
-2. Rung 2 with RD quoted; enough mirrored pairs that intervals separate.
+1. Offline accuracy check vs the 0.381 majority line (pipeline check only).
+2. Local tournament with RD quoted; enough mirrored pairs that intervals
+   separate.
 3. Ladder ritual: bundle build (read the printed tarball MiB) → forced-CPU
    rehearsal (`PTCG_DEVICE=cpu`, ms/decision recorded) → submit with a
    DETAILED message (what changed, from which checkpoint, expected effect)
@@ -465,7 +473,7 @@ v1's list minus the retired 1-hour rule, plus the v2 additions:
 - **B0 data recovery impossible** (streaming and Kaggle re-fetch both fail)
   → report what was tried; do NOT silently train on the 24 surviving
   train-day episodes.
-- Any design that wants to write episodes to disk beyond Rung-3
+- Any design that wants to write episodes to disk beyond replay-review
   transcripts; bundle MiB over the envelope.
 
 ## Work items in order
@@ -479,14 +487,15 @@ v1's list minus the retired 1-hour rule, plus the v2 additions:
 3. **[B2a]** `train_critic.py` TD(0) mode + critic audit script; train on
    the restored corpus; run the three-part audit; decide advantage arms vs
    E-fallback.
-4. **[B2]** Arms E0/E1/E2(β sweep) → Rung 1 (pipeline check) + Rung 2 →
-   E3 (+ optional E4 if signal) → pick by selection rule/tiebreak.
-5. **[B3]** Stage-2 gate: Rung 2 with RD → bundle → CPU rehearsal → submit
+4. **[B2]** Arms E0/E1/E2(β sweep) → offline accuracy check (pipeline
+   only) + local tournament → E3 (+ optional E4 if signal) → pick by
+   selection rule/tiebreak.
+5. **[B3]** Stage-2 gate: local tournament with RD → bundle → CPU rehearsal → submit
    (detailed) → leaderboard-check → **Stage-3 init declared**.
 6. **[C]** Stage-3 additions to `train_ppo_puffer.py`/`pufferl_kl.py`:
    entropy schedule knobs, per-context KL/entropy logging, PFSP-lite
    (persistence + harvest + weight refresh), `tests/test_kl_mask.py`;
    then launch from the Stage-3 init with the §3.4 table; anchor gate
    every 20 updates; candidate gate + ladder per §3.1(b).
-7. **[C-loop]** Snapshot → Rung 2 → (if decisive) ladder → league; repeat
+7. **[C-loop]** Snapshot → local tournament → (if decisive) ladder → league; repeat
    until two consecutive candidate failures or the calendar ends it.
