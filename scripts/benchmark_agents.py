@@ -273,6 +273,9 @@ AGENT_FILES = {
     "s2v2_efb_s42": REPO / "agents" / "s2v2_arms" / "efb_s42" / "agent_core.py",
     "s2v2_efb_s43": REPO / "agents" / "s2v2_arms" / "efb_s43" / "agent_core.py",
     "s2v2_efb_s44": REPO / "agents" / "s2v2_arms" / "efb_s44" / "agent_core.py",
+    # All-days imitation (plain-name scheme, 2026-08-04): fresh 3-epoch BC on
+    # every Hub train day (15,032 episodes) -- Rami's data-scale experiment.
+    "il_alldays_0804": REPO / "agents" / "il_alldays_0804" / "agent_core.py",
     # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
     # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
     "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",

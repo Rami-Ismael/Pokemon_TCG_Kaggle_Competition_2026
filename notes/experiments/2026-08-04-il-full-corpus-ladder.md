@@ -42,7 +42,22 @@ I expect the performance to increase dramatically"), coached into this card.
   Metamon paper (data scale is their central axis — but across orders of
   magnitude, not +0.18 dex); ADR-001 (hub streaming = the corpus path).
 
-## Result (fill after)
-- **Observed:**
-- **Decision:**
-- **What we learned:**
+## Result (updating as readings land)
+- **Observed so far (2026-08-04):** training complete (127,748 steps).
+  Offline accuracy **0.7583** — above PRIOR (0.7534) and the 2-day point
+  (0.7527): the scaling curve's third point bends UP where the second was
+  flat (likely the recency mechanism; +0.5pt, small but the first offline
+  gain data has bought this architecture). Independent robustness datapoint
+  from the exploiter session: their PPO exploiter wins 95.5% vs PRIOR and
+  92–97% vs unfamiliar imitation seeds, but only **38.5% [32.0, 45.4]** vs
+  this model — far less exploitable. Submitted as **55248985** (by the
+  concurrent session; this session's duplicate attempt bounced on the
+  daily limit — ledger-mediated dedup). First read 600.0. NOTE: its two
+  submissions displaced continued-imitation (55246108) from the active set
+  after ~3h (readings 600 → 320.4, truncated settle — weak evidence).
+- **Decision:** pending the ~08-07 settle vs the pre-registered bars
+  (≥500 dramatic / >400 modest / ≤400 null). Provisional Stage-3 base
+  switched to THIS model (robustness evidence + it holds an active slot).
+- **What we learned (so far):** offline accuracy CAN move with data at
+  this scale once recency enters; and exploitability — not offline
+  accuracy — separated the imitation models most sharply.
