@@ -247,6 +247,30 @@ is itself a finding to report.
 **If the critic fails the audit: the advantage arms are BLOCKED; run
 E-fallback (registered below) and say so loudly in every report.**
 
+**STATUS 2026-08-04 ~09:50 — BOTH critics trained, BOTH blocked; fallback
+path engaged.**
+- `critic_td` (one epoch, frozen-target TD(0) after fixing a measured
+  live-bootstrap divergence, MSE 0.30→284 by step 21k): audit (i) FAIL /
+  (ii) FAIL / (iii) FAIL — one epoch ≈ 27 target refreshes cannot propagate
+  terminal signal through ~68-decision games; V pinned near an
+  out-of-range floor for whole state clusters (mean Â +0.247).
+- `critic_mc` (direct outcome regression): accuracy 65.0% vs 53.8% base —
+  real ranking signal — but calibration FAILS even after clamping V to the
+  valid [0,1] range at consumption (clamped MSE 0.2679 vs constant-0.5's
+  0.2499; raw out-of-range rate 22.2%); (ii) PASS; (iii) extremes are
+  magnitude artifacts (V=0.000 on live positions with a deck-out risk).
+- **Finding:** at 9,820 episodes a 3.32M critic ranks but cannot calibrate —
+  consistent with the ~50× data-scale gap to the Metamon paper, whose
+  critic-based objectives this register imports. Full audits:
+  `reports/critic_audit_critic_{td,mc}.md` (+ figures).
+- **Consequence (registered rule applied):** E1/E2/E4 do not run. Running
+  instead: E-fallback ×3 seeds, and E3 adapted to
+  `efb weight × 1[avg_score ≥ 1189.0]` — the skill gate is orthogonal to
+  the critic and remains the most externally-validated technique in the
+  evidence base. TD-with-longer-propagation (multi-epoch, Polyak targets)
+  is registered as future work, not run now (fall back, don't knob-twiddle
+  past the deadline).
+
 ### 2.B2 The arm register — UPGRADED from v1 §2.1
 
 Rationale for the upgrade: v1's E1/E2 weighted by **episode outcome** — a
