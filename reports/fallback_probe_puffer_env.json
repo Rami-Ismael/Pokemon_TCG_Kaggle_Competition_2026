@@ -1,0 +1,25 @@
+{
+  "harness": "PTCGGym (puffer_env)",
+  "opponent": "il_agent",
+  "episodes": 6,
+  "learner": "uniform-random-legal",
+  "learner_outcomes": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "learner_steps": 281,
+  "seconds": 1.8,
+  "opponent_decisions": 267,
+  "opponent_fallbacks": 0,
+  "opponent_fallback_rate": 0.0,
+  "diag_snapshot": {
+    "decisions": 267,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  }
+}

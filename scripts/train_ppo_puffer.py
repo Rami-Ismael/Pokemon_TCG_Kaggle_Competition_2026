@@ -153,6 +153,16 @@ def main() -> None:
     ap.add_argument("--max-seconds", type=float, default=None,
                     help="internal wall-clock budget: stop cleanly (with a final "
                          "snapshot) once exceeded -- replaces external kill timers")
+    ap.add_argument("--opponent-module", default=None,
+                    help="EXPLOITER MODE: train 100%% of episodes against this "
+                         "single frozen benchmark agent (an AGENT_FILES name, "
+                         "e.g. il_agent — loaded via load_agent, real main.py "
+                         "bundle + its own deck). Overrides --league/--pool-"
+                         "weights, disables the mirror bucket, and turns on "
+                         "strict per-episode seat alternation. The opponent is "
+                         "never updated; fallback tracking is enabled in the "
+                         "env workers so the frozen target's decisions stay "
+                         "auditable (see scripts/fallback_probe_puffer_env.py)")
     ap.add_argument("--league", default=str(config.MODELS_DIR / "il_agent"),
                     help="comma-separated frozen checkpoint dirs for the env's "
                          "league bucket (the 30%% draw)")
@@ -233,10 +243,24 @@ def main() -> None:
     league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
+    env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
+                  "league": league, "pool_weights": pool_weights}
+    if args.opponent_module:
+        # Exploiter mode: every draw lands in the league bucket, whose single
+        # entry is the frozen module agent. No mirror (the opponent must never
+        # track the learner), strict seat alternation, opponent decisions
+        # audited by the fallback tracker (flag inherited by spawned workers;
+        # read at agent-module import, so it must be set before vecenv).
+        os.environ.setdefault("PTCG_FALLBACK_TRACK", "1")
+        env_kwargs = {"mirror_root": None, "anchor_ckpt": str(args.init_from),
+                      "league": [("module", args.opponent_module)],
+                      "mix": (0.0, 1.0, 0.0), "pool_weights": None,
+                      "alternate_seats": True}
+        print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
+              f"(100% of episodes, seats strictly alternating)")
     vecenv = pvector.make(
         make_puffer_env,
-        env_kwargs={"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                    "league": league, "pool_weights": pool_weights},
+        env_kwargs=env_kwargs,
         backend=pvector.Multiprocessing,  # never Serial >1 env: cg singleton
         num_envs=args.num_envs,
         num_workers=args.num_workers,
