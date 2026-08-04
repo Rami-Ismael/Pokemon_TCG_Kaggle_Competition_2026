@@ -308,12 +308,43 @@ def main() -> None:
     logger = TensorBoardLogger(run_dir)
     print(f"run dir: {run_dir}  device: {device}  git sha: {git_sha()[:12]}")
 
+    def _local_split_complete(split: str) -> bool:
+        """True only if the local folder holds (approximately) the full split.
+
+        After ADR-001 raw days are pruned post-Hub-verify, so a split folder
+        can EXIST as a near-empty stub while the real corpus lives on the
+        Hub. Training on a stub silently memorizes a handful of episodes
+        (this burned a 24-run ablation on 2026-08-03: 'train' had 24 of
+        4,554 files and every arm hit 98.8%% train accuracy). Any local
+        folder holding <90%% of splits.json's registered episode count is
+        treated as incomplete.
+        """
+        try:
+            split_dir = resolve_split_dir(split)
+        except (FileNotFoundError, KeyError):
+            return False
+        if not split_dir.exists():
+            return False
+        splits_meta = json.loads(
+            (config.EPISODES_DIR / "splits" / "splits.json").read_text()
+        ).get(split, {})
+        registered = splits_meta.get("episodes")
+        n_local = sum(1 for _ in split_dir.glob("*.json"))
+        if registered and n_local < 0.9 * registered:
+            print(f"warning: local split {split!r} has {n_local} of {registered} "
+                  f"registered episodes (pruned stub) -- not using it")
+            return False
+        return n_local > 0
+
     source = args.data_source
     if source == "auto":
-        try:
-            source = "local" if resolve_split_dir(args.train_split).exists() else "hub"
-        except (FileNotFoundError, KeyError):
-            source = "hub"
+        source = "local" if _local_split_complete(args.train_split) else "hub"
+    elif source == "local" and not _local_split_complete(args.train_split):
+        sys.exit(
+            f"--data-source local, but the local {args.train_split!r} split is "
+            "missing or a pruned stub (see warning above). Use --data-source "
+            "hub -- the Hub shards are the only full copy (ADR-001)."
+        )
     if args.num_workers > 0 and source != "hub":
         sys.exit(
             "--num-workers > 0 requires --data-source hub: ILDataset over raw JSON "

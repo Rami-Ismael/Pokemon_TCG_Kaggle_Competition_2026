@@ -50,7 +50,7 @@ ARMS: dict[str, str] = {
 }
 SEEDS = [42, 43, 44]
 TOTAL_STEPS = 4000
-EVAL_EPISODES = 120
+EVAL_EPISODES = 150
 
 RESULTS_DIR = REPO / "reports" / "feature_ablation" / "results"
 MODELS_DIR = config.MODELS_DIR / "ablation"
@@ -71,11 +71,18 @@ def run_one(arm: str, features: str, seed: int, total_steps: int, dry: bool) -> 
 
     out_dir = MODELS_DIR / tag
     t0 = time.time()
+    # Hub source explicitly: the local split folders are pruned stubs after
+    # ADR-001 (24 of 4,554 train files on 2026-08-03) -- 'local' would
+    # silently memorize a handful of episodes. --hub-days pins the original
+    # train day so every arm sees the exact same corpus.
     train_cmd = [
         "uv", "run", "python", str(REPO / "scripts" / "train_il.py"),
         "--seed", str(seed),
         "--total-steps", str(total_steps),
         "--features", features,
+        "--data-source", "hub",
+        "--hub-days", "2026-07-26",
+        "--num-workers", "2",
         "--out", str(out_dir),
         "--run-dir", str(RUNS_DIR / tag),
     ]
@@ -94,6 +101,7 @@ def run_one(arm: str, features: str, seed: int, total_steps: int, dry: bool) -> 
     eval_cmd = [
         "uv", "run", "python", str(REPO / "scripts" / "eval_rung1.py"),
         "--model-dir", str(out_dir),
+        "--data-source", "hub",
         "--max-episodes", str(10 if dry else EVAL_EPISODES),
     ]
     t1 = time.time()
