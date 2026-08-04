@@ -745,6 +745,13 @@ class ShardILDataset(IterableDataset):
     re-iteration so the shard order and shuffle rng differ per pass; with
     ``shuffle_buffer <= 1`` iteration is deterministic (sorted shards, pack
     order) for eval.
+
+    ``winner_only`` and ``with_meta`` mirror ILDataset's REWEIGHT plumbing
+    (rl_pipeline_v2 §2.B0): meta rows carry outcome/seat/episode_id/turn plus
+    ``avg_score`` joined from a freshly loaded manifest via the shard's
+    ``episode_id`` column — NOT from the shard's baked score columns, which
+    are null forever for any day packed before its manifest rows were
+    backfilled (2026-07-26).
     """
 
     def __init__(
@@ -756,6 +763,8 @@ class ShardILDataset(IterableDataset):
         max_episodes: int | None = None,
         shuffle_buffer: int = 2000,
         seed: int = 0,
+        winner_only: bool = False,
+        with_meta: bool = False,
     ) -> None:
         self.split = split
         self.repo_id = repo_id or config.HF_EPISODES_REPO
@@ -763,6 +772,8 @@ class ShardILDataset(IterableDataset):
         self.max_episodes = max_episodes
         self.shuffle_buffer = shuffle_buffer
         self.seed = seed
+        self.winner_only = winner_only
+        self.with_meta = with_meta
         self._epoch = 0
         if local_root is not None:
             self.files = sorted(
@@ -824,22 +835,37 @@ class ShardILDataset(IterableDataset):
             random.Random(self.seed * 1_000_003 + self._epoch).shuffle(files)
         files = files[wid::n_workers]
         rng = random.Random((self.seed * 1_000_003 + self._epoch) * 64 + wid)
+        # avg_score joins from a FRESHLY loaded manifest at iteration time, by
+        # the shard's own episode_id column -- the score columns baked into the
+        # shards are stale for any day packed before its manifest rows existed
+        # (2026-07-26 was packed with zero coverage; see rl_pipeline_v2 §2.B0).
+        scores = load_manifest_scores() if self.with_meta else None
 
-        def episodes() -> Iterator[dict]:
+        def episodes() -> Iterator[tuple[int, dict]]:
             n = 0
             for rel in files:
                 pf = pq.ParquetFile(self._local_path(rel))
                 # row groups are small by construction (pack_episodes.py uses
                 # ~32 rows), so this holds a few MB decompressed at a time
-                for rb in pf.iter_batches(batch_size=8, columns=["episode_json"]):
-                    for raw in rb.column(0).to_pylist():
+                for rb in pf.iter_batches(
+                    batch_size=8, columns=["episode_id", "episode_json"]
+                ):
+                    for eid, raw in zip(
+                        rb.column(0).to_pylist(), rb.column(1).to_pylist(), strict=True
+                    ):
                         if self.max_episodes is not None and n >= self.max_episodes:
                             return
                         n += 1
-                        yield json.loads(raw)
+                        yield int(eid), json.loads(raw)
 
         def features() -> Iterator[dict[str, torch.Tensor]]:
-            for episode in episodes():
-                yield from _decisions_to_features(iter_episode_decisions(episode))
+            for eid, episode in episodes():
+                yield from _decisions_to_features(
+                    iter_episode_decisions(
+                        episode, episode_id=eid, winner_only=self.winner_only
+                    ),
+                    with_meta=self.with_meta,
+                    scores=scores,
+                )
 
         yield from _shuffled(features(), self.shuffle_buffer, rng)
