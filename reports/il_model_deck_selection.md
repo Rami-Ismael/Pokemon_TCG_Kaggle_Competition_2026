@@ -1,0 +1,272 @@
+# Which IL checkpoint, piloting which deck?
+
+Follows the `deck-selection` skill's ①→②→③→④ ordering, extended with a second
+axis the earlier study held fixed. [`reports/deck_selection.md`](deck_selection.md)
+answered *"which deck, with `il_agent` fixed"*. This answers *"which **checkpoint**,
+and does the deck answer survive changing it"*.
+
+Full cell-level numbers: [`reports/il_model_deck_selection.xlsx`](il_model_deck_selection.xlsx).
+
+> **Ladder status at the time of this run (2026-08-04):** rank **4784 / 6272**, team
+> score **486.0**, best-ever **804.0** (sub 55162376) currently displaced from the
+> 2-slot active set. Everything below is a **local** measurement. Per the two
+> confirmed local-vs-ladder inversions on record, no result here is a ladder claim
+> until something is submitted and read back.
+
+## ⓪ Two silent failures found before any games were played
+
+Both would have produced clean-looking, wrong numbers. Neither raises.
+
+**1. The deck override never reached wrapped checkpoints.** `load_agent()` in
+`scripts/benchmark_agents.py` implemented `<agent>@<deck-tag>` by assigning
+`mod.my_deck` on the module it had just exec'd. But `agent()` returns the
+`my_deck` it sees in *its own* globals, and for every wrapper arm
+(`agents/grid_cells/`, `agents/s2_arms/`, `agents/ppo_arms/`, and the new
+`agents/il_arms/`) that owner is the **inner `il_agent` core module the wrapper
+imported**, not the wrapper. So the override reported success and changed
+nothing: every wrapped arm kept piloting whatever deck its wrapper had already
+injected — Mega Lucario ex, the 1-episode control deck. Fixed by writing through
+to `fn.__globals__`, keeping the `mod` write for plain modules where the two are
+the same dict.
+
+**2. `models/il_agent_medium_combined` is an empty directory.** It contains no
+`config.json` and no `model.safetensors`. `il_agent._load_model()` catches its own
+exceptions and returns `None`, so the pre-existing `grid_medium_comb` arm plays
+non-ML `_safe_choice` moves while looking like a model. Any past number attributed
+to that arm is a measurement of the fallback heuristic, not of a checkpoint. It is
+deliberately **not** re-wired here.
+
+Both are guarded now by [`scripts/verify_il_arms.py`](../scripts/verify_il_arms.py),
+which the sweep is gated on. For every (arm, deck) cell it asserts the core
+resolved the intended `MODEL_DIR`, `_load_model()` returned a real module, the
+weights hash to the expected safetensors, and — end to end — that `agent({})`,
+the real deck-submission call, returns exactly the 60 requested cards.
+**35/35 cells verified**; the empty checkpoint correctly FAILs.
+
+## ① Enumerate — the model axis
+
+Deduped by sha256, because the `models/` directory double-counts:
+
+- `models/il_agent_3ep` is **byte-identical** to `models/il_agent`
+- `models/il_agent_winning_827.8` is **byte-identical** to `models/il_agent_2ep_backup`
+
+So nine directories are **seven distinct checkpoints**.
+
+| arm | checkpoint | params | train data | epochs | offline acc | ECE |
+|---|---|---:|---|---:|---:|---:|
+| `il_bc_2ep` | `il_agent_2ep_backup` | 3.32M | train 2026-07-26 | 2 | 0.7478 | — |
+| `il_bc_3ep` | `il_agent` | 3.32M | train 2026-07-26 | 3 | 0.7534 | — |
+| `il_bc_4ep` | `il_agent_4ep` | 3.32M | train 2026-07-26 | 4 | 0.7592 | — |
+| `il_medium_3ep` | `il_agent_medium` | 10.99M | train 2026-07-26 | 3 | 0.7545 | 0.0231 |
+| `il_small_comb_2ep` | `il_agent_small_combined` | 3.32M | combined 07-01+07-26 | 2 | 0.6366 | 0.1630 |
+| `il_hfstream_comb_3ep` | `il_agent_hfstream_combined_3ep` | 3.32M | combined (HF stream) | 3 | 0.7527 | 0.0231 |
+| `il_alldays_3ep` | `il_alldays_0804` | 3.32M | all days (127,748 steps) | 3 | 0.7583 | 0.0193 |
+
+Majority-class baseline on the same eval rows: **0.381**.
+
+**The identity worth noticing:** the checkpoint behind our best-ever ladder score
+(the build saved as `il_agent_winning_827.8`) is the **2-epoch** model — the one
+offline accuracy ranks *last* of the 07-26 family. The checkpoint `il_agent` ships
+today is the 3-epoch one.
+
+## ② Familiarity audit — and where it is missing
+
+Corpus episode counts per deck are **carried forward** from
+[`reports/deck_selection.md`](deck_selection.md) (train split 2026-07-26, 4554
+episodes, deck identity = ace/carry Pokémon). They were **not** re-derived: the
+local episode splits are now stubs — `train-2026-07-26` holds **24 real files of
+4554**, and `train-combined-0701-0726` is **9,796 dangling symlinks of 9,820**.
+Re-deriving would mean re-streaming the corpus from the HF dataset.
+
+| deck | episodes (07-26) | clears 150 floor |
+|---|---:|---|
+| Marnie's Grimmsnarl ex | 3488 | yes |
+| Alakazam | 1542 | yes |
+| Team Rocket's Spidops | 784 | yes |
+| Cynthia's Garchomp ex | 625 | yes |
+| **Mega Lucario ex** (control) | **1** | **no — unmeasured** |
+
+⚠️ **The gap this leaves.** Three arms (`il_alldays_3ep`, `il_hfstream_comb_3ep`,
+`il_small_comb_2ep`) trained on *more days than 07-26*, so they saw strictly more
+episodes of these decks than the column above states. Their true per-deck
+familiarity is **UNMEASURED**, not equal to the numbers shown. This matters for
+exactly one interpretation — "did the extra-data arm win because it is better, or
+because it had more episodes of this particular deck?" — and this run cannot
+separate those. Stated rather than papered over.
+
+## ③ Measure — setup
+
+- **Policy/deck cross:** `<arm>@<deck-tag>`, one identical wrapper per arm
+  (`agents/il_arms/`), so nothing but the weights varies across the model axis.
+- **Opponent pool (8):** `tb_archaludon` (ladder 1196.1), `makthanithin_1084_baseline`
+  (1084.5), `romanrozen_strong_start` (~950), `tb_dragapult` (880.9), `wmh_alakazam`
+  (860.3), `wmh_garchomp` (713.8), `tb_heuristic` (633.0), `random_legal` (floor).
+  Chosen over the earlier study's pool because 7 of 8 carry real ladder anchors
+  spanning 532→1196, which makes pool predictiveness measurable rather than assumed.
+- Mirrored pairs (harness default), `--games 10` = **20 games per arm-vs-opponent
+  cell, 160 field games per arm**.
+- `PTCG_DEVICE=cpu` — what the Kaggle evaluator uses, so this is the honest device.
+- **Isolated:** `--no-glicko-persist`; the standing `reports/glicko_ratings.json`
+  was never touched. These are synthetic identities that have never played a ladder
+  game, so Glicko is recomputed by
+  [`scripts/merge_il_sweep.py`](../scripts/merge_il_sweep.py) over the union of all
+  runs from a flat 1500 prior. Arms never play each other; they are placed on one
+  scale through the shared pool.
+
+⚠️ **Pool caveat, recorded before reading the results.** Every arm beats
+`tb_archaludon` (ladder 1196) more comfortably than `romanrozen_strong_start`
+(ladder ~950). Romanrozen runs live UCB1/MCTS rollouts through the cg engine and
+receives **unbudgeted think time locally**, which the ladder's time budget would
+constrain. This pool therefore probably **overrates search agents** relative to the
+real ladder, and a win rate against it should not be read as a ladder forecast.
+
+## ③ Results
+
+### Integrity check first — is this the model playing?
+
+`scripts/fallback_diagnostic.py` on the six decisive cells, `PTCG_FALLBACK_TRACK=1`:
+
+| cell | decisions | fallbacks | rate |
+|---|---:|---:|---:|
+| `il_alldays_3ep@marnies_grimmsnarl_ex` | 919 | 0 | 0.00% |
+| `il_bc_3ep@marnies_grimmsnarl_ex` | 845 | 0 | 0.00% |
+| `il_small_comb_2ep@marnies_grimmsnarl_ex` | 926 | 0 | 0.00% |
+| `il_alldays_3ep@mega_lucario_ex` | 732 | 0 | 0.00% |
+| `il_bc_3ep@mega_lucario_ex` | 584 | 0 | 0.00% |
+| `il_small_comb_2ep@mega_lucario_ex` | 688 | 0 | 0.00% |
+
+**0 fallbacks in 4,694 decisions.** Every number below was produced by the checkpoint
+under test, not by `_safe_choice`. This is the check that the earlier deck study had
+to retrofit after the fact; here it gates the result.
+
+### Stage A — the model axis, deck held fixed at Marnie's Grimmsnarl ex
+
+| arm | field win% | 95% CI | Glicko | RD | games |
+|---|---:|---|---:|---:|---:|
+| `il_alldays_3ep` | 86.6 ± 1.9% | [82.4, 89.9] | 1877.1 | 30 | 320 |
+| `il_hfstream_comb_3ep` | 83.1 ± 2.1% | [78.6, 86.8] | 1841.7 | 30 | 320 |
+| `il_bc_3ep` *(shipped)* | 81.9 ± 3.0% | [75.2, 87.1] | 1826.5 | 41 | 160 |
+| `il_bc_4ep` | 80.6 ± 3.1% | [73.8, 86.0] | 1813.7 | 41 | 160 |
+| `il_medium_3ep` | 79.1 ± 2.3% | [74.3, 83.2] | 1799.8 | 30 | 320 |
+| `il_bc_2ep` | 78.1 ± 3.3% | [71.1, 83.8] | 1788.1 | 41 | 160 |
+| `il_small_comb_2ep` | 75.0 ± 2.4% | [70.0, 79.4] | 1757.9 | 30 | 320 |
+
+Unequal n is deliberate: the four arms where separation looked plausible at n=160 were
+re-run to n=320; the three in the middle were not, because their gaps need ~6,900
+games/arm to resolve and that is not worth the compute.
+
+**Separation: 1 of 21 pairs.** Only `il_alldays_3ep` > `il_small_comb_2ep` (+11.6pp)
+has non-overlapping 95% CIs. In particular **`il_alldays_3ep` vs the shipped
+`il_bc_3ep` is NOT separated** — the +4.7pp is inside noise.
+
+Two things that did *not* work, worth recording as negative results:
+
+- **Capacity.** `il_medium_3ep` has 3.3× the parameters (10.99M vs 3.32M) and places
+  5th of 7. Consistent with `notes/adr_metamon_grid_rescaled_not_literal.md`.
+- **Offline accuracy as a proxy.** `il_bc_4ep` has the best offline accuracy of the
+  07-26 family (0.7592) and places 4th. `il_small_comb_2ep` is 12 accuracy points and
+  7× the calibration error worse than everything else, and still finishes 11.6pp back
+  — a fraction of what the offline gap would imply. Offline accuracy is again a weak
+  guide to play strength.
+
+### Stage B — the deck axis, and the interaction
+
+Field win% ± σ, 160 games per cell, same pool throughout:
+
+| checkpoint | Grimmsnarl ex (3488) | Garchomp ex (625) | Spidops (784) | Alakazam (1542) | Lucario ex (1) |
+|---|---|---|---|---|---|
+| `il_alldays_3ep` | **86.6 ± 1.9** | 78.1 ± 3.3 | 71.2 ± 3.6 | 69.4 ± 3.6 | **55.0 ± 3.9** |
+| `il_bc_3ep` | 81.9 ± 3.0 | 73.8 ± 3.5 | 70.0 ± 3.6 | 70.6 ± 3.6 | **28.8 ± 3.6** |
+| `il_small_comb_2ep` | 75.0 ± 2.4 | 65.0 ± 3.8 | 53.1 ± 3.9 | 63.1 ± 3.8 | **48.8 ± 4.0** |
+
+**The earlier deck conclusion replicates under a different pool.** The earlier study
+measured `il_agent@mega_lucario_ex` at 29.7% against its 8-agent pool; the same weights
+(`il_bc_3ep`) score **28.8%** here against a completely disjoint pool, and Grimmsnarl ex
+reproduces too (78.4% → 81.9%). "Stop piloting Mega Lucario ex" is not a pool artifact.
+
+**The interaction is the new finding.** How much the checkpoint matters depends on how
+well the corpus supports the deck:
+
+| deck | corpus episodes | spread across checkpoints | separated pairs |
+|---|---:|---:|---|
+| Marnie's Grimmsnarl ex | 3488 | 11.6pp | 1 of 21 (only the extremes, at n=320) |
+| **Mega Lucario ex** | **1** | **26.2pp** | **both gaps clean** |
+
+On Mega Lucario ex:
+- `il_alldays_3ep` (55.0%) > `il_bc_3ep` (28.8%) — **+26.2pp**, CIs [47.3, 62.5] vs
+  [22.3, 36.2], no overlap.
+- `il_small_comb_2ep` (48.8%) > `il_bc_3ep` (28.8%) — **+20.0pp**, no overlap.
+
+Both checkpoints that beat the shipped one on the data-poor deck are exactly the two
+trained on **more than the 07-26 day**; `il_bc_3ep` is 07-26-only. Read together:
+**extra training data buys robustness on decks the corpus barely covers, and buys
+nothing measurable on decks it covers well.**
+
+⚠️ **The confound this run cannot remove.** The extra-data arms also saw more *Mega
+Lucario ex* episodes than the 1 in the 07-26 census — and because the local splits are
+stubs, that count is unknown. "Better model" and "more episodes of this specific deck"
+are not separated here. Separating them needs the per-day, per-deck census from the HF
+corpus (§② above).
+
+### Is this pool predictive of the ladder?
+
+`scripts/pool_predictiveness.py` over the 7 pool agents carrying ladder anchors:
+
+**Spearman ρ = +0.929 (n=7, permutation p = 0.0071)** — up from the +0.63 recorded for
+the previous pool. The pool orders its own members close to their real ladder order.
+
+Necessary, not sufficient: it says the *pool* is internally well-ordered, not that our
+arms' win rates against it convert to ladder points. The known distortion is still
+there — `romanrozen_strong_start` sits at local Glicko 1643.8, statistically level with
+`tb_archaludon` (1647.3), while their ladder anchors are 950 vs 1196. Romanrozen runs
+live MCTS with unbudgeted local think time. Expect this pool to flatter search agents.
+
+## ④ Decide
+
+**Fork 1 — one deck or a portfolio.** Still one deck. The deck ranking is stable across
+all three checkpoints tested (Grimmsnarl ex first in 3 of 3), and the corpus is still
+too imbalanced to support fielding several. Unchanged from the earlier study.
+
+**Fork 2 — best-vs-field or most-learnable.** The Stage B interaction sharpens this:
+"most learnable" and "wins against the field" are the *same* choice only while you keep
+piloting a deck the corpus covers. The moment the deck is data-poor, the checkpoint
+starts mattering a lot, and it is the broader-data checkpoint that wins.
+
+**The new fork this run creates — which checkpoint to ship.** The two candidates are
+not separated on the deck we would actually pilot:
+
+- `il_bc_3ep` (shipped today): 81.9% [75.2, 87.1] on Grimmsnarl ex.
+- `il_alldays_3ep`: 86.6% [82.4, 89.9] on Grimmsnarl ex — **not separated** — but
+  **+26.2pp on the data-poor deck**, which is real.
+
+The tie-breaker is not local win rate; it is that `il_alldays_3ep` is strictly more
+robust where the corpus is thin, at identical inference cost (3.32M params, same
+architecture, same bundle size). That is an argument for `il_alldays_3ep` **on
+robustness grounds**, not on a demonstrated strength advantage — and it should be
+written that way in any submit message.
+
+## The one sentence
+
+> **Pilot Marnie's Grimmsnarl ex with `il_alldays_3ep`: against an 8-agent pool spanning
+> ladder 532–1196 it wins 86.6% ± 1.9% (277/320 games), on a deck with 3488 training
+> episodes — versus 28.8% ± 3.6% for the currently-shipped `il_bc_3ep` on the Mega
+> Lucario ex deck it pilots today, which has 1.**
+
+Carried forward honestly: `il_alldays_3ep` is **not** statistically separated from
+`il_bc_3ep`, `il_bc_4ep`, `il_hfstream_comb_3ep`, `il_bc_2ep`, or `il_medium_3ep` on
+Grimmsnarl ex. What is decisive is the **deck**, and — only on a data-poor deck — the
+**breadth of the training data**. All of it is local; the ladder has not seen any of it.
+
+## What would change my mind
+
+- **A ladder read-back that inverts this.** Three local-vs-ladder inversions are already
+  on record. ρ = +0.929 makes this pool the most trustworthy we have measured, and that
+  is still not a guarantee.
+- **A per-day, per-deck census from the HF corpus** showing `il_alldays_3ep` simply saw
+  many Mega Lucario ex episodes — that would recast the robustness finding as ordinary
+  deck-specific familiarity, and it is the single most valuable follow-up.
+- **A time-budgeted re-run of the pool.** If `romanrozen_strong_start` is throttled to
+  the ladder's real budget, every arm's field win rate shifts, plausibly unevenly.
+- **More games on the Grimmsnarl ex column.** The top-5 arms there are one tie; ~6,900
+  games/arm would be needed to order adjacent pairs, and that ordering could differ
+  from the one printed above.

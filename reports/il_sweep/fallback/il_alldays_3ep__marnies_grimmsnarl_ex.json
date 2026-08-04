@@ -1,0 +1,46 @@
+{
+  "agent": "il_alldays_3ep@marnies_grimmsnarl_ex",
+  "opponents": [
+    "tb_archaludon",
+    "wmh_alakazam"
+  ],
+  "pairs_per_opponent": 3,
+  "games": 12,
+  "record": {
+    "wins": 10,
+    "losses": 2,
+    "draws": 0
+  },
+  "per_opponent": {
+    "tb_archaludon": {
+      "wins": 4,
+      "losses": 2,
+      "draws": 0,
+      "seconds": 3.7
+    },
+    "wmh_alakazam": {
+      "wins": 6,
+      "losses": 0,
+      "draws": 0,
+      "seconds": 7.5
+    }
+  },
+  "fallback": {
+    "decisions": 919,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {
+    "wmh_alakazam": {
+      "decisions": 349,
+      "policy_ok": 349,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 6,
+      "errors": {},
+      "fallback_rate": 0.0
+    }
+  }
+}

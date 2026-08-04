@@ -287,6 +287,22 @@ AGENT_FILES = {
     "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
     "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
     "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
+    # IL checkpoint sweep (reports/il_model_deck_selection.md): every DISTINCT
+    # BC checkpoint in models/, one identical wrapper each so the only thing
+    # varying across the model axis is the weights. Deduped by sha256 --
+    # models/il_agent_3ep is byte-identical to models/il_agent, and
+    # models/il_agent_winning_827.8 is byte-identical to il_agent_2ep_backup,
+    # so each pair contributes ONE arm. models/il_agent_medium_combined is an
+    # EMPTY directory (no config.json/safetensors), which is why the older
+    # `grid_medium_comb` arm above silently falls back to non-ML behaviour --
+    # it is deliberately not re-wired here.
+    "il_bc_2ep": REPO / "agents" / "il_arms" / "il_bc_2ep" / "agent_core.py",
+    "il_bc_3ep": REPO / "agents" / "il_arms" / "il_bc_3ep" / "agent_core.py",
+    "il_bc_4ep": REPO / "agents" / "il_arms" / "il_bc_4ep" / "agent_core.py",
+    "il_medium_3ep": REPO / "agents" / "il_arms" / "il_medium_3ep" / "agent_core.py",
+    "il_small_comb_2ep": REPO / "agents" / "il_arms" / "il_small_comb_2ep" / "agent_core.py",
+    "il_hfstream_comb_3ep": REPO / "agents" / "il_arms" / "il_hfstream_comb_3ep" / "agent_core.py",
+    "il_alldays_3ep": REPO / "agents" / "il_arms" / "il_alldays_3ep" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
@@ -456,12 +472,26 @@ def load_agent(name: str):
             raise AttributeError(f"{base_name} has no callable `agent`")
 
     if deck_tag:
-        if not hasattr(mod, "my_deck"):
-            raise AttributeError(f"{base_name} has no `my_deck` to override (not deck-injectable)")
         deck_csv = DECK_LISTS_DIR / f"{deck_tag}.csv"
         if not deck_csv.exists():
             raise FileNotFoundError(f"deck override '{deck_tag}' not found: {deck_csv}")
-        mod.my_deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+        deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+        # `agent()` returns the module-level `my_deck` it sees in ITS OWN globals.
+        # For wrapper arms (agents/il_arms/, agents/s2_arms/, agents/ppo_arms/,
+        # agents/grid_cells/) that owner is the inner il_agent core module the
+        # wrapper exec'd, NOT the wrapper module bound to `mod` here. Writing
+        # only to `mod` left every wrapper arm silently piloting the deck its
+        # wrapper had already injected -- an override that reported success and
+        # changed nothing. Write to the function's own globals, and keep the
+        # `mod` write so plain modules (where they're the same dict) still work.
+        owner = getattr(fn, "__globals__", None)
+        if owner is None or "my_deck" not in owner:
+            if not hasattr(mod, "my_deck"):
+                raise AttributeError(
+                    f"{base_name} has no `my_deck` to override (not deck-injectable)")
+        if owner is not None:
+            owner["my_deck"] = deck
+        mod.my_deck = deck
 
     _LOADED_MODULES[name] = mod
     return fn
