@@ -1,0 +1,18 @@
+{
+  "arm": "top50_wd",
+  "seed": 44,
+  "total_steps": 4000,
+  "train_secs": 513.3,
+  "eval_all": {
+    "rows": 29761,
+    "majority_pct": 39.0,
+    "top1_pct": 68.1,
+    "top3_pct": 92.2
+  },
+  "eval_highskill": {
+    "rows": 28315,
+    "majority_pct": 39.0,
+    "top1_pct": 68.6,
+    "top3_pct": 91.8
+  }
+}
