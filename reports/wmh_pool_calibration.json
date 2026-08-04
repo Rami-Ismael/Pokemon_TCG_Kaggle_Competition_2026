@@ -1,0 +1,2347 @@
+{
+  "agents": [
+    "wmh_alakazam",
+    "wmh_megastarmie",
+    "wmh_bellibolt",
+    "wmh_garchomp",
+    "wmh_typhlosion",
+    "wmh_trevenant",
+    "wmh_mewtwo",
+    "wmh_grimmsnarl",
+    "wmh_kangaskhan",
+    "wmh_ogerpon",
+    "wmh_chandelure",
+    "wmh_froslass",
+    "random_legal",
+    "rule_baseline",
+    "improved_prob_main",
+    "il_agent",
+    "romanrozen_strong_start",
+    "tb_archaludon"
+  ],
+  "games_per_pair": 2,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "wmh_alakazam": {
+      "wmh_alakazam": 2,
+      "wmh_megastarmie": 1,
+      "wmh_bellibolt": 3,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 2,
+      "random_legal": 3,
+      "rule_baseline": 2,
+      "improved_prob_main": 4,
+      "il_agent": 3,
+      "romanrozen_strong_start": 1,
+      "tb_archaludon": 2
+    },
+    "wmh_megastarmie": {
+      "wmh_alakazam": 3,
+      "wmh_megastarmie": 2,
+      "wmh_bellibolt": 2,
+      "wmh_garchomp": 2,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 2,
+      "random_legal": 4,
+      "rule_baseline": 1,
+      "improved_prob_main": 3,
+      "il_agent": 4,
+      "romanrozen_strong_start": 2,
+      "tb_archaludon": 0
+    },
+    "wmh_bellibolt": {
+      "wmh_alakazam": 1,
+      "wmh_megastarmie": 2,
+      "wmh_bellibolt": 2,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 0,
+      "wmh_trevenant": 2,
+      "wmh_mewtwo": 0,
+      "wmh_grimmsnarl": 1,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 2,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 3,
+      "random_legal": 4,
+      "rule_baseline": 0,
+      "improved_prob_main": 0,
+      "il_agent": 2,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 0
+    },
+    "wmh_garchomp": {
+      "wmh_alakazam": 3,
+      "wmh_megastarmie": 2,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 2,
+      "wmh_typhlosion": 3,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 3,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 3,
+      "random_legal": 4,
+      "rule_baseline": 2,
+      "improved_prob_main": 0,
+      "il_agent": 4,
+      "romanrozen_strong_start": 2,
+      "tb_archaludon": 1
+    },
+    "wmh_typhlosion": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 2,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 3,
+      "wmh_grimmsnarl": 1,
+      "wmh_kangaskhan": 3,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 0,
+      "random_legal": 4,
+      "rule_baseline": 2,
+      "improved_prob_main": 0,
+      "il_agent": 3,
+      "romanrozen_strong_start": 1,
+      "tb_archaludon": 1
+    },
+    "wmh_trevenant": {
+      "wmh_alakazam": 3,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 2,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 2,
+      "wmh_mewtwo": 3,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 3,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 3,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 2,
+      "tb_archaludon": 0
+    },
+    "wmh_mewtwo": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 1,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 2,
+      "wmh_kangaskhan": 2,
+      "wmh_ogerpon": 2,
+      "wmh_chandelure": 2,
+      "wmh_froslass": 0,
+      "random_legal": 3,
+      "rule_baseline": 1,
+      "improved_prob_main": 0,
+      "il_agent": 2,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 0
+    },
+    "wmh_grimmsnarl": {
+      "wmh_alakazam": 1,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 3,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 3,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 2,
+      "wmh_kangaskhan": 2,
+      "wmh_ogerpon": 2,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 0,
+      "random_legal": 2,
+      "rule_baseline": 1,
+      "improved_prob_main": 1,
+      "il_agent": 1,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 0
+    },
+    "wmh_kangaskhan": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 0,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 1,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 2,
+      "wmh_kangaskhan": 2,
+      "wmh_ogerpon": 2,
+      "wmh_chandelure": 1,
+      "wmh_froslass": 1,
+      "random_legal": 1,
+      "rule_baseline": 0,
+      "improved_prob_main": 0,
+      "il_agent": 0,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 0
+    },
+    "wmh_ogerpon": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 2,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 0,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 2,
+      "wmh_kangaskhan": 2,
+      "wmh_ogerpon": 2,
+      "wmh_chandelure": 1,
+      "wmh_froslass": 0,
+      "random_legal": 0,
+      "rule_baseline": 1,
+      "improved_prob_main": 0,
+      "il_agent": 0,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 1
+    },
+    "wmh_chandelure": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 1,
+      "wmh_bellibolt": 0,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 1,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 0,
+      "wmh_kangaskhan": 3,
+      "wmh_ogerpon": 3,
+      "wmh_chandelure": 2,
+      "wmh_froslass": 0,
+      "random_legal": 4,
+      "rule_baseline": 2,
+      "improved_prob_main": 0,
+      "il_agent": 2,
+      "romanrozen_strong_start": 1,
+      "tb_archaludon": 1
+    },
+    "wmh_froslass": {
+      "wmh_alakazam": 2,
+      "wmh_megastarmie": 2,
+      "wmh_bellibolt": 1,
+      "wmh_garchomp": 1,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 1,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 3,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 2,
+      "random_legal": 4,
+      "rule_baseline": 2,
+      "improved_prob_main": 2,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 0
+    },
+    "random_legal": {
+      "wmh_alakazam": 1,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 0,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 0,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 1,
+      "wmh_grimmsnarl": 2,
+      "wmh_kangaskhan": 3,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 0,
+      "wmh_froslass": 0,
+      "random_legal": 2,
+      "rule_baseline": 1,
+      "improved_prob_main": 0,
+      "il_agent": 0,
+      "romanrozen_strong_start": 0,
+      "tb_archaludon": 0
+    },
+    "rule_baseline": {
+      "wmh_alakazam": 2,
+      "wmh_megastarmie": 3,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 2,
+      "wmh_typhlosion": 2,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 3,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 3,
+      "wmh_chandelure": 2,
+      "wmh_froslass": 2,
+      "random_legal": 3,
+      "rule_baseline": 2,
+      "improved_prob_main": 2,
+      "il_agent": 4,
+      "romanrozen_strong_start": 1,
+      "tb_archaludon": 1
+    },
+    "improved_prob_main": {
+      "wmh_alakazam": 0,
+      "wmh_megastarmie": 1,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 2,
+      "random_legal": 4,
+      "rule_baseline": 2,
+      "improved_prob_main": 2,
+      "il_agent": 4,
+      "romanrozen_strong_start": 2,
+      "tb_archaludon": 1
+    },
+    "il_agent": {
+      "wmh_alakazam": 1,
+      "wmh_megastarmie": 0,
+      "wmh_bellibolt": 2,
+      "wmh_garchomp": 0,
+      "wmh_typhlosion": 1,
+      "wmh_trevenant": 0,
+      "wmh_mewtwo": 2,
+      "wmh_grimmsnarl": 3,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 2,
+      "wmh_froslass": 0,
+      "random_legal": 4,
+      "rule_baseline": 0,
+      "improved_prob_main": 0,
+      "il_agent": 2,
+      "romanrozen_strong_start": 1,
+      "tb_archaludon": 0
+    },
+    "romanrozen_strong_start": {
+      "wmh_alakazam": 3,
+      "wmh_megastarmie": 2,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 2,
+      "wmh_typhlosion": 3,
+      "wmh_trevenant": 2,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 0,
+      "random_legal": 4,
+      "rule_baseline": 3,
+      "improved_prob_main": 2,
+      "il_agent": 3,
+      "romanrozen_strong_start": 2,
+      "tb_archaludon": 0
+    },
+    "tb_archaludon": {
+      "wmh_alakazam": 2,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 3,
+      "wmh_typhlosion": 3,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 3,
+      "wmh_chandelure": 3,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 3,
+      "improved_prob_main": 3,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 2
+    }
+  },
+  "games": {
+    "wmh_alakazam": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_megastarmie": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_bellibolt": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_garchomp": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_typhlosion": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_trevenant": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_mewtwo": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_grimmsnarl": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_kangaskhan": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_ogerpon": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_chandelure": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "wmh_froslass": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "random_legal": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "rule_baseline": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "improved_prob_main": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "il_agent": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "romanrozen_strong_start": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    },
+    "tb_archaludon": {
+      "wmh_alakazam": 4,
+      "wmh_megastarmie": 4,
+      "wmh_bellibolt": 4,
+      "wmh_garchomp": 4,
+      "wmh_typhlosion": 4,
+      "wmh_trevenant": 4,
+      "wmh_mewtwo": 4,
+      "wmh_grimmsnarl": 4,
+      "wmh_kangaskhan": 4,
+      "wmh_ogerpon": 4,
+      "wmh_chandelure": 4,
+      "wmh_froslass": 4,
+      "random_legal": 4,
+      "rule_baseline": 4,
+      "improved_prob_main": 4,
+      "il_agent": 4,
+      "romanrozen_strong_start": 4,
+      "tb_archaludon": 4
+    }
+  },
+  "wall_clock_sec": {
+    "wmh_alakazam": {
+      "wmh_alakazam": 5.429865837097168,
+      "wmh_megastarmie": 1.5694429874420166,
+      "wmh_bellibolt": 2.5456109046936035,
+      "wmh_garchomp": 3.20511794090271,
+      "wmh_typhlosion": 2.709473133087158,
+      "wmh_trevenant": 1.6881120204925537,
+      "wmh_mewtwo": 1.7442638874053955,
+      "wmh_grimmsnarl": 0.9879989624023438,
+      "wmh_kangaskhan": 0.8011109828948975,
+      "wmh_ogerpon": 1.6571869850158691,
+      "wmh_chandelure": 2.3797080516815186,
+      "wmh_froslass": 1.710474967956543,
+      "random_legal": 1.4029550552368164,
+      "rule_baseline": 3.3257880210876465,
+      "improved_prob_main": 3.612891912460327,
+      "il_agent": 4.283131122589111,
+      "romanrozen_strong_start": 1.667165756225586,
+      "tb_archaludon": 1.2375049591064453
+    },
+    "wmh_megastarmie": {
+      "wmh_alakazam": 1.5694429874420166,
+      "wmh_megastarmie": 0.6435461044311523,
+      "wmh_bellibolt": 2.7931909561157227,
+      "wmh_garchomp": 3.0715198516845703,
+      "wmh_typhlosion": 1.4381959438323975,
+      "wmh_trevenant": 2.694920063018799,
+      "wmh_mewtwo": 1.6024022102355957,
+      "wmh_grimmsnarl": 1.869946002960205,
+      "wmh_kangaskhan": 2.4634158611297607,
+      "wmh_ogerpon": 1.1990139484405518,
+      "wmh_chandelure": 1.653437852859497,
+      "wmh_froslass": 0.9446978569030762,
+      "random_legal": 0.5576021671295166,
+      "rule_baseline": 1.1379899978637695,
+      "improved_prob_main": 1.682271957397461,
+      "il_agent": 5.992185831069946,
+      "romanrozen_strong_start": 2.829457998275757,
+      "tb_archaludon": 1.7452988624572754
+    },
+    "wmh_bellibolt": {
+      "wmh_alakazam": 2.5456109046936035,
+      "wmh_megastarmie": 2.7931909561157227,
+      "wmh_bellibolt": 4.635061740875244,
+      "wmh_garchomp": 2.5794501304626465,
+      "wmh_typhlosion": 2.545254945755005,
+      "wmh_trevenant": 3.9196019172668457,
+      "wmh_mewtwo": 4.918784856796265,
+      "wmh_grimmsnarl": 3.7837719917297363,
+      "wmh_kangaskhan": 4.535929203033447,
+      "wmh_ogerpon": 5.970108985900879,
+      "wmh_chandelure": 3.315638780593872,
+      "wmh_froslass": 4.080773115158081,
+      "random_legal": 2.162606716156006,
+      "rule_baseline": 3.2198829650878906,
+      "improved_prob_main": 3.1469881534576416,
+      "il_agent": 4.37554407119751,
+      "romanrozen_strong_start": 1.6765270233154297,
+      "tb_archaludon": 1.6172380447387695
+    },
+    "wmh_garchomp": {
+      "wmh_alakazam": 3.20511794090271,
+      "wmh_megastarmie": 3.0715198516845703,
+      "wmh_bellibolt": 2.5794501304626465,
+      "wmh_garchomp": 1.8564820289611816,
+      "wmh_typhlosion": 2.969130039215088,
+      "wmh_trevenant": 3.9750418663024902,
+      "wmh_mewtwo": 2.5090091228485107,
+      "wmh_grimmsnarl": 3.22723388671875,
+      "wmh_kangaskhan": 2.270730972290039,
+      "wmh_ogerpon": 1.5583009719848633,
+      "wmh_chandelure": 1.340968370437622,
+      "wmh_froslass": 1.1536030769348145,
+      "random_legal": 1.7802553176879883,
+      "rule_baseline": 1.9290599822998047,
+      "improved_prob_main": 3.215183973312378,
+      "il_agent": 9.83754587173462,
+      "romanrozen_strong_start": 2.0943379402160645,
+      "tb_archaludon": 1.3389499187469482
+    },
+    "wmh_typhlosion": {
+      "wmh_alakazam": 2.709473133087158,
+      "wmh_megastarmie": 1.4381959438323975,
+      "wmh_bellibolt": 2.545254945755005,
+      "wmh_garchomp": 2.969130039215088,
+      "wmh_typhlosion": 1.3891043663024902,
+      "wmh_trevenant": 2.2242579460144043,
+      "wmh_mewtwo": 4.097430944442749,
+      "wmh_grimmsnarl": 3.3393900394439697,
+      "wmh_kangaskhan": 3.254833936691284,
+      "wmh_ogerpon": 3.6447508335113525,
+      "wmh_chandelure": 2.5369789600372314,
+      "wmh_froslass": 1.853208065032959,
+      "random_legal": 1.9494941234588623,
+      "rule_baseline": 7.4269959926605225,
+      "improved_prob_main": 3.3960447311401367,
+      "il_agent": 14.671601295471191,
+      "romanrozen_strong_start": 2.4510109424591064,
+      "tb_archaludon": 3.28357195854187
+    },
+    "wmh_trevenant": {
+      "wmh_alakazam": 1.6881120204925537,
+      "wmh_megastarmie": 2.694920063018799,
+      "wmh_bellibolt": 3.9196019172668457,
+      "wmh_garchomp": 3.9750418663024902,
+      "wmh_typhlosion": 2.2242579460144043,
+      "wmh_trevenant": 3.3282980918884277,
+      "wmh_mewtwo": 4.348329067230225,
+      "wmh_grimmsnarl": 3.820488214492798,
+      "wmh_kangaskhan": 3.685741901397705,
+      "wmh_ogerpon": 3.651322841644287,
+      "wmh_chandelure": 1.3799309730529785,
+      "wmh_froslass": 1.4676098823547363,
+      "random_legal": 1.7952299118041992,
+      "rule_baseline": 3.9956910610198975,
+      "improved_prob_main": 4.468611001968384,
+      "il_agent": 5.257623195648193,
+      "romanrozen_strong_start": 2.374220132827759,
+      "tb_archaludon": 2.6554019451141357
+    },
+    "wmh_mewtwo": {
+      "wmh_alakazam": 1.7442638874053955,
+      "wmh_megastarmie": 1.6024022102355957,
+      "wmh_bellibolt": 4.918784856796265,
+      "wmh_garchomp": 2.5090091228485107,
+      "wmh_typhlosion": 4.097430944442749,
+      "wmh_trevenant": 4.348329067230225,
+      "wmh_mewtwo": 3.0819616317749023,
+      "wmh_grimmsnarl": 2.165515899658203,
+      "wmh_kangaskhan": 3.0684008598327637,
+      "wmh_ogerpon": 2.489516019821167,
+      "wmh_chandelure": 3.7701709270477295,
+      "wmh_froslass": 2.1390161514282227,
+      "random_legal": 1.9555060863494873,
+      "rule_baseline": 2.823448896408081,
+      "improved_prob_main": 1.907576084136963,
+      "il_agent": 4.8057780265808105,
+      "romanrozen_strong_start": 3.366403818130493,
+      "tb_archaludon": 2.90547776222229
+    },
+    "wmh_grimmsnarl": {
+      "wmh_alakazam": 0.9879989624023438,
+      "wmh_megastarmie": 1.869946002960205,
+      "wmh_bellibolt": 3.7837719917297363,
+      "wmh_garchomp": 3.22723388671875,
+      "wmh_typhlosion": 3.3393900394439697,
+      "wmh_trevenant": 3.820488214492798,
+      "wmh_mewtwo": 2.165515899658203,
+      "wmh_grimmsnarl": 4.01125431060791,
+      "wmh_kangaskhan": 3.2266199588775635,
+      "wmh_ogerpon": 2.4759511947631836,
+      "wmh_chandelure": 1.6450541019439697,
+      "wmh_froslass": 1.968803882598877,
+      "random_legal": 3.24714994430542,
+      "rule_baseline": 3.334298849105835,
+      "improved_prob_main": 2.445415735244751,
+      "il_agent": 4.865722894668579,
+      "romanrozen_strong_start": 1.4673168659210205,
+      "tb_archaludon": 1.6869752407073975
+    },
+    "wmh_kangaskhan": {
+      "wmh_alakazam": 0.8011109828948975,
+      "wmh_megastarmie": 2.4634158611297607,
+      "wmh_bellibolt": 4.535929203033447,
+      "wmh_garchomp": 2.270730972290039,
+      "wmh_typhlosion": 3.254833936691284,
+      "wmh_trevenant": 3.685741901397705,
+      "wmh_mewtwo": 3.0684008598327637,
+      "wmh_grimmsnarl": 3.2266199588775635,
+      "wmh_kangaskhan": 3.289155960083008,
+      "wmh_ogerpon": 3.6113967895507812,
+      "wmh_chandelure": 2.965169906616211,
+      "wmh_froslass": 2.4311559200286865,
+      "random_legal": 3.521847724914551,
+      "rule_baseline": 1.145676851272583,
+      "improved_prob_main": 1.1340277194976807,
+      "il_agent": 2.264819860458374,
+      "romanrozen_strong_start": 1.4815318584442139,
+      "tb_archaludon": 2.344510078430176
+    },
+    "wmh_ogerpon": {
+      "wmh_alakazam": 1.6571869850158691,
+      "wmh_megastarmie": 1.1990139484405518,
+      "wmh_bellibolt": 5.970108985900879,
+      "wmh_garchomp": 1.5583009719848633,
+      "wmh_typhlosion": 3.6447508335113525,
+      "wmh_trevenant": 3.651322841644287,
+      "wmh_mewtwo": 2.489516019821167,
+      "wmh_grimmsnarl": 2.4759511947631836,
+      "wmh_kangaskhan": 3.6113967895507812,
+      "wmh_ogerpon": 3.5657925605773926,
+      "wmh_chandelure": 3.7278618812561035,
+      "wmh_froslass": 1.356766939163208,
+      "random_legal": 2.527104139328003,
+      "rule_baseline": 1.500385046005249,
+      "improved_prob_main": 1.4522960186004639,
+      "il_agent": 7.023147106170654,
+      "romanrozen_strong_start": 2.5148911476135254,
+      "tb_archaludon": 2.785098075866699
+    },
+    "wmh_chandelure": {
+      "wmh_alakazam": 2.3797080516815186,
+      "wmh_megastarmie": 1.653437852859497,
+      "wmh_bellibolt": 3.315638780593872,
+      "wmh_garchomp": 1.340968370437622,
+      "wmh_typhlosion": 2.5369789600372314,
+      "wmh_trevenant": 1.3799309730529785,
+      "wmh_mewtwo": 3.7701709270477295,
+      "wmh_grimmsnarl": 1.6450541019439697,
+      "wmh_kangaskhan": 2.965169906616211,
+      "wmh_ogerpon": 3.7278618812561035,
+      "wmh_chandelure": 2.2945556640625,
+      "wmh_froslass": 1.1125099658966064,
+      "random_legal": 1.7221791744232178,
+      "rule_baseline": 1.0425682067871094,
+      "improved_prob_main": 0.9628422260284424,
+      "il_agent": 7.082329034805298,
+      "romanrozen_strong_start": 1.8491950035095215,
+      "tb_archaludon": 2.455472946166992
+    },
+    "wmh_froslass": {
+      "wmh_alakazam": 1.710474967956543,
+      "wmh_megastarmie": 0.9446978569030762,
+      "wmh_bellibolt": 4.080773115158081,
+      "wmh_garchomp": 1.1536030769348145,
+      "wmh_typhlosion": 1.853208065032959,
+      "wmh_trevenant": 1.4676098823547363,
+      "wmh_mewtwo": 2.1390161514282227,
+      "wmh_grimmsnarl": 1.968803882598877,
+      "wmh_kangaskhan": 2.4311559200286865,
+      "wmh_ogerpon": 1.356766939163208,
+      "wmh_chandelure": 1.1125099658966064,
+      "wmh_froslass": 1.5786638259887695,
+      "random_legal": 1.0117671489715576,
+      "rule_baseline": 1.141923189163208,
+      "improved_prob_main": 0.9037160873413086,
+      "il_agent": 3.7148799896240234,
+      "romanrozen_strong_start": 2.484074354171753,
+      "tb_archaludon": 1.206697940826416
+    },
+    "random_legal": {
+      "wmh_alakazam": 1.4029550552368164,
+      "wmh_megastarmie": 0.5576021671295166,
+      "wmh_bellibolt": 2.162606716156006,
+      "wmh_garchomp": 1.7802553176879883,
+      "wmh_typhlosion": 1.9494941234588623,
+      "wmh_trevenant": 1.7952299118041992,
+      "wmh_mewtwo": 1.9555060863494873,
+      "wmh_grimmsnarl": 3.24714994430542,
+      "wmh_kangaskhan": 3.521847724914551,
+      "wmh_ogerpon": 2.527104139328003,
+      "wmh_chandelure": 1.7221791744232178,
+      "wmh_froslass": 1.0117671489715576,
+      "random_legal": 1.755420207977295,
+      "rule_baseline": 1.0949771404266357,
+      "improved_prob_main": 1.2050480842590332,
+      "il_agent": 5.502737045288086,
+      "romanrozen_strong_start": 0.6523940563201904,
+      "tb_archaludon": 0.7528729438781738
+    },
+    "rule_baseline": {
+      "wmh_alakazam": 3.3257880210876465,
+      "wmh_megastarmie": 1.1379899978637695,
+      "wmh_bellibolt": 3.2198829650878906,
+      "wmh_garchomp": 1.9290599822998047,
+      "wmh_typhlosion": 7.4269959926605225,
+      "wmh_trevenant": 3.9956910610198975,
+      "wmh_mewtwo": 2.823448896408081,
+      "wmh_grimmsnarl": 3.334298849105835,
+      "wmh_kangaskhan": 1.145676851272583,
+      "wmh_ogerpon": 1.500385046005249,
+      "wmh_chandelure": 1.0425682067871094,
+      "wmh_froslass": 1.141923189163208,
+      "random_legal": 1.0949771404266357,
+      "rule_baseline": 1.474897861480713,
+      "improved_prob_main": 1.4464921951293945,
+      "il_agent": 5.973858118057251,
+      "romanrozen_strong_start": 2.1607589721679688,
+      "tb_archaludon": 2.185589075088501
+    },
+    "improved_prob_main": {
+      "wmh_alakazam": 3.612891912460327,
+      "wmh_megastarmie": 1.682271957397461,
+      "wmh_bellibolt": 3.1469881534576416,
+      "wmh_garchomp": 3.215183973312378,
+      "wmh_typhlosion": 3.3960447311401367,
+      "wmh_trevenant": 4.468611001968384,
+      "wmh_mewtwo": 1.907576084136963,
+      "wmh_grimmsnarl": 2.445415735244751,
+      "wmh_kangaskhan": 1.1340277194976807,
+      "wmh_ogerpon": 1.4522960186004639,
+      "wmh_chandelure": 0.9628422260284424,
+      "wmh_froslass": 0.9037160873413086,
+      "random_legal": 1.2050480842590332,
+      "rule_baseline": 1.4464921951293945,
+      "improved_prob_main": 2.222414016723633,
+      "il_agent": 3.233283042907715,
+      "romanrozen_strong_start": 1.2991161346435547,
+      "tb_archaludon": 1.4076530933380127
+    },
+    "il_agent": {
+      "wmh_alakazam": 4.283131122589111,
+      "wmh_megastarmie": 5.992185831069946,
+      "wmh_bellibolt": 4.37554407119751,
+      "wmh_garchomp": 9.83754587173462,
+      "wmh_typhlosion": 14.671601295471191,
+      "wmh_trevenant": 5.257623195648193,
+      "wmh_mewtwo": 4.8057780265808105,
+      "wmh_grimmsnarl": 4.865722894668579,
+      "wmh_kangaskhan": 2.264819860458374,
+      "wmh_ogerpon": 7.023147106170654,
+      "wmh_chandelure": 7.082329034805298,
+      "wmh_froslass": 3.7148799896240234,
+      "random_legal": 5.502737045288086,
+      "rule_baseline": 5.973858118057251,
+      "improved_prob_main": 3.233283042907715,
+      "il_agent": 14.488277435302734,
+      "romanrozen_strong_start": 3.9017751216888428,
+      "tb_archaludon": 2.1326608657836914
+    },
+    "romanrozen_strong_start": {
+      "wmh_alakazam": 1.667165756225586,
+      "wmh_megastarmie": 2.829457998275757,
+      "wmh_bellibolt": 1.6765270233154297,
+      "wmh_garchomp": 2.0943379402160645,
+      "wmh_typhlosion": 2.4510109424591064,
+      "wmh_trevenant": 2.374220132827759,
+      "wmh_mewtwo": 3.366403818130493,
+      "wmh_grimmsnarl": 1.4673168659210205,
+      "wmh_kangaskhan": 1.4815318584442139,
+      "wmh_ogerpon": 2.5148911476135254,
+      "wmh_chandelure": 1.8491950035095215,
+      "wmh_froslass": 2.484074354171753,
+      "random_legal": 0.6523940563201904,
+      "rule_baseline": 2.1607589721679688,
+      "improved_prob_main": 1.2991161346435547,
+      "il_agent": 3.9017751216888428,
+      "romanrozen_strong_start": 1.4951658248901367,
+      "tb_archaludon": 1.4364469051361084
+    },
+    "tb_archaludon": {
+      "wmh_alakazam": 1.2375049591064453,
+      "wmh_megastarmie": 1.7452988624572754,
+      "wmh_bellibolt": 1.6172380447387695,
+      "wmh_garchomp": 1.3389499187469482,
+      "wmh_typhlosion": 3.28357195854187,
+      "wmh_trevenant": 2.6554019451141357,
+      "wmh_mewtwo": 2.90547776222229,
+      "wmh_grimmsnarl": 1.6869752407073975,
+      "wmh_kangaskhan": 2.344510078430176,
+      "wmh_ogerpon": 2.785098075866699,
+      "wmh_chandelure": 2.455472946166992,
+      "wmh_froslass": 1.206697940826416,
+      "random_legal": 0.7528729438781738,
+      "rule_baseline": 2.185589075088501,
+      "improved_prob_main": 1.4076530933380127,
+      "il_agent": 2.1326608657836914,
+      "romanrozen_strong_start": 1.4364469051361084,
+      "tb_archaludon": 2.5777664184570312
+    }
+  },
+  "total_wall_clock_sec": 447.4689018726349,
+  "overall_win_pct": {
+    "wmh_alakazam": 66.66666666666667,
+    "wmh_megastarmie": 72.22222222222223,
+    "wmh_bellibolt": 37.5,
+    "wmh_garchomp": 70.83333333333333,
+    "wmh_typhlosion": 44.44444444444444,
+    "wmh_trevenant": 66.66666666666667,
+    "wmh_mewtwo": 31.944444444444443,
+    "wmh_grimmsnarl": 36.111111111111114,
+    "wmh_kangaskhan": 18.055555555555557,
+    "wmh_ogerpon": 18.055555555555557,
+    "wmh_chandelure": 33.333333333333336,
+    "wmh_froslass": 66.66666666666667,
+    "random_legal": 19.444444444444443,
+    "rule_baseline": 59.72222222222222,
+    "improved_prob_main": 68.05555555555556,
+    "il_agent": 36.111111111111114,
+    "romanrozen_strong_start": 68.05555555555556,
+    "tb_archaludon": 86.11111111111111
+  },
+  "overall_win_pct_wilson_ci": {
+    "wmh_alakazam": {
+      "p": 66.66666666666666,
+      "lo": 55.17938807199862,
+      "hi": 76.46551393428815
+    },
+    "wmh_megastarmie": {
+      "p": 72.22222222222221,
+      "lo": 60.95334868037199,
+      "hi": 81.23985399467706
+    },
+    "wmh_bellibolt": {
+      "p": 37.5,
+      "lo": 27.219009399354576,
+      "hi": 49.04731409593034
+    },
+    "wmh_garchomp": {
+      "p": 70.83333333333334,
+      "lo": 59.49403922510519,
+      "hi": 80.0620882827533
+    },
+    "wmh_typhlosion": {
+      "p": 44.44444444444444,
+      "lo": 33.538885104705244,
+      "hi": 55.91281422653248
+    },
+    "wmh_trevenant": {
+      "p": 66.66666666666666,
+      "lo": 55.17938807199862,
+      "hi": 76.46551393428815
+    },
+    "wmh_mewtwo": {
+      "p": 31.944444444444443,
+      "lo": 22.325457048556473,
+      "hi": 43.392565777966176
+    },
+    "wmh_grimmsnarl": {
+      "p": 36.11111111111111,
+      "lo": 25.981514475687582,
+      "hi": 47.64773385240676
+    },
+    "wmh_kangaskhan": {
+      "p": 18.055555555555554,
+      "lo": 10.866714144495852,
+      "hi": 28.48055701012113
+    },
+    "wmh_ogerpon": {
+      "p": 18.055555555555554,
+      "lo": 10.866714144495852,
+      "hi": 28.48055701012113
+    },
+    "wmh_chandelure": {
+      "p": 33.33333333333333,
+      "lo": 23.53448606571184,
+      "hi": 44.82061192800137
+    },
+    "wmh_froslass": {
+      "p": 66.66666666666666,
+      "lo": 55.17938807199862,
+      "hi": 76.46551393428815
+    },
+    "random_legal": {
+      "p": 19.444444444444446,
+      "lo": 11.951371043417634,
+      "hi": 30.032975278389916
+    },
+    "rule_baseline": {
+      "p": 59.72222222222222,
+      "lo": 48.18046137128726,
+      "hi": 70.2790647990467
+    },
+    "improved_prob_main": {
+      "p": 68.05555555555556,
+      "lo": 56.607434222033824,
+      "hi": 77.67454295144354
+    },
+    "il_agent": {
+      "p": 36.11111111111111,
+      "lo": 25.981514475687582,
+      "hi": 47.64773385240676
+    },
+    "romanrozen_strong_start": {
+      "p": 68.05555555555556,
+      "lo": 56.607434222033824,
+      "hi": 77.67454295144354
+    },
+    "tb_archaludon": {
+      "p": 86.11111111111111,
+      "lo": 76.2866021584266,
+      "hi": 92.2773521885281
+    }
+  },
+  "glicko": {
+    "wmh_alakazam": {
+      "rating": 1662.7046898209085,
+      "rd": 59.154724790437086,
+      "gxe": 65.06202690003094
+    },
+    "wmh_megastarmie": {
+      "rating": 1716.6410362024812,
+      "rd": 59.154724790437086,
+      "gxe": 69.59067945399082
+    },
+    "wmh_bellibolt": {
+      "rating": 1340.3414439335747,
+      "rd": 59.154724790437086,
+      "gxe": 35.203042087915236
+    },
+    "wmh_garchomp": {
+      "rating": 1690.065533042334,
+      "rd": 59.154724790437086,
+      "gxe": 67.39982356669181
+    },
+    "wmh_typhlosion": {
+      "rating": 1427.4257548473756,
+      "rd": 59.154724790437086,
+      "gxe": 43.110642835265736
+    },
+    "wmh_trevenant": {
+      "rating": 1688.9774686906305,
+      "rd": 59.154724790437086,
+      "gxe": 67.30839657534216
+    },
+    "wmh_mewtwo": {
+      "rating": 1286.4204658209314,
+      "rd": 59.154724790437086,
+      "gxe": 30.65746887937264
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1320.2618530799375,
+      "rd": 59.154724790437086,
+      "gxe": 33.47321287867206
+    },
+    "wmh_kangaskhan": {
+      "rating": 1118.7929779985402,
+      "rd": 59.154724790437086,
+      "gxe": 18.896320578030718
+    },
+    "wmh_ogerpon": {
+      "rating": 1118.7815529181842,
+      "rd": 59.154724790437086,
+      "gxe": 18.895651466342553
+    },
+    "wmh_chandelure": {
+      "rating": 1313.0372474912062,
+      "rd": 59.154724790437086,
+      "gxe": 32.861241666687185
+    },
+    "wmh_froslass": {
+      "rating": 1662.7414343134515,
+      "rd": 59.154724790437086,
+      "gxe": 65.06521870104577
+    },
+    "random_legal": {
+      "rating": 970.1300220182275,
+      "rd": 30.0,
+      "gxe": 11.540811661453942
+    },
+    "rule_baseline": {
+      "rating": 1573.6523994301633,
+      "rd": 30.0,
+      "gxe": 57.03051843243804
+    },
+    "improved_prob_main": {
+      "rating": 1711.7425787610698,
+      "rd": 30.0,
+      "gxe": 69.29338070228503
+    },
+    "il_agent": {
+      "rating": 1322.2472137318077,
+      "rd": 30.0,
+      "gxe": 33.554185474435215
+    },
+    "romanrozen_strong_start": {
+      "rating": 1676.2134054458506,
+      "rd": 59.154724790437086,
+      "gxe": 66.226172610838
+    },
+    "tb_archaludon": {
+      "rating": 1864.542887115045,
+      "rd": 59.154724790437086,
+      "gxe": 80.10835010195221
+    }
+  },
+  "fallback_diag": {
+    "wmh_alakazam": {
+      "decisions": 4251,
+      "policy_ok": 4251,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 72,
+      "errors": {},
+      "fallback_rate": 0.0
+    },
+    "wmh_bellibolt": {
+      "decisions": 5826,
+      "policy_ok": 5826,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 72,
+      "errors": {},
+      "chosen_types": {},
+      "attack_ids_chosen": {},
+      "fallback_rate": 0.0
+    },
+    "wmh_typhlosion": {
+      "decisions": 4601,
+      "policy_ok": 4601,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 72,
+      "errors": {},
+      "fallback_rate": 0.0
+    },
+    "improved_prob_main": {
+      "decisions": 4833,
+      "search_fallback": 2057,
+      "fallback_rate": 0.42561555969377196
+    },
+    "il_agent": {
+      "decisions": 4036,
+      "too_many_options": 1,
+      "enabled": true,
+      "fallbacks": 1,
+      "fallback_rate": 0.0002477700693756194
+    }
+  },
+  "fallback_first": {
+    "il_agent": {
+      "too_many_options": {
+        "reason": "too_many_options",
+        "occurrence": 1,
+        "n_opts": 51,
+        "obs": {
+          "remainingOverageTime": 599.8116969999999,
+          "select": {
+            "type": 0,
+            "context": 0,
+            "minCount": 1,
+            "maxCount": 1,
+            "remainDamageCounter": 0,
+            "remainEnergyCost": 0,
+            "option": [
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 7,
+                "index": 5
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 13,
+                "attackId": 982
+              },
+              {
+                "type": 14
+              }
+            ],
+            "deck": null,
+            "contextCard": null,
+            "effect": null
+          },
+          "logs": [
+            {
+              "type": 6,
+              "playerIndex": 1,
+              "cardId": 1159,
+              "serial": 96,
+              "fromArea": 6,
+              "toArea": 2
+            },
+            {
+              "type": 6,
+              "playerIndex": 0,
+              "cardId": 675,
+              "serial": 22,
+              "fromArea": 5,
+              "toArea": 4
+            },
+            {
+              "type": 3,
+              "playerIndex": 1
+            },
+            {
+              "type": 2,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 6,
+              "playerIndex": 0,
+              "cardId": 6,
+              "serial": 8,
+              "fromArea": 2,
+              "toArea": 3
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 10,
+              "playerIndex": 0,
+              "cardId": 117,
+              "serial": 21
+            },
+            {
+              "type": 10,
+              "playerIndex": 0,
+              "cardId": 1187,
+              "serial": 53
+            },
+            {
+              "type": 6,
+              "playerIndex": 0,
+              "cardId": 1174,
+              "serial": 47,
+              "fromArea": 2,
+              "toArea": 3
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 3,
+              "playerIndex": 0
+            },
+            {
+              "type": 2,
+              "playerIndex": 1
+            },
+            {
+              "type": 4,
+              "playerIndex": 1,
+              "cardId": 6,
+              "serial": 117
+            }
+          ],
+          "current": {
+            "turn": 19,
+            "turnActionCount": 1,
+            "yourIndex": 1,
+            "firstPlayer": 1,
+            "supporterPlayed": false,
+            "stadiumPlayed": false,
+            "energyAttached": false,
+            "retreated": false,
+            "result": -1,
+            "stadium": [
+              {
+                "id": 1252,
+                "serial": 122,
+                "playerIndex": 1
+              }
+            ],
+            "looking": null,
+            "players": [
+              {
+                "active": [
+                  {
+                    "id": 675,
+                    "serial": 22,
+                    "playerIndex": 0,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 1051,
+                    "serial": 28,
+                    "playerIndex": 0,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 112,
+                    "serial": 17,
+                    "playerIndex": 0,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 675,
+                    "serial": 23,
+                    "playerIndex": 0,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 676,
+                    "serial": 24,
+                    "playerIndex": 0,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 117,
+                    "serial": 21,
+                    "playerIndex": 0,
+                    "hp": 210,
+                    "maxHp": 210,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 3,
+                "discard": [
+                  {
+                    "id": 1122,
+                    "serial": 34,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 57,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 43,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1122,
+                    "serial": 35,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 46,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 51,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 39,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1238,
+                    "serial": 60,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1097,
+                    "serial": 32,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1122,
+                    "serial": 36,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 49,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 42,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1238,
+                    "serial": 61,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1264,
+                    "serial": 62,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1052,
+                    "serial": 29,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1051,
+                    "serial": 27,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 5,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 45,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1122,
+                    "serial": 37,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 56,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1118,
+                    "serial": 33,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 676,
+                    "serial": 26,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 11,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 4,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 58,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1187,
+                    "serial": 55,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 44,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 116,
+                    "serial": 20,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 6,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 59,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 41,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 116,
+                    "serial": 18,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 8,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1174,
+                    "serial": 47,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1187,
+                    "serial": 53,
+                    "playerIndex": 0
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 11,
+                "hand": null,
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              },
+              {
+                "active": [
+                  {
+                    "id": 678,
+                    "serial": 77,
+                    "playerIndex": 1,
+                    "hp": 270,
+                    "maxHp": 340,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 95,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 677,
+                        "serial": 72,
+                        "playerIndex": 1
+                      }
+                    ]
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 673,
+                    "serial": 63,
+                    "playerIndex": 1,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6,
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 116,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 112,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 675,
+                    "serial": 67,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 673,
+                    "serial": 64,
+                    "playerIndex": 1,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 678,
+                    "serial": 78,
+                    "playerIndex": 1,
+                    "hp": 340,
+                    "maxHp": 340,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 677,
+                        "serial": 74,
+                        "playerIndex": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 675,
+                    "serial": 68,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 28,
+                "discard": [
+                  {
+                    "id": 1142,
+                    "serial": 89,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 92,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 98,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 677,
+                    "serial": 121,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 120,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 104,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 80,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 91,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 79,
+                    "playerIndex": 1
+                  }
+                ],
+                "prize": [
+                  null,
+                  null
+                ],
+                "handCount": 9,
+                "hand": [
+                  {
+                    "id": 6,
+                    "serial": 108,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 114,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 111,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 109,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 113,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1123,
+                    "serial": 84,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 107,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1159,
+                    "serial": 96,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 117,
+                    "playerIndex": 1
+                  }
+                ],
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              }
+            ]
+          },
+          "search_begin_input": "EwAEEAKQAEEAUBABQAEEAOQAMEBADBACEAEB-kC1gMAHCCAODjABQAoEACQACTQEAB1gMADF6-pERYFHBEXGBUAFBQ-ZBL-aBM-ZBIwADCI5KyMuMyc8ICQxKj0+HRsFLSU4IRoLBDo3LBQGOykSCC81-CHFNBT9DQE5EAGI-ZBCQADGxyb21xVGtgdQ-JBc-aBkADBZXGJ5eGhQW08-KBwADHRfc-tCIADBISg-tCB-VEQ-VBL-+BI-UBBCw-NFGAEkgE-UBDC-3BBgADFwB-VBwI-3BYADC2ABQ-UBMC-MFBgADNUB-VBwI-hIBgADJEB-VBwg-hScAEMc-VBBQI-2BHQADDSABQ-UBME-MFdAELIB-VBwQ-2BHUADDZABQ-UBUC-sBBAJCjABgACwg-VBEBQ-2BowIACMs-VBBQI-2BKQCACC1ABQ-UBUC-MFpABIACJABB-VBwQ-2BBsEACBXABQ-UBMK-3BbBADmQ-VBFABg-2BHABQACFYB-VBwQ-hISQQACP0-WBw0-2BF4EACCOABQ-UBMN-2BBiBADsw-VBDDQ-2BYgQACNs-WBw0-2BGIEADNABQ-UBMN-2BBiBADcwE-UBDDQ-LFHYEACDu-WBMN-MFdgQACM4B-VBw0-2BHYEADeABQ-UBMN-2BCABBADyg-VBDDQ-2BgABQACJ4B-VBw0-2BIABEACBjABQ-UBMN-2BCABBAD6Q-VBDDQ-2BlgQACNsB-VBwI-LFCeBADGwE-UBDDQ-LFJ4EACDr-WBMN-MFowQACOEB-VBw0-LFCjBADmwE-UBDDQ-2BywQACIoB-VBw0-2BMsEACDB-WBMN-2BDLBADlgE-UBDABg-2BywQACMsB-VBw0-2BNYEACD1-WBMN-2BDWBADKgE-UBDDQ-2B8ABQACFMB-VBwc-2BKECACCJ-VBQUE-2BChABgACUQE-TBEFABg-gICjABgACOwE-TBEFABg-2BowIACLEB-TBBBQI-2LKUCACBMABQACng-PBQoE-MFpQIACNABBACBSABQ-NBBCgU-hIpgIACJ4AOEY-EBBBABI-2BKYCACBSABQ-TBQUC-2BBOBADsABE-TBEDDQ-2BTgQACEsB-TBBABw0-2LGMEACCTABQ-TBQIG-MPdgQACJ0-UBBABw0-LFB2BADUABE-TBEDDQ-2BdgQACKE-UBBABw0-hIBgADCABBACCe-PBBCABI-2BIcEACDTABQ-TBQIG-MFngQACN4-UBBABw0-hSywQACDoB-TBBABw0-hIBgADLMB-TBBABgY-3BYAE0ABQ-TBQIB-3BGAEWgE-TBECBg-MFYAE4ABQ-TBQIB-3BGAEVQEACIk-PBEIABw-2BBgADI8B-TBBABgE-3BYAE1ABQ-TBQIB-MFBgADKIADCJ-PBBCABI-3BYADDiABQ-TBQIB-hIJ4EADTABQ-TBQMN-2BClABgACDgE-TBEDB-3B5ABQACFQB-TBBBwI-hSMwAEgACgAEQAHgACgAEUAHgACgAEUACQAEgACgAEUACgAEgACgAEUACwAEgACgAEUABBAFgACgABBACQAHgACgABBACUAHgACgABBACUACQAEgACgABBACUACgAEgACgABBACUACwAEgACgABBACUABBAFgACgABCACQAHgACgABCACUAHgACgABCACUACQAEgACgABCACUACgAEgACgABCACUACwAEgACgABCACUABBAFgACgABDACQAHgACgABDACUAHgACgABDACUACQAEgACgABDACUACgAEgACgABDACUACwAEgACgABDACUABBAFgACgABEACQAHgACgABEACUAHgACgABEACUACQAEgACgABEACUACgAEgACgABEACUACwAEgACgABEACUABBAFcABBQAMgACgABGACQAHgACgABGACUAHgACgABGACUACQAEgACgABGACUACgAEgACgABGACUACwAEgACgABGACUABBAFgACgABHACQAHgACgABHACUAHgACgABHACUACQAEgACgABHACUACgAEgACgABHACUACwAEgACgABHACUABBAFgACgABIACQAHgACgABIACUAHgACgABIACUACQAEgACgABIACUACgAEgACgABIACUACwAEgACgABIACUABBAF0AB1gMACP//AG4-KBQADE8AWQAI==",
+          "step": 140
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "arm": "prize_race",
+  "features": "prize_race",
+  "seed": 44,
+  "total_steps": 4000,
+  "eval_rows": 2171,
+  "majority_pct": 40.8,
+  "top1_pct": 56.8,
+  "top3_pct": 84.8,
+  "train_secs": 625.3,
+  "eval_secs": 35.4
+}

@@ -1,0 +1,12 @@
+{
+  "arm": "attach_enable",
+  "features": "attach_enable",
+  "seed": 42,
+  "total_steps": 4000,
+  "eval_rows": 29761,
+  "majority_pct": 39.0,
+  "top1_pct": 68.7,
+  "top3_pct": 92.3,
+  "train_secs": 427.3,
+  "eval_secs": 232.3
+}

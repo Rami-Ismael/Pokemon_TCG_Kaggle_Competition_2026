@@ -150,6 +150,7 @@ class PTCGGym(gymnasium.Env):
                  anchor_ckpt: str | None = None,
                  mix: tuple[float, float, float] = (0.5, 0.3, 0.2),
                  pool_weights: list[float] | None = None,
+                 alternate_seats: bool = False,
                  seed: int = 0) -> None:
         super().__init__()
         self.observation_space = gymnasium.spaces.Box(
@@ -168,6 +169,12 @@ class PTCGGym(gymnasium.Env):
         self.pool_weights = pool_weights
         self._mirror = (LatestCheckpointOpponent(mirror_root, anchor)
                         if mirror_root else None)
+        # Strict seat alternation (exploiter runs): a policy trained vs a
+        # FROZEN opponent must not specialize in first-player-only exploits,
+        # so flip seats every episode instead of sampling 50/50. First seat
+        # comes from the per-env rng so parallel workers desynchronize.
+        self.alternate_seats = alternate_seats
+        self._next_seat = self.rng.randint(0, 1)
         self._opp_cache: dict = {}
         self._env = None
         self._illegal = 0
@@ -267,7 +274,11 @@ class PTCGGym(gymnasium.Env):
             self.rng.seed(seed)
         self._env = self._make("cabt")
         self._env.reset(2)
-        self.learner_seat = self.rng.randint(0, 1)
+        if self.alternate_seats:
+            self.learner_seat = self._next_seat
+            self._next_seat = 1 - self._next_seat
+        else:
+            self.learner_seat = self.rng.randint(0, 1)
         self.opponent = self._draw_opponent()
         self._illegal = 0
         obs, done = self._advance_until_learner()
@@ -321,11 +332,13 @@ class PTCGGym(gymnasium.Env):
 
 
 def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
-                    pool_weights=None, seed=0, buf=None):
+                    pool_weights=None, mix=(0.5, 0.3, 0.2),
+                    alternate_seats=False, seed=0, buf=None):
     """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call."""
     import pufferlib.emulation
 
     torch.set_num_threads(1)
     env = PTCGGym(league=league, mirror_root=mirror_root,
-                  anchor_ckpt=anchor_ckpt, pool_weights=pool_weights, seed=seed)
+                  anchor_ckpt=anchor_ckpt, pool_weights=pool_weights,
+                  mix=mix, alternate_seats=alternate_seats, seed=seed)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)
