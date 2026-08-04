@@ -122,7 +122,7 @@ def test_feature_columns_order_and_unknown():
 
 def _some_encoded_rows(n=200):
     rows = []
-    for obs, label, exclude in iter_decisions(resolve_split_dir("train"), max_episodes=5):
+    for obs, label, exclude, _meta in iter_decisions(resolve_split_dir("train"), max_episodes=5):
         feats = encode_observation(obs, exclude=exclude)
         if feats is not None:
             rows.append(feats)
@@ -152,7 +152,7 @@ def test_attack_tactical_ko_flag_consistent_with_visible_hp():
     """Wherever attack_tactical fired, kos_now must equal dmg >= visible opp hp."""
     card_db, attack_db = _static_db()
     checked = 0
-    for obs, label, exclude in iter_decisions(resolve_split_dir("train"), max_episodes=20):
+    for obs, label, exclude, _meta in iter_decisions(resolve_split_dir("train"), max_episodes=20):
         select = obs.get("select") or {}
         cur = obs.get("current") or {}
         me = cur["players"][cur["yourIndex"]]

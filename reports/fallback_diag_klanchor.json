@@ -1,0 +1,29 @@
+{
+  "agent": "il_agent",
+  "opponents": [
+    "rule_baseline"
+  ],
+  "pairs_per_opponent": 1,
+  "games": 2,
+  "record": {
+    "wins": 2,
+    "losses": 0,
+    "draws": 0
+  },
+  "per_opponent": {
+    "rule_baseline": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "seconds": 1.3
+    }
+  },
+  "fallback": {
+    "decisions": 76,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {}
+}

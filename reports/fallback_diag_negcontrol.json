@@ -1,0 +1,43 @@
+{
+  "agent": "il_agent",
+  "opponents": [
+    "rule_baseline"
+  ],
+  "pairs_per_opponent": 1,
+  "games": 2,
+  "record": {
+    "wins": 1,
+    "losses": 1,
+    "draws": 0
+  },
+  "per_opponent": {
+    "rule_baseline": {
+      "wins": 1,
+      "losses": 1,
+      "draws": 0,
+      "seconds": 0.8
+    }
+  },
+  "fallback": {
+    "decisions": 67,
+    "model_load_error": 1,
+    "model_unavailable:load_failed": 67,
+    "enabled": true,
+    "fallbacks": 67,
+    "fallback_rate": 1.0
+  },
+  "fallback_first": {
+    "model_load_error": {
+      "reason": "model_load_error",
+      "occurrence": 1,
+      "model_dir": "/tmp/empty_model_dir",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/ptcg-exploiter-agent-b80eab/agents/il_agent/agent_core.py\", line 186, in _load_model\n    _model = PTCGImitationPolicy.from_pretrained(MODEL_DIR)\n  File \"/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/ptcg-exploiter-agent-b80eab/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py\", line 4355, in from_pretrained\n    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(\n                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        pretrained_model_name_or_path=pretrained_model_name_or_path,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<7 lines>...\n        tqdm_class=tqdm_class,\n        ^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/ptcg-exploiter-agent-b80eab/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py\", line 648, in _get_resolved_checkpoint_files\n    raise OSError(\n    ...<2 lines>...\n    )\nOSError: Error no file named model.safetensors, or pytorch_model.bin, found in directory /tmp/empty_model_dir.\n"
+    },
+    "model_unavailable": {
+      "reason": "model_unavailable:load_failed",
+      "occurrence": 1,
+      "model_dir": "/tmp/empty_model_dir"
+    }
+  },
+  "opponent_diag": {}
+}

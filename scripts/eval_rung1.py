@@ -135,7 +135,7 @@ def main() -> None:
 
     n = 0
     with torch.no_grad():
-        for obs, label, exclude in decisions:
+        for obs, label, exclude, _meta in decisions:
             feats = encode_observation(obs, exclude=exclude)
             if feats is None:
                 continue

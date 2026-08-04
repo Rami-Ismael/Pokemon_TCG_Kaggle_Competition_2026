@@ -230,4 +230,7 @@ class PTCGImitationPolicy(PreTrainedModel):
         if label is not None:
             loss = nn.functional.cross_entropy(logits, label)
 
-        return {"loss": loss, "logits": logits}
+        # cls_hidden: the [CLS] token's final hidden state. Free to expose
+        # (no new parameters, checkpoint-compatible) -- Stage 3's value head
+        # reads it (pokemon_tcg/ppo.py); BC training ignores it.
+        return {"loss": loss, "logits": logits, "cls_hidden": hidden[:, 0]}

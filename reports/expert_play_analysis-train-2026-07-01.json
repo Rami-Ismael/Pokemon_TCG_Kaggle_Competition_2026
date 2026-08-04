@@ -1,0 +1,472 @@
+{
+  "meta": {
+    "day": "2026-07-01",
+    "split": "train",
+    "n_scored": 5266,
+    "strong_n": 40,
+    "weak_n": 40,
+    "strong_min_score_range": "1328-1344",
+    "weak_max_score_range": "1136-1141",
+    "elapsed_s": 8.3
+  },
+  "strong": {
+    "episodes": 40,
+    "decisions": 8353,
+    "forced": 324,
+    "main_picks": {
+      "PLAY": 1297,
+      "EVOLVE": 389,
+      "ABILITY": 984,
+      "ATTACH": 270,
+      "END": 102,
+      "RETREAT": 23,
+      "ATTACK": 318
+    },
+    "main_legal": {
+      "END": 3383,
+      "PLAY": 2609,
+      "EVOLVE": 742,
+      "ABILITY": 2061,
+      "ATTACH": 1890,
+      "RETREAT": 2245,
+      "ATTACK": 2157
+    },
+    "main_pick_given_legal": {
+      "PLAY": 1297,
+      "EVOLVE": 389,
+      "ABILITY": 984,
+      "ATTACH": 270,
+      "END": 102,
+      "RETREAT": 23,
+      "ATTACK": 318
+    },
+    "attach_first": {
+      "act2+/n": 1521,
+      "act2+/k": 253,
+      "act0-1/n": 313,
+      "act0-1/k": 6
+    },
+    "retreat_hp": {
+      "hp>2/3/n": 1242,
+      "hp>2/3/k": 19,
+      "hp<=2/3/n": 720,
+      "hp<=1/3/n": 283,
+      "hp<=1/3/k": 2,
+      "hp<=2/3/k": 2
+    },
+    "end_while_attack": [
+      0,
+      2157
+    ],
+    "coverage_95": [
+      5,
+      [
+        "PLAY",
+        "ABILITY",
+        "EVOLVE",
+        "ATTACK",
+        "ATTACH"
+      ]
+    ],
+    "per_context": {
+      "IS_FIRST": {
+        "n": 40,
+        "forced": 0,
+        "opts": 80,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SETUP_ACTIVE_POKEMON": {
+        "n": 80,
+        "forced": 30,
+        "opts": 148,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SETUP_BENCH_POKEMON": {
+        "n": 71,
+        "forced": 0,
+        "opts": 119,
+        "decline_legal": 71,
+        "declined": 5
+      },
+      "MAIN": {
+        "n": 3432,
+        "forced": 49,
+        "opts": 31717,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_BENCH": {
+        "n": 192,
+        "forced": 0,
+        "opts": 668,
+        "decline_legal": 192,
+        "declined": 48
+      },
+      "TO_HAND": {
+        "n": 1256,
+        "forced": 31,
+        "opts": 6413,
+        "decline_legal": 845,
+        "declined": 18
+      },
+      "ACTIVATE": {
+        "n": 195,
+        "forced": 0,
+        "opts": 390,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "ATTACH_TO": {
+        "n": 565,
+        "forced": 0,
+        "opts": 3115,
+        "decline_legal": 565,
+        "declined": 142
+      },
+      "ATTACH_FROM": {
+        "n": 467,
+        "forced": 9,
+        "opts": 1332,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DISCARD_ENERGY": {
+        "n": 17,
+        "forced": 12,
+        "opts": 22,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SWITCH": {
+        "n": 28,
+        "forced": 0,
+        "opts": 115,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DAMAGE": {
+        "n": 310,
+        "forced": 9,
+        "opts": 1217,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "REMOVE_DAMAGE_COUNTER": {
+        "n": 452,
+        "forced": 137,
+        "opts": 1060,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "REMOVE_DAMAGE_COUNTER_COUNT": {
+        "n": 437,
+        "forced": 0,
+        "opts": 1288,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DAMAGE_COUNTER": {
+        "n": 452,
+        "forced": 0,
+        "opts": 2305,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_ACTIVE": {
+        "n": 145,
+        "forced": 7,
+        "opts": 526,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "EVOLVE": {
+        "n": 92,
+        "forced": 38,
+        "opts": 202,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DISCARD": {
+        "n": 45,
+        "forced": 0,
+        "opts": 310,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SWITCH_ENERGY": {
+        "n": 44,
+        "forced": 0,
+        "opts": 88,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_DECK": {
+        "n": 18,
+        "forced": 0,
+        "opts": 66,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DRAW_COUNT": {
+        "n": 11,
+        "forced": 0,
+        "opts": 23,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DISCARD_TOOL_CARD": {
+        "n": 4,
+        "forced": 2,
+        "opts": 6,
+        "decline_legal": 0,
+        "declined": 0
+      }
+    }
+  },
+  "weak": {
+    "episodes": 40,
+    "decisions": 6271,
+    "forced": 359,
+    "main_picks": {
+      "PLAY": 1376,
+      "END": 92,
+      "ATTACK": 369,
+      "EVOLVE": 495,
+      "ABILITY": 256,
+      "ATTACH": 399,
+      "RETREAT": 30
+    },
+    "main_legal": {
+      "END": 3017,
+      "ATTACH": 1497,
+      "PLAY": 2573,
+      "ABILITY": 799,
+      "ATTACK": 1519,
+      "RETREAT": 1547,
+      "EVOLVE": 1021
+    },
+    "main_pick_given_legal": {
+      "PLAY": 1376,
+      "END": 92,
+      "ATTACK": 369,
+      "EVOLVE": 495,
+      "ABILITY": 256,
+      "ATTACH": 399,
+      "RETREAT": 30
+    },
+    "attach_first": {
+      "act0-1/n": 387,
+      "act2+/n": 1046,
+      "act2+/k": 285,
+      "act0-1/k": 100
+    },
+    "retreat_hp": {
+      "hp>2/3/n": 1316,
+      "hp<=1/3/n": 87,
+      "hp<=2/3/n": 144,
+      "hp>2/3/k": 26,
+      "hp<=2/3/k": 1,
+      "hp<=1/3/k": 3
+    },
+    "end_while_attack": [
+      4,
+      1519
+    ],
+    "coverage_95": [
+      5,
+      [
+        "PLAY",
+        "EVOLVE",
+        "ATTACH",
+        "ATTACK",
+        "ABILITY"
+      ]
+    ],
+    "per_context": {
+      "IS_FIRST": {
+        "n": 40,
+        "forced": 0,
+        "opts": 80,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SETUP_ACTIVE_POKEMON": {
+        "n": 80,
+        "forced": 42,
+        "opts": 130,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "MAIN": {
+        "n": 3103,
+        "forced": 86,
+        "opts": 33521,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "EVOLVE": {
+        "n": 75,
+        "forced": 37,
+        "opts": 157,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "ACTIVATE": {
+        "n": 344,
+        "forced": 0,
+        "opts": 688,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "ATTACH_TO": {
+        "n": 170,
+        "forced": 11,
+        "opts": 773,
+        "decline_legal": 79,
+        "declined": 6
+      },
+      "ATTACH_FROM": {
+        "n": 164,
+        "forced": 37,
+        "opts": 409,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_BENCH": {
+        "n": 235,
+        "forced": 0,
+        "opts": 713,
+        "decline_legal": 235,
+        "declined": 7
+      },
+      "DAMAGE": {
+        "n": 20,
+        "forced": 2,
+        "opts": 76,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_HAND": {
+        "n": 1095,
+        "forced": 37,
+        "opts": 4925,
+        "decline_legal": 551,
+        "declined": 17
+      },
+      "TO_ACTIVE": {
+        "n": 278,
+        "forced": 26,
+        "opts": 987,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DISCARD_TOOL_CARD": {
+        "n": 1,
+        "forced": 1,
+        "opts": 1,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "REMOVE_DAMAGE_COUNTER": {
+        "n": 13,
+        "forced": 9,
+        "opts": 17,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "REMOVE_DAMAGE_COUNTER_COUNT": {
+        "n": 13,
+        "forced": 0,
+        "opts": 35,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DAMAGE_COUNTER": {
+        "n": 13,
+        "forced": 1,
+        "opts": 50,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SWITCH": {
+        "n": 68,
+        "forced": 10,
+        "opts": 212,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SETUP_BENCH_POKEMON": {
+        "n": 51,
+        "forced": 0,
+        "opts": 86,
+        "decline_legal": 51,
+        "declined": 10
+      },
+      "DISCARD": {
+        "n": 336,
+        "forced": 10,
+        "opts": 3749,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "TO_DECK": {
+        "n": 89,
+        "forced": 2,
+        "opts": 468,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DISCARD_ENERGY": {
+        "n": 56,
+        "forced": 47,
+        "opts": 66,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "DRAW_COUNT": {
+        "n": 16,
+        "forced": 0,
+        "opts": 36,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "EVOLVES_TO": {
+        "n": 2,
+        "forced": 0,
+        "opts": 7,
+        "decline_legal": 2,
+        "declined": 0
+      },
+      "EVOLVES_FROM": {
+        "n": 1,
+        "forced": 0,
+        "opts": 2,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "SWITCH_ENERGY": {
+        "n": 3,
+        "forced": 0,
+        "opts": 9,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "HEAL": {
+        "n": 1,
+        "forced": 1,
+        "opts": 1,
+        "decline_legal": 0,
+        "declined": 0
+      },
+      "MULLIGAN": {
+        "n": 4,
+        "forced": 0,
+        "opts": 8,
+        "decline_legal": 0,
+        "declined": 0
+      }
+    }
+  }
+}

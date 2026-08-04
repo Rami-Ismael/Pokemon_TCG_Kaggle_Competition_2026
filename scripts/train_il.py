@@ -62,7 +62,12 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
 from pokemon_tcg.device import log_device_info, resolve_device  # noqa: E402
-from pokemon_tcg.il_dataset import ILDataset, ShardILDataset, resolve_split_dir  # noqa: E402
+from pokemon_tcg.il_dataset import (  # noqa: E402
+    ILDataset,
+    ShardILDataset,
+    resolve_split_dir,
+    split_meta,
+)
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 from pokemon_tcg.logging_utils import TensorBoardLogger  # noqa: E402
 
@@ -231,6 +236,31 @@ def main() -> None:
     )
     ap.add_argument("--train-split", default="train", help="key into splits.json")
     ap.add_argument("--eval-split", default="eval", help="key into splits.json")
+    ap.add_argument("--winner-only", action="store_true",
+                    help="clone only the winning seat of each training episode "
+                         "(drops loser-side and drawn-game decisions; ~halves rows). "
+                         "Applies to the train split only; eval stays both-seats.")
+    ap.add_argument("--weight-arm", choices=["none", "outcome", "adv-exp", "adv-binary"],
+                    default="none",
+                    help="per-row loss weighting (S2-E2/E4, rl_pipeline_v1.md §2.1): "
+                         "'outcome' weights each row by exp(beta*(outcome-0.5)) -- "
+                         "wins upweighted, losses downweighted, draws neutral; rows "
+                         "with unknown outcome get weight 0. 'none' is plain BC. "
+                         "'adv-exp'/'adv-binary' (S2-E4) replace the constant 0.5 "
+                         "baseline with a trained critic V(s) (--critic-dir): "
+                         "exp(beta*(outcome-V)) clipped, or 1[outcome-V>0].")
+    ap.add_argument("--critic-dir", type=Path, default=None,
+                    help="saved critic from scripts/train_critic.py; required for "
+                         "the adv-* weight arms, ignored otherwise")
+    ap.add_argument("--adv-weight-clip", type=float, default=20.0,
+                    help="max per-row weight for adv-exp (guards a badly "
+                         "calibrated critic handing one row the whole gradient)")
+    ap.add_argument("--beta", type=float, default=1.0,
+                    help="outcome-weighting temperature: win/loss weight ratio is e^beta")
+    ap.add_argument("--init-from", type=Path, default=None,
+                    help="warm-start from a saved checkpoint dir (e.g. models/il_agent, "
+                         "the frozen Stage-1 PRIOR); architecture comes from its config, "
+                         "so --hidden-size/--num-layers/--num-heads are ignored")
     ap.add_argument("--epochs", type=float, default=3,
                      help="schedule length in passes over the train split; fractional "
                           "values (e.g. 0.5) run a genuine sub-epoch schedule, not a "
@@ -251,13 +281,18 @@ def main() -> None:
                      help="'local' = raw JSON split folders (original path); 'hub' = "
                           "zstd Parquet shards from the private HF repo (ADR-001; each "
                           "shard is cached after first use, so pass 2+ reads from "
-                          "disk); 'auto' = local if the split folder exists, else hub. "
-                          "NOTE: hub trains on ALL train days in the repo (the growing "
-                          "corpus), not just splits.json's single day -- restrict with "
-                          "--hub-days for a like-for-like comparison")
+                          "disk); 'auto' = local only when BOTH split folders are "
+                          "COMPLETE per splits.json (raw days are pruned after "
+                          "Hub-verify, and the union splits are symlink folders whose "
+                          "targets may be gone -- an existence check alone would train "
+                          "on whatever fraction still resolves), else hub. Both "
+                          "sources follow the --train-split/--eval-split day lists "
+                          "from splits.json")
     ap.add_argument("--hub-days", default=None,
-                     help="comma-separated YYYY-MM-DD list restricting TRAIN days when "
-                          "--data-source hub (eval always uses the repo's eval days)")
+                     help="comma-separated YYYY-MM-DD list overriding the "
+                          "splits.json-derived TRAIN day list when --data-source hub "
+                          "(e.g. to fold in a freshly ingested day without editing "
+                          "splits.json)")
     ap.add_argument("--hub-repo", default=None,
                      help=f"dataset repo id (default {config.HF_EPISODES_REPO})")
     ap.add_argument("--episode-ids-file", type=Path, default=None,
@@ -298,6 +333,11 @@ def main() -> None:
         args.eval_batches = 20
         args.log_every = 20
         args.warmup_steps = 10
+        if args.out == config.MODELS_DIR / "il_agent":
+            # never let a smoke test overwrite the production checkpoint
+            # (a --dry-run once clobbered the deployed model this way)
+            args.out = config.MODELS_DIR / "il_agent_dryrun"
+            print(f"dry-run: redirecting --out to {args.out}")
 
     set_seed(args.seed)
     device = resolve_device(args.device)
@@ -312,43 +352,42 @@ def main() -> None:
     logger = TensorBoardLogger(run_dir)
     print(f"run dir: {run_dir}  device: {device}  git sha: {git_sha()[:12]}")
 
-    def _local_split_complete(split: str) -> bool:
-        """True only if the local folder holds (approximately) the full split.
+    def _n_local_complete(split: str) -> tuple[int, int]:
+        """(resolvable raw files, expected count) for a splits.json key.
 
-        After ADR-001 raw days are pruned post-Hub-verify, so a split folder
-        can EXIST as a near-empty stub while the real corpus lives on the
-        Hub. Training on a stub silently memorizes a handful of episodes
-        (this burned a 24-run ablation on 2026-08-03: 'train' had 24 of
-        4,554 files and every arm hit 98.8%% train accuracy). Any local
-        folder holding <90%% of splits.json's registered episode count is
-        treated as incomplete.
+        p.exists() follows symlinks: the union splits (train-combined-*) are
+        folders of symlinks whose targets may have been pruned after
+        Hub-verify, and raw day folders may hold a partially restored test
+        sample -- a bare glob or dir-exists check counts those as data, then
+        the loader silently skips what it can't read, shrinking the corpus
+        without a word (observed live: 9,820-link union, 24 readable).
         """
-        try:
-            split_dir = resolve_split_dir(split)
-        except (FileNotFoundError, KeyError):
-            return False
-        if not split_dir.exists():
-            return False
-        splits_meta = json.loads(
-            (config.EPISODES_DIR / "splits" / "splits.json").read_text()
-        ).get(split, {})
-        registered = splits_meta.get("episodes")
-        n_local = sum(1 for _ in split_dir.glob("*.json"))
-        if registered and n_local < 0.9 * registered:
-            print(f"warning: local split {split!r} has {n_local} of {registered} "
-                  f"registered episodes (pruned stub) -- not using it")
-            return False
-        return n_local > 0
+        _, _, expected = split_meta(split)
+        raw_dir = resolve_split_dir(split)
+        n = (
+            sum(1 for p in raw_dir.glob("*.json") if p.exists())
+            if raw_dir.is_dir()
+            else 0
+        )
+        return n, expected
 
     source = args.data_source
     if source == "auto":
-        source = "local" if _local_split_complete(args.train_split) else "hub"
-    elif source == "local" and not _local_split_complete(args.train_split):
-        sys.exit(
-            f"--data-source local, but the local {args.train_split!r} split is "
-            "missing or a pruned stub (see warning above). Use --data-source "
-            "hub -- the Hub shards are the only full copy (ADR-001)."
-        )
+        try:
+            n_train_raw, n_train_expected = _n_local_complete(args.train_split)
+            n_eval_raw, n_eval_expected = _n_local_complete(args.eval_split)
+            complete = (
+                n_train_raw == n_train_expected and n_eval_raw == n_eval_expected
+            )
+            source = "local" if complete else "hub"
+            if not complete:
+                print(
+                    f"auto data source -> hub (local raw incomplete: "
+                    f"train {n_train_raw}/{n_train_expected}, "
+                    f"eval {n_eval_raw}/{n_eval_expected})"
+                )
+        except (FileNotFoundError, KeyError):
+            source = "hub"
     if args.num_workers > 0 and source != "hub":
         sys.exit(
             "--num-workers > 0 requires --data-source hub: ILDataset over raw JSON "
@@ -357,8 +396,28 @@ def main() -> None:
 
     if args.episode_ids_file is not None and source != "hub":
         sys.exit("--episode-ids-file requires --data-source hub")
+    weighted = args.weight_arm != "none"
+    critic = None
+    if args.weight_arm.startswith("adv-"):
+        if args.critic_dir is None:
+            raise SystemExit(f"--weight-arm {args.weight_arm} requires --critic-dir "
+                             "(train one with scripts/train_critic.py)")
+        from pokemon_tcg.offline_critic import load_critic  # noqa: E402
+        critic = load_critic(args.critic_dir, device=device)
+        print(f"critic loaded from {args.critic_dir} (frozen, train-time only)")
+    if source == "hub" and (weighted or args.winner_only):
+        sys.exit(
+            "--weight-arm/--winner-only need per-episode outcome meta, which "
+            "ShardILDataset (--data-source hub) does not carry yet; use "
+            "--data-source local for the REWEIGHT arms."
+        )
+
     if source == "hub":
-        hub_days = args.hub_days.split(",") if args.hub_days else None
+        # --train-split/--eval-split select Hub days via splits.json, exactly
+        # as they select folders locally; --hub-days is an explicit override.
+        train_kind, train_days, _ = split_meta(args.train_split)
+        eval_kind, eval_days, _ = split_meta(args.eval_split)
+        hub_days = args.hub_days.split(",") if args.hub_days else train_days
         episode_ids = None
         if args.episode_ids_file is not None:
             episode_ids = {
@@ -366,12 +425,12 @@ def main() -> None:
             }
             print(f"episode allowlist: {len(episode_ids)} ids from {args.episode_ids_file}")
         train_ds = ShardILDataset(
-            "train", days=hub_days, repo_id=args.hub_repo,
+            train_kind, days=hub_days, repo_id=args.hub_repo,
             max_episodes=args.max_train_episodes, seed=args.seed,
             episode_ids=episode_ids,
         )
         eval_ds = ShardILDataset(
-            "eval", repo_id=args.hub_repo,
+            eval_kind, days=eval_days, repo_id=args.hub_repo,
             max_episodes=args.max_eval_episodes, shuffle_buffer=1,
         )
         n_episodes = train_ds.n_episodes()  # parquet footers only, no downloads
@@ -380,17 +439,22 @@ def main() -> None:
                   f"train shards; clamping to {train_ds.n_shards}")
             args.num_workers = train_ds.n_shards
         print(f"train source: hub {train_ds.repo_id} ({train_ds.n_shards} shards, "
-              f"{n_episodes} episodes{', days ' + args.hub_days if hub_days else ''}, "
+              f"{n_episodes} episodes, days {','.join(hub_days)}, "
               f"{args.num_workers} workers)")
-        print(f"eval source:  hub {eval_ds.repo_id} ({eval_ds.n_shards} shards)")
+        print(f"eval source:  hub {eval_ds.repo_id} ({eval_ds.n_shards} shards, "
+              f"days {','.join(eval_days)})")
     else:
         train_dir = resolve_split_dir(args.train_split)
         eval_dir = resolve_split_dir(args.eval_split)
         print(f"train split: {train_dir}")
         print(f"eval split:  {eval_dir}")
-        train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed)
+        train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed,
+                             winner_only=args.winner_only, with_meta=weighted)
         eval_ds = ILDataset(eval_dir, max_episodes=args.max_eval_episodes, shuffle_buffer=1)
-        n_episodes = len(list(train_dir.glob("*.json")))
+        # resolvable files only -- see _n_local_complete; a forced
+        # --data-source local on a partial folder should at least get an
+        # honest schedule
+        n_episodes = sum(1 for p in train_dir.glob("*.json") if p.exists())
 
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, num_workers=args.num_workers
@@ -406,14 +470,21 @@ def main() -> None:
     if unknown_features:
         sys.exit(f"unknown feature group(s) {unknown_features}; known: "
                  f"{list(GLOBAL_FEATURE_SPECS) + list(OPT_FEATURE_SPECS)}")
-    model_config = PTCGILConfig(
-        hidden_size=args.hidden_size,
-        num_hidden_layers=args.num_layers,
-        num_attention_heads=args.num_heads,
-        global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
-        opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
-    )
-    model = PTCGImitationPolicy(model_config).to(device)
+    if args.init_from is not None:
+        if feature_names:
+            sys.exit("--features cannot be combined with --init-from: the "
+                     "warm-start checkpoint's config already fixes its feature set")
+        model = PTCGImitationPolicy.from_pretrained(args.init_from).to(device)
+        print(f"warm-started from {args.init_from}")
+    else:
+        model_config = PTCGILConfig(
+            hidden_size=args.hidden_size,
+            num_hidden_layers=args.num_layers,
+            num_attention_heads=args.num_heads,
+            global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
+            opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
+        )
+        model = PTCGImitationPolicy(model_config).to(device)
     n_params = sum(p.numel() for p in model.parameters())
     print(f"model params: {n_params:,} ({n_params/1e6:.2f}M)")
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
@@ -536,8 +607,33 @@ def main() -> None:
                 g["lr"] = lr
 
             batch = {k: v.to(device) for k, v in batch.items()}
+            # Meta fields (outcome/seat/...) ride along for weighting but are
+            # not model inputs -- pop them before the forward pass.
+            meta = {k: batch.pop(k) for k in ILDataset.META_KEYS if k in batch}
             out = model(**batch)
-            loss = out["loss"]
+            if weighted:
+                # exp(beta*(outcome-0.5)): win = e^{+b/2}, draw = 1, loss = e^{-b/2}.
+                # Unknown outcome (-1 sentinel) gets weight 0 -- excluded, never
+                # treated as "a bit worse than a loss". Normalizing by sum(w)
+                # keeps the loss scale (and thus the effective LR) comparable
+                # across arms and beta values instead of drifting with e^beta.
+                # The adv-* arms (S2-E4) are the same shapes with the constant
+                # 0.5 baseline replaced by the frozen critic's V(s).
+                per_row = torch.nn.functional.cross_entropy(
+                    out["logits"], batch["label"], reduction="none"
+                )
+                outcome = meta["outcome"]
+                if critic is not None:
+                    from pokemon_tcg.offline_critic import advantage_weights
+                    with torch.no_grad():
+                        v = critic(**{k: t for k, t in batch.items() if k != "label"})
+                    w = advantage_weights(args.weight_arm, outcome, v,
+                                          beta=args.beta, clip=args.adv_weight_clip)
+                else:
+                    w = torch.exp(args.beta * (outcome - 0.5)) * (outcome >= 0.0)
+                loss = (w * per_row).sum() / w.sum().clamp_min(1e-8)
+            else:
+                loss = out["loss"]
 
             optimizer.zero_grad()
             loss.backward()

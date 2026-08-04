@@ -180,7 +180,7 @@ def test_encoder_output_identical_without_visualize_blob():
         p = Path(tmpdir) / path.name
         p.write_text(json.dumps(ep_dict))
         out = []
-        for obs, label, exclude in iter_decisions(Path(tmpdir)):
+        for obs, label, exclude, _meta in iter_decisions(Path(tmpdir)):
             feats = encode_observation(obs, exclude=exclude)
             if feats is not None:
                 out.append((label, feats))

@@ -233,6 +233,56 @@ AGENT_FILES = {
     "tb_heuristic": REPO / "agents" / "tb_heuristic" / "agent_core.py",    # mu 633.0 archetype
     "tb_rulecore": REPO / "agents" / "tb_rulecore" / "agent_core.py",      # mu 535.6
     "tb_lucario": REPO / "agents" / "tb_lucario" / "agent_core.py",        # LucarioScorer
+    # ------------------------------------------------------------------
+    # wmh pool (github.com/wmh/ptcg-abc @ 7854fde, vendored 2026-08-03) --
+    # a solo competitor's rule-based ladder agents, divergence-mined from
+    # the era's ladder top (Majkel1337 #1, keidroid #1, Yushin #2) and
+    # validated by real-ladder A/B (their repo's own lesson: local sims
+    # mispredicted their rank, so they tuned on the ladder). Wired for the
+    # NINE deck archetypes the pool had zero coverage for, plus three
+    # ladder-scored stronger pilots of covered decks. Safety-reviewed
+    # 2026-08-03: stdlib + cg.api only, no network/subprocess/exec/eval,
+    # module-relative deck.csv reads; AGENT_FILES points at their verbatim
+    # main.py (module-level `my_deck` + `agent`). The five Generic* agents
+    # carry byte-identical vendored policy_base/generic_policy siblings
+    # (identical hashes, so first-import module caching is behavior-safe).
+    # Ladder Elo where their docs record one:
+    "wmh_alakazam": REPO / "agents" / "wmh_alakazam" / "main.py",        # Alakazam v4.x, ladder ~860 lineage (their best-developed)
+    "wmh_megastarmie": REPO / "agents" / "wmh_megastarmie" / "main.py",  # keidroid (#1, 1341) clone; their v3 scored 871.5
+    "wmh_bellibolt": REPO / "agents" / "wmh_bellibolt" / "main.py",      # Iono's Bellibolt ex, ladder 836
+    "wmh_garchomp": REPO / "agents" / "wmh_garchomp" / "main.py",        # NEW deck: Cynthia's Garchomp ex, ladder 713.8
+    "wmh_typhlosion": REPO / "agents" / "wmh_typhlosion" / "main.py",    # NEW deck: Ethan's Typhlosion, ladder 532
+    "wmh_trevenant": REPO / "agents" / "wmh_trevenant" / "main.py",      # NEW deck: Hop's Trevenant (bespoke policy)
+    "wmh_mewtwo": REPO / "agents" / "wmh_mewtwo" / "main.py",            # NEW deck: Team Rocket's Mewtwo ex (bespoke policy)
+    "wmh_grimmsnarl": REPO / "agents" / "wmh_grimmsnarl" / "main.py",    # NEW deck: Grimmsnarl ex (GenericPolicy, top-player list)
+    "wmh_kangaskhan": REPO / "agents" / "wmh_kangaskhan" / "main.py",    # NEW deck: Kangaskhan ex (GenericPolicy, top-player list)
+    "wmh_ogerpon": REPO / "agents" / "wmh_ogerpon" / "main.py",          # NEW deck: Ogerpon (GenericPolicy, top-player list)
+    "wmh_chandelure": REPO / "agents" / "wmh_chandelure" / "main.py",    # NEW deck: Chandelure (GenericPolicy)
+    "wmh_froslass": REPO / "agents" / "wmh_froslass" / "main.py",        # NEW deck: Mega Froslass ex (GenericPolicy)
+    # Stage-2 REWEIGHT arms (rl_pipeline_v1.md §2.1): il_agent's inference core
+    # pointed at each fine-tuned checkpoint via thin wrappers (agents/s2_arms/).
+    # One entry per (arm, seed) -- distinct names on purpose, because Glicko
+    # history compounds by name and these are genuinely different policies.
+    "s2_e0_s42": REPO / "agents" / "s2_arms" / "e0_seed42" / "agent_core.py",
+    "s2_e0_s43": REPO / "agents" / "s2_arms" / "e0_seed43" / "agent_core.py",
+    "s2_e0_s44": REPO / "agents" / "s2_arms" / "e0_seed44" / "agent_core.py",
+    "s2_e1_s42": REPO / "agents" / "s2_arms" / "e1_seed42" / "agent_core.py",
+    "s2_e1_s43": REPO / "agents" / "s2_arms" / "e1_seed43" / "agent_core.py",
+    "s2_e1_s44": REPO / "agents" / "s2_arms" / "e1_seed44" / "agent_core.py",
+    "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
+    "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
+    "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
+    # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
+    # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
+    "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",
+    "ppo_u120832": REPO / "agents" / "ppo_arms" / "u120832" / "agent_core.py",
+    "ppo_g2_u107520": REPO / "agents" / "ppo_arms" / "g2_u107520" / "agent_core.py",
+    # 2x2 size-x-data BC grid (notes/adr_rl_objective_progression.md, Option B):
+    # il_agent core pointed at each cell's checkpoint, all sharing il_agent's
+    # deck. The 4th cell is il_agent itself (Small @ 07-26, the PRIOR).
+    "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
+    "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
+    "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
