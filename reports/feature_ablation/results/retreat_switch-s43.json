@@ -1,0 +1,12 @@
+{
+  "arm": "retreat_switch",
+  "features": "retreat_switch",
+  "seed": 43,
+  "total_steps": 4000,
+  "eval_rows": 29761,
+  "majority_pct": 39.0,
+  "top1_pct": 68.8,
+  "top3_pct": 92.1,
+  "train_secs": 495.8,
+  "eval_secs": 232.2
+}

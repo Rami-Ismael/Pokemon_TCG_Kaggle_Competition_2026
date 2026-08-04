@@ -1,0 +1,12 @@
+{
+  "arm": "baseline",
+  "features": "",
+  "seed": 43,
+  "total_steps": 4000,
+  "eval_rows": 29761,
+  "majority_pct": 39.0,
+  "top1_pct": 69.6,
+  "top3_pct": 92.7,
+  "train_secs": 809.4,
+  "eval_secs": 1264.0
+}

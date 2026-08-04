@@ -1,0 +1,18 @@
+{
+  "arm": "unfiltered_scored",
+  "seed": 42,
+  "total_steps": 4000,
+  "train_secs": 530.9,
+  "eval_all": {
+    "rows": 29761,
+    "majority_pct": 39.0,
+    "top1_pct": 66.4,
+    "top3_pct": 91.6
+  },
+  "eval_highskill": {
+    "rows": 28315,
+    "majority_pct": 39.0,
+    "top1_pct": 66.5,
+    "top3_pct": 90.6
+  }
+}
