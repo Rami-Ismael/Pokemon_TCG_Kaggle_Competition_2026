@@ -1,0 +1,29 @@
+{
+  "agent": "s2v2_e0_s43",
+  "opponents": [
+    "rule_baseline"
+  ],
+  "pairs_per_opponent": 20,
+  "games": 40,
+  "record": {
+    "wins": 18,
+    "losses": 22,
+    "draws": 0
+  },
+  "per_opponent": {
+    "rule_baseline": {
+      "wins": 18,
+      "losses": 22,
+      "draws": 0,
+      "seconds": 22.0
+    }
+  },
+  "fallback": {
+    "decisions": 2162,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {}
+}

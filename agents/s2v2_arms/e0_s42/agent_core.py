@@ -27,3 +27,7 @@ finally:
 my_deck = [int(x) for x in (_REPO / "agents" / "il_agent" / "deck.csv").read_text().split() if x.strip()]
 _mod.my_deck = my_deck
 agent = _mod.agent
+
+# Fallback-diagnostic hook (run-fallback-diagnostic skill): re-export the
+# inner core's counters so the wrapper is instrumented like agents/s2_arms/.
+diag_snapshot = _mod.diag_snapshot
