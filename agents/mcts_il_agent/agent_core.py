@@ -49,9 +49,17 @@ except Exception:
 _DEVICE = "cpu"  # evaluator parity; never resolve_device() here on purpose
 SEARCH_COUNT = int(os.environ.get("MCTS_IL_SEARCH_COUNT", "30"))
 
-_MODEL_DIR = os.environ.get("MCTS_IL_MODEL_DIR") or str(_REPO / "models" / "il_agent")
-_CRITIC_DIR = os.environ.get("MCTS_IL_CRITIC_DIR") or str(
-    _REPO / "models" / "critic_search_prior"
+# Bundle-local first (submissions ship model/ next to this file, same pattern
+# as agents/il_agent), then the dev-repo checkpoint.
+_MODEL_DIR = os.environ.get("MCTS_IL_MODEL_DIR") or (
+    str(_HERE / "model")
+    if (_HERE / "model").exists()
+    else str(_REPO / "models" / "il_agent")
+)
+_CRITIC_DIR = os.environ.get("MCTS_IL_CRITIC_DIR") or (
+    str(_HERE / "critic")
+    if (_HERE / "critic").exists()
+    else str(_REPO / "models" / "critic_search_prior")
 )
 
 _EVALUATOR = None
