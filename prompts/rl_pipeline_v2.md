@@ -307,7 +307,38 @@ the winning advantage arm. Unknown-outcome rows get weight 0 in every arm.
 **Selection rule:** the local tournament (round-robin vs PRIOR + public
 pool, mirrored pairs, pooled seeds, Glicko with RD quoted) and the ladder
 only. The offline accuracy check is a pipeline check, never a selection
-metric (it already failed to separate arms once — expected). **If arms do not separate
+metric (it already failed to separate arms once — expected).
+
+**STATUS 2026-08-04 12:06 — tournament run (14 agents, 12 mirrored
+pairs/pairing, isolated ratings, `reports/s2v2_tournament.json`, figure
+`s2v2_arms_tournament.png`). All numbers LOCAL — unverified on the ladder:**
+
+| Arm (seeds pooled) | vs PRIOR (n=72) | vs strong trio (n=216) | vs e3 |
+|---|---|---|---|
+| e0 control | **79.2% [68.4, 86.9]** | **19.4% [14.7, 25.2]** | 59.7% [53.1, 66.0] |
+| efb outcome-weighted | 72.2% [61.0, 81.2] | 12.5% [8.7, 17.6] | 63.0% [56.3, 69.1] |
+| e3 skill-gated | 69.4% [58.0, 78.9] | 13.4% [9.5, 18.6] | — |
+| (PRIOR reference) | — | 9.7% [4.8, 18.7] | — |
+
+- Every arm beats PRIOR locally with a CI floor above 50% — necessary but
+  NOT sufficient (the old E1's 62.5% did too and settled at 395).
+- **e0 vs efb: statistical tie** (48.1% [41.6, 54.8]). The pre-registered
+  row-count tiebreak cannot separate them (neither discards rows), so
+  selection falls to the documented secondary margins: e0 nearly doubles
+  efb against the strong trio and carries zero extra assumptions.
+  **Selected arm: e0; champion checkpoint: `s2v2_e0_s43`** (20/24 vs
+  PRIOR, best-in-family 52.7% overall, best trio count 16/72).
+- **Negative result, written down: the skill gate HURT.** e3 loses to e0
+  (40.3%) and efb (37.0%) with non-overlapping-from-50 CIs. Mechanism
+  consistent with the registered scale-mix caveat: the pooled Q75=1189
+  threshold keeps mostly 07-01 (oldest, real-rated) episodes, so the gate
+  trades away both volume and recency at equal steps. The most
+  externally-validated technique in the evidence base did not survive
+  contact with this corpus's rating field.
+- efb β-sweep {0.5, 2} NOT run — registered scope decision: efb tied e0 at
+  β=1, the full-corpus experiment (below) supersedes the family, and the
+  calendar prices each extra arm at ~1h + tournament time.
+- E4 never triggered (its gate required advantage-arm signal). **If arms do not separate
 (overlapping CIs), say so plainly and pick by the pre-registered tiebreak:
 fewest training rows** (E1 ties beat E2 ties, a skill-gated arm beats an
 ungated one), rather than narrating a winner.
