@@ -270,6 +270,14 @@ path engaged.**
   evidence base. TD-with-longer-propagation (multi-epoch, Polyak targets)
   is registered as future work, not run now (fall back, don't knob-twiddle
   past the deadline).
+- **Re-trigger (keeps the Metamon schema alive, registered 2026-08-04 per
+  Rami):** the corpus grows daily and the critic audit is cheap. When the
+  train corpus reaches ~2× today's 15k episodes (or before any future
+  Stage-2 iteration), retrain the MC critic on the enlarged corpus and
+  re-run `audit_critic.py`. If it passes all three parts, the true
+  advantage arms (E1 Binary / E2 Exp — the paper's actual objective
+  family) UNBLOCK and take priority over outcome-weighting. The blocked
+  state is a data-scale verdict, not a method verdict.
 
 ### 2.B2 The arm register — UPGRADED from v1 §2.1
 
