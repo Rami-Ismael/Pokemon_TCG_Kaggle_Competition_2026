@@ -120,9 +120,25 @@ def main() -> None:
     ap.add_argument("--bptt-horizon", type=int, default=128)
     ap.add_argument("--minibatch-size", type=int, default=512)
     ap.add_argument("--update-epochs", type=int, default=3)
-    ap.add_argument("--lr", type=float, default=3e-5)
-    ap.add_argument("--ent-coef", type=float, default=0.001)
-    ap.add_argument("--gamma", type=float, default=1.0)
+    ap.add_argument("--lr", type=float, default=1e-4,
+                    help="v2 default 1e-4 (was 3e-5): gen-2 measured clipfrac "
+                         "~0.5%%/approx_kl ~0.002 at 3e-5 -- updates far inside "
+                         "the trust region, little net movement per budget")
+    ap.add_argument("--ent-coef-init", "--ent-coef", dest="ent_coef_init",
+                    type=float, default=0.01,
+                    help="entropy bonus at step 0 (rl_pipeline_v2 §3.2: the "
+                         "schedule is its own knob; Orbit Wars 3rd place "
+                         "called entropy annealing the most important one)")
+    ap.add_argument("--ent-coef-final", type=float, default=0.001,
+                    help="entropy bonus after the anneal (equal to init = "
+                         "constant, the old behavior)")
+    ap.add_argument("--ent-anneal-frac", type=float, default=0.5,
+                    help="fraction of total timesteps over which the entropy "
+                         "coef anneals linearly init->final, then holds")
+    ap.add_argument("--gamma", type=float, default=0.997,
+                    help="v2 default 0.997 (gen-2's recorded call: time "
+                         "preference against game-dragging; ~1 stays legal "
+                         "for terminal-only episodic reward)")
     ap.add_argument("--kl-coef", type=float, default=0.05,
                     help="beta for the frozen-reference anchor "
                          "beta*KL(pi_theta||pi_ref); sweepable. 0 = stock "
@@ -157,9 +173,22 @@ def main() -> None:
                     help="comma-separated frozen checkpoint dirs for the env's "
                          "league bucket (the 30%% draw)")
     ap.add_argument("--pool-weights", default=None,
-                    help="comma-separated draw weights for the public-pool trio "
-                         "(kiyotah,mechi22,plamen06), e.g. '0.6,0.25,0.15' for "
-                         "PFSP-style frontier weighting; default uniform")
+                    help="comma-separated INITIAL draw weights for the public-"
+                         "pool trio (kiyotah,mechi22,plamen06); default uniform. "
+                         "With PFSP refresh on, these only seed the first "
+                         "refresh interval")
+    ap.add_argument("--opp-hold", type=int, default=4,
+                    help="PFSP-lite: each env keeps its drawn opponent for "
+                         "this many consecutive episodes (stable win-rate "
+                         "runs harvested from rollouts, §3.3)")
+    ap.add_argument("--pfsp-refresh-every", type=int, default=10,
+                    help="rewrite pool_weights.json from rollout-harvested "
+                         "win-rate EMAs every N updates (0 = static weights). "
+                         "Weights follow w = max(wr*(1-wr), 0.05): peak "
+                         "learning signal near 50%% matchups, floored so no "
+                         "opponent fully disappears")
+    ap.add_argument("--pfsp-ema", type=float, default=0.15,
+                    help="EMA step for harvested per-opponent win rates")
     ap.add_argument("--init-policy-full", type=Path, default=None,
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
@@ -214,7 +243,7 @@ def main() -> None:
         "gamma": args.gamma,
         "gae_lambda": 0.95,
         "update_epochs": args.update_epochs,
-        "ent_coef": args.ent_coef,
+        "ent_coef": args.ent_coef_init,
         "vf_coef": 0.5,
         "max_grad_norm": 1.0,
         "total_timesteps": args.total_timesteps,
@@ -233,10 +262,20 @@ def main() -> None:
     league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
+    POOL_NAMES = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
+    weights_path = None
+    if args.pfsp_refresh_every > 0:
+        # Seed the weights file BEFORE envs spawn so no worker reads a stale
+        # file left by a previous run into the same out dir.
+        weights_path = args.out / "pool_weights.json"
+        init_w = pool_weights or [1.0] * len(POOL_NAMES)
+        weights_path.write_text(json.dumps(dict(zip(POOL_NAMES, init_w))))
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs={"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                    "league": league, "pool_weights": pool_weights},
+                    "league": league, "pool_weights": pool_weights,
+                    "pool_weights_path": str(weights_path) if weights_path else None,
+                    "opp_hold": args.opp_hold},
         backend=pvector.Multiprocessing,  # never Serial >1 env: cg singleton
         num_envs=args.num_envs,
         num_workers=args.num_workers,
@@ -304,6 +343,36 @@ def main() -> None:
         # Seed snapshot so mirror opponents have something to load from step 0.
         save_actor(args.out / "u0")
 
+        # PFSP-lite harvest state (§3.3): per-opponent win-rate EMAs from the
+        # wr_<slug> terminal infos, consumed-length bookkeeping because
+        # pufferl's stats lists accumulate until its throttled log clears them.
+        from collections import defaultdict as _dd
+        wr_ema: dict[str, float] = {}
+        wr_seen: dict[str, int] = _dd(int)
+        wr_games: dict[str, int] = _dd(int)
+
+        def harvest(stats) -> None:
+            for k, v in list(stats.items()):
+                if not k.startswith("wr_") or not isinstance(v, list):
+                    continue
+                if len(v) < wr_seen[k]:
+                    wr_seen[k] = 0  # upstream cleared its stats on a log tick
+                fresh, wr_seen[k] = v[wr_seen[k]:], len(v)
+                slug = k[3:]
+                for x in fresh:
+                    x = float(x)
+                    wr_ema[slug] = (x if slug not in wr_ema
+                                    else (1 - args.pfsp_ema) * wr_ema[slug]
+                                    + args.pfsp_ema * x)
+                    wr_games[slug] += 1
+
+        total_ts = train_config["total_timesteps"]
+
+        def ent_coef_at(step: int) -> float:
+            span = max(int(total_ts * args.ent_anneal_frac), 1)
+            frac = min(step / span, 1.0)
+            return args.ent_coef_init + (args.ent_coef_final - args.ent_coef_init) * frac
+
         last_snap = time.time()
         t_run = time.time()
         while trainer.global_step < train_config["total_timesteps"]:
@@ -311,18 +380,39 @@ def main() -> None:
                 print(f"wall-clock budget {args.max_seconds:.0f}s reached at "
                       f"step {trainer.global_step} -- stopping cleanly")
                 break
-            trainer.evaluate()
+            # Entropy schedule (§3.2): PuffeRL reads config['ent_coef'] per
+            # train() call, and self.config is the dict we passed by reference.
+            ent_coef = ent_coef_at(trainer.global_step)
+            trainer.config["ent_coef"] = ent_coef
+            harvest(trainer.evaluate())
             trainer.train()
             epoch += 1
+
+            if weights_path is not None and epoch % args.pfsp_refresh_every == 0:
+                # w = wr(1-wr) peaks at 50% matchups (max learning signal
+                # under terminal-only reward), floored so nobody vanishes;
+                # unseen opponents sit at the 0.25 uniform-ish default.
+                w = {n: max(round(wr_ema.get(n, 0.5) * (1 - wr_ema.get(n, 0.5)), 4),
+                            0.05) for n in POOL_NAMES}
+                tmp = weights_path.with_suffix(".json.tmp")
+                tmp.write_text(json.dumps(w))
+                os.replace(tmp, weights_path)
 
             # Per-update metrics (kl_to_prior included when the anchor is on).
             sps = trainer.global_step / max(time.time() - t_run, 1e-9)
             row = {"ts": round(time.time(), 3), "run_tag": args.run_tag,
                    "global_step": int(trainer.global_step), "epoch": epoch,
-                   "sps": round(sps, 2), "ref": ref_dir}
+                   "sps": round(sps, 2), "ref": ref_dir,
+                   "ent_coef": round(ent_coef, 6)}
             row.update({k: (float(v) if math.isfinite(v) else None)
                         for k, v in dict(getattr(trainer, "losses", {})).items()
                         if isinstance(v, (int, float))})
+            if wr_ema:
+                row["pool_wr"] = {s: round(v, 3) for s, v in sorted(wr_ema.items())}
+                row["pool_games"] = dict(sorted(wr_games.items()))
+            pc = getattr(trainer, "per_context", None)
+            if pc:
+                row["per_context"] = pc
             append_jsonl(metrics_path, row)
 
             if gate_on and epoch % args.promote_every == 0:

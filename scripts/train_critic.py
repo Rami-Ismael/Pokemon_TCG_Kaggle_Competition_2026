@@ -354,11 +354,23 @@ def main() -> None:
                 break
             if args.target == "td":
                 v = critic(**_feats_of(batch, device))
-                with torch.no_grad():
-                    vn = critic(**_feats_of(batch, device, prefix="next_"))
                 terminal = batch["terminal"].to(device)
                 outcome = batch["outcome"].to(device)
-                target = torch.where(terminal, outcome, args.td_gamma * vn)
+                target = outcome.clone()
+                live = ~terminal
+                live_cpu = ~batch["terminal"]  # index cpu-resident batch tensors
+                if bool(live.any()):
+                    # Bootstrap forward: eval mode (a dropout-noised TD target
+                    # buys nothing), and only the non-terminal rows — the
+                    # all-zero successor padding of terminal rows makes a
+                    # fully-masked attention row, which MPS's sdpa kernel
+                    # rejects under dropout.
+                    critic.eval()
+                    with torch.no_grad():
+                        vn = critic(**{k: batch[f"next_{k}"][live_cpu].to(device)
+                                       for k in FEAT_KEYS})
+                    critic.train()
+                    target[live] = args.td_gamma * vn
                 loss = ((v - target) ** 2).mean()
             else:
                 outcome = batch.pop("outcome").to(device)

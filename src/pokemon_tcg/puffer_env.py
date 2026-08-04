@@ -26,6 +26,7 @@ Reward: terminal only, {0, 0.5, 1} (win/draw/loss remap; never -1).
 from __future__ import annotations
 
 import glob
+import json
 import os
 import random
 import sys
@@ -150,6 +151,8 @@ class PTCGGym(gymnasium.Env):
                  anchor_ckpt: str | None = None,
                  mix: tuple[float, float, float] = (0.5, 0.3, 0.2),
                  pool_weights: list[float] | None = None,
+                 pool_weights_path: str | None = None,
+                 opp_hold: int = 4,
                  seed: int = 0) -> None:
         super().__init__()
         self.observation_space = gymnasium.spaces.Box(
@@ -165,7 +168,19 @@ class PTCGGym(gymnasium.Env):
         # PFSP-style frontier weighting: overweight the strongest opponent the
         # learner beats often enough to learn from (near-zero-win matchups
         # yield ~no gradient under terminal-only reward). None = uniform.
+        # pool_weights_path points at a JSON {agent_name: weight} the driver
+        # rewrites from rollout-harvested win rates (rl_pipeline_v2 §3.3);
+        # re-read periodically, same hot-reload idiom as the mirror opponent.
         self.pool_weights = pool_weights
+        self.pool_weights_path = pool_weights_path
+        self._weights_next_check = 0.0
+        # PFSP-lite opponent persistence: keep the drawn opponent for
+        # `opp_hold` consecutive episodes so per-opponent win-rate estimates
+        # harvested from rollouts are runs, not single samples (§3.3's
+        # translation of "fix the opponent for 2 consecutive PPO updates").
+        self.opp_hold = max(1, int(opp_hold))
+        self._opp_left = 0
+        self._opp_slug = "mirror"
         self._mirror = (LatestCheckpointOpponent(mirror_root, anchor)
                         if mirror_root else None)
         self._opp_cache: dict = {}
@@ -176,19 +191,37 @@ class PTCGGym(gymnasium.Env):
         self._make = kaggle_make
 
     # -- opponent plumbing ---------------------------------------------------
+    def _maybe_reload_weights(self) -> None:
+        if not self.pool_weights_path:
+            return
+        now = time.time()
+        if now < self._weights_next_check:
+            return
+        self._weights_next_check = now + 60.0
+        try:
+            data = json.loads(Path(self.pool_weights_path).read_text())
+            w = [float(data.get(n, 0.0)) for n in self.pool_names]
+            if sum(w) > 0:
+                self.pool_weights = w
+        except (OSError, ValueError):
+            pass  # keep current weights; the file may be mid-write or absent
+
     def _draw_opponent(self):
+        """Returns (agent_fn, slug); slug feeds the wr_<slug> terminal info."""
         u = self.rng.random()
         if u < self.mix[0]:
             if self._mirror is not None:
-                return self._mirror.agent
-            return self._cached(("ckpt", self.anchor))
+                return self._mirror.agent, "mirror"
+            return self._cached(("ckpt", self.anchor)), "mirror"
         if u < self.mix[0] + self.mix[1] and self.league:
-            return self._cached(self.league[self.rng.randrange(len(self.league))])
+            spec = self.league[self.rng.randrange(len(self.league))]
+            return self._cached(spec), f"league_{Path(spec[1]).name}"
+        self._maybe_reload_weights()
         if self.pool_weights:
             name = self.rng.choices(self.pool_names, weights=self.pool_weights, k=1)[0]
         else:
             name = self.pool_names[self.rng.randrange(len(self.pool_names))]
-        return self._cached(("module", name))
+        return self._cached(("module", name)), name
 
     def _cached(self, spec: tuple[str, str]):
         if spec in self._opp_cache:
@@ -268,7 +301,10 @@ class PTCGGym(gymnasium.Env):
         self._env = self._make("cabt")
         self._env.reset(2)
         self.learner_seat = self.rng.randint(0, 1)
-        self.opponent = self._draw_opponent()
+        if self._opp_left <= 0:
+            self.opponent, self._opp_slug = self._draw_opponent()
+            self._opp_left = self.opp_hold
+        self._opp_left -= 1
         self._illegal = 0
         obs, done = self._advance_until_learner()
         if done:  # pathological instant end; hand back a zero obs, will reset
@@ -315,17 +351,23 @@ class PTCGGym(gymnasium.Env):
             scored = [float("-inf") if x is None else x for x in r]
             mine, theirs = scored[self.learner_seat], scored[1 - self.learner_seat]
             reward = 0.5 if mine == theirs else (1.0 if mine > theirs else 0.0)
+            # wr_<slug>: the free per-opponent outcome harvest (§3.3) — flows
+            # through pufferl's info->stats aggregation; the driver EMAs these
+            # into PFSP pool weights instead of running separate eval games.
             return (np.zeros(OBS_SIZE, dtype=np.float32), reward, True, False,
-                    {"illegal_picks": self._illegal})
+                    {"illegal_picks": self._illegal, f"wr_{self._opp_slug}": reward})
         return obs, 0.0, False, False, {}
 
 
 def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
-                    pool_weights=None, seed=0, buf=None):
+                    pool_weights=None, pool_weights_path=None, opp_hold=4,
+                    seed=0, buf=None):
     """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call."""
     import pufferlib.emulation
 
     torch.set_num_threads(1)
     env = PTCGGym(league=league, mirror_root=mirror_root,
-                  anchor_ckpt=anchor_ckpt, pool_weights=pool_weights, seed=seed)
+                  anchor_ckpt=anchor_ckpt, pool_weights=pool_weights,
+                  pool_weights_path=pool_weights_path, opp_hold=opp_hold,
+                  seed=seed)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)

@@ -36,24 +36,19 @@ import torch
 import pufferlib.pytorch
 from pufferlib.pufferl import PuffeRL, compute_puff_advantage
 
-from .puffer_policy import NEG
+# Anchor math lives in the pufferlib-free kl_math module so the main venv's
+# test suite (tests/test_kl_mask.py) exercises the exact functions this
+# trainer ships with — see that module's docstring.
+from .kl_math import masked_kl, masked_kl_per_row, masks_agree  # noqa: F401
+from .puffer_env import OBS_LAYOUT, _OFFSETS
 
-
-def masked_kl(cur_logits: torch.Tensor, prior_logits: torch.Tensor) -> torch.Tensor:
-    """KL(pi_cur || pi_prior) over the (finite-)masked option distribution.
-
-    Only valid when BOTH logit tensors were masked with the IDENTICAL legal-
-    action mask (PTCGPufferPolicy applies opt_mask from the same packed obs,
-    so this holds by construction; PuffeRLPriorKL.train() asserts it once per
-    prior). A mismatched mask would put probability mass on actions one side
-    considers illegal and silently corrupt the anchor gradient. Illegal slots
-    contribute exactly 0 to the sum: their p underflows to 0 through softmax
-    of NEG, and logp - logq stays finite (both sides offset by NEG), so the
-    KL is NaN-free with no torch.where gating.
-    """
-    logp = torch.log_softmax(cur_logits, dim=-1)
-    logq = torch.log_softmax(prior_logits, dim=-1)
-    return (logp.exp() * (logp - logq)).sum(dim=-1).mean()
+# select_context's offset in the packed flat obs — used to attribute per-row
+# KL/entropy to the SelectContext it happened in (rl_pipeline_v2 §3.2: the
+# aggregate hides single-context entropy collapse; the per-context lines are
+# the stop-signal instrument).
+_CTX_OFF = int(_OFFSETS[[i for i, (k, _, _) in enumerate(OBS_LAYOUT)
+                         if k == "select_context"][0]])
+_N_CTX = 96  # SELECT_CONTEXT_VOCAB_SIZE headroom
 
 
 class PuffeRLPriorKL(PuffeRL):
@@ -93,6 +88,13 @@ class PuffeRLPriorKL(PuffeRL):
         vf_clip = config['vf_clip_coef']
         anneal_beta = b0 + (1 - b0)*a*self.epoch/self.total_epochs
         self.ratio[:] = 1
+
+        # >>> KL ANCHOR: per-SelectContext KL/entropy accumulators (§3.2) >>>
+        device_t = torch.device(device)
+        ctx_kl_sum = torch.zeros(_N_CTX, device=device_t)
+        ctx_ent_sum = torch.zeros(_N_CTX, device=device_t)
+        ctx_n = torch.zeros(_N_CTX, device=device_t)
+        # <<< KL ANCHOR <<<
 
         for mb in range(self.total_minibatches):
             profile('train_misc', epoch, nest=True)
@@ -176,16 +178,27 @@ class PuffeRLPriorKL(PuffeRL):
                 # guaranteed today (both forwards mask from the same mb_obs's
                 # opt_mask), but a future prior that masks differently -- or
                 # not at all -- would silently corrupt the anchor gradient
-                # with probability mass on illegal actions. NEG/10 separates
-                # masked (-1e9) from any reachable real logit.
-                assert torch.equal(logits.detach() < NEG / 10,
-                                   prior_logits < NEG / 10), (
+                # with probability mass on illegal actions. Unit-tested in
+                # tests/test_kl_mask.py against the same kl_math functions.
+                assert masks_agree(logits.detach(), prior_logits), (
                     "KL anchor mask mismatch: current and prior policies "
                     "disagree on which options are illegal for the same obs")
                 self._mask_checked = True
-            kl_prior = masked_kl(logits, prior_logits)
+            kl_vec = masked_kl_per_row(logits, prior_logits)
+            kl_prior = kl_vec.mean()
             loss = loss + self.kl_coef * kl_prior
             losses['kl_to_prior'] += kl_prior.item() / self.total_minibatches
+            # Per-SelectContext attribution (detached; §3.2 stop-signal
+            # instrument). mb_obs is already flat [N, OBS_SIZE] here when
+            # use_rnn is False (reshaped above before the forward).
+            with torch.no_grad():
+                flat_obs = mb_obs.reshape(-1, mb_obs.shape[-1])
+                ctx = flat_obs[:, _CTX_OFF].long().clamp_(0, _N_CTX - 1)
+                ctx_kl_sum += torch.bincount(
+                    ctx, weights=kl_vec.detach().reshape(-1), minlength=_N_CTX)
+                ctx_ent_sum += torch.bincount(
+                    ctx, weights=entropy.detach().reshape(-1), minlength=_N_CTX)
+                ctx_n += torch.bincount(ctx, minlength=_N_CTX).float()
             # <<< KL ANCHOR <<<
 
             self.amp_context.__enter__() # TODO: AMP needs some debugging
@@ -227,6 +240,17 @@ class PuffeRLPriorKL(PuffeRL):
         # path; publish every update so the driver can log kl_to_prior per
         # update (same values the dashboard would show, just not throttled).
         self.losses = losses
+        # Per-SelectContext means for this update, for the driver's JSONL log
+        # (contexts actually seen only).
+        nz = torch.nonzero(ctx_n > 0).flatten()
+        self.per_context = {
+            int(c): {
+                "kl": round(float(ctx_kl_sum[c] / ctx_n[c]), 5),
+                "entropy": round(float(ctx_ent_sum[c] / ctx_n[c]), 5),
+                "n": int(ctx_n[c]),
+            }
+            for c in nz.tolist()
+        }
         # <<< KL ANCHOR <<<
 
         profile.end()
