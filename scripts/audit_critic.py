@@ -145,8 +145,10 @@ def main() -> None:
     critic = load_critic(args.critic_dir, device=device)
     name = args.critic_dir.name
 
+    global n_oor
     se_model = se_const = 0.0
     n_rows = n_decisive = n_wins = correct = 0
+    n_oor = 0
     advantages: list[float] = []
     adv_win: list[float] = []
     adv_loss: list[float] = []
@@ -163,7 +165,15 @@ def main() -> None:
             return
         batch = {k: torch.stack([f[k] for f in batch_feats]).to(device) for k in FEAT_KEYS}
         with torch.no_grad():
-            v = critic(**batch).cpu().numpy()
+            v_raw = critic(**batch).cpu()
+        # Audit the CONSUMED quantity: advantage_weights clamps V into the
+        # valid [0,1] outcome range (out-of-range values are regression
+        # artifacts, 2026-08-04 finding), so the audit judges the clamped
+        # values the arms actually see; the raw out-of-range rate is kept
+        # as a diagnostic.
+        global n_oor
+        n_oor += int(((v_raw < 0) | (v_raw > 1)).sum())
+        v = v_raw.clamp(0.0, 1.0).numpy()
         for (obs, label, meta), vi in zip(batch_ctx, v, strict=True):
             oc = meta.outcome
             if oc < 0:
@@ -242,6 +252,8 @@ def main() -> None:
         f"Eval rows: {n_rows} ({n_eps} episodes, held-out day 2026-07-27)",
         "",
         "## (i) Outcome prediction vs no-skill baselines",
+        "(V clamped to [0,1] — the quantity advantage_weights consumes; "
+        f"raw out-of-range rate {100 * n_oor / max(n_rows, 1):.2f}%)",
         f"- MSE {eval_mse:.4f} vs constant-0.5 {const_mse:.4f} -> "
         f"{'PASS' if eval_mse < const_mse else 'FAIL'}",
         f"- accuracy@0.5 {acc:.4f} vs majority base rate {base:.4f} "
