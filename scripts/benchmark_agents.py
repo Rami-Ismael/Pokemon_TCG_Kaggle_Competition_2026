@@ -246,6 +246,33 @@ AGENT_FILES = {
     "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
     "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
     "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
+    # RESTARTED Stage-2 arms (rl_pipeline_v2.md §2.B2, 2026-08-04): advantage-
+    # weighted BC on the restored streamed corpus, critic-first. e0=control,
+    # e1=binary advantage, e2b{05,1,2}=exp advantage at beta 0.5/1/2, e3=
+    # skill-gated best arm, efb=outcome-weighted fallback (only if the critic
+    # audit fails). Wrappers exist before their checkpoints; loading one
+    # without its checkpoint raises at import -- the desired loud failure.
+    "s2v2_e0_s42": REPO / "agents" / "s2v2_arms" / "e0_s42" / "agent_core.py",
+    "s2v2_e0_s43": REPO / "agents" / "s2v2_arms" / "e0_s43" / "agent_core.py",
+    "s2v2_e0_s44": REPO / "agents" / "s2v2_arms" / "e0_s44" / "agent_core.py",
+    "s2v2_e1_s42": REPO / "agents" / "s2v2_arms" / "e1_s42" / "agent_core.py",
+    "s2v2_e1_s43": REPO / "agents" / "s2v2_arms" / "e1_s43" / "agent_core.py",
+    "s2v2_e1_s44": REPO / "agents" / "s2v2_arms" / "e1_s44" / "agent_core.py",
+    "s2v2_e2b05_s42": REPO / "agents" / "s2v2_arms" / "e2b05_s42" / "agent_core.py",
+    "s2v2_e2b05_s43": REPO / "agents" / "s2v2_arms" / "e2b05_s43" / "agent_core.py",
+    "s2v2_e2b05_s44": REPO / "agents" / "s2v2_arms" / "e2b05_s44" / "agent_core.py",
+    "s2v2_e2b1_s42": REPO / "agents" / "s2v2_arms" / "e2b1_s42" / "agent_core.py",
+    "s2v2_e2b1_s43": REPO / "agents" / "s2v2_arms" / "e2b1_s43" / "agent_core.py",
+    "s2v2_e2b1_s44": REPO / "agents" / "s2v2_arms" / "e2b1_s44" / "agent_core.py",
+    "s2v2_e2b2_s42": REPO / "agents" / "s2v2_arms" / "e2b2_s42" / "agent_core.py",
+    "s2v2_e2b2_s43": REPO / "agents" / "s2v2_arms" / "e2b2_s43" / "agent_core.py",
+    "s2v2_e2b2_s44": REPO / "agents" / "s2v2_arms" / "e2b2_s44" / "agent_core.py",
+    "s2v2_e3_s42": REPO / "agents" / "s2v2_arms" / "e3_s42" / "agent_core.py",
+    "s2v2_e3_s43": REPO / "agents" / "s2v2_arms" / "e3_s43" / "agent_core.py",
+    "s2v2_e3_s44": REPO / "agents" / "s2v2_arms" / "e3_s44" / "agent_core.py",
+    "s2v2_efb_s42": REPO / "agents" / "s2v2_arms" / "efb_s42" / "agent_core.py",
+    "s2v2_efb_s43": REPO / "agents" / "s2v2_arms" / "efb_s43" / "agent_core.py",
+    "s2v2_efb_s44": REPO / "agents" / "s2v2_arms" / "efb_s44" / "agent_core.py",
     # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
     # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
     "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",

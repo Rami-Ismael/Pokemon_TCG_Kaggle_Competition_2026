@@ -152,13 +152,24 @@ PRIOR and lets E0 (plain BC, continued, on the restored corpus) absorb the
 2. **Train-day manifest rows (suspected-error source #1):**
    `ingest_episodes.py backfill-manifest` extended with `--from-hub`, so the
    episode-id universe comes from the Hub shards (4,554 ids for 07-26), not
-   from the 24 surviving local files. Ratings are the documented
-   current-publicScore approximation (the CLI cannot recover historical
-   per-episode ratings): real enough to rank players, logged as approximate.
-   ⚠️ Scale caveat for E3: 07-01 carries TRUE at-the-time ratings; 07-26
-   carries CURRENT-score approximations. The Q75 skill threshold is computed
-   on the pooled distribution, and the E3 report must chart per-day
-   sensitivity so a scale mismatch can't masquerade as a skill effect.
+   from the 24 surviving local files.
+   **STATUS 2026-08-04: the Kaggle-CLI route is a measured dead end** — the
+   `episodes` listing returns one page of most-recent games per submission,
+   so a week-old day is unreachable (44 episodes listed for 07-26 across the
+   current top teams, **0 of 4,554** overlapping the corpus). Used instead:
+   the **team-name proxy** registered in `notes/phase0_discovery_report.md`
+   §0.6(b), implemented as `scripts/backfill_manifest_names.py` — a team's
+   proxy is the median `avg_score` over its episodes on the two fully-rated
+   days (07-01 train, 07-27 eval; Glicko matchmaking pairs rating-adjacent
+   opponents, so episode avg_score ≈ each participant's rating); a 07-26
+   episode's avg_score is the mean of its two teams' proxies, written only
+   when both are known. Result: 180 team proxies, **3,794/4,554 (83.3%) of
+   07-26 covered**, merged (manifest now 16,678 rows).
+   ⚠️ Scale caveat for E3, now with numbers: 07-01 carries TRUE at-the-time
+   ratings (median ~1180); the 07-26 proxies inherit the mixed 07-01+07-27
+   scale (median 1113.7). The pooled Q75 = 1189.0 therefore keeps mostly
+   07-01 episodes — the E3 report MUST chart per-day threshold sensitivity
+   so a scale artifact can't masquerade as a skill effect.
 3. **Count resolvable files, never `splits.json`** (measured counts in the
    corrections table above). If streaming AND the Kaggle re-fetch both fail,
    **halt and report — do NOT train on the 24 surviving train-day
@@ -182,6 +193,20 @@ PRIOR and lets E0 (plain BC, continued, on the restored corpus) absorb the
    **the restarted Stage 2's bar is s2_e1_s43's settled 395.0 and PRIOR's
    400.0**, i.e. a candidate must convincingly clear 400 to be worth an
    active-set slot.
+
+**STATUS 2026-08-04 (all five run on the restored corpus):**
+streamed scan saw **9,820 episodes / 1,663,092 decision rows**; row outcomes
+**53.0% win / 46.9% loss / 0.1% draw** (winner-row share reproduces v1's
+52.9%); episode-seat outcomes perfectly complementary (**9,815 win / 9,815
+loss / 10 draw-seats**); **zero unknown-outcome (−1 sentinel) rows** — the
+suspected-error source is gone; manifest join **92.3%** (9,060/9,820), pooled
+avg_score quartiles Q25 = 1120.7 / median = 1150.8 / **Q75 = 1189.0** (E3's
+starting threshold); figure `s2_plumbing_outcomes_avgscore.png`. Remap
+hand-checked on sample episodes (raw −1/1 → {0,1} per seat, exact);
+`test_privacy_no_leak.py` + the full IL suite green in this worktree (29
+tests). One flag, not fixed (audit discipline): `benchmark_agents.py`'s
+`AGENT_FILES` contains the s2_arms block twice — duplicate identical keys,
+harmless, left in place.
 
 ### 2.B2a Critic first (blocking prerequisite for the advantage arms)
 
