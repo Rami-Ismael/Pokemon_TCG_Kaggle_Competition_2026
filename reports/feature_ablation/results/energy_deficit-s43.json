@@ -1,0 +1,12 @@
+{
+  "arm": "energy_deficit",
+  "features": "energy_deficit",
+  "seed": 43,
+  "total_steps": 4000,
+  "eval_rows": 29761,
+  "majority_pct": 39.0,
+  "top1_pct": 69.4,
+  "top3_pct": 92.4,
+  "train_secs": 534.2,
+  "eval_secs": 242.6
+}

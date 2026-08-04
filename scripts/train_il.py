@@ -260,6 +260,10 @@ def main() -> None:
                           "--data-source hub (eval always uses the repo's eval days)")
     ap.add_argument("--hub-repo", default=None,
                      help=f"dataset repo id (default {config.HF_EPISODES_REPO})")
+    ap.add_argument("--episode-ids-file", type=Path, default=None,
+                     help="text file of episode_ids (one per line): restrict TRAIN "
+                          "episodes to this allowlist (hub source only). Used for "
+                          "skill-filtered-demonstration arms.")
     ap.add_argument("--num-workers", type=int, default=0,
                      help="DataLoader workers for the train stream (hub source only; "
                           "needs >= that many shards). 0 reproduces the old "
@@ -351,11 +355,20 @@ def main() -> None:
             "has no worker sharding, so every worker would duplicate the data."
         )
 
+    if args.episode_ids_file is not None and source != "hub":
+        sys.exit("--episode-ids-file requires --data-source hub")
     if source == "hub":
         hub_days = args.hub_days.split(",") if args.hub_days else None
+        episode_ids = None
+        if args.episode_ids_file is not None:
+            episode_ids = {
+                int(line) for line in args.episode_ids_file.read_text().split() if line
+            }
+            print(f"episode allowlist: {len(episode_ids)} ids from {args.episode_ids_file}")
         train_ds = ShardILDataset(
             "train", days=hub_days, repo_id=args.hub_repo,
             max_episodes=args.max_train_episodes, seed=args.seed,
+            episode_ids=episode_ids,
         )
         eval_ds = ShardILDataset(
             "eval", repo_id=args.hub_repo,

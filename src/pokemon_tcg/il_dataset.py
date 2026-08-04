@@ -945,6 +945,7 @@ class ShardILDataset(IterableDataset):
         max_episodes: int | None = None,
         shuffle_buffer: int = 2000,
         seed: int = 0,
+        episode_ids: set[int] | None = None,
     ) -> None:
         self.split = split
         self.repo_id = repo_id or config.HF_EPISODES_REPO
@@ -952,6 +953,10 @@ class ShardILDataset(IterableDataset):
         self.max_episodes = max_episodes
         self.shuffle_buffer = shuffle_buffer
         self.seed = seed
+        # Optional allowlist (skill-filtered demonstrations): only episodes
+        # whose shard `episode_id` is in this set are decoded/streamed. None
+        # = no filter. Filtering happens BEFORE max_episodes counting.
+        self.episode_ids = episode_ids
         self._epoch = 0
         if local_root is not None:
             self.files = sorted(
@@ -1020,8 +1025,14 @@ class ShardILDataset(IterableDataset):
                 pf = pq.ParquetFile(self._local_path(rel))
                 # row groups are small by construction (pack_episodes.py uses
                 # ~32 rows), so this holds a few MB decompressed at a time
-                for rb in pf.iter_batches(batch_size=8, columns=["episode_json"]):
-                    for raw in rb.column(0).to_pylist():
+                for rb in pf.iter_batches(
+                    batch_size=8, columns=["episode_id", "episode_json"]
+                ):
+                    for eid, raw in zip(
+                        rb.column(0).to_pylist(), rb.column(1).to_pylist(), strict=True
+                    ):
+                        if self.episode_ids is not None and eid not in self.episode_ids:
+                            continue
                         if self.max_episodes is not None and n >= self.max_episodes:
                             return
                         n += 1
