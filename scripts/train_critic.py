@@ -235,6 +235,13 @@ def main() -> None:
                     help="bootstrap discount for --target td. Keep 1.0: the "
                          "arms consume outcome - V(s), so V must be on the "
                          "outcome's undiscounted scale")
+    ap.add_argument("--td-target-refresh", type=int, default=1000,
+                    help="hard-copy the frozen target network from the live "
+                         "critic every N steps. Semi-gradient TD(0) that "
+                         "bootstraps from the LIVE net diverged on the real "
+                         "corpus (train MSE 0.3 -> 280 by step 21k, measured "
+                         "2026-08-04); frozen target + the [0,1] target clamp "
+                         "is the standard fix")
     ap.add_argument("--data-source", choices=["auto", "local", "hub"], default="auto")
     ap.add_argument("--hub-days", default="2026-07-01,2026-07-26",
                     help="comma-separated train days (hub source)")
@@ -290,7 +297,13 @@ def main() -> None:
         init_desc = str(args.init_from)
     critic.to(device).train()
     n_params = sum(p.numel() for p in critic.parameters())
-    print(f"critic target: {args.target} (td_gamma {args.td_gamma})  trunk init: "
+    target_critic = None
+    if args.target == "td":
+        import copy
+        target_critic = copy.deepcopy(critic).to(device).eval()
+        target_critic.requires_grad_(False)
+    print(f"critic target: {args.target} (td_gamma {args.td_gamma}, "
+          f"target refresh {args.td_target_refresh})  trunk init: "
           f"{init_desc}  params: {n_params / 1e6:.2f}M  device: {device}  "
           f"source: {source}", flush=True)
 
@@ -360,17 +373,19 @@ def main() -> None:
                 live = ~terminal
                 live_cpu = ~batch["terminal"]  # index cpu-resident batch tensors
                 if bool(live.any()):
-                    # Bootstrap forward: eval mode (a dropout-noised TD target
-                    # buys nothing), and only the non-terminal rows — the
-                    # all-zero successor padding of terminal rows makes a
-                    # fully-masked attention row, which MPS's sdpa kernel
-                    # rejects under dropout.
-                    critic.eval()
+                    # Bootstrap from the FROZEN target network (never the live
+                    # critic — that feedback loop measurably diverged), only
+                    # for non-terminal rows (terminal rows' all-zero successor
+                    # padding makes a fully-masked attention row that MPS's
+                    # sdpa kernel rejects under dropout; eval mode also keeps
+                    # the target noise-free). Targets clamp to [0,1]: outcomes
+                    # are bounded, so any bootstrap outside the range is
+                    # already an error and must not propagate.
                     with torch.no_grad():
-                        vn = critic(**{k: batch[f"next_{k}"][live_cpu].to(device)
-                                       for k in FEAT_KEYS})
-                    critic.train()
-                    target[live] = args.td_gamma * vn
+                        vn = target_critic(
+                            **{k: batch[f"next_{k}"][live_cpu].to(device)
+                               for k in FEAT_KEYS})
+                    target[live] = (args.td_gamma * vn).clamp_(0.0, 1.0)
                 loss = ((v - target) ** 2).mean()
             else:
                 outcome = batch.pop("outcome").to(device)
@@ -383,11 +398,16 @@ def main() -> None:
             loss.backward()
             torch.nn.utils.clip_grad_norm_(critic.parameters(), args.grad_clip)
             optimizer.step()
+            if target_critic is not None and step % args.td_target_refresh == 0:
+                target_critic.load_state_dict(critic.state_dict())
             running += loss.item()
             running_n += 1
             step += 1
             if step % args.log_every == 0:
+                with torch.no_grad():
+                    v_stats = (float(v.mean()), float(v.min()), float(v.max()))
                 print(f"step {step}/{total_steps} train_mse={running / max(running_n, 1):.4f} "
+                      f"v mean/min/max={v_stats[0]:.3f}/{v_stats[1]:.3f}/{v_stats[2]:.3f} "
                       f"({step / (time.time() - t0):.2f} steps/s)", flush=True)
                 running, running_n = 0.0, 0
 
