@@ -76,11 +76,34 @@ if _ML_AVAILABLE:
 _RNG = random.Random(0)
 
 # Fallback bookkeeping for the run-fallback-diagnostic skill: every decision
-# NOT chosen by the search path increments a cause counter here.
+# NOT chosen by the search path increments a cause counter here. Exposes the
+# same diag_snapshot()/diag_reset() interface the benchmark harness collects
+# (hasattr(mod, "diag_snapshot")); always on — the tiny counter cost is paid
+# by the dev harness only, this module is not the submission bundle.
 from collections import Counter  # noqa: E402
 
 FALLBACK_COUNTS: Counter = Counter()
 DECISION_COUNT = 0
+
+
+def diag_reset() -> None:
+    global DECISION_COUNT
+    FALLBACK_COUNTS.clear()
+    DECISION_COUNT = 0
+
+
+def diag_snapshot() -> dict:
+    out = dict(FALLBACK_COUNTS)
+    fallbacks = sum(FALLBACK_COUNTS.values())
+    out["enabled"] = True
+    out["decisions"] = DECISION_COUNT
+    out["fallbacks"] = fallbacks
+    out["fallback_rate"] = fallbacks / max(1, DECISION_COUNT)
+    return out
+
+
+def diag_first() -> dict[str, dict]:
+    return {}
 
 # `my_deck` intentionally not pre-declared (injection contract; see
 # agents/il_agent/agent_core.py).
