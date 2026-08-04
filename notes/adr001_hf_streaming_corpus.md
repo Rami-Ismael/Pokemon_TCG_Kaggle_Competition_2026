@@ -304,3 +304,33 @@ local cache layer for free.
    stabilized and loader CPU-bound → emit derived decision-level Parquet (v2).
 7. [ ] Post-competition teardown: once training no longer needs the corpus, delete
    the private HF repo and the local shard cache, and cancel PRO if it was enabled.
+
+### Addendum (2026-08-03 evening, post-merge session)
+
+- Hub inventory re-verified independently against splits.json: 07-01 = 5,266
+  rows, 07-26 = 4,554, eval 07-27 = 4,430 — all exact. `train/day=2026-08-03`
+  (partial day, 2 episodes) packed, verified, uploaded; the raw pair kept
+  locally (ingest will extend that day).
+- Parity re-confirmed at tensor level: 24 restored train-2026-07-26 episodes →
+  4,439 decisions, every feature tensor and label `torch.equal` between the
+  raw-folder path and `ShardILDataset` over the Hub.
+- **`--data-source auto` hardened**: the old check was `split_dir.exists()`,
+  but raw dirs now hold pruned-target symlinks (train-combined union: 9,820
+  links, 24 resolvable) or partial test-restored samples (24/4,554) — auto
+  would have picked "local" and silently trained on the readable fraction
+  while scheduling for the full count. Auto now requires BOTH splits' raw
+  folders to be complete per splits.json, counting only symlink-resolvable
+  files, and prints why it reroutes to hub.
+- **Hub source now follows splits.json**: `--train-split`/`--eval-split`
+  resolve to Hub day lists via `il_dataset.split_meta` (union splits use their
+  `dates` field), instead of defaulting to every day under `train/` — new
+  ingest days no longer leak into the corpus definition silently. `--hub-days`
+  remains as an explicit override.
+- `--dry-run` now redirects a default `--out` to `models/il_agent_dryrun`
+  (a smoke test once overwrote the deployed `models/il_agent`; restored from
+  `models/il_agent_3ep`, same step-38562 checkpoint).
+- First full streamed training run: `runs/hfstream-combined-3ep` —
+  train_combined (9,820 episodes, days 07-01+07-26 from the Hub), eval 07-27
+  streamed, 3 epochs / 83,454 steps, 11.38 steps/s observed at step 1k
+  (matches the no-worker row of the throughput table; run predates the
+  `--num-workers 4` recommendation).
