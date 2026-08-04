@@ -1,6 +1,6 @@
 ---
 name: leaderboard-check
-description: Read the real Kaggle leaderboard and our submission scores before evaluating, comparing, or reporting on agents in the Pokémon TCG AI Battle Challenge. Use at the START of any task that benchmarks agents, interprets Glicko or win-rate results, decides what to submit, or writes up results; IMMEDIATELY before writing "better", "best", "beats", "improves", or "top-ranked" about any agent or method; and right after any kaggle submission. Local rankings have inverted on the real ladder twice — never repeat a local claim the ladder contradicts.
+description: Read the real Kaggle leaderboard, and record/track our submissions in the per-submission ledger, for the Pokémon TCG AI Battle Challenge. Use at the START of any task that benchmarks agents, interprets Glicko or win-rate results, decides what to submit, or writes up results; IMMEDIATELY before writing "better", "best", "beats", "improves", or "top-ranked" about any agent or method; right after any kaggle submission (log its approach/config/rationale — Kaggle's submit message caps at 500 chars, the ledger doesn't); and whenever asked what a past submission was, or how a submission's score moved over time. Local rankings have inverted on the real ladder twice — never repeat a local claim the ladder contradicts.
 ---
 
 # Leaderboard check
@@ -43,7 +43,66 @@ uv run kaggle competitions leaderboard -c pokemon-tcg-ai-battle --show
 - ⚠️ Slug trap: `pokemon-tcg-ai-battle-challenge-strategy` is the separate writeup
   track with an empty leaderboard. The ladder lives at `pokemon-tcg-ai-battle`.
 
-## ② Rules the numbers are subject to
+## ② Per-submission ledger — record what a submission IS, and watch its score move
+
+Kaggle's submit-message field caps at 500 characters and each submission shows
+ONE live score that drifts for hours (55215267 read 232.1 → 265.5 → 290.8 →
+299.1 → 319.0 in one day). `reports/submission_ledger.jsonl` (append-only,
+driver `scripts/submission_ledger.py`) is where the full story lives: unlimited
+metadata per ref + a timestamped score timeline.
+
+After every submission — and periodically while scores are settling:
+
+```
+uv run python scripts/submission_ledger.py refresh
+```
+
+One cheap submissions-list API call. Appends a reading for every ref whose
+score/status moved (deduped — re-running immediately appends nothing), and
+auto-stubs refs it has never seen, preserving their 500-char Kaggle
+description verbatim so nothing is lost even for un-logged submissions.
+
+Right after submitting, log the detail the submit message couldn't hold:
+
+```
+uv run python scripts/submission_ledger.py log --ref <ref> \
+  --deck "..." --git-sha <sha> --checkpoint-sha256 <sha> \
+  --config "env flags / hyperparams, no length limit" \
+  --local-result "local evidence at submit time" \
+  --displaces "what this pushes out of the 2-slot active set" \
+  --expects "falsifiable score prediction" \
+  --link notes/scores.md \
+  --approach-file notes/submission_<ref>.md   # or --approach "text" / '-' for stdin
+```
+
+A later `log` for the same ref amends per field (append-only file; later-wins
+on fold) — use that to correct a field, never edit the jsonl by hand.
+
+Read it back:
+
+```
+uv run python scripts/submission_ledger.py show              # table: first→latest score, drift, #reads
+uv run python scripts/submission_ledger.py show --ref <ref>  # full metadata + score timeline
+```
+
+Division of labor: this ledger is per-REF and machine-readable;
+`reports/leaderboard_history.jsonl` (written by check_leaderboard.py) tracks
+the TEAM (rank, active set); `notes/scores.md` stays the human-curated Gate-5
+table — the ledger feeds it, doesn't replace it.
+
+Ledger gotchas (all hit for real on 2026-08-04):
+
+- An errored submission (e.g. 55149689, `SubmissionStatus.ERROR`) never gets a
+  score; `show` prints ERROR for it, not pending.
+- A ref submitted seconds ago records as PENDING/score-null — that's correct;
+  `refresh` again later and the scored reading lands as a second timeline entry.
+- "0 new score readings" from `refresh` means no score moved since last run —
+  a data point, not a failure.
+- Trust the stub's `kaggle_description` over hand-typed `log` fields when they
+  disagree — it's what was actually said at submit time (this caught a wrong
+  USE_SEARCH claim on 55228113's first `log`).
+
+## ③ Rules the numbers are subject to
 
 1. **Ladder is ground truth; local numbers are hypotheses about it.** Until a
    submission's score is read back, the only honest phrasing is *"wins X% ± σ
