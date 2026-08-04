@@ -32,6 +32,12 @@ first read-back; append a new row instead if a submission is rebuilt.
   55190924 437.3 → 397.3; 55190932 252.8 → 190.3; 55215267 232.1 → 265.5 within
   hours. Same-build spread observed ~±100 (804.0 vs 699.0). A row records the
   score at its stated read time; per protocol, never edited afterward.
+- **55248781 (mcts_il_agent) collapsed on convergence**: first reading 600.0
+  (19:46 UTC 08-04), **294.7 by 20:17** — a −305 move, far beyond the ±100
+  same-build band, landing BELOW the il-family 397–400. Third confirmed
+  local-vs-ladder inversion (67.2% [58.4,75.0] head-to-head over il_agent
+  locally). Lesson: a first reading minutes after COMPLETE is provisional;
+  never claim transfer until the rating has settled across hours of reads.
 - Baseline to beat remains **804.0** (55162376 lineage). Nothing since has
   approached it. Process guard now lives in the `leaderboard-check` skill +
   `scripts/check_leaderboard.py`; snapshots append to
