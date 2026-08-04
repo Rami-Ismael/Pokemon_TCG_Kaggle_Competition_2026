@@ -123,6 +123,7 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-5)
     ap.add_argument("--ent-coef", type=float, default=0.001)
     ap.add_argument("--gamma", type=float, default=1.0)
+    ap.add_argument("--gae-lambda", type=float, default=0.95)
     ap.add_argument("--kl-coef", type=float, default=0.05,
                     help="beta for the frozen-reference anchor "
                          "beta*KL(pi_theta||pi_ref); sweepable. 0 = stock "
@@ -222,7 +223,7 @@ def main() -> None:
         "learning_rate": args.lr,
         "anneal_lr": True,
         "gamma": args.gamma,
-        "gae_lambda": 0.95,
+        "gae_lambda": args.gae_lambda,
         "update_epochs": args.update_epochs,
         "ent_coef": args.ent_coef,
         "vf_coef": 0.5,
