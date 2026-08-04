@@ -87,7 +87,17 @@ class ILPriorEvaluator:
         logits = self.policy(**batch)["logits"][0]
         if bool(torch.isnan(logits[: n_real + 1]).any()):
             return 0.0, uniform
-        decline_logit = float(logits[n_real])  # slot exists whenever minCount==0
+        # DECLINE slot exists at index n_real whenever minCount==0 AND the
+        # option list didn't fill MAX_OPTIONS (>=48 options leave no room for
+        # it -- reading logits[n_real] there is out of bounds, the 12.76%
+        # IndexError-fallback bug of the first critic benchmark). When the
+        # slot is unavailable, give the empty selection a NEUTRAL prior (mean
+        # of real-option logits), not an extreme one.
+        real = logits[:n_real]
+        if n_real < logits.shape[0]:
+            decline_logit = float(logits[n_real])
+        else:
+            decline_logit = float(real.mean()) if n_real else 0.0
 
         child_logits = []
         for action in actions:
