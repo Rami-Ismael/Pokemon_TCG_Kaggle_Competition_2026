@@ -390,6 +390,61 @@ def load_manifest_scores(manifest_path: Path | None = None) -> dict[int, float]:
     return scores
 
 
+class DecisionMeta(NamedTuple):
+    """Per-row provenance for outcome weighting / filtering (Stage 2, REWEIGHT).
+
+    ``outcome`` is the ACTING seat's terminal result remapped to
+    0.0 = loss, 0.5 = draw, 1.0 = win, or -1.0 when the episode carries no
+    usable ``rewards`` pair (crashed/truncated dumps -- callers that weight
+    by outcome must treat -1.0 as "exclude", never as a weight). The raw
+    cabt -1/0/1 value deliberately never leaves this module: negative
+    terminal rewards are a known pathology magnet (bc_pipeline_v2 §8.4).
+    """
+
+    episode_id: int  # int(filename stem); -1 if the stem is not numeric
+    seat: int  # agent_idx: 0 or 1
+    outcome: float  # 0.0 loss / 0.5 draw / 1.0 win / -1.0 unknown
+    turn: int  # obs["current"]["turn"] at this decision; -1 if absent
+
+
+def _seat_outcome(rewards: object, seat: int) -> float:
+    """Remap the episode-level rewards pair to this seat's {0, 0.5, 1} outcome.
+
+    A ``None`` reward means this seat errored out -- a loss, matching
+    ``winning_agent``'s treatment of the same case (None = lowest value).
+    """
+    if not isinstance(rewards, list) or len(rewards) != 2:
+        return -1.0
+    r = rewards[seat]
+    if r is None:
+        return 0.0
+    if not isinstance(r, (int, float)):
+        return -1.0
+    if r > 0:
+        return 1.0
+    if r < 0:
+        return 0.0
+    return 0.5
+
+
+def load_manifest_scores(manifest_path: Path | None = None) -> dict[int, float]:
+    """episode_id -> avg_score (the player-rating field) from manifest.csv.
+
+    Loaded once and held as a plain dict -- never re-read per row. Episodes
+    absent from the manifest simply have no entry; ILDataset substitutes a
+    -1.0 sentinel (avg_score is always positive in the real manifest).
+    """
+    path = manifest_path or (config.EPISODES_DIR / "manifest.csv")
+    scores: dict[int, float] = {}
+    with path.open(newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                scores[int(row["episode_id"])] = float(row["avg_score"])
+            except (KeyError, ValueError):
+                continue
+    return scores
+
+
 def resolve_split_dir(split: str) -> Path:
     """Resolve 'train' / 'eval' to its folder via data/episodes/splits/splits.json."""
     splits_json = config.EPISODES_DIR / "splits" / "splits.json"
