@@ -6,6 +6,7 @@ scripts stay portable regardless of the current working directory.
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 # Project root = two levels up from this file (src/pokemon_tcg/config.py).
@@ -29,7 +30,8 @@ EPISODES_SPLITS_DIR = EPISODES_DIR / "splits"
 # Packed corpus on Hugging Face Hub (ADR-001): private dataset repo holding
 # zstd-Parquet episode shards, layout {split}/day=YYYY-MM-DD/shard-NNN.parquet.
 # EPISODES_PACKED_DIR is the local staging/cache dir mirroring that layout.
-HF_EPISODES_REPO = "Rami/ptcg-episodes"
+# Env override mirrors PTCG_DEVICE's pattern (e.g. point at a fork/test repo).
+HF_EPISODES_REPO = os.environ.get("PTCG_HF_EPISODES_REPO", "Rami/ptcg-episodes")
 EPISODES_PACKED_DIR = DATA_DIR / "episodes_packed"
 
 # Artifact directories.

@@ -168,6 +168,27 @@ def resolve_split_dir(split: str) -> Path:
     return config.EPISODES_DIR / meta["folder"]
 
 
+def split_meta(split: str) -> tuple[str, list[str], int]:
+    """splits.json key -> (hub split kind, calendar days, expected episode count).
+
+    Kind is 'train' or 'eval' -- the ``{split}/day=.../`` prefix on the Hub
+    and the prefix of the local folder name. Multi-day unions (e.g.
+    ``train_combined``) list their days in a ``dates`` field; single-day
+    splits derive the day from the folder name (``train-2026-07-26`` ->
+    ``2026-07-26``), mirroring pack_episodes.py. This is how a splits.json
+    key selects Hub days for ShardILDataset without hand-listing them, so
+    hub-sourced training follows the SAME split definition as local raw --
+    not simply "every day currently uploaded under train/" (which would
+    silently absorb new ingest days into the corpus).
+    """
+    splits_json = config.EPISODES_SPLITS_DIR / "splits.json"
+    meta = json.loads(splits_json.read_text())[split]
+    folder_name = Path(meta["folder"]).name
+    kind = folder_name.split("-", 1)[0]
+    days = meta.get("dates") or [folder_name.split("-", 1)[1]]
+    return kind, days, int(meta["episodes"])
+
+
 def _card_features(card: object | None) -> tuple[int, float, float, float]:
     """(card_id, hp_frac, energy_norm, tool_norm) for a Card or Pokemon, 0s if None."""
     if card is None:
