@@ -10,16 +10,20 @@ Motivated by the feature-ablation negative result
 logged population, so making the logged population BETTER is the lever
 that feature engineering wasn't.
 
-Arms (equal --total-steps, seeds shared with the feature sweep):
-- unfiltered: all Hub train days, no filter (the current recipe)
-- top50 / top25: episodes above the pooled median / 75th percentile of
-  min_score across all scored train episodes. Fewer episodes, repeated
+Arms (equal --total-steps, seeds shared with the feature sweep). Filtering
+is WITHIN-DAY: a pooled threshold turned out to be a day filter in
+disguise (top50 came out 91% from 2026-07-01 because that day's ratings
+run ~60 points hotter -- measured 2026-08-04, one arm burned before the
+confound was caught), so every arm now holds the day mix fixed:
+- unfiltered_scored: every scored episode on every scored day
+- top50_wd / top25_wd: within each day, episodes at or above that day's
+  own median / 75th percentile of min_score. Fewer episodes, repeated
   more -- that trade IS the treatment (equal steps, standing rule #4).
 
 Scores come from the shard columns where present, with a manifest.csv
 fallback join on episode_id (the 2026-07-26 shards were packed before
-score-joining). Unscored episodes stay in `unfiltered` but can never
-enter a filtered arm.
+score-joining). Days with no scores anywhere (2026-07-28..2026-08-01,
+2026-08-03) are excluded from EVERY arm, including the baseline.
 
 Gate metric (both reported, per arm): eval_rung1 on the held-out day,
 (a) unfiltered eval episodes -- comparable to every previous number, and
@@ -62,8 +66,8 @@ RUNS_DIR = REPO / "runs" / "skill_filter"
 _GLOBAL_RE = re.compile(r"GLOBAL\s+(\d+)\s+([\d.]+)%\s+([\d.]+)%\s+([\d.]+)%")
 
 
-def collect_scores() -> dict[int, float]:
-    """episode_id -> min_score for every scored train episode on the Hub."""
+def collect_scores() -> dict[int, tuple[str, float]]:
+    """episode_id -> (day, min_score) for every scored train episode on the Hub."""
     import pyarrow.parquet as pq
     from huggingface_hub import hf_hub_download
 
@@ -77,9 +81,10 @@ def collect_scores() -> dict[int, float]:
             except (ValueError, KeyError):
                 pass
 
-    scores: dict[int, float] = {}
+    scores: dict[int, tuple[str, float]] = {}
     n_total = 0
     for rel in _resolve_hub_shards(config.HF_EPISODES_REPO, "train", days=None):
+        day = rel.split("/")[1].removeprefix("day=")
         pf = pq.ParquetFile(
             hf_hub_download(config.HF_EPISODES_REPO, rel, repo_type="dataset")
         )
@@ -89,7 +94,7 @@ def collect_scores() -> dict[int, float]:
             if ms is None:
                 ms = manifest.get(eid)
             if ms is not None:
-                scores[eid] = float(ms)
+                scores[eid] = (day, float(ms))
     print(f"train episodes on Hub: {n_total}; with a min_score: {len(scores)} "
           f"({100 * len(scores) / max(n_total, 1):.0f}%)")
     return scores
@@ -168,20 +173,38 @@ def main() -> None:
     args = ap.parse_args()
 
     scores = collect_scores()
-    vals = sorted(scores.values())
-    med = statistics.median(vals)
-    q75 = statistics.quantiles(vals, n=4)[2]
-    print(f"pooled min_score: median={med:.0f} q75={q75:.0f} "
-          f"(n={len(vals)})")
+    by_day: dict[str, list[tuple[int, float]]] = {}
+    for eid, (day, ms) in scores.items():
+        by_day.setdefault(day, []).append((eid, ms))
+
+    # Within-day thresholds: each day contributes its own top half/quarter,
+    # so every arm has the SAME day mix and the treatment is skill, not day.
+    day_thr: dict[str, tuple[float, float]] = {}
+    for day, pairs in sorted(by_day.items()):
+        vals = sorted(ms for _, ms in pairs)
+        med = statistics.median(vals)
+        q75 = statistics.quantiles(vals, n=4)[2] if len(vals) >= 4 else med
+        day_thr[day] = (med, q75)
+        print(f"day {day}: n={len(vals)} median={med:.0f} q75={q75:.0f}")
 
     IDS_DIR.mkdir(parents=True, exist_ok=True)
-    arms: dict[str, Path | None] = {"unfiltered": None}
-    for name, thr in (("top50", med), ("top25", q75)):
-        ids = sorted(e for e, s in scores.items() if s >= thr)
+    arm_ids = {
+        "unfiltered_scored": [eid for eid, _ in
+                              (p for pairs in by_day.values() for p in pairs)],
+        "top50_wd": [eid for day, pairs in by_day.items()
+                     for eid, ms in pairs if ms >= day_thr[day][0]],
+        "top25_wd": [eid for day, pairs in by_day.items()
+                     for eid, ms in pairs if ms >= day_thr[day][1]],
+    }
+    arms: dict[str, Path | None] = {}
+    for name, ids in arm_ids.items():
         p = IDS_DIR / f"{name}.txt"
-        p.write_text("\n".join(str(i) for i in ids))
+        p.write_text("\n".join(str(i) for i in sorted(ids)))
         arms[name] = p
-        print(f"arm {name}: min_score >= {thr:.0f}, {len(ids)} episodes")
+        id_set = set(ids)
+        comp = {day: sum(1 for eid, _ in pairs if eid in id_set)
+                for day, pairs in sorted(by_day.items())}
+        print(f"arm {name}: {len(ids)} episodes, per-day {comp}")
 
     # High-skill eval threshold: 75th percentile of the EVAL day's own
     # min_score (fully scored in-shard), computed by eval_rung1 via
@@ -207,14 +230,14 @@ def main() -> None:
                 arm, ids_file, seed, args.total_steps, eval_thr
             )
 
-    base = results["unfiltered"]
+    base = results["unfiltered_scored"]
     lines = ["| arm | high-skill top1 by seed (%) | mean | paired d (pp) | mean d | spread | all-eval mean d | verdict |",
              "|---|---|---|---|---|---|---|---|"]
     accepted: list[str] = []
     for arm, by in results.items():
         hs = [by[s]["eval_highskill"]["top1_pct"] for s in SEEDS]
-        if arm == "unfiltered":
-            lines.append(f"| unfiltered | {', '.join(f'{x:.1f}' for x in hs)} | "
+        if arm == "unfiltered_scored":
+            lines.append(f"| unfiltered_scored | {', '.join(f'{x:.1f}' for x in hs)} | "
                          f"{sum(hs)/3:.2f} | — | — | — | — | reference |")
             continue
         d = [by[s]["eval_highskill"]["top1_pct"] - base[s]["eval_highskill"]["top1_pct"]
