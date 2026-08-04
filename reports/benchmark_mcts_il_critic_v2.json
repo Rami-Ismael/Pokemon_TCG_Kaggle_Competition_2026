@@ -1,0 +1,83 @@
+{
+  "agents": [
+    "il_agent",
+    "mcts_il_agent"
+  ],
+  "games_per_pair": 20,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_agent": {
+      "il_agent": 20,
+      "mcts_il_agent": 19
+    },
+    "mcts_il_agent": {
+      "il_agent": 21,
+      "mcts_il_agent": 20
+    }
+  },
+  "games": {
+    "il_agent": {
+      "il_agent": 40,
+      "mcts_il_agent": 40
+    },
+    "mcts_il_agent": {
+      "il_agent": 40,
+      "mcts_il_agent": 40
+    }
+  },
+  "wall_clock_sec": {
+    "il_agent": {
+      "il_agent": 34.47680425643921,
+      "mcts_il_agent": 559.9726190567017
+    },
+    "mcts_il_agent": {
+      "il_agent": 559.9726190567017,
+      "mcts_il_agent": 1017.0575098991394
+    }
+  },
+  "total_wall_clock_sec": 1085.757511138916,
+  "overall_win_pct": {
+    "il_agent": 48.75,
+    "mcts_il_agent": 51.25
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_agent": {
+      "p": 48.75,
+      "lo": 38.107693944368336,
+      "hi": 59.50685539629311
+    },
+    "mcts_il_agent": {
+      "p": 51.24999999999999,
+      "lo": 40.49314460370689,
+      "hi": 61.892306055631664
+    }
+  },
+  "glicko": {
+    "il_agent": {
+      "rating": 1475.3902177550576,
+      "rd": 79.93563950976193,
+      "gxe": 47.665515478223895
+    },
+    "mcts_il_agent": {
+      "rating": 1524.6097822449424,
+      "rd": 79.93563950976193,
+      "gxe": 52.3344845217761
+    }
+  },
+  "fallback_diag": {
+    "il_agent": {
+      "decisions": 5213,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "mcts_il_agent": {
+      "enabled": true,
+      "decisions": 5285,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}
