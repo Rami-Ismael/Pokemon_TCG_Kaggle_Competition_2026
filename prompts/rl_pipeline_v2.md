@@ -366,6 +366,22 @@ ungated one), rather than narrating a winner.
 
 ---
 
+## PRIOR-v2 re-base rule (registered 2026-08-04, per Rami)
+
+The pipeline is a function of its base imitation model; a better base
+upgrades every downstream stage. Two candidates are on the ladder as of
+08-04: **continued imitation** (`s2v2_e0_s43`, 55246108, first read 600.0)
+and **all-days imitation** (`il_agent_full_0804`, 15,032 episodes,
+submitting 08-04 PM). Whichever has the higher **settled** score (~08-07)
+becomes **PRIOR-v2**: Stage-3 init AND KL teacher re-base onto it (two
+flags + a generation restart, ~hours), the critic re-trigger trains from
+its trunk, and any future weighted-arm rerun warm-starts from it. Corpus
+recovery/audits and all machinery carry over unchanged. A provisional
+Stage-3 generation may run from the local champion before settle — labeled
+provisional, discarded without ceremony if the settle picks the other base.
+
+---
+
 ## Stage 3 — SELFPLAY (on-policy PPO, nothing stored)
 
 **The core deviation from the Metamon paper, restated so it survives
