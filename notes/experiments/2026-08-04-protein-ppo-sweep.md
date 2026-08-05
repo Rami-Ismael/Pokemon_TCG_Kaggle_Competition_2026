@@ -71,7 +71,33 @@ has held up on the ladder, so it can choose *among PPO configs* — but a sweep
 run (seed 42, shared): treat per-run scores as provisional; the adoption
 decision rests on the 300-game validation, not on any single sweep score.
 
-## Result (fill after)
-- **Observed:**
-- **Decision:**
-- **What we learned:**
+## Result (filled 2026-08-05)
+
+- **Observed:** 19/20 runs scored (run20 never launched: preflight refused a
+  busy machine — other sessions' training runs; also exposed and fixed a
+  quiet-check regex bug that missed `train_ppo_puffer.py`). Artifacts:
+  `reports/ppo_sweep/{sweep_log.jsonl,best.json,validation.json}`; commands:
+  `.venv-ppo/bin/python scripts/sweep_ppo_protein.py` then `--validate`.
+  - Incumbent (run01) sweep score: **65.0%** [55.3, 73.6] vs frozen anchor.
+  - Best (run18: lr 6.76e-5, ent 3.57e-3, kl 0.0346, epochs 3, mb 1024,
+    λ 0.933): **72.0%** [62.5, 79.9] vs anchor.
+  - **Pre-registered validation** — run18 vs run01, 300 games, 0 draws:
+    **162W/138L, 54.0%, 95% Wilson [0.483, 0.596]** → CI includes 0.5.
+  - Sensitivity (19 runs): no knob's marginal correlation with score exceeds
+    the n=19 noise band (all |ρ| ≤ 0.24 vs null ±~0.45). Directional hints
+    only: top-6 runs lean higher-lr (median 6.4e-5) and mb 1024. Low-lr
+    (<2e-5), weak-anchor (kl<0.03), and high-entropy (>5e-3) corners were
+    consistently below center. Coverage caveat: Protein's local search never
+    left update_epochs {3,4} or minibatch {256–1024}.
+- **Decision: DROP** (per the pre-registered rule). The incumbent operating
+  point (lr 3e-5, ent 1e-3, kl 0.05, 3 epochs, mb 512, λ 0.95) stands;
+  finding recorded as *operating point robust within the searched box at 60k
+  steps*. Nothing was submitted; no ladder claim is made.
+- **What we learned:** the sweep argmax (72.0%) regressed to 54.0% under an
+  independent 3×-larger test — textbook winner's curse in noisy model
+  selection (19 draws from a ±5%-noise metric make the max an overestimate
+  by construction). The pre-registered validation stage is what caught it;
+  without it we'd have "adopted" a config whose true edge is
+  indistinguishable from zero. Transferable: never read a sweep's best score
+  as an effect size — re-measure the winner on fresh games before believing
+  it.
