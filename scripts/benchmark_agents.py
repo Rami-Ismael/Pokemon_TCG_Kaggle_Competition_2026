@@ -330,6 +330,27 @@ AGENT_FILES = {
     "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
     "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
     "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
+    # IL checkpoint sweep (reports/il_model_deck_selection.md): every DISTINCT
+    # BC checkpoint in models/, one identical wrapper each so the only thing
+    # varying across the model axis is the weights. Deduped by sha256 --
+    # models/il_agent_3ep is byte-identical to models/il_agent, and
+    # models/il_agent_winning_827.8 is byte-identical to il_agent_2ep_backup,
+    # so each pair contributes ONE arm. models/il_agent_medium_combined is an
+    # EMPTY directory (no config.json/safetensors), which is why the older
+    # `grid_medium_comb` arm above silently falls back to non-ML behaviour --
+    # it is deliberately not re-wired here.
+    "il_bc_2ep": REPO / "agents" / "il_arms" / "il_bc_2ep" / "agent_core.py",
+    "il_bc_3ep": REPO / "agents" / "il_arms" / "il_bc_3ep" / "agent_core.py",
+    "il_bc_4ep": REPO / "agents" / "il_arms" / "il_bc_4ep" / "agent_core.py",
+    "il_medium_3ep": REPO / "agents" / "il_arms" / "il_medium_3ep" / "agent_core.py",
+    "il_small_comb_2ep": REPO / "agents" / "il_arms" / "il_small_comb_2ep" / "agent_core.py",
+    "il_hfstream_comb_3ep": REPO / "agents" / "il_arms" / "il_hfstream_comb_3ep" / "agent_core.py",
+    "il_alldays_3ep": REPO / "agents" / "il_arms" / "il_alldays_3ep" / "agent_core.py",
+    # Equal-steps control for il_alldays_3ep (standing rule 4: compare at equal
+    # STEPS, not equal epochs). 38,562 steps vs 127,748; offline acc .7414 vs
+    # .7583 but ECE .0124 -- the best calibration of any checkpoint here.
+    # Trained by a concurrent session; lives in that worktree, symlinked in.
+    "il_alldays_equalsteps": REPO / "agents" / "il_arms" / "il_alldays_equalsteps" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
@@ -500,12 +521,26 @@ def load_agent(name: str):
             raise AttributeError(f"{base_name} has no callable `agent`")
 
     if deck_tag:
-        if not hasattr(mod, "my_deck"):
-            raise AttributeError(f"{base_name} has no `my_deck` to override (not deck-injectable)")
         deck_csv = DECK_LISTS_DIR / f"{deck_tag}.csv"
         if not deck_csv.exists():
             raise FileNotFoundError(f"deck override '{deck_tag}' not found: {deck_csv}")
-        mod.my_deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+        deck = [int(x) for x in deck_csv.read_text().splitlines() if x.strip()][:60]
+        # `agent()` returns the module-level `my_deck` it sees in ITS OWN globals.
+        # For wrapper arms (agents/il_arms/, agents/s2_arms/, agents/ppo_arms/,
+        # agents/grid_cells/) that owner is the inner il_agent core module the
+        # wrapper exec'd, NOT the wrapper module bound to `mod` here. Writing
+        # only to `mod` left every wrapper arm silently piloting the deck its
+        # wrapper had already injected -- an override that reported success and
+        # changed nothing. Write to the function's own globals, and keep the
+        # `mod` write so plain modules (where they're the same dict) still work.
+        owner = getattr(fn, "__globals__", None)
+        if owner is None or "my_deck" not in owner:
+            if not hasattr(mod, "my_deck"):
+                raise AttributeError(
+                    f"{base_name} has no `my_deck` to override (not deck-injectable)")
+        if owner is not None:
+            owner["my_deck"] = deck
+        mod.my_deck = deck
 
     _LOADED_MODULES[name] = mod
     return fn
@@ -572,7 +607,7 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
 
 def run_benchmark(agents: list[str], games_per_pair: int = 8,
                    glicko_path: Path = GLICKO_PATH, out_path: Path | None = None,
-                   persist_glicko: bool = True, tb_dir: Path | None = None):
+                   persist_glicko: bool = True, tb_dir: Path | None = None, focus: str | None = None):
     from kaggle_environments import make
 
     # The benchmark IS the diagnostic surface: turn on fallback tracking for
@@ -599,12 +634,20 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
     # about its rating relative to the field.
     glicko_games: list[tuple[str, str, float]] = []
 
-    total_pairs = n * (n - 1) // 2 + n  # unordered incl. self-play
+    # `focus` turns the full round-robin into a STAR: only focus-vs-everyone is
+    # played, skipping every other-vs-other pairing. Testing one model against a
+    # 42-agent bed is then 42 pairings instead of 903 -- the pool's internal
+    # ratings come from a separate one-off round-robin and are merged in, so
+    # nothing is lost by not replaying them for every candidate.
+    if focus:
+        pairlist = [(focus, b) for b in agents if b != focus]
+    else:
+        pairlist = [(agents[i], agents[j]) for i in range(n) for j in range(i, n)]
+    total_pairs = len(pairlist)
     done = 0
     run_t0 = time.time()
-    for i in range(n):
-        for j in range(i, n):
-            a, b = agents[i], agents[j]
+    if True:
+        for a, b in pairlist:
             pairs = games_per_pair if a != b else max(1, games_per_pair // 2)
             aw, bw, dr, secs = play_match(fns[a], fns[b], lambda: make("cabt"), pairs, name_a=a, name_b=b)
             wins[a][b] += aw
@@ -779,6 +822,10 @@ def main():
                     help="where to load/persist Glicko ratings (default: reports/glicko_ratings.json)")
     ap.add_argument("--out", type=Path, default=None,
                     help="where to save the result JSON (default: reports/agent_benchmark.json)")
+    ap.add_argument("--focus", default=None,
+                    help="star mode: play ONLY <focus> vs every other agent, skipping "
+                         "other-vs-other. Testing one candidate against a 42-agent bed "
+                         "becomes 42 pairings instead of 903.")
     ap.add_argument("--no-glicko-persist", action="store_true",
                     help="score Glicko for this run's printout but don't read/write --glicko-path "
                          "(use for isolated runs, e.g. deck-arm sweeps, that shouldn't pollute "
@@ -816,7 +863,7 @@ def main():
               file=sys.stderr)
     run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
                   out_path=args.out, persist_glicko=persist_glicko,
-                  tb_dir=None if args.no_tb else args.tb_dir)
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
 
 
 if __name__ == "__main__":

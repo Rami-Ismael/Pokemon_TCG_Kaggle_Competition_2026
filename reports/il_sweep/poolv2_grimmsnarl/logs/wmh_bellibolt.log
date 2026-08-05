@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] wmh_bellibolt: 0/5113 = 0.00%  by_reason={'deck_returns': 40, 'policy_ok': 5113}
+Loading 2 agents: wmh_bellibolt, wmh_grimmsnarl
+[1/3] wmh_bellibolt vs wmh_bellibolt: wmh_bellibolt 5-5  (10 games, 6.5s, 0.65s/game)
+[2/3] wmh_bellibolt vs wmh_grimmsnarl: wmh_bellibolt 5-15  (20 games, 7.6s, 0.38s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 6-4  (10 games, 3.3s, 0.33s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 wmh_be  wmh_gr  win% [95% CI]
+wmh_bellibolt         -       5        37.5  [24.2,53.0]
+wmh_grimmsnarl        15      -        62.5  [47.0,75.8]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  wmh_bellibolt vs wmh_grimmsnarl: 5/20 =  25.0% [11.2,46.9]  (7.6s, 0.38s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  wmh_grimmsnarl          62.5%  [47.0,75.8]  (25/40)
+  wmh_bellibolt           37.5%  [24.2,53.0]  (15/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  wmh_grimmsnarl          1733.9  (RD 110.2, 95% CI +/-220.4)  GXE  70.6%
+  wmh_bellibolt           1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  wmh_bellibolt          fallback_rate= 0.00%  decisions=5113  raw={'decisions': 5113, 'policy_ok': 5113, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 40, 'errors': {}, 'chosen_types': {}, 'attack_ids_chosen': {}, 'fallback_rate': 0.0}
+
+total wall clock: 17.4s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/wmh_bellibolt.json
+glicko: not persisted (isolated run)

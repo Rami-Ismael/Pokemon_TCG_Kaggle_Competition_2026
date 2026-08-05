@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: wmh_megastarmie, wmh_grimmsnarl
+[1/3] wmh_megastarmie vs wmh_megastarmie: wmh_megastarmie 5-5  (10 games, 0.9s, 0.09s/game)
+[2/3] wmh_megastarmie vs wmh_grimmsnarl: wmh_megastarmie 20-0  (20 games, 3.7s, 0.19s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 4-5-1d  (10 games, 3.2s, 0.32s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 wmh_me  wmh_gr  win% [95% CI]
+wmh_megastarmie       -       20       75.0  [59.8,85.8]
+wmh_grimmsnarl        0       -        22.5  [12.3,37.5]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  wmh_grimmsnarl vs wmh_megastarmie: 0/20 =   0.0% [ 0.0,16.1]  (3.7s, 0.19s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  wmh_megastarmie         75.0%  [59.8,85.8]  (30/40)
+  wmh_grimmsnarl          22.5%  [12.3,37.5]  (9/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  wmh_megastarmie         1967.8  (RD 110.2, 95% CI +/-220.4)  GXE  85.2%
+  wmh_grimmsnarl          1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+
+total wall clock: 7.9s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/wmh_megastarmie.json
+glicko: not persisted (isolated run)

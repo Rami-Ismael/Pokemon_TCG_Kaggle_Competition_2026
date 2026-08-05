@@ -1,0 +1,437 @@
+{
+  "agents": [
+    "tb_starmie",
+    "tb_archaludon",
+    "makthanithin_1084_baseline",
+    "romanrozen_strong_start",
+    "tb_dragapult",
+    "wmh_alakazam",
+    "wmh_garchomp",
+    "tb_heuristic",
+    "random_legal"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "tb_starmie": {
+      "tb_starmie": 10,
+      "tb_archaludon": 0,
+      "makthanithin_1084_baseline": 0,
+      "romanrozen_strong_start": 1,
+      "tb_dragapult": 0,
+      "wmh_alakazam": 0,
+      "wmh_garchomp": 0,
+      "tb_heuristic": 6,
+      "random_legal": 16
+    },
+    "tb_archaludon": {
+      "tb_starmie": 20,
+      "tb_archaludon": 10,
+      "makthanithin_1084_baseline": 14,
+      "romanrozen_strong_start": 9,
+      "tb_dragapult": 11,
+      "wmh_alakazam": 14,
+      "wmh_garchomp": 16,
+      "tb_heuristic": 19,
+      "random_legal": 19
+    },
+    "makthanithin_1084_baseline": {
+      "tb_starmie": 20,
+      "tb_archaludon": 6,
+      "makthanithin_1084_baseline": 10,
+      "romanrozen_strong_start": 10,
+      "tb_dragapult": 17,
+      "wmh_alakazam": 4,
+      "wmh_garchomp": 14,
+      "tb_heuristic": 19,
+      "random_legal": 20
+    },
+    "romanrozen_strong_start": {
+      "tb_starmie": 19,
+      "tb_archaludon": 11,
+      "makthanithin_1084_baseline": 10,
+      "romanrozen_strong_start": 10,
+      "tb_dragapult": 12,
+      "wmh_alakazam": 8,
+      "wmh_garchomp": 16,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "tb_dragapult": {
+      "tb_starmie": 20,
+      "tb_archaludon": 9,
+      "makthanithin_1084_baseline": 3,
+      "romanrozen_strong_start": 7,
+      "tb_dragapult": 10,
+      "wmh_alakazam": 12,
+      "wmh_garchomp": 10,
+      "tb_heuristic": 20,
+      "random_legal": 19
+    },
+    "wmh_alakazam": {
+      "tb_starmie": 20,
+      "tb_archaludon": 6,
+      "makthanithin_1084_baseline": 16,
+      "romanrozen_strong_start": 12,
+      "tb_dragapult": 8,
+      "wmh_alakazam": 10,
+      "wmh_garchomp": 10,
+      "tb_heuristic": 19,
+      "random_legal": 19
+    },
+    "wmh_garchomp": {
+      "tb_starmie": 20,
+      "tb_archaludon": 4,
+      "makthanithin_1084_baseline": 6,
+      "romanrozen_strong_start": 4,
+      "tb_dragapult": 10,
+      "wmh_alakazam": 10,
+      "wmh_garchomp": 10,
+      "tb_heuristic": 19,
+      "random_legal": 20
+    },
+    "tb_heuristic": {
+      "tb_starmie": 14,
+      "tb_archaludon": 1,
+      "makthanithin_1084_baseline": 1,
+      "romanrozen_strong_start": 0,
+      "tb_dragapult": 0,
+      "wmh_alakazam": 1,
+      "wmh_garchomp": 1,
+      "tb_heuristic": 10,
+      "random_legal": 16
+    },
+    "random_legal": {
+      "tb_starmie": 4,
+      "tb_archaludon": 1,
+      "makthanithin_1084_baseline": 0,
+      "romanrozen_strong_start": 0,
+      "tb_dragapult": 1,
+      "wmh_alakazam": 1,
+      "wmh_garchomp": 0,
+      "tb_heuristic": 4,
+      "random_legal": 10
+    }
+  },
+  "games": {
+    "tb_starmie": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "tb_archaludon": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "makthanithin_1084_baseline": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "romanrozen_strong_start": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "tb_dragapult": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "wmh_alakazam": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "wmh_garchomp": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "tb_heuristic": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    },
+    "random_legal": {
+      "tb_starmie": 20,
+      "tb_archaludon": 20,
+      "makthanithin_1084_baseline": 20,
+      "romanrozen_strong_start": 20,
+      "tb_dragapult": 20,
+      "wmh_alakazam": 20,
+      "wmh_garchomp": 20,
+      "tb_heuristic": 20,
+      "random_legal": 20
+    }
+  },
+  "wall_clock_sec": {
+    "tb_starmie": {
+      "tb_starmie": 12.744072437286377,
+      "tb_archaludon": 4.836632013320923,
+      "makthanithin_1084_baseline": 4.51435112953186,
+      "romanrozen_strong_start": 3.275899887084961,
+      "tb_dragapult": 5.985173225402832,
+      "wmh_alakazam": 3.8187978267669678,
+      "wmh_garchomp": 4.2535719871521,
+      "tb_heuristic": 7.473156929016113,
+      "random_legal": 7.1998560428619385
+    },
+    "tb_archaludon": {
+      "tb_starmie": 4.836632013320923,
+      "tb_archaludon": 6.930592060089111,
+      "makthanithin_1084_baseline": 6.493201017379761,
+      "romanrozen_strong_start": 5.19527792930603,
+      "tb_dragapult": 8.1131272315979,
+      "wmh_alakazam": 4.936305999755859,
+      "wmh_garchomp": 8.170711040496826,
+      "tb_heuristic": 5.303292989730835,
+      "random_legal": 3.356398820877075
+    },
+    "makthanithin_1084_baseline": {
+      "tb_starmie": 4.51435112953186,
+      "tb_archaludon": 6.493201017379761,
+      "makthanithin_1084_baseline": 5.8885722160339355,
+      "romanrozen_strong_start": 7.481133937835693,
+      "tb_dragapult": 7.675277948379517,
+      "wmh_alakazam": 7.027166128158569,
+      "wmh_garchomp": 7.669965028762817,
+      "tb_heuristic": 5.0277769565582275,
+      "random_legal": 2.949846029281616
+    },
+    "romanrozen_strong_start": {
+      "tb_starmie": 3.275899887084961,
+      "tb_archaludon": 5.19527792930603,
+      "makthanithin_1084_baseline": 7.481133937835693,
+      "romanrozen_strong_start": 7.494517803192139,
+      "tb_dragapult": 7.473542928695679,
+      "wmh_alakazam": 6.313691139221191,
+      "wmh_garchomp": 8.232408046722412,
+      "tb_heuristic": 6.481411695480347,
+      "random_legal": 3.1514391899108887
+    },
+    "tb_dragapult": {
+      "tb_starmie": 5.985173225402832,
+      "tb_archaludon": 8.1131272315979,
+      "makthanithin_1084_baseline": 7.675277948379517,
+      "romanrozen_strong_start": 7.473542928695679,
+      "tb_dragapult": 8.430768013000488,
+      "wmh_alakazam": 6.579532861709595,
+      "wmh_garchomp": 8.488859176635742,
+      "tb_heuristic": 6.002407789230347,
+      "random_legal": 4.910490989685059
+    },
+    "wmh_alakazam": {
+      "tb_starmie": 3.8187978267669678,
+      "tb_archaludon": 4.936305999755859,
+      "makthanithin_1084_baseline": 7.027166128158569,
+      "romanrozen_strong_start": 6.313691139221191,
+      "tb_dragapult": 6.579532861709595,
+      "wmh_alakazam": 8.217973709106445,
+      "wmh_garchomp": 6.454355001449585,
+      "tb_heuristic": 5.097301006317139,
+      "random_legal": 2.726010799407959
+    },
+    "wmh_garchomp": {
+      "tb_starmie": 4.2535719871521,
+      "tb_archaludon": 8.170711040496826,
+      "makthanithin_1084_baseline": 7.669965028762817,
+      "romanrozen_strong_start": 8.232408046722412,
+      "tb_dragapult": 8.488859176635742,
+      "wmh_alakazam": 6.454355001449585,
+      "wmh_garchomp": 7.829249858856201,
+      "tb_heuristic": 7.94151496887207,
+      "random_legal": 7.021728992462158
+    },
+    "tb_heuristic": {
+      "tb_starmie": 7.473156929016113,
+      "tb_archaludon": 5.303292989730835,
+      "makthanithin_1084_baseline": 5.0277769565582275,
+      "romanrozen_strong_start": 6.481411695480347,
+      "tb_dragapult": 6.002407789230347,
+      "wmh_alakazam": 5.097301006317139,
+      "wmh_garchomp": 7.94151496887207,
+      "tb_heuristic": 10.942520141601562,
+      "random_legal": 6.776849746704102
+    },
+    "random_legal": {
+      "tb_starmie": 7.1998560428619385,
+      "tb_archaludon": 3.356398820877075,
+      "makthanithin_1084_baseline": 2.949846029281616,
+      "romanrozen_strong_start": 3.1514391899108887,
+      "tb_dragapult": 4.910490989685059,
+      "wmh_alakazam": 2.726010799407959,
+      "wmh_garchomp": 7.021728992462158,
+      "tb_heuristic": 6.776849746704102,
+      "random_legal": 5.929609775543213
+    }
+  },
+  "total_wall_clock_sec": 251.821928024292,
+  "overall_win_pct": {
+    "tb_starmie": 18.333333333333332,
+    "tb_archaludon": 73.33333333333333,
+    "makthanithin_1084_baseline": 66.66666666666667,
+    "romanrozen_strong_start": 70.0,
+    "tb_dragapult": 61.111111111111114,
+    "wmh_alakazam": 66.66666666666667,
+    "wmh_garchomp": 57.22222222222222,
+    "tb_heuristic": 24.444444444444443,
+    "random_legal": 11.666666666666666
+  },
+  "overall_win_pct_wilson_ci": {
+    "tb_starmie": {
+      "p": 18.333333333333332,
+      "lo": 13.362624296924455,
+      "hi": 24.627471524695896
+    },
+    "tb_archaludon": {
+      "p": 73.33333333333333,
+      "lo": 66.43470816774092,
+      "hi": 79.25680017422302
+    },
+    "makthanithin_1084_baseline": {
+      "p": 66.66666666666666,
+      "lo": 59.49509727403892,
+      "hi": 73.14169439879248
+    },
+    "romanrozen_strong_start": {
+      "p": 70.0,
+      "lo": 62.94454640382406,
+      "hi": 76.21960360357359
+    },
+    "tb_dragapult": {
+      "p": 61.111111111111114,
+      "lo": 53.82806192890348,
+      "hi": 67.92979918631745
+    },
+    "wmh_alakazam": {
+      "p": 66.66666666666666,
+      "lo": 59.49509727403892,
+      "hi": 73.14169439879248
+    },
+    "wmh_garchomp": {
+      "p": 57.22222222222222,
+      "lo": 49.917743380385026,
+      "hi": 64.22486634450858
+    },
+    "tb_heuristic": {
+      "p": 24.444444444444443,
+      "lo": 18.74317785766672,
+      "hi": 31.21374157732515
+    },
+    "random_legal": {
+      "p": 11.666666666666666,
+      "lo": 7.758508751636231,
+      "hi": 17.176870400851563
+    }
+  },
+  "glicko": {
+    "tb_starmie": {
+      "rating": 1135.0328502174075,
+      "rd": 40.77331556802718,
+      "gxe": 19.774912539495173
+    },
+    "tb_archaludon": {
+      "rating": 1768.9231629976996,
+      "rd": 40.77331556802718,
+      "gxe": 73.72821538532699
+    },
+    "makthanithin_1084_baseline": {
+      "rating": 1692.0879735697854,
+      "rd": 40.77331556802718,
+      "gxe": 67.63535680811641
+    },
+    "romanrozen_strong_start": {
+      "rating": 1733.7070345099057,
+      "rd": 40.77331556802718,
+      "gxe": 71.02835510263242
+    },
+    "tb_dragapult": {
+      "rating": 1631.2601152726868,
+      "rd": 40.77331556802718,
+      "gxe": 62.33192019257988
+    },
+    "wmh_alakazam": {
+      "rating": 1692.0879735697854,
+      "rd": 40.77331556802718,
+      "gxe": 67.63535680811641
+    },
+    "wmh_garchomp": {
+      "rating": 1583.2381218802404,
+      "rd": 40.77331556802718,
+      "gxe": 57.91766882945842
+    },
+    "tb_heuristic": {
+      "rating": 1205.4651071929957,
+      "rd": 40.77331556802718,
+      "gxe": 24.413060161625037
+    },
+    "random_legal": {
+      "rating": 1058.1976607894935,
+      "rd": 40.77331556802718,
+      "gxe": 15.508693499875836
+    }
+  },
+  "fallback_diag": {
+    "wmh_alakazam": {
+      "decisions": 10460,
+      "policy_ok": 10460,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 180,
+      "errors": {},
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

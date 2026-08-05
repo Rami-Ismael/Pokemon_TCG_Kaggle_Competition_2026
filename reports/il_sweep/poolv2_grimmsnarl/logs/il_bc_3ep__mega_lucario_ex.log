@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_bc_3ep@mega_lucario_ex: 0/2909 = 0.00%  by_reason={}
+Loading 2 agents: il_bc_3ep@mega_lucario_ex, wmh_grimmsnarl
+[1/3] il_bc_3ep@mega_lucario_ex vs il_bc_3ep@mega_lucario_ex: il_bc_3ep@mega_lucario_ex 5-5  (10 games, 22.5s, 2.25s/game)
+[2/3] il_bc_3ep@mega_lucario_ex vs wmh_grimmsnarl: il_bc_3ep@mega_lucario_ex 11-9  (20 games, 31.5s, 1.58s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 4-5-1d  (10 games, 8.0s, 0.80s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_bc_  wmh_gr  win% [95% CI]
+il_bc_3ep@mega_lucario_ex-       11       52.5  [37.5,67.1]
+wmh_grimmsnarl        9       -        45.0  [30.7,60.2]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_bc_3ep@mega_lucario_ex vs wmh_grimmsnarl: 11/20 =  55.0% [34.2,74.2]  (31.5s, 1.58s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_bc_3ep@mega_lucario_ex  52.5%  [37.5,67.1]  (21/40)
+  wmh_grimmsnarl          45.0%  [30.7,60.2]  (18/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_bc_3ep@mega_lucario_ex  1546.8  (RD 110.2, 95% CI +/-220.4)  GXE  54.4%
+  wmh_grimmsnarl          1453.2  (RD 110.2, 95% CI +/-220.4)  GXE  45.6%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_bc_3ep@mega_lucario_ex fallback_rate= 0.00%  decisions=2909  raw={'decisions': 2909, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+
+total wall clock: 62.1s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/il_bc_3ep__mega_lucario_ex.json
+glicko: not persisted (isolated run)

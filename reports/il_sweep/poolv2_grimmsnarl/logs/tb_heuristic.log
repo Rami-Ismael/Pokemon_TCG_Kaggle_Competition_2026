@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: tb_heuristic, wmh_grimmsnarl
+[1/3] tb_heuristic vs tb_heuristic: tb_heuristic 4-6  (10 games, 9.6s, 0.96s/game)
+[2/3] tb_heuristic vs wmh_grimmsnarl: tb_heuristic 1-19  (20 games, 12.3s, 0.61s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 4-6  (10 games, 9.1s, 0.91s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 tb_heu  wmh_gr  win% [95% CI]
+tb_heuristic          -       1        27.5  [16.1,42.8]
+wmh_grimmsnarl        19      -        72.5  [57.2,83.9]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  tb_heuristic vs wmh_grimmsnarl: 1/20 =   5.0% [ 0.9,23.6]  (12.3s, 0.61s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  wmh_grimmsnarl          72.5%  [57.2,83.9]  (29/40)
+  tb_heuristic            27.5%  [16.1,42.8]  (11/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  wmh_grimmsnarl          1921.0  (RD 110.2, 95% CI +/-220.4)  GXE  82.9%
+  tb_heuristic            1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+
+total wall clock: 31.0s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/tb_heuristic.json
+glicko: not persisted (isolated run)

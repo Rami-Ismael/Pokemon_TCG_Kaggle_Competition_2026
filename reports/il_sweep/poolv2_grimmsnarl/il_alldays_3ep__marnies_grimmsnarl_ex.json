@@ -1,0 +1,77 @@
+{
+  "agents": [
+    "il_alldays_3ep@marnies_grimmsnarl_ex",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 10,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 0,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 61.447885513305664,
+      "wmh_grimmsnarl": 30.131886959075928
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@marnies_grimmsnarl_ex": 30.131886959075928,
+      "wmh_grimmsnarl": 15.421152114868164
+    }
+  },
+  "total_wall_clock_sec": 68.58977794647217,
+  "overall_win_pct": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": 75.0,
+    "wmh_grimmsnarl": 25.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "p": 75.0,
+      "lo": 59.8057409330299,
+      "hi": 85.81303210445049
+    },
+    "wmh_grimmsnarl": {
+      "p": 25.0,
+      "lo": 14.186967895549518,
+      "hi": 40.194259066970105
+    }
+  },
+  "glicko": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "rating": 1967.795048606361,
+      "rd": 110.20831912594903,
+      "gxe": 85.24947142043656
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1032.204951393639,
+      "rd": 110.20831912594903,
+      "gxe": 14.750528579563424
+    }
+  },
+  "fallback_diag": {
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "decisions": 3731,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

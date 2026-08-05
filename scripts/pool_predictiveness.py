@@ -41,10 +41,32 @@ LADDER_ANCHORS: dict[str, tuple[float, str]] = {
     "tb_heuristic": (633.0, "TomBombadyl catalog mu"),
     "tb_rulecore": (535.6, "TomBombadyl catalog mu"),
     "improved_prob_main": (701.6, "our sub 55169814, 2026-08-01"),
-    "agent_core_improved": (804.0, "our sub 55162376 best-ever; recent reads 643-693"),
+    # CORRECTED 2026-08-05. 804.0 was ONE early read of 55162376 and is not what
+    # this build polls at now. Four same-build resubmits settled at 699.0
+    # (55191752), 692.7 (55219194), 666.1 (55224682), 683.2 (55228113) -> mean
+    # 685.3. Using best-ever here silently inflated the anchor by ~119 points and
+    # produced a false local-vs-ladder "inversion" against improved_prob_main.
+    "agent_core_improved": (685.3, "our subs 55191752/55219194/55224682/55228113 mean of settled reads"),
     "il_agent": (398.7, "our subs 55190924/55149903 mean"),
     "s2_e1_s43": (395.0, "our sub 55196434"),
     "ppo_u120832": (275.1, "our sub 55215267 (drifting read)"),
+    # Fresh reads for agents that are IN this study's local leaderboard, so the
+    # correlation includes points where both sides are ours and measured.
+    "il_alldays_3ep@mega_lucario_ex": (422.8, "our sub 55248985, settled read 3 (600.0 was the mu0 prior)"),
+    "mcts_il_agent": (291.4, "our sub 55248781, latest of 4 reads"),
+    # same weights as `il_agent` on the same deck -> same verified anchor
+    "il_bc_3ep@mega_lucario_ex": (398.7, "our subs 55190924/55149903 mean (il_agent weights, Lucario)"),
+    "il_alldays_3ep@marnies_grimmsnarl_ex": (311.3, "our sub 55270787, settled over 3 reads"),
+}
+
+# Which anchors WE measured on the real ladder vs which are third-party claims.
+# The tb_* catalog mu values, the wmh_* README/doc numbers and the notebook-title
+# claims are all SELF-REPORTED and unverified by us -- they are alleged, not read.
+# Correlations computed over them inherit that uncertainty.
+VERIFIED_ANCHORS = {
+    "improved_prob_main", "agent_core_improved", "il_agent", "s2_e1_s43",
+    "ppo_u120832", "il_alldays_3ep@mega_lucario_ex", "mcts_il_agent",
+    "il_bc_3ep@mega_lucario_ex", "il_alldays_3ep@marnies_grimmsnarl_ex",
 }
 
 
@@ -90,6 +112,9 @@ def main() -> None:
     ap.add_argument("--result", type=Path,
                     default=REPO / "reports" / "wmh_pool_calibration.json",
                     help="benchmark result JSON (needs a 'glicko' block)")
+    ap.add_argument("--verified-only", action="store_true",
+                    help="use ONLY anchors we read off the ladder ourselves, dropping the\n"
+                         "self-reported tb_*/wmh_*/notebook claims")
     args = ap.parse_args()
 
     res = json.loads(args.result.read_text())
@@ -97,15 +122,18 @@ def main() -> None:
 
     rows = []
     for name, g in glicko.items():
+        if args.verified_only and name not in VERIFIED_ANCHORS:
+            continue
         if name in LADDER_ANCHORS:
             ladder, src = LADDER_ANCHORS[name]
             rows.append((name, g["rating"], g["rd"], ladder, src))
     rows.sort(key=lambda r: -r[3])
 
     print(f"{len(rows)} agents with BOTH a local Glicko (this run) and a ladder reading:\n")
-    print(f"{'agent':32s} {'local glicko':>14s} {'RD':>6s} {'ladder':>8s}  provenance")
+    print(f"{'agent':40s} {'local glicko':>14s} {'RD':>6s} {'ladder':>8s} {'src':>9s}  provenance")
     for name, rating, rd, ladder, src in rows:
-        print(f"{name:32s} {rating:>10.1f} {'+/-':>3s}{rd:>4.0f} {ladder:>8.1f}  {src}")
+        tier = "VERIFIED" if name in VERIFIED_ANCHORS else "alleged"
+        print(f"{name:40s} {rating:>10.1f} {'+/-':>3s}{rd:>4.0f} {ladder:>8.1f} {tier:>9s}  {src}")
 
     if len(rows) < 4:
         print("\nToo few overlapping agents for a correlation; wire more ladder-scored anchors.")
@@ -117,6 +145,9 @@ def main() -> None:
     p = permutation_p(local, ladder, rho)
     print(f"\nSpearman rho (local Glicko vs ladder) = {rho:+.3f}  "
           f"(n={len(rows)}, permutation p={p:.4f})")
+    n_ver = sum(1 for r in rows if r[0] in VERIFIED_ANCHORS)
+    print(f"Anchor provenance: {n_ver} VERIFIED (we read them off the ladder), "
+          f"{len(rows) - n_ver} alleged (self-reported by their authors, unverified).")
     print("Read with the header caveats: mixed-era ladder readings, ~+/-100 same-build drift.")
 
     # The two most decision-relevant slices: does the pool order OUR agents right?

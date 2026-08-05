@@ -1,0 +1,33 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: mcts_il_agent, wmh_grimmsnarl
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12100.77it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/models/critic_search_prior missing -> prior-only search
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] mcts_il_agent: 0/2900 = 0.00%  by_reason={}
+[1/3] mcts_il_agent vs mcts_il_agent: mcts_il_agent 7-3  (10 games, 178.7s, 17.87s/game)
+[2/3] mcts_il_agent vs wmh_grimmsnarl: mcts_il_agent 14-6  (20 games, 183.5s, 9.18s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 5-5  (10 games, 7.3s, 0.73s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 mcts_i  wmh_gr  win% [95% CI]
+mcts_il_agent         -       14       60.0  [44.6,73.7]
+wmh_grimmsnarl        6       -        40.0  [26.3,55.4]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  mcts_il_agent vs wmh_grimmsnarl: 14/20 =  70.0% [48.1,85.5]  (183.5s, 9.18s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  mcts_il_agent           60.0%  [44.6,73.7]  (24/40)
+  wmh_grimmsnarl          40.0%  [26.3,55.4]  (16/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  mcts_il_agent           1687.1  (RD 110.2, 95% CI +/-220.4)  GXE  66.9%
+  wmh_grimmsnarl          1312.9  (RD 110.2, 95% CI +/-220.4)  GXE  33.1%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  mcts_il_agent          fallback_rate= 0.00%  decisions=2900  raw={'enabled': True, 'decisions': 2900, 'fallbacks': 0, 'fallback_rate': 0.0}
+
+total wall clock: 369.6s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/mcts_il_agent.json
+glicko: not persisted (isolated run)
