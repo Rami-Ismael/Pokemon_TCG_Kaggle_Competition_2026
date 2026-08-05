@@ -9,3 +9,5 @@ START il_alldays_3ep@mega_lucario_ex
 DONE  il_alldays_3ep@mega_lucario_ex
 START il_bc_3ep@mega_lucario_ex
 DONE  il_bc_3ep@mega_lucario_ex
+DONE  mcts_il_agent
+TESTBED-COMPLETE verified_anchors

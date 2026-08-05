@@ -4,6 +4,7 @@
     "il_alldays_3ep__mega_lucario_ex.json",
     "il_bc_3ep__mega_lucario_ex.json",
     "improved_prob_main.json",
+    "mcts_il_agent.json",
     "il_alldays_3ep__grimmsnarl_toplayer.json",
     "il_alldays_3ep__marnies_grimmsnarl_ex.json",
     "pool_round_robin.json"
@@ -58,7 +59,8 @@
     "il_alldays_3ep@marnies_grimmsnarl_ex",
     "il_alldays_3ep@mega_lucario_ex",
     "il_bc_3ep@mega_lucario_ex",
-    "improved_prob_main"
+    "improved_prob_main",
+    "mcts_il_agent"
   ],
   "per_opponent": {
     "agent_core_improved": {
@@ -1584,6 +1586,260 @@
         "win_pct": 95.0,
         "sigma": 4.873397172404484
       }
+    },
+    "mcts_il_agent": {
+      "avikdas567_heuristic": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "biohack44_day2": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "kiyotah_abomasnow": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "kiyotah_dragapult": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "kiyotah_iono": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "kojimar_lucario": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "makimakiai_rl": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "makthanithin_improved_prob": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "mechi22_alakazam": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "pixiux_lucario_v63": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "plamen06_steel": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "pllinas_alakazam": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "prvsiyan_control_v11": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "random_legal": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "romanrozen_strong_start": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "tb_abomasnow": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "tb_alakazam": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "tb_archaludon": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "tb_dragapult": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "tb_heuristic": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_iono": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "tb_lucario": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "tb_rulecore": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "tb_search": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "tb_starmie": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "wmh_alakazam": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "wmh_bellibolt": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_chandelure": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "wmh_froslass": {
+        "wins": 3,
+        "games": 20,
+        "win_pct": 15.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_garchomp": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "wmh_kangaskhan": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "wmh_megastarmie": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "wmh_mewtwo": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "wmh_ogerpon": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_trevenant": {
+        "wins": 3,
+        "games": 20,
+        "win_pct": 15.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_typhlosion": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      }
     }
   },
   "aggregate": {
@@ -1658,6 +1914,18 @@
       ],
       "glicko": 1713.335606737683,
       "glicko_rd": 30.0
+    },
+    "mcts_il_agent": {
+      "wins": 262,
+      "games": 840,
+      "win_pct": 31.19047619047619,
+      "sigma": 1.598437411847582,
+      "wilson95": [
+        28.149136275692786,
+        34.40307731510435
+      ],
+      "glicko": 1305.1617002048904,
+      "glicko_rd": 30.0
     }
   },
   "glicko": {
@@ -1667,214 +1935,214 @@
       "gxe": 67.893819763641
     },
     "avikdas567_heuristic": {
-      "rating": 1138.957910254595,
+      "rating": 1144.1820650079146,
       "rd": 30.0,
-      "gxe": 19.97702390236629
+      "gxe": 20.2999628372519
     },
     "biohack44_day2": {
-      "rating": 1559.2334678488558,
+      "rating": 1582.9350074041708,
       "rd": 30.0,
-      "gxe": 55.66740532322262
+      "gxe": 57.90258753700267
     },
     "daniilkrasnovvv_conservative_prob": {
-      "rating": 1641.0320663067996,
+      "rating": 1660.5193691693628,
       "rd": 30.0,
-      "gxe": 63.229670779237374
+      "gxe": 64.9532617506909
     },
     "jek1wantaufik_lucario": {
-      "rating": 1459.1007007710282,
+      "rating": 1469.2337875758722,
       "rd": 30.0,
-      "gxe": 46.077976257902954
+      "gxe": 47.047052025737514
     },
     "kiyotah_abomasnow": {
-      "rating": 1618.4669356977117,
+      "rating": 1628.4154953354903,
       "rd": 30.0,
-      "gxe": 61.191030599174866
+      "gxe": 62.09513860400992
     },
     "kiyotah_dragapult": {
-      "rating": 1559.2334678488558,
+      "rating": 1569.558393306724,
       "rd": 30.0,
-      "gxe": 55.66740532322262
+      "gxe": 56.644475915404094
     },
     "kiyotah_iono": {
-      "rating": 1528.20641326136,
+      "rating": 1550.831133570298,
       "rd": 30.0,
-      "gxe": 52.70776032075821
+      "gxe": 54.86898909463323
     },
     "kojimar_lucario": {
-      "rating": 1655.1352729374796,
+      "rating": 1671.2206604473204,
       "rd": 30.0,
-      "gxe": 64.48072094967385
+      "gxe": 65.88374455735288
     },
     "makimakiai_rl": {
-      "rating": 1127.675344950051,
+      "rating": 1130.8054509104682,
       "rd": 30.0,
-      "gxe": 19.292772620847618
+      "gxe": 19.48079768564469
     },
     "makthanithin_1084_baseline": {
-      "rating": 1624.1082183499836,
+      "rating": 1641.7921094329372,
       "rd": 30.0,
-      "gxe": 61.704690471572306
+      "gxe": 63.29756549905474
     },
     "makthanithin_improved_prob": {
-      "rating": 1646.6733489590715,
+      "rating": 1660.5193691693628,
       "rd": 30.0,
-      "gxe": 63.73234051414297
+      "gxe": 64.9532617506909
     },
     "mechi22_alakazam": {
-      "rating": 1683.3416861988394,
+      "rating": 1697.973888642214,
       "rd": 30.0,
-      "gxe": 66.92305785404338
+      "gxe": 68.15596659239597
     },
     "pixiux_lucario_v63": {
-      "rating": 1581.7985984579436,
+      "rating": 1604.3375899600858,
       "rd": 30.0,
-      "gxe": 57.796078927066716
+      "gxe": 59.89376300117687
     },
     "plamen06_steel": {
-      "rating": 1728.4719474170154,
+      "rating": 1740.779053754044,
       "rd": 30.0,
-      "gxe": 70.64435855607421
+      "gxe": 71.61569938626968
     },
     "pllinas_alakazam": {
-      "rating": 1751.0370780261032,
+      "rating": 1764.8569591294483,
       "rd": 30.0,
-      "gxe": 72.41031321848115
+      "gxe": 73.45878962176077
     },
     "prvsiyan_control_v11": {
-      "rating": 1578.9779571318077,
+      "rating": 1590.9609758626389,
       "rd": 30.0,
-      "gxe": 57.53140603235879
+      "gxe": 58.65266556481105
     },
     "prvsiyan_grimbelief_alakazam": {
-      "rating": 1147.4198342330028,
+      "rating": 1149.5327106468933,
       "rd": 30.0,
-      "gxe": 20.502055095675864
+      "gxe": 20.63473773246614
     },
     "romanrozen_strong_start": {
-      "rating": 1632.5701423283915,
+      "rating": 1647.1427550719159,
       "rd": 30.0,
-      "gxe": 62.470272974301814
+      "gxe": 63.77403396884446
     },
     "ryotasueyoshi_alakazam": {
-      "rating": 1593.0811637624877,
+      "rating": 1612.363558418554,
       "rd": 30.0,
-      "gxe": 58.85015712658573
+      "gxe": 60.63248420557448
     },
     "tb_abomasnow": {
-      "rating": 1570.5160331533998,
+      "rating": 1593.6362986821282,
       "rd": 30.0,
-      "gxe": 56.73485022005545
+      "gxe": 58.90182012834558
     },
     "tb_alakazam": {
-      "rating": 1542.3096198920398,
+      "rating": 1550.831133570298,
       "rd": 30.0,
-      "gxe": 54.05668154160823
+      "gxe": 54.86898909463323
     },
     "tb_archaludon": {
-      "rating": 1652.3146316113434,
+      "rating": 1668.5453376278308,
       "rd": 30.0,
-      "gxe": 64.23202572969282
+      "gxe": 65.65223476003429
     },
     "tb_dragapult": {
-      "rating": 1581.7985984579439,
+      "rating": 1598.986944321107,
       "rd": 30.0,
-      "gxe": 57.79607892706673
+      "gxe": 59.39875022586663
     },
     "tb_heuristic": {
-      "rating": 1136.137268928459,
+      "rating": 1138.8314193689362,
       "rd": 30.0,
-      "gxe": 19.804271045736936
+      "gxe": 19.969252690028416
     },
     "tb_iono": {
-      "rating": 1553.5921851965838,
+      "rating": 1566.8830704872344,
       "rd": 30.0,
-      "gxe": 55.131650081375945
+      "gxe": 56.391768110388625
     },
     "tb_lucario": {
-      "rating": 1375.8917816500164,
+      "rating": 1398.3377328594036,
       "rd": 30.0,
-      "gxe": 38.29530952842769
+      "gxe": 40.353497872572916
     },
     "tb_rulecore": {
-      "rating": 1363.1988956824043,
+      "rating": 1391.6494258106802,
       "rd": 30.0,
-      "gxe": 37.14923462613743
+      "gxe": 39.73629165882902
     },
     "tb_search": {
-      "rating": 1319.4789551272966,
+      "rating": 1339.4806308306372,
       "rd": 30.0,
-      "gxe": 33.31737274202551
+      "gxe": 35.0467382493091
     },
     "tb_starmie": {
-      "rating": 1085.3657250580122,
+      "rating": 1085.3249629791496,
       "rd": 30.0,
-      "gxe": 16.88608390600703
+      "gxe": 16.88388511509894
     },
     "wmh_alakazam": {
-      "rating": 1610.0050117193036,
+      "rating": 1612.363558418554,
       "rd": 30.0,
-      "gxe": 60.41588785253684
+      "gxe": 60.63248420557448
     },
     "wmh_bellibolt": {
-      "rating": 1212.2945847341293,
+      "rating": 1208.3898126756585,
       "rd": 30.0,
-      "gxe": 24.86457355140947
+      "gxe": 24.585238462362742
     },
     "wmh_chandelure": {
-      "rating": 1237.6803566693527,
+      "rating": 1235.1430408705517,
       "rd": 30.0,
-      "gxe": 26.731790568674576
+      "gxe": 26.541210378239224
     },
     "wmh_froslass": {
-      "rating": 1466.152304086368,
+      "rating": 1486.623385902553,
       "rd": 30.0,
-      "gxe": 46.75208537965478
+      "gxe": 48.714896815151285
     },
     "wmh_garchomp": {
-      "rating": 1545.1302612181757,
+      "rating": 1569.558393306724,
       "rd": 30.0,
-      "gxe": 54.325817570885256
+      "gxe": 56.644475915404094
     },
     "wmh_grimmsnarl": {
-      "rating": 1234.8597153432167,
+      "rating": 1237.818363690041,
       "rd": 30.0,
-      "gxe": 26.519983473438856
+      "gxe": 26.74218129381553
     },
     "wmh_kangaskhan": {
-      "rating": 1093.82764903642,
+      "rating": 1101.3768998960854,
       "rd": 30.0,
-      "gxe": 17.34749008354074
+      "gxe": 17.767488536593934
     },
     "wmh_megastarmie": {
-      "rating": 1559.2334678488558,
+      "rating": 1577.584361765192,
       "rd": 30.0,
-      "gxe": 55.66740532322262
+      "gxe": 57.40047842943513
     },
     "wmh_mewtwo": {
-      "rating": 1282.8106178875287,
+      "rating": 1310.052079816254,
       "rd": 30.0,
-      "gxe": 30.26296322937881
+      "gxe": 32.51729142163753
     },
     "wmh_ogerpon": {
-      "rating": 1107.9308556670996,
+      "rating": 1104.0522227155748,
       "rd": 30.0,
-      "gxe": 18.138543443224396
+      "gxe": 17.918229491820284
     },
     "wmh_trevenant": {
-      "rating": 1590.2605224363517,
+      "rating": 1604.3375899600858,
       "rd": 30.0,
-      "gxe": 58.58735808754612
+      "gxe": 59.89376300117687
     },
     "wmh_typhlosion": {
-      "rating": 1313.8376724750246,
+      "rating": 1328.7793395526796,
       "rd": 30.0,
-      "gxe": 32.837392180039515
+      "gxe": 34.11625544264712
     },
     "random_legal": {
-      "rating": 1059.9799531227889,
+      "rating": 1061.2470576037458,
       "rd": 30.0,
-      "gxe": 15.560532980099824
+      "gxe": 15.624632980626078
     },
     "il_alldays_3ep@mega_lucario_ex": {
       "rating": 1564.1239974009227,
@@ -1890,6 +2158,11 @@
       "rating": 1713.335606737683,
       "rd": 30.0,
       "gxe": 69.42351162291725
+    },
+    "mcts_il_agent": {
+      "rating": 1305.1617002048904,
+      "rd": 30.0,
+      "gxe": 32.106180236358995
     },
     "il_alldays_3ep@grimmsnarl_toplayer": {
       "rating": 1856.3814470935895,
@@ -1929,6 +2202,12 @@
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 55.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
       "gap_pp": 57.38095238095238,
       "separated": true
@@ -1953,6 +2232,12 @@
     },
     {
       "a": "il_alldays_3ep@grimmsnarl_toplayer",
+      "b": "mcts_il_agent",
+      "gap_pp": 53.21428571428571,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@grimmsnarl_toplayer",
       "b": "il_bc_3ep@mega_lucario_ex",
       "gap_pp": 55.59523809523809,
       "separated": true
@@ -1971,6 +2256,12 @@
     },
     {
       "a": "improved_prob_main",
+      "b": "mcts_il_agent",
+      "gap_pp": 39.40476190476191,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
       "b": "il_bc_3ep@mega_lucario_ex",
       "gap_pp": 41.78571428571429,
       "separated": true
@@ -1983,8 +2274,20 @@
     },
     {
       "a": "agent_core_improved",
+      "b": "mcts_il_agent",
+      "gap_pp": 37.61904761904762,
+      "separated": true
+    },
+    {
+      "a": "agent_core_improved",
       "b": "il_bc_3ep@mega_lucario_ex",
       "gap_pp": 40.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 25.0,
       "separated": true
     },
     {
@@ -1992,6 +2295,12 @@
       "b": "il_bc_3ep@mega_lucario_ex",
       "gap_pp": 27.38095238095238,
       "separated": true
+    },
+    {
+      "a": "mcts_il_agent",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 2.3809523809523796,
+      "separated": false
     }
   ]
 }
