@@ -124,6 +124,7 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-5)
     ap.add_argument("--ent-coef", type=float, default=0.001)
     ap.add_argument("--gamma", type=float, default=1.0)
+    ap.add_argument("--gae-lambda", type=float, default=0.95)
     ap.add_argument("--kl-coef", type=float, default=0.05,
                     help="beta for the frozen-reference anchor "
                          "beta*KL(pi_theta||pi_ref); sweepable. 0 = stock "
@@ -193,6 +194,13 @@ def main() -> None:
                          "for the mirror control: without it a module opponent "
                          "keeps serving its own bundled deck and a K>1 pool "
                          "silently becomes a cross-deck matchup")
+    ap.add_argument("--mix", default="0.625,0.375,0",
+                    help="mirror,league,public-pool draw shares (must sum to 1). "
+                         "Default drops the public pool entirely — pure "
+                         "self-play + fictitious-self-play league, per the "
+                         "2026-08-04 decision (external decks now unseen in "
+                         "training; see notes/experiments/2026-08-04-league-"
+                         "pool-composition.md). Old behavior: '0.5,0.3,0.2'")
     ap.add_argument("--init-policy-full", type=Path, default=None,
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
@@ -245,7 +253,7 @@ def main() -> None:
         "learning_rate": args.lr,
         "anneal_lr": True,
         "gamma": args.gamma,
-        "gae_lambda": 0.95,
+        "gae_lambda": args.gae_lambda,
         "update_epochs": args.update_epochs,
         "ent_coef": args.ent_coef,
         "vf_coef": 0.5,
@@ -266,8 +274,16 @@ def main() -> None:
     league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
+    mix = tuple(float(x) for x in args.mix.split(","))
+    if len(mix) != 3 or abs(sum(mix) - 1.0) > 1e-6:
+        ap.error(f"--mix needs 3 shares summing to 1, got {args.mix}")
+    if mix[2] == 0 and not league:
+        # _draw_opponent falls through to the public pool when the league
+        # bucket is empty; with a zero pool share that would silently
+        # reintroduce external opponents.
+        ap.error("--mix with zero public-pool share requires a non-empty --league")
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                  "league": league, "pool_weights": pool_weights}
+                  "league": league, "pool_weights": pool_weights, "mix": mix}
     if args.opponent_module:
         # Exploiter mode: every draw lands in the league bucket, whose single
         # entry is the frozen module agent. No mirror (the opponent must never

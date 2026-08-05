@@ -121,6 +121,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
+    # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
+    # comparison is therefore policy-vs-policy+search, deck held fixed.
+    "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
     # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
     # bare module (literal DECK -> my_deck). Distinct 60-card list from
     # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.

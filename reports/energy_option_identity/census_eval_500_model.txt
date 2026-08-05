@@ -1,0 +1,78 @@
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 28766.87it/s]
+scoring separable rows with models/il_agent on cpu
+episodes consumed: 500
+
+total decision rows: 93621
+
+ ctx name                        rows   %all   multi  collide   full  etypeDIFF  etypeSAME  sepSEM  sepARB
+----------------------------------------------------------------------------------------------------------
+   0 MAIN                       44492 47.52%   43140    21570      0          0          0       0       0
+   7 TO_HAND                    14502 15.49%   13113    11519   4690          0          0       0       0
+  22 ATTACH_TO                   4256  4.55%    3805     3759   3611          0          0       0       0
+   5 TO_BENCH                    2134  2.28%    1915     1748    606          0          0       0       0
+  13 DAMAGE_COUNTER              2906  3.10%    2864     1255      1          0          0       0       0
+   4 TO_ACTIVE                   2231  2.38%    2145     1109     25          0          0       0       0
+   8 DISCARD                     1427  1.52%    1427     1104      0          0          0       0       0
+   3 SWITCH                      1947  2.08%    1894      863     28          0          0       0       0
+  34 SKILL_ORDER                  862  0.92%     862      862    862          0          0       0     862
+  21 ATTACH_FROM                 3531  3.77%    3150      832     25          0          0       0       0
+  15 DAMAGE                      1875  2.00%    1816      747     21          0          0       0       0
+  16 REMOVE_DAMAGE_COUNTER       2899  3.10%    2044      573    160          0          0       0       0
+  30 DISCARD_ENERGY              1105  1.18%     424      417    389         47        370      44     354
+  37 EVOLVE                       630  0.67%     345      295    244          0          0       0       0
+  14 DAMAGE_COUNTER_ANY           834  0.89%     798      266      0          0          0       0       0
+   9 TO_DECK                      304  0.32%     301      241      0          0          0       0       0
+   1 SETUP_ACTIVE_POKEMON        1000  1.07%     437      134     63          0          0       0       0
+  26 DISCARD_ENERGY_CARD          164  0.18%     138      123     27         71         52      34      42
+   2 SETUP_BENCH_POKEMON          598  0.64%     287      111     75          0          0       0       0
+  28 SWITCH_ENERGY_CARD            76  0.08%      73       68      0         45         23      18      18
+  32 TO_DECK_ENERGY                87  0.09%      58       58     58         55          3      55       3
+  33 SWITCH_ENERGY                 68  0.07%      57       57     57          7         50       8      49
+  19 EVOLVES_TO                    11  0.01%      11       11     11          0          0       0       0
+
+dropped field varies INSIDE a bitwise-identical group (rows):
+ ctx name                      energyIndex        count    toolIndex       serial       cardId
+----------------------------------------------------------------------------------------------
+   0 MAIN                                0            0            0            0            0
+   7 TO_HAND                             0            0            0            0            0
+  22 ATTACH_TO                           0            0            0            0            0
+   5 TO_BENCH                            0            0            0            0            0
+  13 DAMAGE_COUNTER                      0            0            0            0            0
+   4 TO_ACTIVE                           0            0            0            0            0
+   8 DISCARD                             0            0            0            0            0
+   3 SWITCH                              0            0            0            0            0
+  34 SKILL_ORDER                         0            0            0          862            0
+  21 ATTACH_FROM                         0            0            0            0            0
+  15 DAMAGE                              0            0            0            0            0
+  16 REMOVE_DAMAGE_COUNTER               0            0            0            0            0
+  30 DISCARD_ENERGY                    412            4            0            0            0
+  37 EVOLVE                              0            0            0            0            0
+  14 DAMAGE_COUNTER_ANY                  0            0            0            0            0
+   9 TO_DECK                             0            0            0            0            0
+   1 SETUP_ACTIVE_POKEMON                0            0            0            0            0
+  26 DISCARD_ENERGY_CARD               117            0            0            0            0
+   2 SETUP_BENCH_POKEMON                 0            0            0            0            0
+  28 SWITCH_ENERGY_CARD                 68            0            0            0            0
+  32 TO_DECK_ENERGY                     58            0            0            0            0
+  33 SWITCH_ENERGY                      57            3            0            0            0
+  19 EVOLVES_TO                          0            0            0            0            0
+
+SEMANTIC ceiling -- label sits in a collision group whose members differ in energy type / count / cardId:
+  159 / 93621 = 0.170% of all decisions   95% CI [0.127%, 0.218%] (episode-cluster bootstrap, 500 episodes)
+  ^ OPTIMISTIC ceiling on top-1 gain: assumes the feature fixes every such row
+    AND that the model currently gets all of them wrong.
+
+ARBITRARY (unlearnable) -- label's group differs only by raw energyIndex / serial:
+  1328 / 93621 = 1.418% of all decisions -- no feature can predict which interchangeable index was logged
+
+ACTUAL ceiling -- of the 159 semantically-separable rows the model already gets 117 right (73.6%).
+  Only the remaining 42 could improve: 0.045% of all decisions.
+
+ ctx name                      sepSEM  modelOK  wrong  ctxRows  sep/ctx
+  32 TO_DECK_ENERGY                55       55      0       87    63.2%
+  30 DISCARD_ENERGY                44       22     22     1105     4.0%
+  26 DISCARD_ENERGY_CARD           34       26      8      164    20.7%
+  28 SWITCH_ENERGY_CARD            18        8     10       76    23.7%
+  33 SWITCH_ENERGY                  8        6      2       68    11.8%
+
+wrote reports/energy_option_identity/census_eval_500_model.json
