@@ -39,7 +39,7 @@ log "MPS free"
 MAX_QUIET_WAIT_S=21600; waited=0
 while [ "$(heavy_benchmarks)" != "0" ] && [ $waited -lt $MAX_QUIET_WAIT_S ]; do
   log "soft-wait: $(heavy_benchmarks) heavy benchmark proc(s); waited ${waited}s"
-  sleep 600; waited=$((waited+600))
+  sleep 3600; waited=$((waited+3600))
 done
 [ "$(heavy_benchmarks)" != "0" ] && log "proceeding despite CPU contention (soft-wait expired)"
 
