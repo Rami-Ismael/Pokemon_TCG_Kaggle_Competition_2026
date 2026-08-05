@@ -74,24 +74,41 @@ SWEEP_CONFIG = {
 
 # Anything matching this, outside our own process tree, blocks a launch: two
 # MPS jobs (or a training run + a benchmark) invalidate each other's numbers.
+# \w* after train_ppo matters: train_ppo_puffer.py is the main offender, and
+# the original strict form silently missed it (caught 2026-08-05 when another
+# session's run was only stopped by the generic preflight CPU check).
 COMPETING_RE = re.compile(
-    r"(train_il|train_ppo|train_critic|benchmark_agents|ingest_episodes|"
+    r"(train_il|train_ppo\w*|train_critic|benchmark_agents|ingest_episodes|"
     r"exploiter_curve_sweep|eval_exploiter)\.py")
 
 MIN_DECISIVE_SCORE = 20  # below this many decisive eval games, don't score
 
 
-def competing_processes() -> list[str]:
-    out = subprocess.run(["ps", "-axo", "pid=,command="],
+def competing_processes(min_total_pcpu: float = 25.0) -> list[str]:
+    """Competing training/benchmark processes that are actually RUNNING.
+
+    The pcpu floor exists because a hung run (a known failure mode: 0% CPU
+    forever, e.g. the stranded-worker deadlock) would otherwise block a
+    launch indefinitely; idle matches are reported as a note, not a blocker.
+    """
+    out = subprocess.run(["ps", "-axo", "pid=,pcpu=,command="],
                          capture_output=True, text=True).stdout
-    hits = []
+    hits, total = [], 0.0
     for line in out.splitlines():
-        parts = line.split(None, 1)
-        if len(parts) < 2:
+        parts = line.split(None, 2)
+        if len(parts) < 3:
             continue
-        pid, cmd = parts
+        pid, pcpu, cmd = parts
         if COMPETING_RE.search(cmd) and "sweep_ppo_protein" not in cmd:
-            hits.append(f"{pid} {cmd[:110]}")
+            total += float(pcpu)
+            hits.append(f"{pid} ({pcpu}% cpu) {cmd[:100]}")
+    if hits and total < min_total_pcpu:
+        print(f"[sweep] note: matching but IDLE process(es) (sum "
+              f"{total:.0f}% cpu < {min_total_pcpu:.0f}%), likely hung -- "
+              "not treating as competition:")
+        for h in hits:
+            print(f"    {h}")
+        return []
     return hits
 
 
@@ -306,6 +323,7 @@ def validate(args) -> None:
     print(f"[validate] best run{best['idx']:02d} {best['params']}\n"
           f"      vs incumbent run01 {inc['params']}\n"
           f"      {args.validate_pairs} mirrored pairs...")
+    wait_for_quiet()  # 16 policy processes; don't pile onto a live run
     verdict = evaluate_snapshot(Path(best["snap"]), Path(inc["snap"]),
                                 args.validate_pairs, args.eval_workers)
     decisive = verdict["wins"] + verdict["losses"]
