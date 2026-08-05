@@ -95,7 +95,13 @@ def advantage_weights(
     if arm not in ADV_ARMS:
         raise ValueError(f"unknown advantage arm {arm!r}; expected one of {ADV_ARMS}")
     known = (outcome >= 0.0).float()
-    adv = outcome - value
+    # V outside [0,1] is definitionally invalid for a {0, 0.5, 1} outcome —
+    # the 2026-08-04 critic audits found the extreme-|Â| tail was exactly
+    # such out-of-range regression artifacts (V ≈ −0.4 on even midgames).
+    # Clamping at consumption bounds every adv-exp weight to e^beta by
+    # construction (advantage ∈ [−1, 1]), so no artifact row can grab the
+    # batch's gradient.
+    adv = outcome - value.clamp(0.0, 1.0)
     if arm == "adv-exp":
         w = torch.exp(beta * adv).clamp(max=clip)
     else:  # adv-binary

@@ -504,21 +504,52 @@ def cmd_download(args: argparse.Namespace) -> int:
     return 0
 
 
+def _hub_day_episode_ids(split: str, date: str) -> set[int]:
+    """Episode-id universe for one day, read from the Hub shards' episode_id
+    column (a few KB per shard) — the raw folder may be long deleted."""
+    from huggingface_hub import HfApi, hf_hub_download
+
+    prefix = f"{split}/day={date}/"
+    shards = [
+        f for f in HfApi().list_repo_files(HF_EPISODES_REPO, repo_type="dataset")
+        if f.startswith(prefix) and f.endswith(".parquet")
+    ]
+    if not shards:
+        sys.exit(f"no Hub shards under {prefix} in {HF_EPISODES_REPO}")
+    ids: set[int] = set()
+    for rel in shards:
+        path = hf_hub_download(HF_EPISODES_REPO, rel, repo_type="dataset")
+        ids |= {int(x) for x in pq.read_table(path, columns=["episode_id"]).column(0).to_pylist()}
+    return ids
+
+
 def cmd_backfill_manifest(args: argparse.Namespace) -> int:
     local_dir = EPISODES_SPLITS_DIR / f"{args.split}-{args.date}"
-    if not local_dir.exists():
-        sys.exit(f"{local_dir} does not exist")
-    on_disk = {int(p.stem) for p in local_dir.glob("*.json")}
+    if args.from_hub:
+        # The 08-03 cleanup deleted most raw day folders; the Hub copy is the
+        # id universe of record (rl_pipeline_v2 §2.B0 — do NOT let the ~24
+        # surviving local files masquerade as the day).
+        universe = _hub_day_episode_ids(args.split, args.date)
+        where = f"hub {args.split}/day={args.date}"
+    else:
+        if not local_dir.exists():
+            sys.exit(f"{local_dir} does not exist (use --from-hub for a deleted day)")
+        universe = {int(p.stem) for p in local_dir.glob("*.json") if p.exists()}
+        where = local_dir.name
 
     team_ids = _leaderboard_team_ids(args.top_teams)
     print(f"listing episodes for {len(team_ids)} top teams on {args.date}...")
     day_eps = _list_day_episodes(team_ids, args.date, args.sleep)
 
-    hits = {eid: row for eid, row in day_eps.items() if eid in on_disk}
+    hits = {eid: row for eid, row in day_eps.items() if eid in universe}
+    scored = sum(1 for row in hits.values() if row.get("avg_score") != "")
     for eid, row in hits.items():
-        row["size_bytes"] = (local_dir / f"{eid}.json").stat().st_size
-    print(f"score rows found for {len(hits)}/{len(on_disk)} episodes in {local_dir.name} "
-          "(current-publicScore approximation, see module docstring)")
+        f = local_dir / f"{eid}.json"
+        if f.exists():
+            row["size_bytes"] = f.stat().st_size
+    print(f"score rows found for {len(hits)}/{len(universe)} episodes in {where} "
+          f"({scored} with both participants' ratings; "
+          "current-publicScore approximation, see module docstring)")
     if hits:
         _merge_manifest(hits)
     return 0
@@ -568,6 +599,10 @@ def main() -> int:
     p.add_argument("--top-teams", type=int, default=50)
     p.add_argument("--sleep", type=float, default=0.2,
                    help="seconds between listing calls")
+    p.add_argument("--from-hub", action="store_true",
+                   help="take the episode-id universe from the day's Hub "
+                        "shards instead of local files (for days whose raw "
+                        "folders were deleted after Hub verification)")
     p.set_defaults(fn=cmd_backfill_manifest)
 
     args = ap.parse_args()

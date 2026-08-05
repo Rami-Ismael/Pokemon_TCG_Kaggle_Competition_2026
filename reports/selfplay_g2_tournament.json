@@ -1,0 +1,1433 @@
+{
+  "agents": [
+    "selfplay_g2_final",
+    "selfplay_g1_ref430k",
+    "il_alldays_0804",
+    "il_agent",
+    "kiyotah_dragapult",
+    "mechi22_alakazam",
+    "plamen06_steel",
+    "tb_dragapult",
+    "tb_search",
+    "dedquoc_rule_engine",
+    "kojimar_lucario"
+  ],
+  "games_per_pair": 12,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "selfplay_g2_final": {
+      "selfplay_g2_final": 12,
+      "selfplay_g1_ref430k": 14,
+      "il_alldays_0804": 13,
+      "il_agent": 23,
+      "kiyotah_dragapult": 14,
+      "mechi22_alakazam": 7,
+      "plamen06_steel": 10,
+      "tb_dragapult": 17,
+      "tb_search": 21,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 13
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g2_final": 10,
+      "selfplay_g1_ref430k": 12,
+      "il_alldays_0804": 11,
+      "il_agent": 23,
+      "kiyotah_dragapult": 19,
+      "mechi22_alakazam": 6,
+      "plamen06_steel": 7,
+      "tb_dragapult": 12,
+      "tb_search": 16,
+      "dedquoc_rule_engine": 23,
+      "kojimar_lucario": 12
+    },
+    "il_alldays_0804": {
+      "selfplay_g2_final": 11,
+      "selfplay_g1_ref430k": 13,
+      "il_alldays_0804": 12,
+      "il_agent": 19,
+      "kiyotah_dragapult": 16,
+      "mechi22_alakazam": 11,
+      "plamen06_steel": 7,
+      "tb_dragapult": 10,
+      "tb_search": 19,
+      "dedquoc_rule_engine": 23,
+      "kojimar_lucario": 6
+    },
+    "il_agent": {
+      "selfplay_g2_final": 1,
+      "selfplay_g1_ref430k": 1,
+      "il_alldays_0804": 5,
+      "il_agent": 12,
+      "kiyotah_dragapult": 0,
+      "mechi22_alakazam": 0,
+      "plamen06_steel": 0,
+      "tb_dragapult": 10,
+      "tb_search": 6,
+      "dedquoc_rule_engine": 20,
+      "kojimar_lucario": 0
+    },
+    "kiyotah_dragapult": {
+      "selfplay_g2_final": 10,
+      "selfplay_g1_ref430k": 5,
+      "il_alldays_0804": 8,
+      "il_agent": 24,
+      "kiyotah_dragapult": 12,
+      "mechi22_alakazam": 19,
+      "plamen06_steel": 6,
+      "tb_dragapult": 14,
+      "tb_search": 17,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 4
+    },
+    "mechi22_alakazam": {
+      "selfplay_g2_final": 17,
+      "selfplay_g1_ref430k": 18,
+      "il_alldays_0804": 13,
+      "il_agent": 24,
+      "kiyotah_dragapult": 5,
+      "mechi22_alakazam": 12,
+      "plamen06_steel": 14,
+      "tb_dragapult": 4,
+      "tb_search": 22,
+      "dedquoc_rule_engine": 22,
+      "kojimar_lucario": 14
+    },
+    "plamen06_steel": {
+      "selfplay_g2_final": 14,
+      "selfplay_g1_ref430k": 17,
+      "il_alldays_0804": 16,
+      "il_agent": 24,
+      "kiyotah_dragapult": 18,
+      "mechi22_alakazam": 10,
+      "plamen06_steel": 12,
+      "tb_dragapult": 15,
+      "tb_search": 22,
+      "dedquoc_rule_engine": 23,
+      "kojimar_lucario": 18
+    },
+    "tb_dragapult": {
+      "selfplay_g2_final": 7,
+      "selfplay_g1_ref430k": 12,
+      "il_alldays_0804": 14,
+      "il_agent": 14,
+      "kiyotah_dragapult": 10,
+      "mechi22_alakazam": 20,
+      "plamen06_steel": 9,
+      "tb_dragapult": 12,
+      "tb_search": 16,
+      "dedquoc_rule_engine": 23,
+      "kojimar_lucario": 9
+    },
+    "tb_search": {
+      "selfplay_g2_final": 3,
+      "selfplay_g1_ref430k": 8,
+      "il_alldays_0804": 5,
+      "il_agent": 18,
+      "kiyotah_dragapult": 7,
+      "mechi22_alakazam": 2,
+      "plamen06_steel": 2,
+      "tb_dragapult": 8,
+      "tb_search": 12,
+      "dedquoc_rule_engine": 22,
+      "kojimar_lucario": 6
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g2_final": 0,
+      "selfplay_g1_ref430k": 1,
+      "il_alldays_0804": 1,
+      "il_agent": 4,
+      "kiyotah_dragapult": 0,
+      "mechi22_alakazam": 2,
+      "plamen06_steel": 1,
+      "tb_dragapult": 1,
+      "tb_search": 2,
+      "dedquoc_rule_engine": 12,
+      "kojimar_lucario": 1
+    },
+    "kojimar_lucario": {
+      "selfplay_g2_final": 11,
+      "selfplay_g1_ref430k": 12,
+      "il_alldays_0804": 18,
+      "il_agent": 24,
+      "kiyotah_dragapult": 20,
+      "mechi22_alakazam": 10,
+      "plamen06_steel": 6,
+      "tb_dragapult": 15,
+      "tb_search": 18,
+      "dedquoc_rule_engine": 23,
+      "kojimar_lucario": 12
+    }
+  },
+  "games": {
+    "selfplay_g2_final": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "il_alldays_0804": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "il_agent": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "kiyotah_dragapult": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "mechi22_alakazam": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "plamen06_steel": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "tb_dragapult": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "tb_search": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "kojimar_lucario": {
+      "selfplay_g2_final": 24,
+      "selfplay_g1_ref430k": 24,
+      "il_alldays_0804": 24,
+      "il_agent": 24,
+      "kiyotah_dragapult": 24,
+      "mechi22_alakazam": 24,
+      "plamen06_steel": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    }
+  },
+  "wall_clock_sec": {
+    "selfplay_g2_final": {
+      "selfplay_g2_final": 39.033496379852295,
+      "selfplay_g1_ref430k": 37.56234073638916,
+      "il_alldays_0804": 37.94065570831299,
+      "il_agent": 40.534428119659424,
+      "kiyotah_dragapult": 26.794362783432007,
+      "mechi22_alakazam": 28.170610189437866,
+      "plamen06_steel": 26.432827949523926,
+      "tb_dragapult": 29.203675985336304,
+      "tb_search": 24.292123794555664,
+      "dedquoc_rule_engine": 14.393282175064087,
+      "kojimar_lucario": 20.36091709136963
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g2_final": 37.56234073638916,
+      "selfplay_g1_ref430k": 17.676226139068604,
+      "il_alldays_0804": 19.821749925613403,
+      "il_agent": 15.965788841247559,
+      "kiyotah_dragapult": 12.751872062683105,
+      "mechi22_alakazam": 14.187373876571655,
+      "plamen06_steel": 17.405702829360962,
+      "tb_dragapult": 23.74196195602417,
+      "tb_search": 21.463680028915405,
+      "dedquoc_rule_engine": 16.502662897109985,
+      "kojimar_lucario": 21.60130786895752
+    },
+    "il_alldays_0804": {
+      "selfplay_g2_final": 37.94065570831299,
+      "selfplay_g1_ref430k": 19.821749925613403,
+      "il_alldays_0804": 39.57266569137573,
+      "il_agent": 33.00795578956604,
+      "kiyotah_dragapult": 25.359498977661133,
+      "mechi22_alakazam": 19.98953413963318,
+      "plamen06_steel": 22.45990490913391,
+      "tb_dragapult": 22.486342191696167,
+      "tb_search": 23.937213897705078,
+      "dedquoc_rule_engine": 16.55080509185791,
+      "kojimar_lucario": 22.96913981437683
+    },
+    "il_agent": {
+      "selfplay_g2_final": 40.534428119659424,
+      "selfplay_g1_ref430k": 15.965788841247559,
+      "il_alldays_0804": 33.00795578956604,
+      "il_agent": 33.66044616699219,
+      "kiyotah_dragapult": 19.98004984855652,
+      "mechi22_alakazam": 19.30344581604004,
+      "plamen06_steel": 19.16373109817505,
+      "tb_dragapult": 18.037902116775513,
+      "tb_search": 19.96504020690918,
+      "dedquoc_rule_engine": 14.18248701095581,
+      "kojimar_lucario": 18.91182804107666
+    },
+    "kiyotah_dragapult": {
+      "selfplay_g2_final": 26.794362783432007,
+      "selfplay_g1_ref430k": 12.751872062683105,
+      "il_alldays_0804": 25.359498977661133,
+      "il_agent": 19.98004984855652,
+      "kiyotah_dragapult": 10.319943904876709,
+      "mechi22_alakazam": 10.606508016586304,
+      "plamen06_steel": 9.23267412185669,
+      "tb_dragapult": 9.891368865966797,
+      "tb_search": 7.669656753540039,
+      "dedquoc_rule_engine": 4.872825860977173,
+      "kojimar_lucario": 9.51266098022461
+    },
+    "mechi22_alakazam": {
+      "selfplay_g2_final": 28.170610189437866,
+      "selfplay_g1_ref430k": 14.187373876571655,
+      "il_alldays_0804": 19.98953413963318,
+      "il_agent": 19.30344581604004,
+      "kiyotah_dragapult": 10.606508016586304,
+      "mechi22_alakazam": 10.623425960540771,
+      "plamen06_steel": 7.452037811279297,
+      "tb_dragapult": 10.195834159851074,
+      "tb_search": 6.701361894607544,
+      "dedquoc_rule_engine": 5.187824964523315,
+      "kojimar_lucario": 9.431192874908447
+    },
+    "plamen06_steel": {
+      "selfplay_g2_final": 26.432827949523926,
+      "selfplay_g1_ref430k": 17.405702829360962,
+      "il_alldays_0804": 22.45990490913391,
+      "il_agent": 19.16373109817505,
+      "kiyotah_dragapult": 9.23267412185669,
+      "mechi22_alakazam": 7.452037811279297,
+      "plamen06_steel": 7.299959659576416,
+      "tb_dragapult": 9.096780061721802,
+      "tb_search": 7.861740827560425,
+      "dedquoc_rule_engine": 3.8869078159332275,
+      "kojimar_lucario": 7.586204767227173
+    },
+    "tb_dragapult": {
+      "selfplay_g2_final": 29.203675985336304,
+      "selfplay_g1_ref430k": 23.74196195602417,
+      "il_alldays_0804": 22.486342191696167,
+      "il_agent": 18.037902116775513,
+      "kiyotah_dragapult": 9.891368865966797,
+      "mechi22_alakazam": 10.195834159851074,
+      "plamen06_steel": 9.096780061721802,
+      "tb_dragapult": 9.94673204421997,
+      "tb_search": 8.502960920333862,
+      "dedquoc_rule_engine": 6.775091171264648,
+      "kojimar_lucario": 10.274372816085815
+    },
+    "tb_search": {
+      "selfplay_g2_final": 24.292123794555664,
+      "selfplay_g1_ref430k": 21.463680028915405,
+      "il_alldays_0804": 23.937213897705078,
+      "il_agent": 19.96504020690918,
+      "kiyotah_dragapult": 7.669656753540039,
+      "mechi22_alakazam": 6.701361894607544,
+      "plamen06_steel": 7.861740827560425,
+      "tb_dragapult": 8.502960920333862,
+      "tb_search": 6.940996170043945,
+      "dedquoc_rule_engine": 4.99981689453125,
+      "kojimar_lucario": 7.407629013061523
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g2_final": 14.393282175064087,
+      "selfplay_g1_ref430k": 16.502662897109985,
+      "il_alldays_0804": 16.55080509185791,
+      "il_agent": 14.18248701095581,
+      "kiyotah_dragapult": 4.872825860977173,
+      "mechi22_alakazam": 5.187824964523315,
+      "plamen06_steel": 3.8869078159332275,
+      "tb_dragapult": 6.775091171264648,
+      "tb_search": 4.99981689453125,
+      "dedquoc_rule_engine": 4.784844398498535,
+      "kojimar_lucario": 4.461723327636719
+    },
+    "kojimar_lucario": {
+      "selfplay_g2_final": 20.36091709136963,
+      "selfplay_g1_ref430k": 21.60130786895752,
+      "il_alldays_0804": 22.96913981437683,
+      "il_agent": 18.91182804107666,
+      "kiyotah_dragapult": 9.51266098022461,
+      "mechi22_alakazam": 9.431192874908447,
+      "plamen06_steel": 7.586204767227173,
+      "tb_dragapult": 10.274372816085815,
+      "tb_search": 7.407629013061523,
+      "dedquoc_rule_engine": 4.461723327636719,
+      "kojimar_lucario": 7.786990165710449
+    }
+  },
+  "total_wall_clock_sec": 1021.1515431404114,
+  "overall_win_pct": {
+    "selfplay_g2_final": 63.63636363636363,
+    "selfplay_g1_ref430k": 57.196969696969695,
+    "il_alldays_0804": 55.68181818181818,
+    "il_agent": 20.833333333333332,
+    "kiyotah_dragapult": 54.166666666666664,
+    "mechi22_alakazam": 62.5,
+    "plamen06_steel": 71.5909090909091,
+    "tb_dragapult": 55.303030303030305,
+    "tb_search": 35.22727272727273,
+    "dedquoc_rule_engine": 9.469696969696969,
+    "kojimar_lucario": 64.01515151515152
+  },
+  "overall_win_pct_wilson_ci": {
+    "selfplay_g2_final": {
+      "p": 63.63636363636363,
+      "lo": 57.67638781718216,
+      "hi": 69.20517203013057
+    },
+    "selfplay_g1_ref430k": {
+      "p": 57.1969696969697,
+      "lo": 51.16713007120149,
+      "hi": 63.02035984821358
+    },
+    "il_alldays_0804": {
+      "p": 55.68181818181818,
+      "lo": 49.6504824898288,
+      "hi": 61.5501674465515
+    },
+    "il_agent": {
+      "p": 20.833333333333336,
+      "lo": 16.36999839098122,
+      "hi": 26.133331935599863
+    },
+    "kiyotah_dragapult": {
+      "p": 54.166666666666664,
+      "lo": 48.13936122616018,
+      "hi": 60.07444872718537
+    },
+    "mechi22_alakazam": {
+      "p": 62.5,
+      "lo": 56.52001723423383,
+      "hi": 68.12141262580285
+    },
+    "plamen06_steel": {
+      "p": 71.5909090909091,
+      "lo": 65.87135832237045,
+      "hi": 76.69111143587473
+    },
+    "tb_dragapult": {
+      "p": 55.3030303030303,
+      "lo": 49.27218626968191,
+      "hi": 61.1817536709397
+    },
+    "tb_search": {
+      "p": 35.22727272727273,
+      "lo": 29.71448671867236,
+      "hi": 41.163823446738846
+    },
+    "dedquoc_rule_engine": {
+      "p": 9.469696969696969,
+      "lo": 6.4965898456987485,
+      "hi": 13.605440608121716
+    },
+    "kojimar_lucario": {
+      "p": 64.01515151515152,
+      "lo": 58.06260089567306,
+      "hi": 69.56566894739838
+    }
+  },
+  "glicko": {
+    "selfplay_g2_final": {
+      "rating": 1654.3686980104094,
+      "rd": 33.36682922224548,
+      "gxe": 64.40669795648618
+    },
+    "selfplay_g1_ref430k": {
+      "rating": 1581.4723683943828,
+      "rd": 33.36682922224548,
+      "gxe": 57.76183268193681
+    },
+    "il_alldays_0804": {
+      "rating": 1566.4643005322596,
+      "rd": 33.36682922224548,
+      "gxe": 56.34917324094626
+    },
+    "il_agent": {
+      "rating": 1169.8225070332908,
+      "rd": 33.36682922224548,
+      "gxe": 21.951588607283814
+    },
+    "kiyotah_dragapult": {
+      "rating": 1547.1682132809585,
+      "rd": 33.36682922224548,
+      "gxe": 54.517963970412026
+    },
+    "mechi22_alakazam": {
+      "rating": 1641.5046398428753,
+      "rd": 33.36682922224548,
+      "gxe": 63.265841380397156
+    },
+    "plamen06_steel": {
+      "rating": 1746.5611148777375,
+      "rd": 33.36682922224548,
+      "gxe": 72.05615657964681
+    },
+    "tb_dragapult": {
+      "rating": 1560.0322714484926,
+      "rd": 33.36682922224548,
+      "gxe": 55.74043958953785
+    },
+    "tb_search": {
+      "rating": 1332.7672438220563,
+      "rd": 33.36682922224548,
+      "gxe": 34.46857322569968
+    },
+    "dedquoc_rule_engine": {
+      "rating": 1041.1819253579506,
+      "rd": 33.36682922224548,
+      "gxe": 14.645168367157792
+    },
+    "kojimar_lucario": {
+      "rating": 1658.6567173995875,
+      "rd": 33.36682922224548,
+      "gxe": 64.78345055352119
+    }
+  },
+  "fallback_diag": {
+    "selfplay_g2_final": {
+      "decisions": 17111,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "selfplay_g1_ref430k": {
+      "decisions": 17596,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_alldays_0804": {
+      "decisions": 17455,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_agent": {
+      "decisions": 14205,
+      "too_many_options": 2,
+      "enabled": true,
+      "fallbacks": 2,
+      "fallback_rate": 0.00014079549454417458
+    },
+    "mechi22_alakazam": {
+      "deck_returns": 264,
+      "decisions": 16920,
+      "policy_ok": 16920,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {
+    "il_agent": {
+      "too_many_options": {
+        "reason": "too_many_options",
+        "occurrence": 1,
+        "n_opts": 49,
+        "obs": {
+          "remainingOverageTime": 599.8241840000001,
+          "select": {
+            "type": 0,
+            "context": 0,
+            "minCount": 1,
+            "maxCount": 1,
+            "remainDamageCounter": 0,
+            "remainEnergyCost": 0,
+            "option": [
+              {
+                "type": 7,
+                "index": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 3,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 7,
+                "index": 7
+              },
+              {
+                "type": 7,
+                "index": 8
+              },
+              {
+                "type": 9,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 11,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 13,
+                "attackId": 980
+              },
+              {
+                "type": 12
+              },
+              {
+                "type": 14
+              }
+            ],
+            "deck": null,
+            "contextCard": null,
+            "effect": null
+          },
+          "logs": [
+            {
+              "type": 6,
+              "playerIndex": 1,
+              "cardId": 678,
+              "serial": 75,
+              "fromArea": 6,
+              "toArea": 2
+            },
+            {
+              "type": 6,
+              "playerIndex": 0,
+              "cardId": 678,
+              "serial": 31,
+              "fromArea": 5,
+              "toArea": 4
+            },
+            {
+              "type": 3,
+              "playerIndex": 1
+            },
+            {
+              "type": 2,
+              "playerIndex": 0
+            },
+            {
+              "type": 5,
+              "playerIndex": 0
+            },
+            {
+              "type": 10,
+              "playerIndex": 0,
+              "cardId": 1182,
+              "serial": 52
+            },
+            {
+              "type": 8,
+              "playerIndex": 1,
+              "cardIdActive": 678,
+              "serialActive": 76,
+              "cardIdBench": 676,
+              "serialBench": 69
+            },
+            {
+              "type": 3,
+              "playerIndex": 0
+            },
+            {
+              "type": 2,
+              "playerIndex": 1
+            },
+            {
+              "type": 4,
+              "playerIndex": 1,
+              "cardId": 6,
+              "serial": 116
+            }
+          ],
+          "current": {
+            "turn": 16,
+            "turnActionCount": 1,
+            "yourIndex": 1,
+            "firstPlayer": 0,
+            "supporterPlayed": false,
+            "stadiumPlayed": false,
+            "energyAttached": false,
+            "retreated": false,
+            "result": -1,
+            "stadium": [
+              {
+                "id": 1252,
+                "serial": 62,
+                "playerIndex": 0
+              }
+            ],
+            "looking": null,
+            "players": [
+              {
+                "active": [
+                  {
+                    "id": 678,
+                    "serial": 31,
+                    "playerIndex": 0,
+                    "hp": 340,
+                    "maxHp": 340,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 677,
+                        "serial": 25,
+                        "playerIndex": 0
+                      }
+                    ]
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 675,
+                    "serial": 20,
+                    "playerIndex": 0,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 677,
+                    "serial": 27,
+                    "playerIndex": 0,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 36,
+                "discard": [
+                  {
+                    "id": 1142,
+                    "serial": 44,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 40,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 33,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 673,
+                    "serial": 16,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 34,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 41,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 678,
+                    "serial": 30,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 677,
+                    "serial": 26,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 11,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 675,
+                    "serial": 21,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 4,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 6,
+                    "serial": 7,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 52,
+                    "playerIndex": 0
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 0,
+                "hand": null,
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              },
+              {
+                "active": [
+                  {
+                    "id": 676,
+                    "serial": 69,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6,
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 118,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 108,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 678,
+                    "serial": 76,
+                    "playerIndex": 1,
+                    "hp": 20,
+                    "maxHp": 340,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6,
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 117,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 113,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 677,
+                        "serial": 121,
+                        "playerIndex": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 676,
+                    "serial": 71,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 109,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 673,
+                    "serial": 63,
+                    "playerIndex": 1,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 114,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 676,
+                    "serial": 70,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 677,
+                    "serial": 72,
+                    "playerIndex": 1,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 23,
+                "discard": [
+                  {
+                    "id": 1102,
+                    "serial": 82,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1192,
+                    "serial": 100,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 87,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 674,
+                    "serial": 66,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1192,
+                    "serial": 101,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 90,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 105,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 93,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 91,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 89,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 98,
+                    "playerIndex": 1
+                  }
+                ],
+                "prize": [
+                  null
+                ],
+                "handCount": 12,
+                "hand": [
+                  {
+                    "id": 1123,
+                    "serial": 83,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 115,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 111,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 95,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 110,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 107,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 119,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 86,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 92,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 673,
+                    "serial": 64,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 678,
+                    "serial": 75,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 116,
+                    "playerIndex": 1
+                  }
+                ],
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              }
+            ]
+          },
+          "search_begin_input": "EAFEAKQAEEAbEAbEBADBACEAEB-kC1gMAHCCAOBNABQAoEACQACTABEAB1gMADE+-pER8CFBsAJBg-zCCQ-ZBDQADCwoIRABiKR4aCxUEBzQ-6DQADBk-fDFFBUxHP0ZIAGE-ZBDAEFNzb19ua3dWXEBLd-GBX-aBsADBSZFdCZVppXVtZYg-GBBgADHVxdmxtcg-oCEADB5-vCB-VEQ-VBL-+BI-UBBCw-NFGAERgE-UBDC-iIGAERwE-UBDC-3LBgADDwB-VBwg-LPChABgACGABE-UBDB-3LowIACOI-VBBQI-2BKMCACBFABQ-UBME-2LClABgACMgEACCwB-PBKBQ-2BpQIACDsB-VBwo-2BKUCACBBABQ-UBUC-hIKYCAD6ABQ-UBME-2BCmABgACLABE-UBEBQ-LFE4EACDJ-WBMN-2BBOBADKwE-UBDDQ-gSB1BADuQ-VBDDQ-2BdQQACDUB-VBw0-hIdgQACLc-WBw0-LZCeBADSwE-UBDDQ-2f5ABQACPw-VBBwI-2BKECADLABQ-TBQUC-2BChABgACPwE-TBECBg-LFKICACDu-VBQMC-hIKQCACD2-VBQQF-2BCkABgACEQE-TBEFABg-2BpABIACP4-UBBBQI-2BKUCADwABQ-TBQUC-hIKYCACBIABQ-TBQIG-2BCmABgACpgAOQABE-DBEFB-hSBOBAD3Q-UBEDDQ-2BYwQADQB-TBBABgE-hIdQQACD0B-TBBABgY-2BHUEACDt-VBQMC-MFdgQACDkB-TBBABw0-2BHYEACD5-VBQMN-2BB2BADFABE-TBEDDQ-2BdgQACD4B-TBBABgY-2BIABEADQABQ-TBQMN-MFBgAEgB-TBBABgE-hIngQACEQB-TBBABw0-LFCoBAD6g-UBEDABg-2BqABQACPU-UBBABw0-2LMsEADKABQ-TBQMN-MFBgADC8B-TBBABgE-3BYAEVABQAC9g-PBQgD-3BGAEFgEACP4-PBEIABw-2BBgADBMB-TBBABgE-3BYAEHABQ-TBQIB-MFBgADOUADCm-PBBCABI-3BYAEXABQACCwE-OBQgD-3BGAEBgE-TBECABQ-2BBgADEwB-TBBABgE-3BYADDeAEpg-PBQgC-3BGAE+gADPY-PBEIABg-2BBgADDgB-TBBABgE-LFClABgACDABEACKY-PBEKB-3VMQAEcAPgACgABBACQAHgACgABBACUAHgACgABBACUACQAEgACgABBACUACgAEgACgABBACUACwAEgACgABBACUABBAFgACgABCACQAHgACgABCACUAHgACgABCACUACQAEgACgABCACUACgAEgACgABCACUACwAEgACgABCACUABBAFgACgABDACQAHgACgABDACUAHgACgABDACUACQAEgACgABDACUACgAEgACgABDACUACwAEgACgABDACUABBAFgACgABEACQAHgACgABEACUAHgACgABEACUACQAEgACgABEACUACgAEgACgABEACUACwAEgACgABEACUABBAFgACgABFACQAHgACgABFACUAHgACgABFACUACQAEgACgABFACUACgAEgACgABFACUACwAEgACgABFACUABBAFgACgABGACQAHgACgABGACUAHgACgABGACUACQAEgACgABGACUACgAEgACgABGACUACwAEgACgABGACUABBAFcABBwAMcABCANkACgABKACUABBAFgACgABLACQAHgACgABLACUAHgACgABLACUACQAEgACgABLACUACgAEgACgABLACUACwAEgACgABLACUABBAF0AB1ABMACP//AGwAP4-KBQADE8AWQAI==",
+          "step": 79
+        }
+      }
+    }
+  }
+}

@@ -390,61 +390,6 @@ def load_manifest_scores(manifest_path: Path | None = None) -> dict[int, float]:
     return scores
 
 
-class DecisionMeta(NamedTuple):
-    """Per-row provenance for outcome weighting / filtering (Stage 2, REWEIGHT).
-
-    ``outcome`` is the ACTING seat's terminal result remapped to
-    0.0 = loss, 0.5 = draw, 1.0 = win, or -1.0 when the episode carries no
-    usable ``rewards`` pair (crashed/truncated dumps -- callers that weight
-    by outcome must treat -1.0 as "exclude", never as a weight). The raw
-    cabt -1/0/1 value deliberately never leaves this module: negative
-    terminal rewards are a known pathology magnet (bc_pipeline_v2 §8.4).
-    """
-
-    episode_id: int  # int(filename stem); -1 if the stem is not numeric
-    seat: int  # agent_idx: 0 or 1
-    outcome: float  # 0.0 loss / 0.5 draw / 1.0 win / -1.0 unknown
-    turn: int  # obs["current"]["turn"] at this decision; -1 if absent
-
-
-def _seat_outcome(rewards: object, seat: int) -> float:
-    """Remap the episode-level rewards pair to this seat's {0, 0.5, 1} outcome.
-
-    A ``None`` reward means this seat errored out -- a loss, matching
-    ``winning_agent``'s treatment of the same case (None = lowest value).
-    """
-    if not isinstance(rewards, list) or len(rewards) != 2:
-        return -1.0
-    r = rewards[seat]
-    if r is None:
-        return 0.0
-    if not isinstance(r, (int, float)):
-        return -1.0
-    if r > 0:
-        return 1.0
-    if r < 0:
-        return 0.0
-    return 0.5
-
-
-def load_manifest_scores(manifest_path: Path | None = None) -> dict[int, float]:
-    """episode_id -> avg_score (the player-rating field) from manifest.csv.
-
-    Loaded once and held as a plain dict -- never re-read per row. Episodes
-    absent from the manifest simply have no entry; ILDataset substitutes a
-    -1.0 sentinel (avg_score is always positive in the real manifest).
-    """
-    path = manifest_path or (config.EPISODES_DIR / "manifest.csv")
-    scores: dict[int, float] = {}
-    with path.open(newline="") as f:
-        for row in csv.DictReader(f):
-            try:
-                scores[int(row["episode_id"])] = float(row["avg_score"])
-            except (KeyError, ValueError):
-                continue
-    return scores
-
-
 def resolve_split_dir(split: str) -> Path:
     """Resolve 'train' / 'eval' to its folder via data/episodes/splits/splits.json."""
     splits_json = config.EPISODES_DIR / "splits" / "splits.json"
@@ -1146,6 +1091,13 @@ class ShardILDataset(IterableDataset):
     re-iteration so the shard order and shuffle rng differ per pass; with
     ``shuffle_buffer <= 1`` iteration is deterministic (sorted shards, pack
     order) for eval.
+
+    ``winner_only`` and ``with_meta`` mirror ILDataset's REWEIGHT plumbing
+    (rl_pipeline_v2 §2.B0): meta rows carry outcome/seat/episode_id/turn plus
+    ``avg_score`` joined from a freshly loaded manifest via the shard's
+    ``episode_id`` column — NOT from the shard's baked score columns, which
+    are null forever for any day packed before its manifest rows were
+    backfilled (2026-07-26).
     """
 
     def __init__(
@@ -1157,6 +1109,8 @@ class ShardILDataset(IterableDataset):
         max_episodes: int | None = None,
         shuffle_buffer: int = 2000,
         seed: int = 0,
+        winner_only: bool = False,
+        with_meta: bool = False,
         episode_ids: set[int] | None = None,
     ) -> None:
         self.split = split
@@ -1165,6 +1119,8 @@ class ShardILDataset(IterableDataset):
         self.max_episodes = max_episodes
         self.shuffle_buffer = shuffle_buffer
         self.seed = seed
+        self.winner_only = winner_only
+        self.with_meta = with_meta
         # Optional allowlist (skill-filtered demonstrations): only episodes
         # whose shard `episode_id` is in this set are decoded/streamed. None
         # = no filter. Filtering happens BEFORE max_episodes counting.
@@ -1230,8 +1186,13 @@ class ShardILDataset(IterableDataset):
             random.Random(self.seed * 1_000_003 + self._epoch).shuffle(files)
         files = files[wid::n_workers]
         rng = random.Random((self.seed * 1_000_003 + self._epoch) * 64 + wid)
+        # avg_score joins from a FRESHLY loaded manifest at iteration time, by
+        # the shard's own episode_id column -- the score columns baked into the
+        # shards are stale for any day packed before its manifest rows existed
+        # (2026-07-26 was packed with zero coverage; see rl_pipeline_v2 §2.B0).
+        scores = load_manifest_scores() if self.with_meta else None
 
-        def episodes() -> Iterator[dict]:
+        def episodes() -> Iterator[tuple[int, dict]]:
             n = 0
             for rel in files:
                 pf = pq.ParquetFile(self._local_path(rel))
@@ -1248,10 +1209,16 @@ class ShardILDataset(IterableDataset):
                         if self.max_episodes is not None and n >= self.max_episodes:
                             return
                         n += 1
-                        yield json.loads(raw)
+                        yield int(eid), json.loads(raw)
 
         def features() -> Iterator[dict[str, torch.Tensor]]:
-            for episode in episodes():
-                yield from _decisions_to_features(iter_episode_decisions(episode))
+            for eid, episode in episodes():
+                yield from _decisions_to_features(
+                    iter_episode_decisions(
+                        episode, episode_id=eid, winner_only=self.winner_only
+                    ),
+                    with_meta=self.with_meta,
+                    scores=scores,
+                )
 
         yield from _shuffled(features(), self.shuffle_buffer, rng)

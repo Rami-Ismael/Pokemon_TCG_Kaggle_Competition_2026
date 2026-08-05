@@ -1,0 +1,83 @@
+{
+  "agents": [
+    "selfplay_g1_ref430k",
+    "il_alldays_0804"
+  ],
+  "games_per_pair": 100,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "selfplay_g1_ref430k": {
+      "selfplay_g1_ref430k": 100,
+      "il_alldays_0804": 125
+    },
+    "il_alldays_0804": {
+      "selfplay_g1_ref430k": 73,
+      "il_alldays_0804": 100
+    }
+  },
+  "games": {
+    "selfplay_g1_ref430k": {
+      "selfplay_g1_ref430k": 200,
+      "il_alldays_0804": 200
+    },
+    "il_alldays_0804": {
+      "selfplay_g1_ref430k": 200,
+      "il_alldays_0804": 200
+    }
+  },
+  "wall_clock_sec": {
+    "selfplay_g1_ref430k": {
+      "selfplay_g1_ref430k": 323.76559829711914,
+      "il_alldays_0804": 325.950621843338
+    },
+    "il_alldays_0804": {
+      "selfplay_g1_ref430k": 325.950621843338,
+      "il_alldays_0804": 322.19362783432007
+    }
+  },
+  "total_wall_clock_sec": 648.9509119987488,
+  "overall_win_pct": {
+    "selfplay_g1_ref430k": 56.25,
+    "il_alldays_0804": 43.25
+  },
+  "overall_win_pct_wilson_ci": {
+    "selfplay_g1_ref430k": {
+      "p": 56.25,
+      "lo": 51.351791119805135,
+      "hi": 61.029300872698855
+    },
+    "il_alldays_0804": {
+      "p": 43.25,
+      "lo": 38.481788076603706,
+      "hi": 48.14663257149198
+    }
+  },
+  "glicko": {
+    "selfplay_g1_ref430k": {
+      "rating": 1633.5434621099241,
+      "rd": 36.51835531580816,
+      "gxe": 62.54625366797096
+    },
+    "il_alldays_0804": {
+      "rating": 1366.4565378900759,
+      "rd": 36.51835531580816,
+      "gxe": 37.45374633202904
+    }
+  },
+  "fallback_diag": {
+    "selfplay_g1_ref430k": {
+      "decisions": 27673,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_alldays_0804": {
+      "decisions": 26426,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

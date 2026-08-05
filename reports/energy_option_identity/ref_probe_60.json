@@ -1,0 +1,281 @@
+{
+ "total_rows": 13640,
+ "per_ctx": {
+  "0": {
+   "name": "MAIN",
+   "rows": 7486,
+   "collide_rows": 2940,
+   "kinds": {
+    "resolved": 13843
+   },
+   "sep_by_card": 0
+  },
+  "1": {
+   "name": "SETUP_ACTIVE_POKEMON",
+   "rows": 120,
+   "collide_rows": 13,
+   "kinds": {
+    "resolved": 27
+   },
+   "sep_by_card": 0
+  },
+  "2": {
+   "name": "SETUP_BENCH_POKEMON",
+   "rows": 70,
+   "collide_rows": 8,
+   "kinds": {
+    "resolved": 17
+   },
+   "sep_by_card": 0
+  },
+  "3": {
+   "name": "SWITCH",
+   "rows": 198,
+   "collide_rows": 94,
+   "kinds": {
+    "resolved": 225
+   },
+   "sep_by_card": 0
+  },
+  "4": {
+   "name": "TO_ACTIVE",
+   "rows": 269,
+   "collide_rows": 118,
+   "kinds": {
+    "resolved": 286
+   },
+   "sep_by_card": 0
+  },
+  "5": {
+   "name": "TO_BENCH",
+   "rows": 254,
+   "collide_rows": 207,
+   "kinds": {
+    "resolved": 689
+   },
+   "sep_by_card": 0
+  },
+  "7": {
+   "name": "TO_HAND",
+   "rows": 1787,
+   "collide_rows": 1426,
+   "kinds": {
+    "resolved": 5624,
+    "unresolved": 2101
+   },
+   "sep_by_card": 0
+  },
+  "8": {
+   "name": "DISCARD",
+   "rows": 185,
+   "collide_rows": 142,
+   "kinds": {
+    "resolved": 707
+   },
+   "sep_by_card": 0
+  },
+  "9": {
+   "name": "TO_DECK",
+   "rows": 52,
+   "collide_rows": 48,
+   "kinds": {
+    "resolved": 236
+   },
+   "sep_by_card": 0
+  },
+  "13": {
+   "name": "DAMAGE_COUNTER",
+   "rows": 400,
+   "collide_rows": 183,
+   "kinds": {
+    "resolved": 448
+   },
+   "sep_by_card": 0
+  },
+  "14": {
+   "name": "DAMAGE_COUNTER_ANY",
+   "rows": 126,
+   "collide_rows": 51,
+   "kinds": {
+    "resolved": 111
+   },
+   "sep_by_card": 0
+  },
+  "15": {
+   "name": "DAMAGE",
+   "rows": 241,
+   "collide_rows": 92,
+   "kinds": {
+    "resolved": 214
+   },
+   "sep_by_card": 0
+  },
+  "16": {
+   "name": "REMOVE_DAMAGE_COUNTER",
+   "rows": 399,
+   "collide_rows": 78,
+   "kinds": {
+    "resolved": 168
+   },
+   "sep_by_card": 0
+  },
+  "19": {
+   "name": "EVOLVES_TO",
+   "rows": 1,
+   "collide_rows": 1,
+   "kinds": {
+    "resolved": 2
+   },
+   "sep_by_card": 0
+  },
+  "21": {
+   "name": "ATTACH_FROM",
+   "rows": 472,
+   "collide_rows": 116,
+   "kinds": {
+    "resolved": 251
+   },
+   "sep_by_card": 0
+  },
+  "22": {
+   "name": "ATTACH_TO",
+   "rows": 549,
+   "collide_rows": 477,
+   "kinds": {
+    "resolved": 2697
+   },
+   "sep_by_card": 0
+  },
+  "26": {
+   "name": "DISCARD_ENERGY_CARD",
+   "rows": 11,
+   "collide_rows": 6,
+   "kinds": {
+    "resolved": 14
+   },
+   "sep_by_card": 0
+  },
+  "27": {
+   "name": "DISCARD_TOOL_CARD",
+   "rows": 4,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  },
+  "28": {
+   "name": "SWITCH_ENERGY_CARD",
+   "rows": 8,
+   "collide_rows": 8,
+   "kinds": {
+    "resolved": 38
+   },
+   "sep_by_card": 0
+  },
+  "30": {
+   "name": "DISCARD_ENERGY",
+   "rows": 127,
+   "collide_rows": 54,
+   "kinds": {
+    "resolved": 163
+   },
+   "sep_by_card": 0
+  },
+  "32": {
+   "name": "TO_DECK_ENERGY",
+   "rows": 9,
+   "collide_rows": 6,
+   "kinds": {
+    "resolved": 15
+   },
+   "sep_by_card": 0
+  },
+  "33": {
+   "name": "SWITCH_ENERGY",
+   "rows": 6,
+   "collide_rows": 6,
+   "kinds": {
+    "resolved": 14
+   },
+   "sep_by_card": 0
+  },
+  "34": {
+   "name": "SKILL_ORDER",
+   "rows": 58,
+   "collide_rows": 58,
+   "kinds": {
+    "no_ref": 116
+   },
+   "sep_by_card": 0
+  },
+  "35": {
+   "name": "ATTACK",
+   "rows": 4,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  },
+  "37": {
+   "name": "EVOLVE",
+   "rows": 90,
+   "collide_rows": 40,
+   "kinds": {
+    "resolved": 117
+   },
+   "sep_by_card": 0
+  },
+  "38": {
+   "name": "DRAW_COUNT",
+   "rows": 21,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  },
+  "40": {
+   "name": "REMOVE_DAMAGE_COUNTER_COUNT",
+   "rows": 343,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  },
+  "41": {
+   "name": "IS_FIRST",
+   "rows": 60,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  },
+  "43": {
+   "name": "ACTIVATE",
+   "rows": 290,
+   "collide_rows": 0,
+   "kinds": {},
+   "sep_by_card": 0
+  }
+ },
+ "area_kind": {
+  "HAND": {
+   "resolved": 14308
+  },
+  "DECK": {
+   "resolved": 8466
+  },
+  "ACTIVE": {
+   "resolved": 237
+  },
+  "BENCH": {
+   "resolved": 2126
+  },
+  "PRIZE": {
+   "unresolved": 2101
+  },
+  "DISCARD": {
+   "resolved": 719
+  },
+  "LOOKING": {
+   "resolved": 50
+  }
+ },
+ "deck_present": {
+  "deck_populated": 8466
+ }
+}

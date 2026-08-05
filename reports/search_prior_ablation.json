@@ -1,0 +1,172 @@
+{
+  "search_off_prior_original|improved_prob_main": {
+    "arm": "search_off_prior_original",
+    "opponent": "improved_prob_main",
+    "w": 23,
+    "l": 27,
+    "d": 0,
+    "secs": 26.2,
+    "games": 50,
+    "win_rate": 0.46,
+    "wilson95": [
+      0.3296943460178263,
+      0.5960136567161192
+    ],
+    "USE_SEARCH": "0",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_off_prior_original|rule_baseline": {
+    "arm": "search_off_prior_original",
+    "opponent": "rule_baseline",
+    "w": 29,
+    "l": 21,
+    "d": 0,
+    "secs": 26.3,
+    "games": 50,
+    "win_rate": 0.58,
+    "wilson95": [
+      0.4423319668777783,
+      0.7062520276543307
+    ],
+    "USE_SEARCH": "0",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_off_prior_alldays|improved_prob_main": {
+    "arm": "search_off_prior_alldays",
+    "opponent": "improved_prob_main",
+    "w": 29,
+    "l": 21,
+    "d": 0,
+    "secs": 23.0,
+    "games": 50,
+    "win_rate": 0.58,
+    "wilson95": [
+      0.4423319668777783,
+      0.7062520276543307
+    ],
+    "USE_SEARCH": "0",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_alldays_0804"
+  },
+  "search_off_prior_alldays|rule_baseline": {
+    "arm": "search_off_prior_alldays",
+    "opponent": "rule_baseline",
+    "w": 25,
+    "l": 25,
+    "d": 0,
+    "secs": 24.4,
+    "games": 50,
+    "win_rate": 0.5,
+    "wilson95": [
+      0.36644286412332855,
+      0.6335571358766714
+    ],
+    "USE_SEARCH": "0",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_alldays_0804"
+  },
+  "search_on_no_prior|improved_prob_main": {
+    "arm": "search_on_no_prior",
+    "opponent": "improved_prob_main",
+    "w": 26,
+    "l": 24,
+    "d": 0,
+    "secs": 25.2,
+    "games": 50,
+    "win_rate": 0.52,
+    "wilson95": [
+      0.3851151225880844,
+      0.6520308760449429
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "0",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_on_no_prior|rule_baseline": {
+    "arm": "search_on_no_prior",
+    "opponent": "rule_baseline",
+    "w": 27,
+    "l": 23,
+    "d": 0,
+    "secs": 34.3,
+    "games": 50,
+    "win_rate": 0.54,
+    "wilson95": [
+      0.40398634328388083,
+      0.6703056539821737
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "0",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_on_prior_original|improved_prob_main": {
+    "arm": "search_on_prior_original",
+    "opponent": "improved_prob_main",
+    "w": 19,
+    "l": 31,
+    "d": 0,
+    "secs": 27.1,
+    "games": 50,
+    "win_rate": 0.38,
+    "wilson95": [
+      0.2586259584257722,
+      0.5184980497760643
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_on_prior_original|rule_baseline": {
+    "arm": "search_on_prior_original",
+    "opponent": "rule_baseline",
+    "w": 33,
+    "l": 17,
+    "d": 0,
+    "secs": 24.6,
+    "games": 50,
+    "win_rate": 0.66,
+    "wilson95": [
+      0.5215356854148285,
+      0.7756323036493895
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_agent"
+  },
+  "search_on_prior_alldays|improved_prob_main": {
+    "arm": "search_on_prior_alldays",
+    "opponent": "improved_prob_main",
+    "w": 23,
+    "l": 27,
+    "d": 0,
+    "secs": 24.2,
+    "games": 50,
+    "win_rate": 0.46,
+    "wilson95": [
+      0.3296943460178263,
+      0.5960136567161192
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_alldays_0804"
+  },
+  "search_on_prior_alldays|rule_baseline": {
+    "arm": "search_on_prior_alldays",
+    "opponent": "rule_baseline",
+    "w": 34,
+    "l": 16,
+    "d": 0,
+    "secs": 23.5,
+    "games": 50,
+    "win_rate": 0.68,
+    "wilson95": [
+      0.5418944286372394,
+      0.792419559060006
+    ],
+    "USE_SEARCH": "1",
+    "USE_BC_PRIOR": "1",
+    "IL_MODEL_DIR": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_alldays_0804"
+  }
+}
