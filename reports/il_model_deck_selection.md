@@ -8,10 +8,15 @@ and does the deck answer survive changing it"*.
 Full cell-level numbers: [`reports/il_model_deck_selection.xlsx`](il_model_deck_selection.xlsx).
 
 > **Ladder status at the time of this run (2026-08-04):** rank **4784 / 6272**, team
-> score **486.0**, best-ever **804.0** (sub 55162376) currently displaced from the
-> 2-slot active set. Everything below is a **local** measurement. Per the two
-> confirmed local-vs-ladder inversions on record, no result here is a ladder claim
-> until something is submitted and read back.
+> score **486.0**. Best-ever is reported as **804.0** (sub 55162376), but that is a
+> *single early read* — four same-build resubmits of that agent settled at 699.0 /
+> 692.7 / 666.1 / 683.2, so **~685** is what the build actually polls at. Treat 804.0
+> as the top of the noise band, not the agent's strength.
+>
+> Everything below is a **local** measurement. Per the local-vs-ladder inversions on
+> record, no result here is a ladder claim until something is submitted and read back.
+> Note also that most third-party ladder figures used here are **self-reported by their
+> authors and unverified by us** — see the anchor-provenance table in ⑤.
 
 ## ⓪ Two silent failures found before any games were played
 
@@ -287,16 +292,37 @@ Top of the board, and the entries that matter:
 | 14 | `tb_archaludon` | 1685.9 | 30 | [1627, 1745] | **1196.1** |
 | 15 | `romanrozen_strong_start` | 1665.5 | 30 | [1607, 1724] | 950.0 |
 | 16 | `makthanithin_1084_baseline` | 1655.3 | 30 | [1596, 1714] | 1084.5 |
-| 18 | `improved_prob_main` | 1640.9 | 41 | [1560, 1721] | 701.6 |
-| 22 | `agent_core_improved` | 1602.4 | 41 | [1522, 1682] | **804.0** |
+| 18 | `improved_prob_main` | 1640.9 | 41 | [1560, 1721] | 701.6 (verified) |
+| 22 | `agent_core_improved` | 1602.4 | 41 | [1522, 1682] | **685.3** (verified) |
+| 24 | `il_alldays_3ep@mega_lucario_ex` | 1551.2 | 41 | [1471, 1631] | **422.8** (verified) |
 | 28 | `rule_baseline` | 1493.6 | 41 | [1413, 1574] | — |
-| 33 | `il_bc_3ep@mega_lucario_ex` | 1282.3 | 41 | [1202, 1363] | — |
-| 34 | `mcts_il_agent` | 1256.7 | 41 | [1177, 1337] | — |
+| 33 | `il_bc_3ep@mega_lucario_ex` | 1282.3 | 41 | [1202, 1363] | ~398.7 (verified) |
+| 34 | `mcts_il_agent` | 1256.7 | 41 | [1177, 1337] | **291.4** (verified) |
 | 39 | `random_legal` | 1045.6 | 30 | [987, 1104] | — |
 
-**Predictiveness on the expanded set: Spearman ρ = +0.803 (n=16, permutation
-p = 0.0004).** Lower than the 8-agent pool's +0.929, but over twice the agents and
-still highly significant.
+### ⚠️ Anchor provenance — most of these ladder numbers are alleged, not read
+
+Of the 18 anchors the correlation uses, **only 4 are numbers we read off the ladder
+ourselves**. The other 14 are self-reported by their authors: `tb_*` are
+TomBombadyl's decoded-submission catalog mu, `wmh_*` are README/doc figures, and
+`romanrozen`/`makthanithin` are notebook-title claims. None are verified.
+
+**Corrected 2026-08-05: `agent_core_improved` is 685.3, not 804.0.** The 804.0 was a
+single early read of sub 55162376. Four same-build resubmits settled at 699.0
+(55191752), 692.7 (55219194), 666.1 (55224682) and 683.2 (55228113) — mean **685.3**.
+Anchoring on best-ever inflated it by ~119 points.
+
+| slice | ρ | n | p | what it rests on |
+|---|---:|---:|---:|---|
+| all anchors, corrected | **+0.765** | 18 | 0.0004 | 14 of 18 alleged |
+| all anchors, with the stale 804.0 | +0.803 | 16 | 0.0004 | superseded |
+| **verified-only** | **+1.000** | 4 | 0.0866 | our own ladder reads |
+| the 8-agent pool alone | +0.929 | 7 | 0.0071 | **all 7 alleged** |
+
+The +0.929 figure quoted earlier in this report rests *entirely* on unverified
+third-party claims. The honest summary is narrower: on the four agents where we have
+read both sides ourselves, the local board orders them **perfectly** (ρ = +1.000) — but
+n=4 is not significant (p=0.087), so that is encouraging, not established.
 
 ### What this does and does not license
 
@@ -310,13 +336,18 @@ shape that has misled us three times.** `tb_archaludon` sits at local 1685.9 wit
 **real ladder score of 1196.1**, while our top arm has never played a ladder game on
 this deck. Local rank 1 is a hypothesis about the ladder, not a claim on it.
 
-**The sharpest internal warning** comes from our own two ladder-scored agents:
-`improved_prob_main` (local 1640.9, ladder **701.6**) sits *above* `agent_core_improved`
-(local 1602.4, ladder **804.0**). The ladder ranks them the other way. Their local CIs
-overlap ([1560, 1721] vs [1522, 1682]), so this is not a clean inversion — but it is a
-direct demonstration that this pool cannot resolve a ~100-point real ladder difference
-between two of our own agents. It should not be trusted to resolve the 4.7pp gap between
-`il_alldays_3ep` and `il_bc_3ep` either.
+**RETRACTED — the "internal inversion" was an artifact of the stale anchor.** An earlier
+version of this section claimed `improved_prob_main` (local 1640.9, ladder 701.6) sat
+*above* `agent_core_improved` while the ladder ranked them the other way, and used that
+to argue the pool cannot resolve ~100-point differences between our own agents. With
+`agent_core_improved` corrected to **685.3**, the ladder order is
+`improved_prob_main` (701.6) > `agent_core_improved` (685.3) — **the same order as
+local**. There is no inversion here. The pool got this pair right.
+
+The real caution is smaller and different: the two are 16.3 ladder points apart, well
+inside the ~±100 same-build drift, so this pair is a coin-flip that happened to land
+right — not evidence the pool resolves fine distinctions. It still should not be trusted
+to resolve the 4.7pp gap between `il_alldays_3ep` and `il_bc_3ep`.
 
 **`mcts_il_agent` ranks 34/39** (1256.7), statistically tied with
 `il_bc_3ep@mega_lucario_ex` (1282.3; CIs overlap) and clearly below `rule_baseline`
@@ -325,3 +356,34 @@ contradict the ladder here.
 
 **Biggest anchor outlier:** `wmh_bellibolt`, ladder **836.0** but local 1231.1 (rank 35
 of 39). Whatever it does well on the ladder, this pool does not reward.
+
+## ⑥ The recommended checkpoint already has a ladder read — on the wrong deck
+
+`models/il_alldays_0804` (this study's `il_alldays_3ep`, sha `1d67d1acdbb0`) was
+submitted the same day as this sweep, as ref **55248985**, piloting **Mega Lucario ex**
+(`agents/il_agent/deck.csv`). Its score timeline:
+
+| read | score | note |
+|---|---:|---|
+| 2026-08-04 20:02 | 600.0 | the μ₀ prior, not a score |
+| 2026-08-04 22:20 | 450.6 | settling |
+| 2026-08-05 00:13 | **422.8** | latest |
+
+**This is not a test of the recommendation.** The recommendation is `il_alldays_3ep`
+piloting **Marnie's Grimmsnarl ex**; 55248985 pilots the 1-episode Mega Lucario ex deck
+— the deck this whole study says to abandon. What it does provide is a *same-deck*
+ladder check, and on that comparison the local board is consistent:
+
+| agent (Mega Lucario ex) | local Glicko | ladder |
+|---|---:|---:|
+| `il_alldays_3ep@mega_lucario_ex` | 1551.2 | 422.8 |
+| `il_bc_3ep@mega_lucario_ex` (= `il_agent`) | 1282.3 | ~398.7 |
+
+Local ranks `il_alldays_3ep` above `il_bc_3ep` on this deck; the ladder does too. The
+margin (24 points) is inside same-build drift, so this corroborates rather than proves.
+
+**What it costs the recommendation:** nothing directly — but it removes the "maybe the
+checkpoint alone is enough" option. Submitting this checkpoint on Lucario has now been
+tried and lands at 422.8, in the same 395–450 band as every prior BC submission. If the
+deck-switch hypothesis is right, the Grimmsnarl-ex build is the thing that has to move
+that number, and it has never been submitted.

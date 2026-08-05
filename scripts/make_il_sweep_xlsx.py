@@ -309,7 +309,7 @@ def sheet_leaderboard(wb: Workbook, merged: dict) -> None:
         r += 1
     r += 1
     ws.cell(row=r, column=1,
-            value="Spearman rho (local Glicko vs real ladder) = +0.803  (n=16, permutation p=0.0004)"
+            value="Spearman rho vs ladder: +0.765 (n=18, p=0.0004) on ALL anchors -- but 14 of 18 are self-reported by their authors, NOT verified. On the 4 we read ourselves: rho = +1.000 (n=4, p=0.087). agent_core_improved corrected 804.0 -> 685.3 (mean of 4 settled same-build resubmits)."
             ).font = BOLD
     _autosize(ws, {2: 44, 5: 18})
 
