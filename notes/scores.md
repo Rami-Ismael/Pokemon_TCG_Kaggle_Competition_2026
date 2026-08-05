@@ -69,4 +69,30 @@ first read-back; append a new row instead if a submission is rebuilt.
 - **Displaces** 55248985 (418.0); active set becomes this + 55253900 (267.4, a
   concurrent session's self-play candidate). Team = max(this, 267.4), so this must
   clear 418.0 to avoid a net loss. Best-ever 804.0 still displaced.
-- **Score: PENDING** — fill once, on read-back.
+- **Score: 314.1** (read-back 2026-08-05 14:04 UTC, 1 scored reading).
+
+### PREDICTION FALSIFIED
+
+Pre-registered **>450**. Landed **314.1** — below the 395–450 band every prior BC
+submission hit, and **103.9 points BELOW 55248985 (418.0)**, which is the *same
+checkpoint* on the deck this study said to abandon.
+
+| | local field win% (pool v2, same weights) | ladder |
+|---|---:|---:|
+| Marnie's Grimmsnarl ex | **87.4 ± 1.8%** | **314.1** |
+| Mega Lucario ex | 59.4 ± 3.7% | **418.0** |
+
+The ladder ranks the two decks the **opposite** way from the local pool. This is the
+4th local-vs-ladder divergence on record, and the first that **inverts a headline
+claim** rather than merely failing to transfer it.
+
+**Not yet decisive, and I am not declaring the deck conclusion dead on one reading.**
+The 103.9-pt gap sits inside the observed same-build drift range (~230 pts:
+827.8/804.0/699.0/685.5/600.0 on one bundle), and 55248985 itself drifted
+600 → 450.6 → 422.8 over hours. 55270787 has exactly one scored reading. What is
+already certain is that the pre-registered prediction failed.
+
+**Cost:** team score 418.0 → **314.1**, rank 5387 → **5893 / 6322**. Active set is now
+55270787 (314.1) + 55253900 (267.4). Best-ever 804.0 still displaced. This was the
+bounded downside flagged before submitting; it is recoverable by resubmitting the
+~685 agent_core_improved bundle.
