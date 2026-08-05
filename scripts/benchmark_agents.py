@@ -282,6 +282,7 @@ AGENT_FILES = {
     "selfplay_g1_final": REPO / "agents" / "selfplay_g1_final" / "agent_core.py",
     "selfplay_g1_ref430k": REPO / "agents" / "selfplay_g1_ref430k" / "agent_core.py",
     "selfplay_g2_final": REPO / "agents" / "selfplay_g2_final" / "agent_core.py",
+    "selfplay_g3_final": REPO / "agents" / "selfplay_g3_final" / "agent_core.py",
     # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
     # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
     "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",

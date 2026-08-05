@@ -595,6 +595,43 @@ all-days 418.9 on read 3, heuristic pair 683/666 carrying the team.
 
 ---
 
+## Stage-3 STATUS — loop STALLED by rule (2026-08-05 afternoon), write-up
+
+Gen 3 (1,229,824 steps from g2_final, teacher still ref430k): 60 gates,
+zero promotions, plateau 55–64%. Gate match: **56.0% [49.1, 62.7] vs
+ref430k — non-promotion #2 → the §3.3 stall rule fires. Training loop
+closed.** No gen 4; the registered escape hatch, if Rami wants it, is the
+pre-registered β_KL sweep {0.01, 0.2} — the one knob the doc licenses.
+
+**What three generations bought (16h MPS, ~3.5M steps):**
+
+| | vs all-days base (n=200) | vs ref430k (n=200) | held-out transfer | trio (in-sample) |
+|---|---|---|---|---|
+| gen-1 promoted (ref430k) | **62.5% [55.6, 68.9]** | — | 65.6–68.3% | ~40% |
+| gen-2 final | **68.0% [61.2, 74.1]** | 52.5% [45.6, 59.3] | **78.1% [69, 85]** | ~43% |
+| gen-3 final | — | 56.0% [49.1, 62.7] | 75.0% [65.5, 82.6] | — |
+| (imitation lineage for scale) | — | — | 32–61% | 7–19% |
+
+Reading: anchored self-play produced ONE ratcheted improvement over the
+all-days base, then converged to that policy's level — head-to-head parity
+among the RL candidates while held-out transfer (the honest column) sits
+25–45 points above the imitation lineage. The anchor held in every run
+(KL ≤ 0.28, no stop signals, no post-promotion flapping). The plateau's
+most plausible reads: (a) the β=0.05 leash bounds total drift near
+ref430k's neighborhood; (b) terminal-only reward at ~60 steps/s gives
+~thin gradient signal per wall-clock hour at this scale.
+
+**Everything now rides on the pre-registered ladder verdicts:**
+1. Base-model settle ~08-07: all-days (55248985, reads 600→419→418) vs
+   PRIOR's settled 400 — decides PRIOR-v2 and the Stage-2 gate (task B3).
+2. Gen-1 candidate settle ~08-08: 55253900 (reads 249→267, climbing) —
+   leg 2 of the only gate-passed RL candidate.
+3. If the RL line settles respectably, gen-2 final (best transfer, 68% vs
+   base) is the queued next submission; if not, the write-up stands and
+   remaining slots go to the heuristic incumbent per displacement rules.
+
+---
+
 ## Measurement protocol (binding, all stages)
 
 After EVERY phase gate / candidate promotion: bundle → printed MiB →
