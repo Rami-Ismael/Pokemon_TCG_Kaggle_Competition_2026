@@ -1,0 +1,12 @@
+{
+  "arm": "ko_race",
+  "features": "ko_race",
+  "seed": 44,
+  "total_steps": 4000,
+  "eval_rows": 2171,
+  "majority_pct": 40.8,
+  "top1_pct": 55.1,
+  "top3_pct": 85.1,
+  "train_secs": 580.1,
+  "eval_secs": 33.8
+}

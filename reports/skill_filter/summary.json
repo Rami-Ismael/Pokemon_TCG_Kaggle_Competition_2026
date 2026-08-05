@@ -1,0 +1,184 @@
+{
+  "protocol": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "total_steps": 4000,
+    "eval_episodes": 150,
+    "eval_highskill_threshold": 1119.562957,
+    "accept_rule": "mean paired high-skill top-1 d > spread(d), > 0, and all-eval mean d > -1pp"
+  },
+  "accepted": [],
+  "results": {
+    "unfiltered_scored": {
+      "42": {
+        "arm": "unfiltered_scored",
+        "seed": 42,
+        "total_steps": 4000,
+        "train_secs": 530.9,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 66.4,
+          "top3_pct": 91.6
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 66.5,
+          "top3_pct": 90.6
+        }
+      },
+      "43": {
+        "arm": "unfiltered_scored",
+        "seed": 43,
+        "total_steps": 4000,
+        "train_secs": 489.8,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 70.6,
+          "top3_pct": 92.8
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 68.4,
+          "top3_pct": 91.8
+        }
+      },
+      "44": {
+        "arm": "unfiltered_scored",
+        "seed": 44,
+        "total_steps": 4000,
+        "train_secs": 488.1,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 70.0,
+          "top3_pct": 92.7
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 68.9,
+          "top3_pct": 91.9
+        }
+      }
+    },
+    "top50_wd": {
+      "42": {
+        "arm": "top50_wd",
+        "seed": 42,
+        "total_steps": 4000,
+        "train_secs": 509.1,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 66.0,
+          "top3_pct": 91.1
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 66.3,
+          "top3_pct": 90.6
+        }
+      },
+      "43": {
+        "arm": "top50_wd",
+        "seed": 43,
+        "total_steps": 4000,
+        "train_secs": 509.5,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 68.7,
+          "top3_pct": 91.7
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 66.9,
+          "top3_pct": 90.9
+        }
+      },
+      "44": {
+        "arm": "top50_wd",
+        "seed": 44,
+        "total_steps": 4000,
+        "train_secs": 513.3,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 68.1,
+          "top3_pct": 92.2
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 68.6,
+          "top3_pct": 91.8
+        }
+      }
+    },
+    "top25_wd": {
+      "42": {
+        "arm": "top25_wd",
+        "seed": 42,
+        "total_steps": 4000,
+        "train_secs": 509.8,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 63.6,
+          "top3_pct": 89.4
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 62.5,
+          "top3_pct": 88.6
+        }
+      },
+      "43": {
+        "arm": "top25_wd",
+        "seed": 43,
+        "total_steps": 4000,
+        "train_secs": 433.4,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 65.4,
+          "top3_pct": 91.2
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 65.8,
+          "top3_pct": 90.8
+        }
+      },
+      "44": {
+        "arm": "top25_wd",
+        "seed": 44,
+        "total_steps": 4000,
+        "train_secs": 376.0,
+        "eval_all": {
+          "rows": 29761,
+          "majority_pct": 39.0,
+          "top1_pct": 61.2,
+          "top3_pct": 88.5
+        },
+        "eval_highskill": {
+          "rows": 28315,
+          "majority_pct": 39.0,
+          "top1_pct": 61.6,
+          "top3_pct": 88.2
+        }
+      }
+    }
+  }
+}
