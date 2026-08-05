@@ -1,0 +1,7 @@
+testbed: 2 candidate(s) vs 42 opponents, 10 pairs/cell, conc=2
+out: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/decklist_exp
+START il_alldays_3ep@grimmsnarl_toplayer
+START il_alldays_3ep@marnies_grimmsnarl_ex
+DONE  il_alldays_3ep@marnies_grimmsnarl_ex
+DONE  il_alldays_3ep@grimmsnarl_toplayer
+TESTBED-COMPLETE decklist_exp

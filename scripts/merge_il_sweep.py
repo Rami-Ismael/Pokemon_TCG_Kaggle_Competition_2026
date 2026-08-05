@@ -56,13 +56,19 @@ def sigma(wins: int, n: int) -> float:
 # declared rather than inferred, because challengers are no longer only
 # "<arm>@<deck>" labels -- plain agent names (rule_baseline, mcts_il_agent, the
 # ladder-anchored public agents) are rated on the same scale.
-DEFAULT_POOL = [
-    "tb_archaludon", "makthanithin_1084_baseline", "romanrozen_strong_start",
-    "tb_dragapult", "wmh_alakazam", "wmh_garchomp", "tb_heuristic", "random_legal",
-    # v2 addition: a Grimmsnarl ex pilot, so the pool contests the archetype our
-    # own candidate plays (different 60-card build + rule policy = a real mirror).
-    "wmh_grimmsnarl",
-]
+# Pool v3 (2026-08-05): every wired opponent that passed
+# scripts/validate_agent_pool.py, read from configs/pool_v3.txt so the file
+# is the single source of truth. 42 external agents -- our own agents are
+# deliberately NOT opponents (beating ourselves was never evidence).
+def _load_pool() -> list[str]:
+    f = REPO / "configs" / "pool_v3.txt"
+    if f.exists():
+        return [x.strip() for x in f.read_text().splitlines() if x.strip()]
+    return ["tb_archaludon", "makthanithin_1084_baseline", "romanrozen_strong_start",
+            "tb_dragapult", "wmh_alakazam", "wmh_garchomp", "tb_heuristic",
+            "wmh_grimmsnarl", "random_legal"]
+
+DEFAULT_POOL = _load_pool()
 
 
 def main() -> int:

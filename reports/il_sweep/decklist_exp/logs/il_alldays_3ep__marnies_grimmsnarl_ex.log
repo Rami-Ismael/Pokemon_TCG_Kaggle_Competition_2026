@@ -1,0 +1,242 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 43 agents: il_alldays_3ep@marnies_grimmsnarl_ex, avikdas567_heuristic, biohack44_day2, daniilkrasnovvv_conservative_prob, jek1wantaufik_lucario, kiyotah_abomasnow, kiyotah_dragapult, kiyotah_iono, kojimar_lucario, makimakiai_rl, makthanithin_1084_baseline, makthanithin_improved_prob, mechi22_alakazam, pixiux_lucario_v63, plamen06_steel, pllinas_alakazam, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, romanrozen_strong_start, ryotasueyoshi_alakazam, tb_abomasnow, tb_alakazam, tb_archaludon, tb_dragapult, tb_heuristic, tb_iono, tb_lucario, tb_rulecore, tb_search, tb_starmie, wmh_alakazam, wmh_bellibolt, wmh_chandelure, wmh_froslass, wmh_garchomp, wmh_grimmsnarl, wmh_kangaskhan, wmh_megastarmie, wmh_mewtwo, wmh_ogerpon, wmh_trevenant, wmh_typhlosion, random_legal
+[1/42] il_alldays_3ep@marnies_grimmsnarl_ex vs avikdas567_heuristic: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 11.5s, 0.58s/game)
+[2/42] il_alldays_3ep@marnies_grimmsnarl_ex vs biohack44_day2: il_alldays_3ep@marnies_grimmsnarl_ex 17-3  (20 games, 17.5s, 0.88s/game)
+[3/42] il_alldays_3ep@marnies_grimmsnarl_ex vs daniilkrasnovvv_conservative_prob: il_alldays_3ep@marnies_grimmsnarl_ex 13-7  (20 games, 16.1s, 0.80s/game)
+[4/42] il_alldays_3ep@marnies_grimmsnarl_ex vs jek1wantaufik_lucario: il_alldays_3ep@marnies_grimmsnarl_ex 14-6  (20 games, 17.1s, 0.85s/game)
+[5/42] il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_abomasnow: il_alldays_3ep@marnies_grimmsnarl_ex 8-12  (20 games, 16.6s, 0.83s/game)
+[6/42] il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_dragapult: il_alldays_3ep@marnies_grimmsnarl_ex 18-2  (20 games, 15.3s, 0.76s/game)
+[7/42] il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_iono: il_alldays_3ep@marnies_grimmsnarl_ex 15-5  (20 games, 19.3s, 0.97s/game)
+[8/42] il_alldays_3ep@marnies_grimmsnarl_ex vs kojimar_lucario: il_alldays_3ep@marnies_grimmsnarl_ex 13-7  (20 games, 18.8s, 0.94s/game)
+[9/42] il_alldays_3ep@marnies_grimmsnarl_ex vs makimakiai_rl: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 12.1s, 0.60s/game)
+[10/42] il_alldays_3ep@marnies_grimmsnarl_ex vs makthanithin_1084_baseline: il_alldays_3ep@marnies_grimmsnarl_ex 16-4  (20 games, 15.5s, 0.78s/game)
+[11/42] il_alldays_3ep@marnies_grimmsnarl_ex vs makthanithin_improved_prob: il_alldays_3ep@marnies_grimmsnarl_ex 15-5  (20 games, 18.5s, 0.93s/game)
+[12/42] il_alldays_3ep@marnies_grimmsnarl_ex vs mechi22_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 17.0s, 0.85s/game)
+[13/42] il_alldays_3ep@marnies_grimmsnarl_ex vs pixiux_lucario_v63: il_alldays_3ep@marnies_grimmsnarl_ex 17-3  (20 games, 17.0s, 0.85s/game)
+[14/42] il_alldays_3ep@marnies_grimmsnarl_ex vs plamen06_steel: il_alldays_3ep@marnies_grimmsnarl_ex 12-8  (20 games, 18.2s, 0.91s/game)
+[15/42] il_alldays_3ep@marnies_grimmsnarl_ex vs pllinas_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 60.6s, 3.03s/game)
+[16/42] il_alldays_3ep@marnies_grimmsnarl_ex vs prvsiyan_control_v11: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 20.0s, 1.00s/game)
+[17/42] il_alldays_3ep@marnies_grimmsnarl_ex vs prvsiyan_grimbelief_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 15.4s, 0.77s/game)
+[18/42] il_alldays_3ep@marnies_grimmsnarl_ex vs romanrozen_strong_start: il_alldays_3ep@marnies_grimmsnarl_ex 15-5  (20 games, 18.4s, 0.92s/game)
+[19/42] il_alldays_3ep@marnies_grimmsnarl_ex vs ryotasueyoshi_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 17-3  (20 games, 17.2s, 0.86s/game)
+[20/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_abomasnow: il_alldays_3ep@marnies_grimmsnarl_ex 9-11  (20 games, 11.0s, 0.55s/game)
+[21/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 15.6s, 0.78s/game)
+[22/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_archaludon: il_alldays_3ep@marnies_grimmsnarl_ex 15-5  (20 games, 13.8s, 0.69s/game)
+[23/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_dragapult: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 15.8s, 0.79s/game)
+[24/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_heuristic: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 12.4s, 0.62s/game)
+[25/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_iono: il_alldays_3ep@marnies_grimmsnarl_ex 13-7  (20 games, 23.2s, 1.16s/game)
+[26/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_lucario: il_alldays_3ep@marnies_grimmsnarl_ex 16-4  (20 games, 14.1s, 0.71s/game)
+[27/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_rulecore: il_alldays_3ep@marnies_grimmsnarl_ex 18-2  (20 games, 13.8s, 0.69s/game)
+[28/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_search: il_alldays_3ep@marnies_grimmsnarl_ex 15-5  (20 games, 13.4s, 0.67s/game)
+[29/42] il_alldays_3ep@marnies_grimmsnarl_ex vs tb_starmie: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 9.9s, 0.50s/game)
+[30/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_alakazam: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 17.1s, 0.85s/game)
+[31/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_bellibolt: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 17.7s, 0.89s/game)
+[32/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_chandelure: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 17.1s, 0.86s/game)
+[33/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_froslass: il_alldays_3ep@marnies_grimmsnarl_ex 18-2  (20 games, 16.6s, 0.83s/game)
+[34/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_garchomp: il_alldays_3ep@marnies_grimmsnarl_ex 17-3  (20 games, 19.6s, 0.98s/game)
+[35/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_grimmsnarl: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 22.1s, 1.10s/game)
+[36/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_kangaskhan: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 16.6s, 0.83s/game)
+[37/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_megastarmie: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 20.0s, 1.00s/game)
+[38/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_mewtwo: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 18.0s, 0.90s/game)
+[39/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_ogerpon: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 24.4s, 1.22s/game)
+[40/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_trevenant: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 24.0s, 1.20s/game)
+[41/42] il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_typhlosion: il_alldays_3ep@marnies_grimmsnarl_ex 19-1  (20 games, 22.4s, 1.12s/game)
+[42/42] il_alldays_3ep@marnies_grimmsnarl_ex vs random_legal: il_alldays_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 14.0s, 0.70s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_all  avikda  biohac  daniil  jek1wa  kiyota  kiyota  kiyota  kojima  makima  maktha  maktha  mechi2  pixiux  plamen  pllina  prvsiy  prvsiy  romanr  ryotas  tb_abo  tb_ala  tb_arc  tb_dra  tb_heu  tb_ion  tb_luc  tb_rul  tb_sea  tb_sta  wmh_al  wmh_be  wmh_ch  wmh_fr  wmh_ga  wmh_gr  wmh_ka  wmh_me  wmh_me  wmh_og  wmh_tr  wmh_ty  random  win% [95% CI]
+il_alldays_3ep@marnies_grimmsnarl_ex-       20      17      13      14      8       18      15      13      20      16      15      19      17      12      20      19      20      15      17      9       19      15      19      20      13      16      18      15      20      20      20      19      18      17      20      20      20      20      20      19      19      20       86.2  [83.7,88.4]
+avikdas567_heuristic  0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+biohack44_day2        3       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        15.0  [ 5.2,36.0]
+daniilkrasnovvv_conservative_prob7       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        35.0  [18.1,56.7]
+jek1wantaufik_lucario 6       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        30.0  [14.5,51.9]
+kiyotah_abomasnow     12      0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        60.0  [38.7,78.1]
+kiyotah_dragapult     2       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        10.0  [ 2.8,30.1]
+kiyotah_iono          5       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        25.0  [11.2,46.9]
+kojimar_lucario       7       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        35.0  [18.1,56.7]
+makimakiai_rl         0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+makthanithin_1084_baseline4       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        20.0  [ 8.1,41.6]
+makthanithin_improved_prob5       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        25.0  [11.2,46.9]
+mechi22_alakazam      1       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         5.0  [ 0.9,23.6]
+pixiux_lucario_v63    3       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        15.0  [ 5.2,36.0]
+plamen06_steel        8       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        40.0  [21.9,61.3]
+pllinas_alakazam      0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+prvsiyan_control_v11  1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         5.0  [ 0.9,23.6]
+prvsiyan_grimbelief_alakazam0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+romanrozen_strong_start5       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        25.0  [11.2,46.9]
+ryotasueyoshi_alakazam3       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        15.0  [ 5.2,36.0]
+tb_abomasnow          11      0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        55.0  [34.2,74.2]
+tb_alakazam           1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         5.0  [ 0.9,23.6]
+tb_archaludon         5       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        25.0  [11.2,46.9]
+tb_dragapult          1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         5.0  [ 0.9,23.6]
+tb_heuristic          0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+tb_iono               7       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        35.0  [18.1,56.7]
+tb_lucario            4       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        20.0  [ 8.1,41.6]
+tb_rulecore           2       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0        10.0  [ 2.8,30.1]
+tb_search             5       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0       0        25.0  [11.2,46.9]
+tb_starmie            0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_alakazam          0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_bellibolt         0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_chandelure        1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0       0         5.0  [ 0.9,23.6]
+wmh_froslass          2       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0       0        10.0  [ 2.8,30.1]
+wmh_garchomp          3       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0       0        15.0  [ 5.2,36.0]
+wmh_grimmsnarl        0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_kangaskhan        0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_megastarmie       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_mewtwo            0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0       0         0.0  [ 0.0,16.1]
+wmh_ogerpon           0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0       0         0.0  [ 0.0,16.1]
+wmh_trevenant         1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0       0         5.0  [ 0.9,23.6]
+wmh_typhlosion        1       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -       0         5.0  [ 0.9,23.6]
+random_legal          0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       0       -         0.0  [ 0.0,16.1]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_alldays_3ep@marnies_grimmsnarl_ex vs jek1wantaufik_lucario: 14/20 =  70.0% [48.1,85.5]  (17.1s, 0.85s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_abomasnow: 8/20 =  40.0% [21.9,61.3]  (16.6s, 0.83s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_dragapult: 18/20 =  90.0% [69.9,97.2]  (15.3s, 0.76s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs kiyotah_iono: 15/20 =  75.0% [53.1,88.8]  (19.3s, 0.97s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs kojimar_lucario: 13/20 =  65.0% [43.3,81.9]  (18.8s, 0.94s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs makimakiai_rl: 20/20 = 100.0% [83.9,100.0]  (12.1s, 0.60s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs makthanithin_1084_baseline: 16/20 =  80.0% [58.4,91.9]  (15.5s, 0.78s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs makthanithin_improved_prob: 15/20 =  75.0% [53.1,88.8]  (18.5s, 0.93s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs mechi22_alakazam: 19/20 =  95.0% [76.4,99.1]  (17.0s, 0.85s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs pixiux_lucario_v63: 17/20 =  85.0% [64.0,94.8]  (17.0s, 0.85s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs plamen06_steel: 12/20 =  60.0% [38.7,78.1]  (18.2s, 0.91s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs pllinas_alakazam: 20/20 = 100.0% [83.9,100.0]  (60.6s, 3.03s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs prvsiyan_control_v11: 19/20 =  95.0% [76.4,99.1]  (20.0s, 1.00s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs prvsiyan_grimbelief_alakazam: 20/20 = 100.0% [83.9,100.0]  (15.4s, 0.77s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs romanrozen_strong_start: 15/20 =  75.0% [53.1,88.8]  (18.4s, 0.92s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs ryotasueyoshi_alakazam: 17/20 =  85.0% [64.0,94.8]  (17.2s, 0.86s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_abomasnow: 9/20 =  45.0% [25.8,65.8]  (11.0s, 0.55s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_alakazam: 19/20 =  95.0% [76.4,99.1]  (15.6s, 0.78s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_archaludon: 15/20 =  75.0% [53.1,88.8]  (13.8s, 0.69s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_dragapult: 19/20 =  95.0% [76.4,99.1]  (15.8s, 0.79s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_heuristic: 20/20 = 100.0% [83.9,100.0]  (12.4s, 0.62s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_iono: 13/20 =  65.0% [43.3,81.9]  (23.2s, 1.16s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_lucario: 16/20 =  80.0% [58.4,91.9]  (14.1s, 0.71s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_rulecore: 18/20 =  90.0% [69.9,97.2]  (13.8s, 0.69s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_search: 15/20 =  75.0% [53.1,88.8]  (13.4s, 0.67s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs tb_starmie: 20/20 = 100.0% [83.9,100.0]  (9.9s, 0.50s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_alakazam: 20/20 = 100.0% [83.9,100.0]  (17.1s, 0.85s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_bellibolt: 20/20 = 100.0% [83.9,100.0]  (17.7s, 0.89s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_chandelure: 19/20 =  95.0% [76.4,99.1]  (17.1s, 0.86s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_froslass: 18/20 =  90.0% [69.9,97.2]  (16.6s, 0.83s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_garchomp: 17/20 =  85.0% [64.0,94.8]  (19.6s, 0.98s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_grimmsnarl: 20/20 = 100.0% [83.9,100.0]  (22.1s, 1.10s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_kangaskhan: 20/20 = 100.0% [83.9,100.0]  (16.6s, 0.83s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_megastarmie: 20/20 = 100.0% [83.9,100.0]  (20.0s, 1.00s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_mewtwo: 20/20 = 100.0% [83.9,100.0]  (18.0s, 0.90s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_ogerpon: 20/20 = 100.0% [83.9,100.0]  (24.4s, 1.22s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_trevenant: 19/20 =  95.0% [76.4,99.1]  (24.0s, 1.20s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs wmh_typhlosion: 19/20 =  95.0% [76.4,99.1]  (22.4s, 1.12s/game)
+  il_alldays_3ep@marnies_grimmsnarl_ex vs random_legal: 20/20 = 100.0% [83.9,100.0]  (14.0s, 0.70s/game)
+  avikdas567_heuristic vs il_alldays_3ep@marnies_grimmsnarl_ex: 0/20 =   0.0% [ 0.0,16.1]  (11.5s, 0.58s/game)
+  biohack44_day2 vs il_alldays_3ep@marnies_grimmsnarl_ex: 3/20 =  15.0% [ 5.2,36.0]  (17.5s, 0.88s/game)
+  daniilkrasnovvv_conservative_prob vs il_alldays_3ep@marnies_grimmsnarl_ex: 7/20 =  35.0% [18.1,56.7]  (16.1s, 0.80s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_alldays_3ep@marnies_grimmsnarl_ex  86.2%  [83.7,88.4]  (724/840)
+  kiyotah_abomasnow       60.0%  [38.7,78.1]  (12/20)
+  tb_abomasnow            55.0%  [34.2,74.2]  (11/20)
+  plamen06_steel          40.0%  [21.9,61.3]  (8/20)
+  daniilkrasnovvv_conservative_prob  35.0%  [18.1,56.7]  (7/20)
+  kojimar_lucario         35.0%  [18.1,56.7]  (7/20)
+  tb_iono                 35.0%  [18.1,56.7]  (7/20)
+  jek1wantaufik_lucario   30.0%  [14.5,51.9]  (6/20)
+  kiyotah_iono            25.0%  [11.2,46.9]  (5/20)
+  makthanithin_improved_prob  25.0%  [11.2,46.9]  (5/20)
+  romanrozen_strong_start  25.0%  [11.2,46.9]  (5/20)
+  tb_archaludon           25.0%  [11.2,46.9]  (5/20)
+  tb_search               25.0%  [11.2,46.9]  (5/20)
+  makthanithin_1084_baseline  20.0%  [ 8.1,41.6]  (4/20)
+  tb_lucario              20.0%  [ 8.1,41.6]  (4/20)
+  biohack44_day2          15.0%  [ 5.2,36.0]  (3/20)
+  pixiux_lucario_v63      15.0%  [ 5.2,36.0]  (3/20)
+  ryotasueyoshi_alakazam  15.0%  [ 5.2,36.0]  (3/20)
+  wmh_garchomp            15.0%  [ 5.2,36.0]  (3/20)
+  kiyotah_dragapult       10.0%  [ 2.8,30.1]  (2/20)
+  tb_rulecore             10.0%  [ 2.8,30.1]  (2/20)
+  wmh_froslass            10.0%  [ 2.8,30.1]  (2/20)
+  mechi22_alakazam         5.0%  [ 0.9,23.6]  (1/20)
+  prvsiyan_control_v11     5.0%  [ 0.9,23.6]  (1/20)
+  tb_alakazam              5.0%  [ 0.9,23.6]  (1/20)
+  tb_dragapult             5.0%  [ 0.9,23.6]  (1/20)
+  wmh_chandelure           5.0%  [ 0.9,23.6]  (1/20)
+  wmh_trevenant            5.0%  [ 0.9,23.6]  (1/20)
+  wmh_typhlosion           5.0%  [ 0.9,23.6]  (1/20)
+  avikdas567_heuristic     0.0%  [ 0.0,16.1]  (0/20)
+  makimakiai_rl            0.0%  [ 0.0,16.1]  (0/20)
+  pllinas_alakazam         0.0%  [ 0.0,16.1]  (0/20)
+  prvsiyan_grimbelief_alakazam   0.0%  [ 0.0,16.1]  (0/20)
+  tb_heuristic             0.0%  [ 0.0,16.1]  (0/20)
+  tb_starmie               0.0%  [ 0.0,16.1]  (0/20)
+  wmh_alakazam             0.0%  [ 0.0,16.1]  (0/20)
+  wmh_bellibolt            0.0%  [ 0.0,16.1]  (0/20)
+  wmh_grimmsnarl           0.0%  [ 0.0,16.1]  (0/20)
+  wmh_kangaskhan           0.0%  [ 0.0,16.1]  (0/20)
+  wmh_megastarmie          0.0%  [ 0.0,16.1]  (0/20)
+  wmh_mewtwo               0.0%  [ 0.0,16.1]  (0/20)
+  wmh_ogerpon              0.0%  [ 0.0,16.1]  (0/20)
+  random_legal             0.0%  [ 0.0,16.1]  (0/20)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_alldays_3ep@marnies_grimmsnarl_ex  1874.9  (RD  30.0, 95% CI +/- 60.0)  GXE  80.9%
+  kiyotah_abomasnow       1593.6  (RD 110.2, 95% CI +/-220.4)  GXE  58.7%
+  tb_abomasnow            1546.8  (RD 110.2, 95% CI +/-220.4)  GXE  54.4%
+  plamen06_steel          1406.4  (RD 110.2, 95% CI +/-220.4)  GXE  41.3%
+  daniilkrasnovvv_conservative_prob  1359.7  (RD 110.2, 95% CI +/-220.4)  GXE  37.1%
+  kojimar_lucario         1359.7  (RD 110.2, 95% CI +/-220.4)  GXE  37.1%
+  tb_iono                 1359.7  (RD 110.2, 95% CI +/-220.4)  GXE  37.1%
+  jek1wantaufik_lucario   1312.9  (RD 110.2, 95% CI +/-220.4)  GXE  33.1%
+  kiyotah_iono            1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+  makthanithin_improved_prob  1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+  romanrozen_strong_start  1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+  tb_archaludon           1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+  tb_search               1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+  makthanithin_1084_baseline  1219.3  (RD 110.2, 95% CI +/-220.4)  GXE  25.9%
+  tb_lucario              1219.3  (RD 110.2, 95% CI +/-220.4)  GXE  25.9%
+  biohack44_day2          1172.5  (RD 110.2, 95% CI +/-220.4)  GXE  22.7%
+  pixiux_lucario_v63      1172.5  (RD 110.2, 95% CI +/-220.4)  GXE  22.7%
+  ryotasueyoshi_alakazam  1172.5  (RD 110.2, 95% CI +/-220.4)  GXE  22.7%
+  wmh_garchomp            1172.5  (RD 110.2, 95% CI +/-220.4)  GXE  22.7%
+  kiyotah_dragapult       1125.8  (RD 110.2, 95% CI +/-220.4)  GXE  19.7%
+  tb_rulecore             1125.8  (RD 110.2, 95% CI +/-220.4)  GXE  19.7%
+  wmh_froslass            1125.8  (RD 110.2, 95% CI +/-220.4)  GXE  19.7%
+  mechi22_alakazam        1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  prvsiyan_control_v11    1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  tb_alakazam             1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  tb_dragapult            1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  wmh_chandelure          1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  wmh_trevenant           1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  wmh_typhlosion          1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+  avikdas567_heuristic    1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  makimakiai_rl           1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  pllinas_alakazam        1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  prvsiyan_grimbelief_alakazam  1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_alldays_3ep@marnies_grimmsnarl_ex: 0/67839 = 0.00%  by_reason={}
+[fallback-diag] mechi22_alakazam: 0/1202 = 0.00%  by_reason={'deck_returns': 20, 'policy_ok': 1202}
+[fallback-diag] wmh_alakazam: 0/1209 = 0.00%  by_reason={'deck_returns': 20, 'policy_ok': 1209}
+[fallback-diag] wmh_bellibolt: 0/1233 = 0.00%  by_reason={'deck_returns': 20, 'policy_ok': 1233}
+[fallback-diag] wmh_typhlosion: 0/1226 = 0.00%  by_reason={'deck_returns': 20, 'policy_ok': 1226}
+
+  tb_heuristic            1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  tb_starmie              1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_alakazam            1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_bellibolt           1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_grimmsnarl          1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_kangaskhan          1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_megastarmie         1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_mewtwo              1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  wmh_ogerpon             1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+  random_legal            1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_alldays_3ep@marnies_grimmsnarl_ex fallback_rate= 0.00%  decisions=67839  raw={'decisions': 67839, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  mechi22_alakazam       fallback_rate= 0.00%  decisions=1202  raw={'deck_returns': 20, 'decisions': 1202, 'policy_ok': 1202, 'fallback_rate': 0.0}
+  wmh_alakazam           fallback_rate= 0.00%  decisions=1209  raw={'decisions': 1209, 'policy_ok': 1209, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 20, 'errors': {}, 'fallback_rate': 0.0}
+  wmh_bellibolt          fallback_rate= 0.00%  decisions=1233  raw={'decisions': 1233, 'policy_ok': 1233, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 20, 'errors': {}, 'chosen_types': {}, 'attack_ids_chosen': {}, 'fallback_rate': 0.0}
+  wmh_typhlosion         fallback_rate= 0.00%  decisions=1226  raw={'decisions': 1226, 'policy_ok': 1226, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 20, 'errors': {}, 'fallback_rate': 0.0}
+
+total wall clock: 755.1s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/decklist_exp/il_alldays_3ep__marnies_grimmsnarl_ex.json
+glicko: not persisted (isolated run)

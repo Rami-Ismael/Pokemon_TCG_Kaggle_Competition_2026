@@ -467,3 +467,47 @@ carries little ranking information. Recorded as a caution: enlarging the pool is
 automatically an improvement — a new member earns its place by *discriminating*, and
 this one mostly does not. It stays in because archetype coverage is worth something on
 its own, but it should be replaced by a stronger Grimmsnarl pilot when one exists.
+
+
+## ⑨ CORRECTION — the same-build noise band was wrong, and the inversion is real
+
+Rami flagged 2026-08-05 that the 804.0 "best-ever" is not reproducible: resubmits of
+the identical bundle read only slightly above the μ₀=600 prior. Checking the lineage:
+
+| submitted | ref | settled score |
+|---|---|---:|
+| 2026-08-01 12:42 | 55162376 | 804.0 |
+| 2026-08-02 17:36 | 55191752 | 699.0 |
+| 2026-08-03 18:30 | 55219194 | 692.7 |
+| 2026-08-04 00:25 | 55224682 | 666.1 |
+| 2026-08-04 03:31 | 55228113 | 683.2 |
+
+**Four consecutive attempts: mean 685.2, sd 12.4, range 32.9.** The 804.0 is a single
+unreproduced reading. Our real strength is **~685 — only 85 points above the prior** —
+and the gap to the top-8 cutoff (1135.1) is **~450 points**, not ~330.
+
+**What I got wrong.** Earlier sections of this report quoted a "**~230-point same-build
+spread**" and used it to argue the deck inversion was inside the noise. That band was
+constructed from a range that included both the 804.0 outlier **and a 600.0 reading that
+is the μ₀ prior, not a score** — a value flagged elsewhere in this very report as "not a
+score" and then folded into a noise estimate anyway. The settled same-build spread is
+**32.9 points**, not 230.
+
+Re-scoring the deck comparison against the corrected band:
+
+| | ladder | reads |
+|---|---:|---|
+| `il_alldays_0804` on Mega Lucario ex (55248985) | 418.0 | 5, settled |
+| `il_alldays_0804` on Marnie's Grimmsnarl ex (55270787) | 311.3 | 3, settled |
+| **gap** | **106.7** | **3.2x the 32.9-pt same-build spread** |
+
+**The inversion is therefore REAL, not noise.** Mega Lucario ex genuinely outperformed
+Marnie's Grimmsnarl ex on the ladder while the local pool ranked Grimmsnarl 28pp better.
+Every hedge in this report of the form "inside same-build drift" should be read against
+32.9 points, not 230 — which strengthens the falsification rather than softening it.
+
+**Field movement, restated honestly.** Same build by date: 804 → 699 → 692.7 → 666.1 →
+683.2. The 08-01→08-02 drop is 105 pts; everything after is flat (within the 33-pt
+band). With n=1 at 08-01 we cannot separate "804 was a lucky roll" from "the field
+strengthened sharply on 08-02". What is certain is that the build has been worth ~685
+since 08-02.

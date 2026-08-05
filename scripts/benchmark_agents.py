@@ -563,7 +563,7 @@ def play_match(agent_a, agent_b, env_factory, pairs: int = 1,
 
 def run_benchmark(agents: list[str], games_per_pair: int = 8,
                    glicko_path: Path = GLICKO_PATH, out_path: Path | None = None,
-                   persist_glicko: bool = True, tb_dir: Path | None = None):
+                   persist_glicko: bool = True, tb_dir: Path | None = None, focus: str | None = None):
     from kaggle_environments import make
 
     # The benchmark IS the diagnostic surface: turn on fallback tracking for
@@ -590,12 +590,20 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
     # about its rating relative to the field.
     glicko_games: list[tuple[str, str, float]] = []
 
-    total_pairs = n * (n - 1) // 2 + n  # unordered incl. self-play
+    # `focus` turns the full round-robin into a STAR: only focus-vs-everyone is
+    # played, skipping every other-vs-other pairing. Testing one model against a
+    # 42-agent bed is then 42 pairings instead of 903 -- the pool's internal
+    # ratings come from a separate one-off round-robin and are merged in, so
+    # nothing is lost by not replaying them for every candidate.
+    if focus:
+        pairlist = [(focus, b) for b in agents if b != focus]
+    else:
+        pairlist = [(agents[i], agents[j]) for i in range(n) for j in range(i, n)]
+    total_pairs = len(pairlist)
     done = 0
     run_t0 = time.time()
-    for i in range(n):
-        for j in range(i, n):
-            a, b = agents[i], agents[j]
+    if True:
+        for a, b in pairlist:
             pairs = games_per_pair if a != b else max(1, games_per_pair // 2)
             aw, bw, dr, secs = play_match(fns[a], fns[b], lambda: make("cabt"), pairs, name_a=a, name_b=b)
             wins[a][b] += aw
@@ -763,6 +771,10 @@ def main():
                     help="where to load/persist Glicko ratings (default: reports/glicko_ratings.json)")
     ap.add_argument("--out", type=Path, default=None,
                     help="where to save the result JSON (default: reports/agent_benchmark.json)")
+    ap.add_argument("--focus", default=None,
+                    help="star mode: play ONLY <focus> vs every other agent, skipping "
+                         "other-vs-other. Testing one candidate against a 42-agent bed "
+                         "becomes 42 pairings instead of 903.")
     ap.add_argument("--no-glicko-persist", action="store_true",
                     help="score Glicko for this run's printout but don't read/write --glicko-path "
                          "(use for isolated runs, e.g. deck-arm sweeps, that shouldn't pollute "
@@ -788,7 +800,7 @@ def main():
         sys.exit("no agents selected")
     run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
                   out_path=args.out, persist_glicko=not args.no_glicko_persist,
-                  tb_dir=None if args.no_tb else args.tb_dir)
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
 
 
 if __name__ == "__main__":

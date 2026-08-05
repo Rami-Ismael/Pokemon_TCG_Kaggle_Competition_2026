@@ -1,0 +1,265 @@
+{
+  "sources": [
+    "pool_round_robin.json"
+  ],
+  "pool": [
+    "avikdas567_heuristic",
+    "biohack44_day2",
+    "daniilkrasnovvv_conservative_prob",
+    "jek1wantaufik_lucario",
+    "kiyotah_abomasnow",
+    "kiyotah_dragapult",
+    "kiyotah_iono",
+    "kojimar_lucario",
+    "makimakiai_rl",
+    "makthanithin_1084_baseline",
+    "makthanithin_improved_prob",
+    "mechi22_alakazam",
+    "pixiux_lucario_v63",
+    "plamen06_steel",
+    "pllinas_alakazam",
+    "prvsiyan_control_v11",
+    "prvsiyan_grimbelief_alakazam",
+    "random_legal",
+    "romanrozen_strong_start",
+    "ryotasueyoshi_alakazam",
+    "tb_abomasnow",
+    "tb_alakazam",
+    "tb_archaludon",
+    "tb_dragapult",
+    "tb_heuristic",
+    "tb_iono",
+    "tb_lucario",
+    "tb_rulecore",
+    "tb_search",
+    "tb_starmie",
+    "wmh_alakazam",
+    "wmh_bellibolt",
+    "wmh_chandelure",
+    "wmh_froslass",
+    "wmh_garchomp",
+    "wmh_grimmsnarl",
+    "wmh_kangaskhan",
+    "wmh_megastarmie",
+    "wmh_mewtwo",
+    "wmh_ogerpon",
+    "wmh_trevenant",
+    "wmh_typhlosion"
+  ],
+  "arms": [],
+  "per_opponent": {},
+  "aggregate": {},
+  "glicko": {
+    "avikdas567_heuristic": {
+      "rating": 1202.9103616037123,
+      "rd": 32.96105823585569,
+      "gxe": 24.205600261970073
+    },
+    "biohack44_day2": {
+      "rating": 1583.6872220834614,
+      "rd": 32.96105823585569,
+      "gxe": 57.9697689404339
+    },
+    "daniilkrasnovvv_conservative_prob": {
+      "rating": 1688.2962496877878,
+      "rd": 32.96105823585569,
+      "gxe": 67.33658667910336
+    },
+    "jek1wantaufik_lucario": {
+      "rating": 1510.4609027604326,
+      "rd": 32.96105823585569,
+      "gxe": 51.00465383557924
+    },
+    "kiyotah_abomasnow": {
+      "rating": 1654.8213608544033,
+      "rd": 32.96105823585569,
+      "gxe": 64.44737785110188
+    },
+    "kiyotah_dragapult": {
+      "rating": 1646.4526386460573,
+      "rd": 32.96105823585569,
+      "gxe": 63.70728482506557
+    },
+    "kiyotah_iono": {
+      "rating": 1617.162110916846,
+      "rd": 32.96105823585569,
+      "gxe": 61.067382832051614
+    },
+    "kojimar_lucario": {
+      "rating": 1705.0336941044802,
+      "rd": 32.96105823585569,
+      "gxe": 68.73490033904663
+    },
+    "makimakiai_rl": {
+      "rating": 1165.2511116661547,
+      "rd": 32.96105823585569,
+      "gxe": 21.65085667211774
+    },
+    "makthanithin_1084_baseline": {
+      "rating": 1692.480610791961,
+      "rd": 32.96105823585569,
+      "gxe": 67.68919249186808
+    },
+    "makthanithin_improved_prob": {
+      "rating": 1692.480610791961,
+      "rd": 32.96105823585569,
+      "gxe": 67.68919249186808
+    },
+    "mechi22_alakazam": {
+      "rating": 1746.8773051462108,
+      "rd": 32.96105823585569,
+      "gxe": 72.08176185544687
+    },
+    "pixiux_lucario_v63": {
+      "rating": 1654.8213608544033,
+      "rd": 32.96105823585569,
+      "gxe": 64.44737785110188
+    },
+    "plamen06_steel": {
+      "rating": 1771.9834717712492,
+      "rd": 32.96105823585569,
+      "gxe": 73.98098790482753
+    },
+    "pllinas_alakazam": {
+      "rating": 1851.4863327505375,
+      "rd": 32.96105823585569,
+      "gxe": 79.42009835065956
+    },
+    "prvsiyan_control_v11": {
+      "rating": 1625.530833125192,
+      "rd": 32.96105823585569,
+      "gxe": 61.829054504560595
+    },
+    "prvsiyan_grimbelief_alakazam": {
+      "rating": 1198.7260004995392,
+      "rd": 32.96105823585569,
+      "gxe": 23.9118749951824
+    },
+    "romanrozen_strong_start": {
+      "rating": 1700.849333000307,
+      "rd": 32.96105823585569,
+      "gxe": 68.38837685600441
+    },
+    "ryotasueyoshi_alakazam": {
+      "rating": 1625.530833125192,
+      "rd": 32.96105823585569,
+      "gxe": 61.829054504560595
+    },
+    "tb_abomasnow": {
+      "rating": 1571.1341387709422,
+      "rd": 32.96105823585569,
+      "gxe": 56.79035148606546
+    },
+    "tb_alakazam": {
+      "rating": 1575.318499875115,
+      "rd": 32.96105823585569,
+      "gxe": 57.18441569283952
+    },
+    "tb_archaludon": {
+      "rating": 1700.849333000307,
+      "rd": 32.96105823585569,
+      "gxe": 68.38837685600441
+    },
+    "tb_dragapult": {
+      "rating": 1696.6649718961341,
+      "rd": 32.96105823585569,
+      "gxe": 68.0397985361258
+    },
+    "tb_heuristic": {
+      "rating": 1186.1729171870202,
+      "rd": 32.96105823585569,
+      "gxe": 23.045445541291624
+    },
+    "tb_iono": {
+      "rating": 1621.3464720210188,
+      "rd": 32.96105823585569,
+      "gxe": 61.44891961960765
+    },
+    "tb_lucario": {
+      "rating": 1437.2345834374041,
+      "rd": 32.96105823585569,
+      "gxe": 44.00031242470935
+    },
+    "tb_rulecore": {
+      "rating": 1418.4049584686252,
+      "rd": 32.96105823585569,
+      "gxe": 42.226207655716664
+    },
+    "tb_search": {
+      "rating": 1353.5473613539427,
+      "rd": 32.96105823585569,
+      "gxe": 36.29271517493443
+    },
+    "tb_starmie": {
+      "rating": 1131.7762228327701,
+      "rd": 32.96105823585569,
+      "gxe": 19.548703635223884
+    },
+    "wmh_alakazam": {
+      "rating": 1684.111888583615,
+      "rd": 32.96105823585569,
+      "gxe": 66.98200989325774
+    },
+    "wmh_bellibolt": {
+      "rating": 1278.2288614788276,
+      "rd": 32.96105823585569,
+      "gxe": 29.900066666899075
+    },
+    "wmh_chandelure": {
+      "rating": 1311.7037503122122,
+      "rd": 32.96105823585569,
+      "gxe": 32.66341332089663
+    },
+    "wmh_froslass": {
+      "rating": 1512.5530833125192,
+      "rd": 32.96105823585569,
+      "gxe": 51.205513214531564
+    },
+    "wmh_garchomp": {
+      "rating": 1642.2682775418841,
+      "rd": 32.96105823585569,
+      "gxe": 63.33476262005443
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1307.519389208039,
+      "rd": 32.96105823585569,
+      "gxe": 32.310807508131916
+    },
+    "wmh_kangaskhan": {
+      "rating": 1127.5918617285972,
+      "rd": 32.96105823585569,
+      "gxe": 19.29710072068649
+    },
+    "wmh_megastarmie": {
+      "rating": 1596.2403053959804,
+      "rd": 32.96105823585569,
+      "gxe": 59.14015594421434
+    },
+    "wmh_mewtwo": {
+      "rating": 1303.3350281038659,
+      "rd": 32.96105823585569,
+      "gxe": 31.960201463874203
+    },
+    "wmh_ogerpon": {
+      "rating": 1144.3293061452894,
+      "rd": 32.96105823585569,
+      "gxe": 20.31837856733445
+    },
+    "wmh_trevenant": {
+      "rating": 1587.8715831876343,
+      "rd": 32.96105823585569,
+      "gxe": 58.360963492940954
+    },
+    "wmh_typhlosion": {
+      "rating": 1387.0222501873272,
+      "rd": 32.96105823585569,
+      "gxe": 39.31551405373091
+    },
+    "random_legal": {
+      "rating": 1089.9326117910398,
+      "rd": 32.96105823585569,
+      "gxe": 17.14324202069675
+    }
+  },
+  "separation": []
+}
