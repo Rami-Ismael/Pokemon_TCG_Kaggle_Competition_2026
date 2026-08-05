@@ -276,6 +276,11 @@ AGENT_FILES = {
     # All-days imitation (plain-name scheme, 2026-08-04): fresh 3-epoch BC on
     # every Hub train day (15,032 episodes) -- Rami's data-scale experiment.
     "il_alldays_0804": REPO / "agents" / "il_alldays_0804" / "agent_core.py",
+    # Self-play generation 1 (provisional base = all-days imitation): the
+    # budget-end final policy and the anchor-gate-promoted teacher (beat its
+    # frozen reference 73-27 at step 430k).
+    "selfplay_g1_final": REPO / "agents" / "selfplay_g1_final" / "agent_core.py",
+    "selfplay_g1_ref430k": REPO / "agents" / "selfplay_g1_ref430k" / "agent_core.py",
     # Stage-3 SELFPLAY candidates (rl_pipeline_v1.md §3.3): PufferLib-PPO
     # fine-tuned snapshots from models/ppo_puffer/, wrapped like s2_arms.
     "ppo_u60416": REPO / "agents" / "ppo_arms" / "u60416" / "agent_core.py",
