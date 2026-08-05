@@ -133,6 +133,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
+    # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
+    # comparison is therefore policy-vs-policy+search, deck held fixed.
+    "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
     # Standing regression opponent (BENCHMARK_ONLY_AGENTS). The PPO exploiter
     # trained against frozen il_agent. NEVER SUBMIT IT -- it loses to
     # rule_baseline (0.440) and improved_prob_main (0.230); it beats only its

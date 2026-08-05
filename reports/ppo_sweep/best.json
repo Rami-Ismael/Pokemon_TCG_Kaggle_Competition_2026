@@ -1,0 +1,26 @@
+{
+  "idx": 18,
+  "ts": 1785910087.4,
+  "params": {
+    "learning_rate": 6.757558352519965e-05,
+    "ent_coef": 0.0035679217291045796,
+    "kl_coef": 0.03459509159294605,
+    "update_epochs": 3,
+    "minibatch_size": 1024,
+    "gae_lambda": 0.9325608480024878
+  },
+  "run_tag": "sweep0804_r18",
+  "cost_s": 1441.0,
+  "failure": false,
+  "score": 0.72,
+  "global_step": 60416,
+  "snap": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/protean-hyperparameter-ppo-5397a4/models/ppo_sweep/run18/u60416_final",
+  "gate": {
+    "wins": 72,
+    "losses": 28,
+    "draws": 0,
+    "games": 100,
+    "win_rate": 0.72,
+    "seconds": 25.131293773651123
+  }
+}

@@ -1,0 +1,373 @@
+{
+  "spec": "all:agents",
+  "play_out": true,
+  "probed": 33,
+  "legal": 33,
+  "failed": 0,
+  "seconds": 6.3,
+  "results": [
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 121,
+      "name": "avikdas567_heuristic",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/avikdas567_heuristic/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 66,
+      "name": "biohack44_day2",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/biohack44_day2/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 144,
+      "name": "daniilkrasnovvv_conservative_prob",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/daniilkrasnovvv_conservative_prob/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 156,
+      "name": "kiyotah_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_abomasnow/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 193,
+      "name": "kiyotah_dragapult",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_dragapult/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 155,
+      "name": "kiyotah_iono",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_iono/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 139,
+      "name": "makimakiai_rl",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/makimakiai_rl/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 204,
+      "name": "mechi22_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/mechi22_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 58,
+      "name": "pixiux_lucario_v63",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/pixiux_lucario_v63/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 80,
+      "name": "plamen06_steel",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/plamen06_steel/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 209,
+      "name": "pllinas_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/pllinas_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 95,
+      "name": "prvsiyan_control_v11",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/prvsiyan_control_v11/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 225,
+      "name": "prvsiyan_grimbelief_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/prvsiyan_grimbelief_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 207,
+      "name": "ryotasueyoshi_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/ryotasueyoshi_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 32,
+      "name": "tb_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_abomasnow/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 136,
+      "name": "tb_archaludon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_archaludon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 194,
+      "name": "tb_dragapult",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_dragapult/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 140,
+      "name": "tb_heuristic",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_heuristic/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 75,
+      "name": "tb_iono",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_iono/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 129,
+      "name": "tb_lucario",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_lucario/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 42,
+      "name": "tb_starmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_starmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 195,
+      "name": "wmh_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 316,
+      "name": "wmh_bellibolt",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_bellibolt/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 114,
+      "name": "wmh_chandelure",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_chandelure/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 105,
+      "name": "wmh_froslass",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_froslass/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 204,
+      "name": "wmh_garchomp",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_garchomp/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 182,
+      "name": "wmh_grimmsnarl",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_grimmsnarl/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 165,
+      "name": "wmh_kangaskhan",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_kangaskhan/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 90,
+      "name": "wmh_megastarmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_megastarmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 183,
+      "name": "wmh_mewtwo",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_mewtwo/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 211,
+      "name": "wmh_ogerpon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_ogerpon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 200,
+      "name": "wmh_trevenant",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_trevenant/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 237,
+      "name": "wmh_typhlosion",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_typhlosion/deck.csv"
+    }
+  ]
+}
