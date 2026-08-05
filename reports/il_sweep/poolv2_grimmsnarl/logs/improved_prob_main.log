@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] improved_prob_main: 0/2826 = 39.10%  by_reason={'search_fallback': 1105}
+Loading 2 agents: improved_prob_main, wmh_grimmsnarl
+[1/3] improved_prob_main vs improved_prob_main: improved_prob_main 4-6  (10 games, 4.4s, 0.44s/game)
+[2/3] improved_prob_main vs wmh_grimmsnarl: improved_prob_main 20-0  (20 games, 5.7s, 0.29s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 6-4  (10 games, 3.2s, 0.32s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 improv  wmh_gr  win% [95% CI]
+improved_prob_main    -       20       75.0  [59.8,85.8]
+wmh_grimmsnarl        0       -        25.0  [14.2,40.2]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  improved_prob_main vs wmh_grimmsnarl: 20/20 = 100.0% [83.9,100.0]  (5.7s, 0.29s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  improved_prob_main      75.0%  [59.8,85.8]  (30/40)
+  wmh_grimmsnarl          25.0%  [14.2,40.2]  (10/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  improved_prob_main      1967.8  (RD 110.2, 95% CI +/-220.4)  GXE  85.2%
+  wmh_grimmsnarl          1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  improved_prob_main     fallback_rate=39.10%  decisions=2826  raw={'decisions': 2826, 'search_fallback': 1105, 'fallback_rate': 0.3910120311394197}
+
+total wall clock: 13.3s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/improved_prob_main.json
+glicko: not persisted (isolated run)

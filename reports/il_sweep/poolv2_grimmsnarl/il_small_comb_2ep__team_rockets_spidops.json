@@ -1,0 +1,78 @@
+{
+  "agents": [
+    "il_small_comb_2ep@team_rockets_spidops",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "il_small_comb_2ep@team_rockets_spidops": 10,
+      "wmh_grimmsnarl": 17
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@team_rockets_spidops": 3,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "il_small_comb_2ep@team_rockets_spidops": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@team_rockets_spidops": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "il_small_comb_2ep@team_rockets_spidops": 24.27561616897583,
+      "wmh_grimmsnarl": 17.752264976501465
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@team_rockets_spidops": 17.752264976501465,
+      "wmh_grimmsnarl": 8.552956581115723
+    }
+  },
+  "total_wall_clock_sec": 34.1874418258667,
+  "overall_win_pct": {
+    "il_small_comb_2ep@team_rockets_spidops": 67.5,
+    "wmh_grimmsnarl": 32.5
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "p": 67.5,
+      "lo": 52.017458088898,
+      "hi": 79.91568303733828
+    },
+    "wmh_grimmsnarl": {
+      "p": 32.5,
+      "lo": 20.084316962661724,
+      "hi": 47.98254191110201
+    }
+  },
+  "glicko": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "rating": 1827.4565340244526,
+      "rd": 110.20831912594903,
+      "gxe": 77.34704556253541
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1172.5434659755474,
+      "rd": 110.20831912594903,
+      "gxe": 22.652954437464587
+    }
+  },
+  "fallback_diag": {
+    "il_small_comb_2ep@team_rockets_spidops": {
+      "decisions": 2699,
+      "too_many_options": 2,
+      "enabled": true,
+      "fallbacks": 2,
+      "fallback_rate": 0.0007410151908114116
+    }
+  },
+  "fallback_first": {}
+}

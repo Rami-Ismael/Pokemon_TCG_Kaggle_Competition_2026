@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_small_comb_2ep@mega_lucario_ex: 0/2852 = 0.00%  by_reason={}
+Loading 2 agents: il_small_comb_2ep@mega_lucario_ex, wmh_grimmsnarl
+[1/3] il_small_comb_2ep@mega_lucario_ex vs il_small_comb_2ep@mega_lucario_ex: il_small_comb_2ep@mega_lucario_ex 6-3-1d  (10 games, 12.0s, 1.20s/game)
+[2/3] il_small_comb_2ep@mega_lucario_ex vs wmh_grimmsnarl: il_small_comb_2ep@mega_lucario_ex 16-4  (20 games, 19.0s, 0.95s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 3-7  (10 games, 5.6s, 0.56s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_sma  wmh_gr  win% [95% CI]
+il_small_comb_2ep@mega_lucario_ex-       16       62.5  [47.0,75.8]
+wmh_grimmsnarl        4       -        35.0  [22.1,50.5]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_small_comb_2ep@mega_lucario_ex vs wmh_grimmsnarl: 16/20 =  80.0% [58.4,91.9]  (19.0s, 0.95s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_small_comb_2ep@mega_lucario_ex  62.5%  [47.0,75.8]  (25/40)
+  wmh_grimmsnarl          35.0%  [22.1,50.5]  (14/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_small_comb_2ep@mega_lucario_ex  1780.7  (RD 110.2, 95% CI +/-220.4)  GXE  74.1%
+  wmh_grimmsnarl          1219.3  (RD 110.2, 95% CI +/-220.4)  GXE  25.9%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_small_comb_2ep@mega_lucario_ex fallback_rate= 0.00%  decisions=2852  raw={'decisions': 2852, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+
+total wall clock: 36.7s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/il_small_comb_2ep__mega_lucario_ex.json
+glicko: not persisted (isolated run)

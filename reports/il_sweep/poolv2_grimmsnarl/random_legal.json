@@ -1,0 +1,70 @@
+{
+  "agents": [
+    "random_legal",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "random_legal": {
+      "random_legal": 10,
+      "wmh_grimmsnarl": 3
+    },
+    "wmh_grimmsnarl": {
+      "random_legal": 17,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "random_legal": {
+      "random_legal": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "random_legal": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "random_legal": {
+      "random_legal": 8.182918548583984,
+      "wmh_grimmsnarl": 11.874104022979736
+    },
+    "wmh_grimmsnarl": {
+      "random_legal": 11.874104022979736,
+      "wmh_grimmsnarl": 12.953680515289307
+    }
+  },
+  "total_wall_clock_sec": 22.466633796691895,
+  "overall_win_pct": {
+    "random_legal": 32.5,
+    "wmh_grimmsnarl": 67.5
+  },
+  "overall_win_pct_wilson_ci": {
+    "random_legal": {
+      "p": 32.5,
+      "lo": 20.084316962661724,
+      "hi": 47.98254191110201
+    },
+    "wmh_grimmsnarl": {
+      "p": 67.5,
+      "lo": 52.017458088898,
+      "hi": 79.91568303733828
+    }
+  },
+  "glicko": {
+    "random_legal": {
+      "rating": 1172.5434659755474,
+      "rd": 110.20831912594903,
+      "gxe": 22.652954437464587
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1827.4565340244526,
+      "rd": 110.20831912594903,
+      "gxe": 77.34704556253541
+    }
+  },
+  "fallback_diag": {},
+  "fallback_first": {}
+}

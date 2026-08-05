@@ -1,0 +1,70 @@
+{
+  "agents": [
+    "makthanithin_1084_baseline",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "makthanithin_1084_baseline": {
+      "makthanithin_1084_baseline": 10,
+      "wmh_grimmsnarl": 19
+    },
+    "wmh_grimmsnarl": {
+      "makthanithin_1084_baseline": 1,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "makthanithin_1084_baseline": {
+      "makthanithin_1084_baseline": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "makthanithin_1084_baseline": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "makthanithin_1084_baseline": {
+      "makthanithin_1084_baseline": 15.233721733093262,
+      "wmh_grimmsnarl": 14.936861991882324
+    },
+    "wmh_grimmsnarl": {
+      "makthanithin_1084_baseline": 14.936861991882324,
+      "wmh_grimmsnarl": 17.717482089996338
+    }
+  },
+  "total_wall_clock_sec": 31.44562792778015,
+  "overall_win_pct": {
+    "makthanithin_1084_baseline": 72.5,
+    "wmh_grimmsnarl": 27.5
+  },
+  "overall_win_pct_wilson_ci": {
+    "makthanithin_1084_baseline": {
+      "p": 72.5,
+      "lo": 57.16474916687543,
+      "hi": 83.89214656685692
+    },
+    "wmh_grimmsnarl": {
+      "p": 27.500000000000004,
+      "lo": 16.10785343314309,
+      "hi": 42.83525083312457
+    }
+  },
+  "glicko": {
+    "makthanithin_1084_baseline": {
+      "rating": 1921.0155437457247,
+      "rd": 110.20831912594903,
+      "gxe": 82.90448052668647
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1078.9844562542753,
+      "rd": 110.20831912594903,
+      "gxe": 17.09551947331353
+    }
+  },
+  "fallback_diag": {},
+  "fallback_first": {}
+}

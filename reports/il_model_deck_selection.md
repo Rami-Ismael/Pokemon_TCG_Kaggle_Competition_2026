@@ -417,3 +417,53 @@ artifact of the longer run.
 
 Calibration again fails to predict play: equal-steps is the best-calibrated checkpoint
 (ECE 0.0124) and mid-pack on Grimmsnarl ex.
+
+## ⑧ Pool v2 — the field now contains the archetype we pilot (but does not contest it)
+
+Gap found after the fact: **no pool opponent piloted Marnie's Grimmsnarl ex.** Every
+"Grimmsnarl is the best deck" number above was measured against a field that never
+contested the archetype — and a deck can look strong purely because nothing in the
+field punishes it. Added `wmh_grimmsnarl` (a Grimmsnarl ex pilot on a *different*
+60-card build with a rule-based GenericPolicy) and re-ran **all 41 agents** against it,
+20 games each, so every field win% uses the same 9-opponent denominator.
+
+**Effect on the standings: negligible.** Ordering is unchanged; every field win% rose
+1–3pp because the new opponent is weak.
+
+| agent | pool v1 (8 opp) | pool v2 (9 opp) |
+|---|---:|---:|
+| `il_alldays_3ep@marnies_grimmsnarl_ex` | 86.6 ± 1.9% | **87.4 ± 1.8%** (340 games) |
+| `il_bc_3ep@marnies_grimmsnarl_ex` | 81.9 ± 3.0% | 83.9 ± 2.7% |
+| `il_alldays_3ep@mega_lucario_ex` | 55.0 ± 3.9% | 59.4 ± 3.7% |
+| `il_bc_3ep@mega_lucario_ex` | 28.8 ± 3.6% | 31.7 ± 3.5% |
+| `improved_prob_main` | — | 67.8 ± 3.5% |
+| `mcts_il_agent` | — | 31.1 ± 3.5% |
+
+### ⚠️ The addition does NOT close the gap it was meant to close
+
+`wmh_grimmsnarl` lands at **Glicko 1176.0, rank 39 of 42** — 73 points above
+`tb_heuristic` and 130 above `random_legal`. It is a **floor-tier** opponent:
+
+- **14 of 33** agents beat it **100%**; 21 of 33 beat it ≥90%; median win rate
+  against it is **95.0%**.
+- Our candidate beats it **20/20** in the mirror.
+
+So the pool now *contains* Grimmsnarl ex but still does not *contest* it. The mirror
+result — our BC policy beating a purpose-built rule pilot of the same archetype 20/20 —
+is real but weak evidence, because that pilot loses to nearly everything. **The open
+question stands: we still have no strong Grimmsnarl ex opponent, so "Grimmsnarl beats
+the field" has not been tested against a field that knows how to play it.**
+
+The roster scan for a stronger Grimmsnarl pilot was inconclusive — our list has only 19
+distinct card ids (60 cards, mostly generic trainers), so card-overlap is not a usable
+archetype test, and `wmh_grimmsnarl` is the only self-declared Grimmsnarl agent wired.
+Closing this properly needs either a stronger public Grimmsnarl notebook wired in, or an
+opponent built for the archetype.
+
+**Predictiveness went DOWN, not up:** Spearman ρ vs the ladder fell from **+0.765 to
++0.692** (n=18, p=0.0017) when `wmh_grimmsnarl` joined. Adding a floor-tier opponent
+adds games that almost every agent wins, which compresses the top of the field and
+carries little ranking information. Recorded as a caution: enlarging the pool is not
+automatically an improvement — a new member earns its place by *discriminating*, and
+this one mostly does not. It stays in because archetype coverage is worth something on
+its own, but it should be replaced by a stronger Grimmsnarl pilot when one exists.

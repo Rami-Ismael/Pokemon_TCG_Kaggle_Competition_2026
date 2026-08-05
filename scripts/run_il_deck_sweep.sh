@@ -23,7 +23,11 @@ OUTDIR="$REPO/reports/il_sweep/$OUT_SUBDIR"
 LOGDIR="$OUTDIR/logs"
 mkdir -p "$LOGDIR"
 
-POOL="tb_archaludon,makthanithin_1084_baseline,romanrozen_strong_start,tb_dragapult,wmh_alakazam,wmh_garchomp,tb_heuristic,random_legal"
+# Pool v2 (2026-08-05): wmh_grimmsnarl added so the pool actually CONTAINS the
+# archetype our candidate pilots -- without it we never played the mirror, and
+# a deck can look strong purely because nothing in the field contests it.
+# Override with POOL=... for incremental runs against a single new opponent.
+POOL="${POOL:-tb_archaludon,makthanithin_1084_baseline,romanrozen_strong_start,tb_dragapult,wmh_alakazam,wmh_garchomp,tb_heuristic,wmh_grimmsnarl,random_legal}"
 CONC="${CONC:-3}"
 
 export PTCG_DEVICE=cpu

@@ -1,0 +1,77 @@
+{
+  "agents": [
+    "il_small_comb_2ep@mega_lucario_ex",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "il_small_comb_2ep@mega_lucario_ex": 9,
+      "wmh_grimmsnarl": 16
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@mega_lucario_ex": 4,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "il_small_comb_2ep@mega_lucario_ex": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@mega_lucario_ex": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "il_small_comb_2ep@mega_lucario_ex": 24.026950359344482,
+      "wmh_grimmsnarl": 18.991931200027466
+    },
+    "wmh_grimmsnarl": {
+      "il_small_comb_2ep@mega_lucario_ex": 18.991931200027466,
+      "wmh_grimmsnarl": 11.272356033325195
+    }
+  },
+  "total_wall_clock_sec": 36.653916120529175,
+  "overall_win_pct": {
+    "il_small_comb_2ep@mega_lucario_ex": 62.5,
+    "wmh_grimmsnarl": 35.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "p": 62.5,
+      "lo": 47.032160054531914,
+      "hi": 75.7772264642083
+    },
+    "wmh_grimmsnarl": {
+      "p": 35.0,
+      "lo": 22.13433317104915,
+      "hi": 50.494403006462626
+    }
+  },
+  "glicko": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "rating": 1780.6770291638163,
+      "rd": 110.20831912594903,
+      "gxe": 74.12703671140191
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1219.3229708361837,
+      "rd": 110.20831912594903,
+      "gxe": 25.872963288598086
+    }
+  },
+  "fallback_diag": {
+    "il_small_comb_2ep@mega_lucario_ex": {
+      "decisions": 2852,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

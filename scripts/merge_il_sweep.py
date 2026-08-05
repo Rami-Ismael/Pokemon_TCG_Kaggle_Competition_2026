@@ -59,6 +59,9 @@ def sigma(wins: int, n: int) -> float:
 DEFAULT_POOL = [
     "tb_archaludon", "makthanithin_1084_baseline", "romanrozen_strong_start",
     "tb_dragapult", "wmh_alakazam", "wmh_garchomp", "tb_heuristic", "random_legal",
+    # v2 addition: a Grimmsnarl ex pilot, so the pool contests the archetype our
+    # own candidate plays (different 60-card build + rule policy = a real mirror).
+    "wmh_grimmsnarl",
 ]
 
 

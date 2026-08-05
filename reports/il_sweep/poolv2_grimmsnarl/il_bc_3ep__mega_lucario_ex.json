@@ -1,0 +1,77 @@
+{
+  "agents": [
+    "il_bc_3ep@mega_lucario_ex",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "il_bc_3ep@mega_lucario_ex": 10,
+      "wmh_grimmsnarl": 11
+    },
+    "wmh_grimmsnarl": {
+      "il_bc_3ep@mega_lucario_ex": 9,
+      "wmh_grimmsnarl": 9
+    }
+  },
+  "games": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "il_bc_3ep@mega_lucario_ex": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_bc_3ep@mega_lucario_ex": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "il_bc_3ep@mega_lucario_ex": 45.0796856880188,
+      "wmh_grimmsnarl": 31.507298707962036
+    },
+    "wmh_grimmsnarl": {
+      "il_bc_3ep@mega_lucario_ex": 31.507298707962036,
+      "wmh_grimmsnarl": 16.06150197982788
+    }
+  },
+  "total_wall_clock_sec": 62.10629606246948,
+  "overall_win_pct": {
+    "il_bc_3ep@mega_lucario_ex": 52.5,
+    "wmh_grimmsnarl": 45.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "p": 52.5,
+      "lo": 37.497106853929736,
+      "hi": 67.06477044981831
+    },
+    "wmh_grimmsnarl": {
+      "p": 45.0,
+      "lo": 30.705075280944694,
+      "hi": 60.171170111559235
+    }
+  },
+  "glicko": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "rating": 1546.779504860636,
+      "rd": 110.20831912594903,
+      "gxe": 54.374544073969396
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1453.220495139364,
+      "rd": 110.20831912594903,
+      "gxe": 45.62545592603061
+    }
+  },
+  "fallback_diag": {
+    "il_bc_3ep@mega_lucario_ex": {
+      "decisions": 2909,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

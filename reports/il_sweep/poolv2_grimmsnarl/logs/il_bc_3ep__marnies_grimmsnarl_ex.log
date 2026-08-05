@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_bc_3ep@marnies_grimmsnarl_ex: 0/3717 = 0.00%  by_reason={}
+Loading 2 agents: il_bc_3ep@marnies_grimmsnarl_ex, wmh_grimmsnarl
+[1/3] il_bc_3ep@marnies_grimmsnarl_ex vs il_bc_3ep@marnies_grimmsnarl_ex: il_bc_3ep@marnies_grimmsnarl_ex 3-7  (10 games, 31.4s, 3.14s/game)
+[2/3] il_bc_3ep@marnies_grimmsnarl_ex vs wmh_grimmsnarl: il_bc_3ep@marnies_grimmsnarl_ex 20-0  (20 games, 34.3s, 1.71s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 3-7  (10 games, 9.5s, 0.95s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_bc_  wmh_gr  win% [95% CI]
+il_bc_3ep@marnies_grimmsnarl_ex-       20       75.0  [59.8,85.8]
+wmh_grimmsnarl        0       -        25.0  [14.2,40.2]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_bc_3ep@marnies_grimmsnarl_ex vs wmh_grimmsnarl: 20/20 = 100.0% [83.9,100.0]  (34.3s, 1.71s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_bc_3ep@marnies_grimmsnarl_ex  75.0%  [59.8,85.8]  (30/40)
+  wmh_grimmsnarl          25.0%  [14.2,40.2]  (10/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_bc_3ep@marnies_grimmsnarl_ex  1967.8  (RD 110.2, 95% CI +/-220.4)  GXE  85.2%
+  wmh_grimmsnarl          1032.2  (RD 110.2, 95% CI +/-220.4)  GXE  14.8%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_bc_3ep@marnies_grimmsnarl_ex fallback_rate= 0.00%  decisions=3717  raw={'decisions': 3717, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+
+total wall clock: 75.2s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/il_bc_3ep__marnies_grimmsnarl_ex.json
+glicko: not persisted (isolated run)

@@ -36,6 +36,47 @@
     "tb_starmie.json",
     "wmh_bellibolt.json",
     "wmh_megastarmie.json",
+    "wmh_typhlosion.json",
+    "agent_core_improved.json",
+    "grunt.json",
+    "il_alldays_3ep__alakazam.json",
+    "il_alldays_3ep__cynthias_garchomp_ex.json",
+    "il_alldays_3ep__marnies_grimmsnarl_ex.json",
+    "il_alldays_3ep__mega_lucario_ex.json",
+    "il_alldays_3ep__team_rockets_spidops.json",
+    "il_alldays_equalsteps__marnies_grimmsnarl_ex.json",
+    "il_alldays_equalsteps__mega_lucario_ex.json",
+    "il_bc_2ep__marnies_grimmsnarl_ex.json",
+    "il_bc_3ep__alakazam.json",
+    "il_bc_3ep__cynthias_garchomp_ex.json",
+    "il_bc_3ep__marnies_grimmsnarl_ex.json",
+    "il_bc_3ep__mega_lucario_ex.json",
+    "il_bc_3ep__team_rockets_spidops.json",
+    "il_bc_4ep__marnies_grimmsnarl_ex.json",
+    "il_hfstream_comb_3ep__marnies_grimmsnarl_ex.json",
+    "il_medium_3ep__marnies_grimmsnarl_ex.json",
+    "il_small_comb_2ep__alakazam.json",
+    "il_small_comb_2ep__cynthias_garchomp_ex.json",
+    "il_small_comb_2ep__marnies_grimmsnarl_ex.json",
+    "il_small_comb_2ep__mega_lucario_ex.json",
+    "il_small_comb_2ep__team_rockets_spidops.json",
+    "improved_prob_main.json",
+    "makthanithin_1084_baseline.json",
+    "mcts_il_agent.json",
+    "random_legal.json",
+    "romanrozen_strong_start.json",
+    "rule_baseline.json",
+    "tb_alakazam.json",
+    "tb_archaludon.json",
+    "tb_dragapult.json",
+    "tb_heuristic.json",
+    "tb_rulecore.json",
+    "tb_search.json",
+    "tb_starmie.json",
+    "wmh_alakazam.json",
+    "wmh_bellibolt.json",
+    "wmh_garchomp.json",
+    "wmh_megastarmie.json",
     "wmh_typhlosion.json"
   ],
   "pool": [
@@ -46,7 +87,8 @@
     "tb_dragapult",
     "tb_heuristic",
     "wmh_alakazam",
-    "wmh_garchomp"
+    "wmh_garchomp",
+    "wmh_grimmsnarl"
   ],
   "arms": [
     "agent_core_improved",
@@ -132,6 +174,12 @@
         "games": 20,
         "win_pct": 70.0,
         "sigma": 10.2469507659596
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "grunt": {
@@ -182,6 +230,12 @@
         "games": 20,
         "win_pct": 5.0,
         "sigma": 4.873397172404482
+      },
+      "wmh_grimmsnarl": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
       }
     },
     "il_alldays_3ep@alakazam": {
@@ -232,6 +286,12 @@
         "games": 20,
         "win_pct": 40.0,
         "sigma": 10.954451150103322
+      },
+      "wmh_grimmsnarl": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
       }
     },
     "il_alldays_3ep@cynthias_garchomp_ex": {
@@ -282,6 +342,12 @@
         "games": 20,
         "win_pct": 85.0,
         "sigma": 7.984359711335657
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_alldays_3ep@marnies_grimmsnarl_ex": {
@@ -330,6 +396,12 @@
       "wmh_garchomp": {
         "wins": 40,
         "games": 40,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
         "win_pct": 100.0,
         "sigma": 0.0
       }
@@ -382,6 +454,12 @@
         "games": 20,
         "win_pct": 65.0,
         "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
       }
     },
     "il_alldays_3ep@team_rockets_spidops": {
@@ -428,6 +506,12 @@
         "sigma": 0.0
       },
       "wmh_garchomp": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_grimmsnarl": {
         "wins": 19,
         "games": 20,
         "win_pct": 95.0,
@@ -482,6 +566,12 @@
         "games": 20,
         "win_pct": 95.0,
         "sigma": 4.873397172404484
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_alldays_equalsteps@mega_lucario_ex": {
@@ -532,6 +622,12 @@
         "games": 20,
         "win_pct": 45.0,
         "sigma": 11.124297730643494
+      },
+      "wmh_grimmsnarl": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
       }
     },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
@@ -578,6 +674,12 @@
         "sigma": 4.873397172404484
       },
       "wmh_garchomp": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
         "wins": 20,
         "games": 20,
         "win_pct": 100.0,
@@ -632,6 +734,12 @@
         "games": 20,
         "win_pct": 60.0,
         "sigma": 10.954451150103322
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_bc_3ep@cynthias_garchomp_ex": {
@@ -682,6 +790,12 @@
         "games": 20,
         "win_pct": 85.0,
         "sigma": 7.984359711335657
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_bc_3ep@marnies_grimmsnarl_ex": {
@@ -728,6 +842,12 @@
         "sigma": 6.708203932499368
       },
       "wmh_garchomp": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
         "wins": 20,
         "games": 20,
         "win_pct": 100.0,
@@ -782,6 +902,12 @@
         "games": 20,
         "win_pct": 5.0,
         "sigma": 4.873397172404482
+      },
+      "wmh_grimmsnarl": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
       }
     },
     "il_bc_3ep@team_rockets_spidops": {
@@ -832,6 +958,12 @@
         "games": 20,
         "win_pct": 75.0,
         "sigma": 9.682458365518542
+      },
+      "wmh_grimmsnarl": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
       }
     },
     "il_bc_4ep@marnies_grimmsnarl_ex": {
@@ -882,6 +1014,12 @@
         "games": 20,
         "win_pct": 95.0,
         "sigma": 4.873397172404484
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_hfstream_comb_3ep@marnies_grimmsnarl_ex": {
@@ -932,6 +1070,12 @@
         "games": 40,
         "win_pct": 97.5,
         "sigma": 2.4685522072664385
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_medium_3ep@marnies_grimmsnarl_ex": {
@@ -982,6 +1126,12 @@
         "games": 40,
         "win_pct": 90.0,
         "sigma": 4.743416490252569
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_small_comb_2ep@alakazam": {
@@ -1032,6 +1182,12 @@
         "games": 20,
         "win_pct": 35.0,
         "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
       }
     },
     "il_small_comb_2ep@cynthias_garchomp_ex": {
@@ -1082,6 +1238,12 @@
         "games": 20,
         "win_pct": 75.0,
         "sigma": 9.682458365518542
+      },
+      "wmh_grimmsnarl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
       }
     },
     "il_small_comb_2ep@marnies_grimmsnarl_ex": {
@@ -1132,6 +1294,12 @@
         "games": 40,
         "win_pct": 92.5,
         "sigma": 4.164582812239419
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "il_small_comb_2ep@mega_lucario_ex": {
@@ -1182,6 +1350,12 @@
         "games": 20,
         "win_pct": 35.0,
         "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
       }
     },
     "il_small_comb_2ep@team_rockets_spidops": {
@@ -1232,6 +1406,12 @@
         "games": 20,
         "win_pct": 55.0,
         "sigma": 11.124297730643494
+      },
+      "wmh_grimmsnarl": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
       }
     },
     "improved_prob_main": {
@@ -1282,6 +1462,12 @@
         "games": 20,
         "win_pct": 80.0,
         "sigma": 8.944271909999157
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "mcts_il_agent": {
@@ -1332,6 +1518,12 @@
         "games": 20,
         "win_pct": 10.0,
         "sigma": 6.708203932499369
+      },
+      "wmh_grimmsnarl": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
       }
     },
     "rule_baseline": {
@@ -1382,6 +1574,12 @@
         "games": 20,
         "win_pct": 30.0,
         "sigma": 10.246950765959598
+      },
+      "wmh_grimmsnarl": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
       }
     },
     "tb_alakazam": {
@@ -1432,6 +1630,12 @@
         "games": 20,
         "win_pct": 35.0,
         "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
       }
     },
     "tb_rulecore": {
@@ -1481,6 +1685,12 @@
         "wins": 5,
         "games": 20,
         "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "wmh_grimmsnarl": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
         "sigma": 9.682458365518542
       }
     },
@@ -1532,6 +1742,12 @@
         "games": 20,
         "win_pct": 10.0,
         "sigma": 6.708203932499369
+      },
+      "wmh_grimmsnarl": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
       }
     },
     "tb_starmie": {
@@ -1582,6 +1798,12 @@
         "games": 20,
         "win_pct": 0.0,
         "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
       }
     },
     "wmh_bellibolt": {
@@ -1632,6 +1854,12 @@
         "games": 20,
         "win_pct": 0.0,
         "sigma": 0.0
+      },
+      "wmh_grimmsnarl": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
       }
     },
     "wmh_megastarmie": {
@@ -1682,6 +1910,12 @@
         "games": 20,
         "win_pct": 65.0,
         "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
       }
     },
     "wmh_typhlosion": {
@@ -1732,1393 +1966,1404 @@
         "games": 20,
         "win_pct": 5.0,
         "sigma": 4.873397172404482
+      },
+      "wmh_grimmsnarl": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
       }
     }
   },
   "aggregate": {
     "agent_core_improved": {
-      "wins": 96,
-      "games": 160,
-      "win_pct": 60.0,
-      "sigma": 3.872983346207417,
+      "wins": 116,
+      "games": 180,
+      "win_pct": 64.44444444444444,
+      "sigma": 3.5678798751977174,
       "wilson95": [
-        52.26034047446808,
-        67.27071879253126
+        57.216435174854084,
+        71.06878427493312
       ],
-      "glicko": 1602.446919237219,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1648.202358150657,
+      "glicko_rd": 38.470466384611505
     },
     "grunt": {
-      "wins": 32,
-      "games": 160,
-      "win_pct": 20.0,
-      "sigma": 3.16227766016838,
+      "wins": 38,
+      "games": 180,
+      "win_pct": 21.11111111111111,
+      "sigma": 3.0417758873225433,
       "wilson95": [
-        14.538182327188185,
-        26.86863987181377
+        15.784712930233702,
+        27.64484817019188
       ],
-      "glicko": 1192.6592422883432,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1203.5952836986862,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_3ep@alakazam": {
-      "wins": 111,
-      "games": 160,
-      "win_pct": 69.375,
-      "sigma": 3.6440099607094925,
+      "wins": 129,
+      "games": 180,
+      "win_pct": 71.66666666666667,
+      "sigma": 3.358699777820409,
       "wilson95": [
-        61.84807837409062,
-        75.99334895572059
+        64.68429127526663,
+        77.74353789941419
       ],
-      "glicko": 1698.4909060221116,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1722.3035372259853,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_3ep@cynthias_garchomp_ex": {
-      "wins": 125,
-      "games": 160,
-      "win_pct": 78.125,
-      "sigma": 3.2682032286487326,
+      "wins": 145,
+      "games": 180,
+      "win_pct": 80.55555555555556,
+      "sigma": 2.949913392976665,
       "wilson95": [
-        71.10115967895942,
-        83.82994450947623
+        74.16043794180396,
+        85.6736801250536
       ],
-      "glicko": 1788.131960354678,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1813.5049883956206,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_3ep@marnies_grimmsnarl_ex": {
-      "wins": 277,
-      "games": 320,
-      "win_pct": 86.5625,
-      "sigma": 1.9065541509405786,
+      "wins": 297,
+      "games": 340,
+      "win_pct": 87.3529411764706,
+      "sigma": 1.8025780438902173,
       "wilson95": [
-        82.38892276006246,
-        89.86862537458114
+        83.39765159542914,
+        90.47357282884064
       ],
-      "glicko": 1877.1305923587436,
+      "glicko": 1885.4386416573977,
       "glicko_rd": 30.0
     },
     "il_alldays_3ep@mega_lucario_ex": {
-      "wins": 88,
-      "games": 160,
-      "win_pct": 55.0,
-      "sigma": 3.933033180638068,
+      "wins": 107,
+      "games": 180,
+      "win_pct": 59.44444444444444,
+      "sigma": 3.6596922071062834,
       "wilson95": [
-        47.26402740186129,
-        62.5015022316384
+        52.146691052687736,
+        66.34749089525006
       ],
-      "glicko": 1551.2234596186095,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1596.9015418677373,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_3ep@team_rockets_spidops": {
-      "wins": 114,
-      "games": 160,
-      "win_pct": 71.25,
-      "sigma": 3.5780908841168357,
+      "wins": 133,
+      "games": 180,
+      "win_pct": 73.88888888888889,
+      "sigma": 3.273904386418897,
       "wilson95": [
-        63.80351028170257,
-        77.69999066067103
+        67.02065350320431,
+        79.75874789452068
       ],
-      "glicko": 1717.6997033790901,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1745.1039000183941,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_equalsteps@marnies_grimmsnarl_ex": {
-      "wins": 127,
-      "games": 160,
-      "win_pct": 79.375,
-      "sigma": 3.198739375715064,
+      "wins": 147,
+      "games": 180,
+      "win_pct": 81.66666666666667,
+      "sigma": 2.8840771894260913,
       "wilson95": [
-        72.45248445564205,
-        84.92000214116851
+        75.37252847530411,
+        86.63737570307555
       ],
-      "glicko": 1800.9378252593306,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1824.9051697918248,
+      "glicko_rd": 38.470466384611505
     },
     "il_alldays_equalsteps@mega_lucario_ex": {
-      "wins": 91,
-      "games": 160,
-      "win_pct": 56.875,
-      "sigma": 3.915302011818501,
+      "wins": 109,
+      "games": 180,
+      "win_pct": 60.55555555555556,
+      "sigma": 3.6427860574882795,
       "wilson95": [
-        49.12859643792512,
-        64.29900680813692
+        53.26667296266275,
+        67.40329509679714
       ],
-      "glicko": 1570.432256975588,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1608.3017232639415,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
-      "wins": 125,
-      "games": 160,
-      "win_pct": 78.125,
-      "sigma": 3.2682032286487326,
+      "wins": 145,
+      "games": 180,
+      "win_pct": 80.55555555555556,
+      "sigma": 2.949913392976665,
       "wilson95": [
-        71.10115967895942,
-        83.82994450947623
+        74.16043794180396,
+        85.6736801250536
       ],
-      "glicko": 1788.131960354678,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1813.5049883956206,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_3ep@alakazam": {
-      "wins": 113,
-      "games": 160,
-      "win_pct": 70.625,
-      "sigma": 3.6008760869752234,
+      "wins": 133,
+      "games": 180,
+      "win_pct": 73.88888888888889,
+      "sigma": 3.273904386418897,
       "wilson95": [
-        63.150174197690276,
-        77.13263554049588
+        67.02065350320431,
+        79.75874789452068
       ],
-      "glicko": 1711.296770926764,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1745.1039000183941,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_3ep@cynthias_garchomp_ex": {
-      "wins": 118,
-      "games": 160,
-      "win_pct": 73.75,
-      "sigma": 3.4784492773360944,
+      "wins": 138,
+      "games": 180,
+      "win_pct": 76.66666666666667,
+      "sigma": 3.152502435358024,
       "wilson95": [
-        66.43280015812724,
-        79.95346560099622
+        69.97008662253994,
+        82.2487800539903
       ],
-      "glicko": 1743.3114331883949,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1773.6043535089052,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_3ep@marnies_grimmsnarl_ex": {
-      "wins": 131,
-      "games": 160,
-      "win_pct": 81.875,
-      "sigma": 3.045472433588917,
+      "wins": 151,
+      "games": 180,
+      "win_pct": 83.88888888888889,
+      "sigma": 2.7401776198274117,
       "wilson95": [
-        75.18173600355944,
-        87.07351541000097
+        77.8194266124351,
+        88.54204978898875
       ],
-      "glicko": 1826.5495550686353,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1847.7055325842337,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_3ep@mega_lucario_ex": {
-      "wins": 46,
-      "games": 160,
-      "win_pct": 28.75,
-      "sigma": 3.5780908841168357,
+      "wins": 57,
+      "games": 180,
+      "win_pct": 31.666666666666668,
+      "sigma": 3.4672186170288724,
       "wilson95": [
-        22.300009339328955,
-        36.19648971829743
+        25.31448976703366,
+        38.785039392851814
       ],
-      "glicko": 1282.3002966209099,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1311.8970069626278,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_3ep@team_rockets_spidops": {
-      "wins": 112,
-      "games": 160,
-      "win_pct": 70.0,
-      "sigma": 3.6228441865473595,
+      "wins": 130,
+      "games": 180,
+      "win_pct": 72.22222222222223,
+      "sigma": 3.3384734032073973,
       "wilson95": [
-        62.498372555923986,
-        76.56374597807469
+        65.2665499946382,
+        78.24917223580367
       ],
-      "glicko": 1704.8938384744379,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1728.0036279240876,
+      "glicko_rd": 38.470466384611505
     },
     "il_bc_4ep@marnies_grimmsnarl_ex": {
-      "wins": 129,
-      "games": 160,
-      "win_pct": 80.625,
-      "sigma": 3.124609350582885,
+      "wins": 149,
+      "games": 180,
+      "win_pct": 82.77777777777777,
+      "sigma": 2.8142665157990767,
       "wilson95": [
-        73.81247358914426,
-        86.00139541604125
+        76.59200997039709,
+        87.59368031950464
       ],
-      "glicko": 1813.743690163983,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1836.3053511880294,
+      "glicko_rd": 38.470466384611505
     },
     "il_hfstream_comb_3ep@marnies_grimmsnarl_ex": {
-      "wins": 266,
-      "games": 320,
-      "win_pct": 83.125,
-      "sigma": 2.0936916969494335,
+      "wins": 286,
+      "games": 340,
+      "win_pct": 84.11764705882354,
+      "sigma": 1.9822641237688357,
       "wilson95": [
-        78.6339459888608,
-        86.83015744936333
+        79.85423327138402,
+        87.61869612401199
       ],
-      "glicko": 1841.6738700002297,
+      "glicko": 1852.054192379986,
       "glicko_rd": 30.0
     },
     "il_medium_3ep@marnies_grimmsnarl_ex": {
-      "wins": 253,
-      "games": 320,
-      "win_pct": 79.0625,
-      "sigma": 2.274430625006784,
+      "wins": 273,
+      "games": 340,
+      "win_pct": 80.29411764705883,
+      "sigma": 2.157249362434486,
       "wilson95": [
-        74.27298871643954,
-        83.16249826237974
+        75.7375304611442,
+        84.17377753649193
       ],
-      "glicko": 1799.7704708492588,
+      "glicko": 1812.5998432339536,
       "glicko_rd": 30.0
     },
     "il_small_comb_2ep@alakazam": {
-      "wins": 101,
-      "games": 160,
-      "win_pct": 63.125,
-      "sigma": 3.814228604023361,
+      "wins": 120,
+      "games": 180,
+      "win_pct": 66.66666666666667,
+      "sigma": 3.513641844631533,
       "wilson95": [
-        55.42312628458188,
-        70.21138900335475
+        59.49509727403892,
+        73.14169439879248
       ],
-      "glicko": 1634.46158149885,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1671.0027209430657,
+      "glicko_rd": 38.470466384611505
     },
     "il_small_comb_2ep@cynthias_garchomp_ex": {
-      "wins": 104,
-      "games": 160,
-      "win_pct": 65.0,
-      "sigma": 3.770775782249589,
+      "wins": 123,
+      "games": 180,
+      "win_pct": 68.33333333333333,
+      "sigma": 3.4672186170288724,
       "wilson95": [
-        57.33626975304357,
-        71.96031914745545
+        61.21496060714819,
+        74.68551023296635
       ],
-      "glicko": 1653.6703788558284,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1688.1029930373722,
+      "glicko_rd": 38.470466384611505
     },
     "il_small_comb_2ep@marnies_grimmsnarl_ex": {
-      "wins": 240,
-      "games": 320,
-      "win_pct": 75.0,
-      "sigma": 2.4206145913796355,
+      "wins": 260,
+      "games": 340,
+      "win_pct": 76.47058823529412,
+      "sigma": 2.300452614338362,
       "wilson95": [
-        69.97793992406844,
-        79.42893059534599
+        71.68147165080174,
+        80.66821494907445
       ],
-      "glicko": 1757.8670716982872,
+      "glicko": 1773.1454940879212,
       "glicko_rd": 30.0
     },
     "il_small_comb_2ep@mega_lucario_ex": {
-      "wins": 78,
-      "games": 160,
-      "win_pct": 48.75,
-      "sigma": 3.9516116174290206,
+      "wins": 94,
+      "games": 180,
+      "win_pct": 52.22222222222222,
+      "sigma": 3.7230973727045114,
       "wilson95": [
-        41.12543300404351,
-        56.43318458758158
+        44.95501125747,
+        59.39656096557419
       ],
-      "glicko": 1487.1941350953477,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1522.8003627924088,
+      "glicko_rd": 38.470466384611505
     },
     "il_small_comb_2ep@team_rockets_spidops": {
-      "wins": 85,
-      "games": 160,
-      "win_pct": 53.125,
-      "sigma": 3.9451191165476867,
+      "wins": 102,
+      "games": 180,
+      "win_pct": 56.666666666666664,
+      "sigma": 3.693504475243258,
       "wilson95": [
-        45.410132271210635,
-        60.69332374972666
+        49.36277117723227,
+        63.69194549190029
       ],
-      "glicko": 1532.014662261631,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1568.4010883772262,
+      "glicko_rd": 38.470466384611505
     },
     "improved_prob_main": {
-      "wins": 102,
-      "games": 160,
-      "win_pct": 63.75,
-      "sigma": 3.800441997320838,
+      "wins": 122,
+      "games": 180,
+      "win_pct": 67.77777777777777,
+      "sigma": 3.4832540798671054,
       "wilson95": [
-        56.05952507564442,
-        70.79568141647967
+        60.640612157759044,
+        74.17196562659444
       ],
-      "glicko": 1640.864513951176,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1682.40290233927,
+      "glicko_rd": 38.470466384611505
     },
     "mcts_il_agent": {
-      "wins": 42,
-      "games": 160,
-      "win_pct": 26.25,
-      "sigma": 3.4784492773360953,
+      "wins": 56,
+      "games": 180,
+      "win_pct": 31.11111111111111,
+      "sigma": 3.4506117626228487,
       "wilson95": [
-        20.046534399003782,
-        33.56719984187278
+        24.802024905224975,
+        38.20961119889945
       ],
-      "glicko": 1256.6885668116051,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1306.1969162645255,
+      "glicko_rd": 38.470466384611505
     },
     "rule_baseline": {
-      "wins": 79,
-      "games": 160,
-      "win_pct": 49.375,
-      "sigma": 3.9525382469686487,
+      "wins": 92,
+      "games": 180,
+      "win_pct": 51.111111111111114,
+      "sigma": 3.7258596562842348,
       "wilson95": [
-        41.73402592091182,
-        57.04528287490073
+        43.8618730048297,
+        58.3139131066924
       ],
-      "glicko": 1493.5970675476738,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1511.4001813962043,
+      "glicko_rd": 38.470466384611505
     },
     "tb_alakazam": {
-      "wins": 81,
-      "games": 160,
-      "win_pct": 50.625,
-      "sigma": 3.9525382469686487,
+      "wins": 97,
+      "games": 180,
+      "win_pct": 53.888888888888886,
+      "sigma": 3.715490503890343,
       "wilson95": [
-        42.954717125099286,
-        58.26597407908818
+        46.60129481786236,
+        61.01395657246497
       ],
-      "glicko": 1506.4029324523262,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1539.9006348867154,
+      "glicko_rd": 38.470466384611505
     },
     "tb_rulecore": {
-      "wins": 60,
-      "games": 160,
-      "win_pct": 37.5,
-      "sigma": 3.8273277230987155,
+      "wins": 75,
+      "games": 180,
+      "win_pct": 41.666666666666664,
+      "sigma": 3.6746545987008203,
       "wilson95": [
-        30.37420039328711,
-        45.2119755229637
+        34.71199999300702,
+        48.96960417057729
       ],
-      "glicko": 1371.9413509534763,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1414.4986395284673,
+      "glicko_rd": 38.470466384611505
     },
     "tb_search": {
-      "wins": 52,
-      "games": 160,
-      "win_pct": 32.5,
-      "sigma": 3.7028283108996565,
+      "wins": 64,
+      "games": 180,
+      "win_pct": 35.55555555555556,
+      "sigma": 3.5678798751977174,
       "wilson95": [
-        25.726640121408888,
-        40.09400616134225
+        28.931215725066885,
+        42.78356482514592
       ],
-      "glicko": 1320.7178913348669,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1351.797641849343,
+      "glicko_rd": 38.470466384611505
     },
     "tb_starmie": {
-      "wins": 23,
-      "games": 160,
-      "win_pct": 14.375,
-      "sigma": 2.773602547905882,
+      "wins": 28,
+      "games": 180,
+      "win_pct": 15.555555555555555,
+      "sigma": 2.701419633897847,
       "wilson95": [
-        9.773598361809333,
-        20.647002999505492
+        10.98693602628951,
+        21.563694516525608
       ],
-      "glicko": 1135.0328502174075,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1146.594376717664,
+      "glicko_rd": 38.470466384611505
     },
     "wmh_bellibolt": {
-      "wins": 38,
-      "games": 160,
-      "win_pct": 23.75,
-      "sigma": 3.364276946834193,
+      "wins": 43,
+      "games": 180,
+      "win_pct": 23.88888888888889,
+      "sigma": 3.1782331539387747,
       "wilson95": [
-        17.820262075345614,
-        30.910707348781095
+        18.2465027117642,
+        30.622523667466616
       ],
-      "glicko": 1231.0768370023004,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1232.095737189197,
+      "glicko_rd": 38.470466384611505
     },
     "wmh_megastarmie": {
-      "wins": 99,
-      "games": 160,
-      "win_pct": 61.875,
-      "sigma": 3.8397463905510736,
+      "wins": 119,
+      "games": 180,
+      "win_pct": 66.11111111111111,
+      "sigma": 3.5280086441420875,
       "wilson95": [
-        54.15420671016985,
-        69.03892616939189
+        58.92390407484821,
+        72.62499454222214
       ],
-      "glicko": 1621.6557165941974,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1665.3026302449634,
+      "glicko_rd": 38.470466384611505
     },
     "wmh_typhlosion": {
-      "wins": 50,
-      "games": 160,
-      "win_pct": 31.25,
-      "sigma": 3.6643873123620545,
+      "wins": 63,
+      "games": 180,
+      "win_pct": 35.0,
+      "sigma": 3.5551215012835904,
       "wilson95": [
-        24.578530120802665,
-        38.80073375357356
+        28.41147190492368,
+        42.21541558952807
       ],
-      "glicko": 1307.9120264302146,
-      "glicko_rd": 40.77331556802718
+      "glicko": 1346.0975511512409,
+      "glicko_rd": 38.470466384611505
     }
   },
   "glicko": {
     "agent_core_improved": {
-      "rating": 1602.446919237219,
-      "rd": 40.77331556802718,
-      "gxe": 59.702896997839595
+      "rating": 1648.202358150657,
+      "rd": 38.470466384611505,
+      "gxe": 63.85098624597151
     },
     "tb_archaludon": {
-      "rating": 1684.4869733016158,
+      "rating": 1685.2642559491474,
       "rd": 30.0,
-      "gxe": 67.02043091750839
+      "gxe": 67.08643298014
     },
     "makthanithin_1084_baseline": {
-      "rating": 1653.3591807530988,
+      "rating": 1654.4160095576117,
       "rd": 30.0,
-      "gxe": 64.32421356592884
+      "gxe": 64.41737730477169
     },
     "romanrozen_strong_start": {
-      "rating": 1665.1965103138025,
+      "rating": 1666.0387199544227,
       "rd": 30.0,
-      "gxe": 65.36139212937988
+      "gxe": 65.43464642434246
     },
     "tb_dragapult": {
-      "rating": 1584.7026693010257,
+      "rating": 1585.8158015764432,
       "rd": 30.0,
-      "gxe": 58.06811316118744
+      "gxe": 58.17225513222933
     },
     "wmh_alakazam": {
-      "rating": 1634.857873069332,
+      "rating": 1635.8895839626953,
       "rd": 30.0,
-      "gxe": 62.67620429688593
+      "gxe": 62.76892466173678
     },
     "wmh_garchomp": {
-      "rating": 1518.7643594517801,
+      "rating": 1520.0994239944828,
       "rd": 30.0,
-      "gxe": 51.80232454721305
+      "gxe": 51.9304348143638
     },
     "tb_heuristic": {
-      "rating": 1102.8795142191207,
+      "rating": 1102.6431265090928,
       "rd": 30.0,
-      "gxe": 17.852030553702367
+      "gxe": 17.838709765223562
     },
     "random_legal": {
-      "rating": 1045.6219127144027,
+      "rating": 1045.927795324674,
       "rd": 30.0,
-      "gxe": 14.84911059558575
+      "gxe": 14.863982662791441
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1176.0019752356543,
+      "rd": 30.0,
+      "gxe": 22.350691568149525
     },
     "grunt": {
-      "rating": 1192.6592422883432,
-      "rd": 40.77331556802718,
-      "gxe": 23.51775609453258
+      "rating": 1203.5952836986862,
+      "rd": 38.470466384611505,
+      "gxe": 24.272364410650752
     },
     "il_alldays_3ep@alakazam": {
-      "rating": 1698.4909060221116,
-      "rd": 40.77331556802718,
-      "gxe": 68.17081965121727
+      "rating": 1722.3035372259853,
+      "rd": 38.470466384611505,
+      "gxe": 70.1270151287948
     },
     "il_alldays_3ep@cynthias_garchomp_ex": {
-      "rating": 1788.131960354678,
-      "rd": 40.77331556802718,
-      "gxe": 75.13072448457334
+      "rating": 1813.5049883956206,
+      "rd": 38.470466384611505,
+      "gxe": 76.9137472168542
     },
     "il_alldays_3ep@marnies_grimmsnarl_ex": {
-      "rating": 1877.1305923587436,
+      "rating": 1885.4386416573977,
       "rd": 30.0,
-      "gxe": 80.99322592118887
+      "gxe": 81.47995792874386
     },
     "il_alldays_3ep@mega_lucario_ex": {
-      "rating": 1551.2234596186095,
-      "rd": 40.77331556802718,
-      "gxe": 54.898003856012004
+      "rating": 1596.9015418677373,
+      "rd": 38.470466384611505,
+      "gxe": 59.19360303214365
     },
     "il_alldays_3ep@team_rockets_spidops": {
-      "rating": 1717.6997033790901,
-      "rd": 40.77331556802718,
-      "gxe": 69.74827643835069
+      "rating": 1745.1039000183941,
+      "rd": 38.470466384611505,
+      "gxe": 71.92767700713917
     },
     "il_alldays_equalsteps@marnies_grimmsnarl_ex": {
-      "rating": 1800.9378252593306,
-      "rd": 40.77331556802718,
-      "gxe": 76.03745539958031
+      "rating": 1824.9051697918248,
+      "rd": 38.470466384611505,
+      "gxe": 77.6816356224613
     },
     "il_alldays_equalsteps@mega_lucario_ex": {
-      "rating": 1570.432256975588,
-      "rd": 40.77331556802718,
-      "gxe": 56.71559756817428
+      "rating": 1608.3017232639415,
+      "rd": 38.470466384611505,
+      "gxe": 60.246254509986976
     },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
-      "rating": 1788.131960354678,
-      "rd": 40.77331556802718,
-      "gxe": 75.13072448457334
+      "rating": 1813.5049883956206,
+      "rd": 38.470466384611505,
+      "gxe": 76.9137472168542
     },
     "il_bc_3ep@alakazam": {
-      "rating": 1711.296770926764,
-      "rd": 40.77331556802718,
-      "gxe": 69.22737198837436
+      "rating": 1745.1039000183941,
+      "rd": 38.470466384611505,
+      "gxe": 71.92767700713917
     },
     "il_bc_3ep@cynthias_garchomp_ex": {
-      "rating": 1743.3114331883949,
-      "rd": 40.77331556802718,
-      "gxe": 71.78080723933786
+      "rating": 1773.6043535089052,
+      "rd": 38.470466384611505,
+      "gxe": 74.08289098795002
     },
     "il_bc_3ep@marnies_grimmsnarl_ex": {
-      "rating": 1826.5495550686353,
-      "rd": 40.77331556802718,
-      "gxe": 77.78203549322183
+      "rating": 1847.7055325842337,
+      "rd": 38.470466384611505,
+      "gxe": 79.16223626936528
     },
     "il_bc_3ep@mega_lucario_ex": {
-      "rating": 1282.3002966209099,
-      "rd": 40.77331556802718,
-      "gxe": 30.251723561649303
+      "rating": 1311.8970069626278,
+      "rd": 38.470466384611505,
+      "gxe": 32.69376735805233
     },
     "il_bc_3ep@team_rockets_spidops": {
-      "rating": 1704.8938384744379,
-      "rd": 40.77331556802718,
-      "gxe": 68.7015229902481
+      "rating": 1728.0036279240876,
+      "rd": 38.470466384611505,
+      "gxe": 70.58337000288113
     },
     "il_bc_4ep@marnies_grimmsnarl_ex": {
-      "rating": 1813.743690163983,
-      "rd": 40.77331556802718,
-      "gxe": 76.92128219445522
+      "rating": 1836.3053511880294,
+      "rd": 38.470466384611505,
+      "gxe": 78.43114526194591
     },
     "il_hfstream_comb_3ep@marnies_grimmsnarl_ex": {
-      "rating": 1841.6738700002297,
+      "rating": 1852.054192379986,
       "rd": 30.0,
-      "gxe": 78.80624543967824
+      "gxe": 79.46497456310183
     },
     "il_medium_3ep@marnies_grimmsnarl_ex": {
-      "rating": 1799.7704708492588,
+      "rating": 1812.5998432339536,
       "rd": 30.0,
-      "gxe": 75.99166071990116
+      "gxe": 76.87976313259031
     },
     "il_small_comb_2ep@alakazam": {
-      "rating": 1634.46158149885,
-      "rd": 40.77331556802718,
-      "gxe": 62.61990876142684
+      "rating": 1671.0027209430657,
+      "rd": 38.470466384611505,
+      "gxe": 65.84570382058514
     },
     "il_small_comb_2ep@cynthias_garchomp_ex": {
-      "rating": 1653.6703788558284,
-      "rd": 40.77331556802718,
-      "gxe": 64.32851674262405
+      "rating": 1688.1029930373722,
+      "rd": 38.470466384611505,
+      "gxe": 67.30623264194767
     },
     "il_small_comb_2ep@marnies_grimmsnarl_ex": {
-      "rating": 1757.8670716982872,
+      "rating": 1773.1454940879212,
       "rd": 30.0,
-      "gxe": 72.93167907507046
+      "gxe": 74.07527045348064
     },
     "il_small_comb_2ep@mega_lucario_ex": {
-      "rating": 1487.1941350953477,
-      "rd": 40.77331556802718,
-      "gxe": 48.771806599073706
+      "rating": 1522.8003627924088,
+      "rd": 38.470466384611505,
+      "gxe": 52.186690286125355
     },
     "il_small_comb_2ep@team_rockets_spidops": {
-      "rating": 1532.014662261631,
-      "rd": 40.77331556802718,
-      "gxe": 53.067245026016316
+      "rating": 1568.4010883772262,
+      "rd": 38.470466384611505,
+      "gxe": 56.526802836911386
     },
     "improved_prob_main": {
-      "rating": 1640.864513951176,
-      "rd": 40.77331556802718,
-      "gxe": 63.19319387315326
+      "rating": 1682.40290233927,
+      "rd": 38.470466384611505,
+      "gxe": 66.822934712839
     },
     "mcts_il_agent": {
-      "rating": 1256.6885668116051,
-      "rd": 40.77331556802718,
-      "gxe": 28.219192760662143
+      "rating": 1306.1969162645255,
+      "rd": 38.470466384611505,
+      "gxe": 32.21411573513935
     },
     "rule_baseline": {
-      "rating": 1493.5970675476738,
-      "rd": 40.77331556802718,
-      "gxe": 49.385810637608074
+      "rating": 1511.4001813962043,
+      "rd": 38.470466384611505,
+      "gxe": 51.09386843911125
     },
     "tb_alakazam": {
-      "rating": 1506.4029324523262,
-      "rd": 40.77331556802718,
-      "gxe": 50.614189362391926
+      "rating": 1539.9006348867154,
+      "rd": 38.470466384611505,
+      "gxe": 53.82168210192176
     },
     "tb_rulecore": {
-      "rating": 1371.9413509534763,
-      "rd": 40.77331556802718,
-      "gxe": 37.956942238610445
+      "rating": 1414.4986395284673,
+      "rd": 38.470466384611505,
+      "gxe": 41.86755151979106
     },
     "tb_search": {
-      "rating": 1320.7178913348669,
-      "rd": 40.77331556802718,
-      "gxe": 33.449445041715514
+      "rating": 1351.797641849343,
+      "rd": 38.470466384611505,
+      "gxe": 36.149013754028495
     },
     "tb_starmie": {
-      "rating": 1135.0328502174075,
-      "rd": 40.77331556802718,
-      "gxe": 19.774912539495173
+      "rating": 1146.594376717664,
+      "rd": 38.470466384611505,
+      "gxe": 20.479127691507294
     },
     "wmh_bellibolt": {
-      "rating": 1231.0768370023004,
-      "rd": 40.77331556802718,
-      "gxe": 26.271784614673006
+      "rating": 1232.095737189197,
+      "rd": 38.470466384611505,
+      "gxe": 26.339433274860195
     },
     "wmh_megastarmie": {
-      "rating": 1621.6557165941974,
-      "rd": 40.77331556802718,
-      "gxe": 61.46278318874652
+      "rating": 1665.3026302449634,
+      "rd": 38.470466384611505,
+      "gxe": 65.35192986562905
     },
     "wmh_typhlosion": {
-      "rating": 1307.9120264302146,
-      "rd": 40.77331556802718,
-      "gxe": 32.36464319188359
+      "rating": 1346.0975511512409,
+      "rd": 38.470466384611505,
+      "gxe": 35.645516686633485
     }
   },
   "separation": [
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 3.4375,
+      "gap_pp": 3.235294117647058,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 4.6875,
+      "gap_pp": 3.4640522875817084,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "gap_pp": 5.9375,
+      "gap_pp": 4.575163398692823,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "gap_pp": 7.1875,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
-      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 7.5,
+      "gap_pp": 5.686274509803923,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 8.4375,
+      "gap_pp": 6.797385620915037,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 8.4375,
+      "gap_pp": 6.797385620915037,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 11.5625,
-      "separated": true
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 7.058823529411768,
+      "separated": false
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 12.8125,
+      "gap_pp": 10.686274509803923,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 10.882352941176478,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 15.3125,
+      "gap_pp": 13.464052287581708,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 15.9375,
+      "gap_pp": 13.464052287581708,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 16.5625,
+      "gap_pp": 15.130718954248366,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 17.1875,
+      "gap_pp": 15.686274509803923,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 21.5625,
+      "gap_pp": 19.019607843137265,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "improved_prob_main",
-      "gap_pp": 22.8125,
+      "gap_pp": 19.575163398692823,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 23.4375,
+      "gap_pp": 20.686274509803923,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 24.6875,
+      "gap_pp": 21.24183006535948,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
-      "gap_pp": 26.5625,
+      "gap_pp": 22.90849673202615,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 29.6875,
+      "gap_pp": 26.797385620915037,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 31.5625,
+      "gap_pp": 27.90849673202615,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 33.4375,
+      "gap_pp": 30.68627450980393,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "tb_alakazam",
-      "gap_pp": 35.9375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 37.1875,
+      "gap_pp": 33.46405228758171,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 37.8125,
+      "gap_pp": 35.13071895424837,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 36.24183006535948,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "tb_rulecore",
-      "gap_pp": 49.0625,
+      "gap_pp": 45.68627450980393,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "tb_search",
-      "gap_pp": 54.0625,
+      "gap_pp": 51.79738562091504,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 55.3125,
+      "gap_pp": 52.352941176470594,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 57.8125,
+      "gap_pp": 55.68627450980392,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 60.3125,
+      "gap_pp": 56.24183006535948,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 62.8125,
+      "gap_pp": 63.46405228758171,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "grunt",
-      "gap_pp": 66.5625,
+      "gap_pp": 66.24183006535948,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
-      "gap_pp": 72.1875,
+      "gap_pp": 71.79738562091504,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 1.25,
+      "gap_pp": 0.22875816993465037,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "gap_pp": 2.5,
+      "gap_pp": 1.3398692810457646,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "gap_pp": 3.75,
-      "separated": false
-    },
-    {
-      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
-      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 4.0625,
+      "gap_pp": 2.4509803921568647,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 5.0,
+      "gap_pp": 3.562091503267979,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 5.0,
+      "gap_pp": 3.562091503267979,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 8.125,
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 3.82352941176471,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 9.375,
+      "gap_pp": 7.450980392156865,
+      "separated": false
+    },
+    {
+      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 7.64705882352942,
       "separated": false
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 11.875,
+      "gap_pp": 10.22875816993465,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 12.5,
+      "gap_pp": 10.22875816993465,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 13.125,
+      "gap_pp": 11.895424836601308,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 13.75,
+      "gap_pp": 12.450980392156865,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 18.125,
+      "gap_pp": 15.784313725490208,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "improved_prob_main",
-      "gap_pp": 19.375,
+      "gap_pp": 16.339869281045765,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 20.0,
+      "gap_pp": 17.450980392156865,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 21.25,
+      "gap_pp": 18.006535947712422,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
-      "gap_pp": 23.125,
+      "gap_pp": 19.673202614379093,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 26.25,
+      "gap_pp": 23.56209150326798,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 28.125,
+      "gap_pp": 24.673202614379093,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 30.0,
+      "gap_pp": 27.450980392156872,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "tb_alakazam",
-      "gap_pp": 32.5,
-      "separated": true
-    },
-    {
-      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 33.75,
+      "gap_pp": 30.22875816993465,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 34.375,
+      "gap_pp": 31.895424836601315,
+      "separated": true
+    },
+    {
+      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 33.00653594771242,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "tb_rulecore",
-      "gap_pp": 45.625,
+      "gap_pp": 42.45098039215687,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "tb_search",
-      "gap_pp": 50.625,
+      "gap_pp": 48.56209150326798,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 51.875,
+      "gap_pp": 49.117647058823536,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 54.375,
+      "gap_pp": 52.450980392156865,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 56.875,
+      "gap_pp": 53.00653594771242,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 59.375,
+      "gap_pp": 60.22875816993465,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "grunt",
-      "gap_pp": 63.125,
+      "gap_pp": 63.00653594771242,
       "separated": true
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
-      "gap_pp": 68.75,
+      "gap_pp": 68.56209150326798,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "gap_pp": 1.25,
+      "gap_pp": 1.1111111111111143,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "gap_pp": 2.5,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
-      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 2.8125,
+      "gap_pp": 2.2222222222222143,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 3.75,
+      "gap_pp": 3.3333333333333286,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 3.75,
+      "gap_pp": 3.3333333333333286,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 6.875,
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 3.5947712418300597,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 8.125,
+      "gap_pp": 7.222222222222214,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 7.41830065359477,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 10.625,
+      "gap_pp": 10.0,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 11.25,
+      "gap_pp": 10.0,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 11.875,
+      "gap_pp": 11.666666666666657,
       "separated": false
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 12.5,
-      "separated": false
+      "gap_pp": 12.222222222222214,
+      "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 16.875,
+      "gap_pp": 15.555555555555557,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "improved_prob_main",
-      "gap_pp": 18.125,
+      "gap_pp": 16.111111111111114,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 18.75,
+      "gap_pp": 17.222222222222214,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 20.0,
+      "gap_pp": 17.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
-      "gap_pp": 21.875,
+      "gap_pp": 19.444444444444443,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 25.0,
+      "gap_pp": 23.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 26.875,
+      "gap_pp": 24.444444444444443,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 28.75,
+      "gap_pp": 27.22222222222222,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "tb_alakazam",
-      "gap_pp": 31.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 32.5,
+      "gap_pp": 30.0,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 33.125,
+      "gap_pp": 31.666666666666664,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 32.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "tb_rulecore",
-      "gap_pp": 44.375,
+      "gap_pp": 42.22222222222222,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "tb_search",
-      "gap_pp": 49.375,
+      "gap_pp": 48.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 50.625,
+      "gap_pp": 48.888888888888886,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 53.125,
+      "gap_pp": 52.222222222222214,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 55.625,
+      "gap_pp": 52.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 58.125,
+      "gap_pp": 60.0,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "grunt",
-      "gap_pp": 61.875,
+      "gap_pp": 62.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
-      "gap_pp": 67.5,
+      "gap_pp": 68.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "gap_pp": 1.25,
+      "gap_pp": 1.1111111111111,
+      "separated": false
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@cynthias_garchomp_ex",
+      "gap_pp": 2.2222222222222143,
+      "separated": false
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 2.2222222222222143,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 1.5625,
-      "separated": false
-    },
-    {
-      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 2.5,
-      "separated": false
-    },
-    {
-      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 2.5,
-      "separated": false
-    },
-    {
-      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 5.625,
+      "gap_pp": 2.4836601307189454,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 6.875,
+      "gap_pp": 6.1111111111111,
+      "separated": false
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 6.3071895424836555,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 9.375,
+      "gap_pp": 8.888888888888886,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 10.0,
+      "gap_pp": 8.888888888888886,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 10.625,
+      "gap_pp": 10.555555555555543,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 11.25,
+      "gap_pp": 11.1111111111111,
       "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 15.625,
+      "gap_pp": 14.444444444444443,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "improved_prob_main",
-      "gap_pp": 16.875,
+      "gap_pp": 15.0,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 17.5,
+      "gap_pp": 16.1111111111111,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 18.75,
+      "gap_pp": 16.666666666666657,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
-      "gap_pp": 20.625,
+      "gap_pp": 18.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 23.75,
+      "gap_pp": 22.222222222222214,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 25.625,
+      "gap_pp": 23.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 27.5,
+      "gap_pp": 26.111111111111107,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "tb_alakazam",
-      "gap_pp": 30.0,
-      "separated": true
-    },
-    {
-      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 31.25,
+      "gap_pp": 28.888888888888886,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 31.875,
+      "gap_pp": 30.55555555555555,
+      "separated": true
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 31.666666666666657,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "tb_rulecore",
-      "gap_pp": 43.125,
+      "gap_pp": 41.11111111111111,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "tb_search",
-      "gap_pp": 48.125,
+      "gap_pp": 47.222222222222214,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 49.375,
+      "gap_pp": 47.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 51.875,
+      "gap_pp": 51.1111111111111,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 54.375,
+      "gap_pp": 51.66666666666666,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 56.875,
+      "gap_pp": 58.888888888888886,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "grunt",
-      "gap_pp": 60.625,
+      "gap_pp": 61.66666666666666,
       "separated": true
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
-      "gap_pp": 66.25,
+      "gap_pp": 67.22222222222221,
       "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@cynthias_garchomp_ex",
+      "gap_pp": 1.1111111111111143,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 1.1111111111111143,
+      "separated": false
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "gap_pp": 0.3125,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 4.375,
+      "gap_pp": 1.3725490196078454,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 5.625,
+      "gap_pp": 5.0,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 5.196078431372555,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 8.125,
+      "gap_pp": 7.777777777777786,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 8.75,
+      "gap_pp": 7.777777777777786,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 9.375,
+      "gap_pp": 9.444444444444443,
       "separated": false
     },
     {
@@ -3130,277 +3375,115 @@
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 14.375,
+      "gap_pp": 13.333333333333343,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "improved_prob_main",
-      "gap_pp": 15.625,
+      "gap_pp": 13.8888888888889,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 16.25,
+      "gap_pp": 15.0,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 17.5,
+      "gap_pp": 15.555555555555557,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
-      "gap_pp": 19.375,
+      "gap_pp": 17.22222222222223,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 22.5,
+      "gap_pp": 21.111111111111114,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 24.375,
+      "gap_pp": 22.22222222222223,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 26.25,
+      "gap_pp": 25.000000000000007,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "tb_alakazam",
-      "gap_pp": 28.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 30.0,
+      "gap_pp": 27.777777777777786,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 30.625,
+      "gap_pp": 29.44444444444445,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "tb_rulecore",
-      "gap_pp": 41.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "tb_search",
-      "gap_pp": 46.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 48.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 50.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 53.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "wmh_bellibolt",
-      "gap_pp": 55.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "grunt",
-      "gap_pp": 59.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
-      "b": "tb_starmie",
-      "gap_pp": 65.0,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@cynthias_garchomp_ex",
-      "gap_pp": 0.9375,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 0.9375,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 4.0625,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 5.3125,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 7.8125,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@alakazam",
-      "gap_pp": 8.4375,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 9.0625,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 9.6875,
-      "separated": false
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 14.0625,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "improved_prob_main",
-      "gap_pp": 15.3125,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 15.9375,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "wmh_megastarmie",
-      "gap_pp": 17.1875,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "agent_core_improved",
-      "gap_pp": 19.0625,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 22.1875,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 24.0625,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 25.9375,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "tb_alakazam",
-      "gap_pp": 28.4375,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
       "b": "rule_baseline",
-      "gap_pp": 29.6875,
+      "gap_pp": 30.555555555555557,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 30.3125,
-      "separated": true
-    },
-    {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "tb_rulecore",
-      "gap_pp": 41.5625,
+      "gap_pp": 40.00000000000001,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "tb_search",
-      "gap_pp": 46.5625,
+      "gap_pp": 46.111111111111114,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 47.8125,
+      "gap_pp": 46.66666666666667,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 50.3125,
+      "gap_pp": 50.0,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 52.8125,
+      "gap_pp": 50.55555555555556,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 55.3125,
+      "gap_pp": 57.777777777777786,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "grunt",
-      "gap_pp": 59.0625,
+      "gap_pp": 60.55555555555556,
       "separated": true
     },
     {
-      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
-      "gap_pp": 64.6875,
+      "gap_pp": 66.11111111111111,
       "separated": true
     },
     {
@@ -3411,554 +3494,578 @@
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 0.2614379084967311,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
+      "b": "il_bc_3ep@cynthias_garchomp_ex",
+      "gap_pp": 3.8888888888888857,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 3.125,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 4.375,
+      "gap_pp": 4.084967320261441,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 6.875,
+      "gap_pp": 6.666666666666671,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 7.5,
+      "gap_pp": 6.666666666666671,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 8.125,
+      "gap_pp": 8.333333333333329,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 8.75,
+      "gap_pp": 8.888888888888886,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 13.125,
+      "gap_pp": 12.222222222222229,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "improved_prob_main",
-      "gap_pp": 14.375,
-      "separated": true
+      "gap_pp": 12.777777777777786,
+      "separated": false
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 15.0,
+      "gap_pp": 13.888888888888886,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 16.25,
+      "gap_pp": 14.444444444444443,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "agent_core_improved",
-      "gap_pp": 18.125,
+      "gap_pp": 16.111111111111114,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 21.25,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 23.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 25.0,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "tb_alakazam",
-      "gap_pp": 27.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "rule_baseline",
-      "gap_pp": 28.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 29.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "tb_rulecore",
-      "gap_pp": 40.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "tb_search",
-      "gap_pp": 45.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 46.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 49.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 51.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "wmh_bellibolt",
-      "gap_pp": 54.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "grunt",
-      "gap_pp": 58.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@cynthias_garchomp_ex",
-      "b": "tb_starmie",
-      "gap_pp": 63.75,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "gap_pp": 3.125,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 4.375,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 6.875,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@alakazam",
-      "gap_pp": 7.5,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 8.125,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 8.75,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 13.125,
-      "separated": false
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "improved_prob_main",
-      "gap_pp": 14.375,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 15.0,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "wmh_megastarmie",
-      "gap_pp": 16.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "agent_core_improved",
-      "gap_pp": 18.125,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 21.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 23.125,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 25.0,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "tb_alakazam",
-      "gap_pp": 27.5,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 28.75,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 29.375,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "tb_rulecore",
-      "gap_pp": 40.625,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "tb_search",
-      "gap_pp": 45.625,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 46.875,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 49.375,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 51.875,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "wmh_bellibolt",
-      "gap_pp": 54.375,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "grunt",
-      "gap_pp": 58.125,
-      "separated": true
-    },
-    {
-      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
-      "b": "tb_starmie",
-      "gap_pp": 63.75,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@cynthias_garchomp_ex",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 3.75,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@alakazam",
-      "gap_pp": 4.375,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 5.0,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 5.625,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 10.0,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "improved_prob_main",
-      "gap_pp": 11.25,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 11.875,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "wmh_megastarmie",
-      "gap_pp": 13.125,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "agent_core_improved",
-      "gap_pp": 15.0,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 18.125,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 20.0,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 21.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 21.875,
+      "gap_pp": 23.888888888888893,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "tb_alakazam",
-      "gap_pp": 24.375,
+      "gap_pp": 26.66666666666667,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
-      "b": "rule_baseline",
-      "gap_pp": 25.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 26.25,
+      "gap_pp": 28.333333333333336,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
+      "b": "rule_baseline",
+      "gap_pp": 29.444444444444443,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "tb_rulecore",
-      "gap_pp": 37.5,
+      "gap_pp": 38.88888888888889,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "tb_search",
-      "gap_pp": 42.5,
+      "gap_pp": 45.0,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 43.75,
+      "gap_pp": 45.55555555555556,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 46.25,
+      "gap_pp": 48.888888888888886,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 48.75,
+      "gap_pp": 49.44444444444444,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 51.25,
+      "gap_pp": 56.66666666666667,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "grunt",
-      "gap_pp": 55.0,
+      "gap_pp": 59.44444444444444,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "tb_starmie",
-      "gap_pp": 60.625,
+      "gap_pp": 65.0,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 0.2614379084967311,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@cynthias_garchomp_ex",
+      "gap_pp": 3.8888888888888857,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 4.084967320261441,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@team_rockets_spidops",
+      "gap_pp": 6.666666666666671,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@alakazam",
+      "gap_pp": 6.666666666666671,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@team_rockets_spidops",
+      "gap_pp": 8.333333333333329,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 8.888888888888886,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 12.222222222222229,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "improved_prob_main",
+      "gap_pp": 12.777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 13.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_megastarmie",
+      "gap_pp": 14.444444444444443,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "agent_core_improved",
+      "gap_pp": 16.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 20.0,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 21.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 23.888888888888893,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 26.66666666666667,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 28.333333333333336,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 29.444444444444443,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 38.88888888888889,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_search",
+      "gap_pp": 45.0,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 45.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 48.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 49.44444444444444,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 56.66666666666667,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "grunt",
+      "gap_pp": 59.44444444444444,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_starmie",
+      "gap_pp": 65.0,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@cynthias_garchomp_ex",
+      "gap_pp": 3.6274509803921546,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 3.82352941176471,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@team_rockets_spidops",
+      "gap_pp": 6.40522875816994,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@alakazam",
+      "gap_pp": 6.40522875816994,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@team_rockets_spidops",
+      "gap_pp": 8.071895424836597,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 8.627450980392155,
+      "separated": false
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 11.960784313725497,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "improved_prob_main",
+      "gap_pp": 12.516339869281055,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 13.627450980392155,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "wmh_megastarmie",
+      "gap_pp": 14.183006535947712,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "agent_core_improved",
+      "gap_pp": 15.849673202614383,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 19.73856209150327,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 20.849673202614383,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 23.62745098039216,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 26.40522875816994,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 28.071895424836605,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 29.18300653594771,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 38.62745098039216,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "tb_search",
+      "gap_pp": 44.73856209150327,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 45.294117647058826,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 48.627450980392155,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 49.18300653594771,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 56.40522875816994,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "grunt",
+      "gap_pp": 59.18300653594771,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "tb_starmie",
+      "gap_pp": 64.73856209150327,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 0.19607843137255543,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@team_rockets_spidops",
-      "gap_pp": 2.5,
+      "gap_pp": 2.7777777777777857,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@alakazam",
-      "gap_pp": 3.125,
+      "gap_pp": 2.7777777777777857,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 3.75,
+      "gap_pp": 4.444444444444443,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 4.375,
+      "gap_pp": 5.0,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 8.75,
+      "gap_pp": 8.333333333333343,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "improved_prob_main",
-      "gap_pp": 10.0,
+      "gap_pp": 8.8888888888889,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 10.625,
+      "gap_pp": 10.0,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 11.875,
+      "gap_pp": 10.555555555555557,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "agent_core_improved",
-      "gap_pp": 13.75,
+      "gap_pp": 12.222222222222229,
       "separated": false
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 16.875,
+      "gap_pp": 16.111111111111114,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 18.75,
+      "gap_pp": 17.22222222222223,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 20.625,
+      "gap_pp": 20.000000000000007,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "tb_alakazam",
-      "gap_pp": 23.125,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@cynthias_garchomp_ex",
-      "b": "rule_baseline",
-      "gap_pp": 24.375,
+      "gap_pp": 22.777777777777786,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 25.0,
+      "gap_pp": 24.44444444444445,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "rule_baseline",
+      "gap_pp": 25.555555555555557,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "tb_rulecore",
-      "gap_pp": 36.25,
+      "gap_pp": 35.00000000000001,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "tb_search",
-      "gap_pp": 41.25,
+      "gap_pp": 41.111111111111114,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 42.5,
+      "gap_pp": 41.66666666666667,
       "separated": true
     },
     {
@@ -3970,217 +4077,355 @@
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 47.5,
+      "gap_pp": 45.55555555555556,
       "separated": true
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 52.777777777777786,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "grunt",
+      "gap_pp": 55.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "tb_starmie",
+      "gap_pp": 61.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@team_rockets_spidops",
+      "gap_pp": 2.5816993464052302,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@alakazam",
+      "gap_pp": 2.5816993464052302,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@team_rockets_spidops",
+      "gap_pp": 4.248366013071887,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 4.803921568627445,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 8.137254901960787,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "improved_prob_main",
+      "gap_pp": 8.692810457516345,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 9.803921568627445,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_megastarmie",
+      "gap_pp": 10.359477124183002,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "agent_core_improved",
+      "gap_pp": 12.026143790849673,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 15.915032679738559,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 17.026143790849673,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 19.80392156862745,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 22.58169934640523,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 24.248366013071895,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 25.359477124183,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 34.80392156862745,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_search",
+      "gap_pp": 40.91503267973856,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 41.470588235294116,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 44.803921568627445,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 45.359477124183,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 52.58169934640523,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "grunt",
+      "gap_pp": 55.359477124183,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "tb_starmie",
+      "gap_pp": 60.91503267973856,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_bc_3ep@alakazam",
+      "gap_pp": 0.0,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_bc_3ep@team_rockets_spidops",
+      "gap_pp": 1.6666666666666572,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 2.2222222222222143,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 5.555555555555557,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "improved_prob_main",
+      "gap_pp": 6.111111111111114,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 7.222222222222214,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "wmh_megastarmie",
+      "gap_pp": 7.7777777777777715,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "agent_core_improved",
+      "gap_pp": 9.444444444444443,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 13.333333333333329,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 14.444444444444443,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 17.22222222222222,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "tb_alakazam",
+      "gap_pp": 20.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 21.666666666666664,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "rule_baseline",
+      "gap_pp": 22.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "tb_rulecore",
+      "gap_pp": 32.22222222222222,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "tb_search",
+      "gap_pp": 38.33333333333333,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "wmh_typhlosion",
+      "gap_pp": 38.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 42.222222222222214,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "mcts_il_agent",
+      "gap_pp": 42.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
       "b": "wmh_bellibolt",
       "gap_pp": 50.0,
       "separated": true
     },
     {
-      "a": "il_bc_3ep@cynthias_garchomp_ex",
-      "b": "grunt",
-      "gap_pp": 53.75,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@cynthias_garchomp_ex",
-      "b": "tb_starmie",
-      "gap_pp": 59.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_bc_3ep@alakazam",
-      "gap_pp": 0.625,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 1.875,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 6.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "improved_prob_main",
-      "gap_pp": 7.5,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 8.125,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "wmh_megastarmie",
-      "gap_pp": 9.375,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "agent_core_improved",
-      "gap_pp": 11.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 14.375,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 16.25,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 18.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "tb_alakazam",
-      "gap_pp": 20.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "rule_baseline",
-      "gap_pp": 21.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 22.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "tb_rulecore",
-      "gap_pp": 33.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "tb_search",
-      "gap_pp": 38.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "wmh_typhlosion",
-      "gap_pp": 40.0,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 42.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "mcts_il_agent",
-      "gap_pp": 45.0,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@team_rockets_spidops",
-      "b": "wmh_bellibolt",
-      "gap_pp": 47.5,
-      "separated": true
-    },
-    {
       "a": "il_alldays_3ep@team_rockets_spidops",
       "b": "grunt",
-      "gap_pp": 51.25,
+      "gap_pp": 52.77777777777777,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@team_rockets_spidops",
       "b": "tb_starmie",
-      "gap_pp": 56.875,
+      "gap_pp": 58.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_bc_3ep@team_rockets_spidops",
-      "gap_pp": 0.625,
+      "gap_pp": 1.6666666666666572,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 1.25,
+      "gap_pp": 2.2222222222222143,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 5.625,
+      "gap_pp": 5.555555555555557,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "improved_prob_main",
-      "gap_pp": 6.875,
+      "gap_pp": 6.111111111111114,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 7.5,
+      "gap_pp": 7.222222222222214,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "wmh_megastarmie",
-      "gap_pp": 8.75,
+      "gap_pp": 7.7777777777777715,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "agent_core_improved",
-      "gap_pp": 10.625,
+      "gap_pp": 9.444444444444443,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 13.75,
+      "gap_pp": 13.333333333333329,
       "separated": false
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 15.625,
+      "gap_pp": 14.444444444444443,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 17.5,
+      "gap_pp": 17.22222222222222,
       "separated": true
     },
     {
@@ -4191,698 +4436,698 @@
     },
     {
       "a": "il_bc_3ep@alakazam",
-      "b": "rule_baseline",
-      "gap_pp": 21.25,
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 21.666666666666664,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 21.875,
+      "b": "rule_baseline",
+      "gap_pp": 22.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "tb_rulecore",
-      "gap_pp": 33.125,
+      "gap_pp": 32.22222222222222,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "tb_search",
-      "gap_pp": 38.125,
+      "gap_pp": 38.33333333333333,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "wmh_typhlosion",
-      "gap_pp": 39.375,
+      "gap_pp": 38.888888888888886,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 41.875,
+      "gap_pp": 42.222222222222214,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "mcts_il_agent",
-      "gap_pp": 44.375,
+      "gap_pp": 42.77777777777777,
       "separated": true
     },
     {
       "a": "il_bc_3ep@alakazam",
       "b": "wmh_bellibolt",
-      "gap_pp": 46.875,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@alakazam",
-      "b": "grunt",
-      "gap_pp": 50.625,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@alakazam",
-      "b": "tb_starmie",
-      "gap_pp": 56.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_alldays_3ep@alakazam",
-      "gap_pp": 0.625,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 5.0,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "improved_prob_main",
-      "gap_pp": 6.25,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 6.875,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "wmh_megastarmie",
-      "gap_pp": 8.125,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "agent_core_improved",
-      "gap_pp": 10.0,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 13.125,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 15.0,
-      "separated": false
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 16.875,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "tb_alakazam",
-      "gap_pp": 19.375,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "rule_baseline",
-      "gap_pp": 20.625,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 21.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "tb_rulecore",
-      "gap_pp": 32.5,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "tb_search",
-      "gap_pp": 37.5,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "wmh_typhlosion",
-      "gap_pp": 38.75,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 41.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "mcts_il_agent",
-      "gap_pp": 43.75,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "wmh_bellibolt",
-      "gap_pp": 46.25,
-      "separated": true
-    },
-    {
-      "a": "il_bc_3ep@team_rockets_spidops",
-      "b": "grunt",
       "gap_pp": 50.0,
       "separated": true
     },
     {
+      "a": "il_bc_3ep@alakazam",
+      "b": "grunt",
+      "gap_pp": 52.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@alakazam",
+      "b": "tb_starmie",
+      "gap_pp": 58.33333333333333,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 0.5555555555555571,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 3.8888888888889,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "improved_prob_main",
+      "gap_pp": 4.444444444444457,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 5.555555555555557,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "wmh_megastarmie",
+      "gap_pp": 6.111111111111114,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "agent_core_improved",
+      "gap_pp": 7.777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 11.666666666666671,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 12.777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 15.555555555555564,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "tb_alakazam",
+      "gap_pp": 18.333333333333343,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 20.000000000000007,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "rule_baseline",
+      "gap_pp": 21.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "tb_rulecore",
+      "gap_pp": 30.555555555555564,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "tb_search",
+      "gap_pp": 36.66666666666667,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "wmh_typhlosion",
+      "gap_pp": 37.22222222222223,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 40.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "mcts_il_agent",
+      "gap_pp": 41.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "wmh_bellibolt",
+      "gap_pp": 48.33333333333334,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "grunt",
+      "gap_pp": 51.111111111111114,
+      "separated": true
+    },
+    {
       "a": "il_bc_3ep@team_rockets_spidops",
       "b": "tb_starmie",
-      "gap_pp": 55.625,
+      "gap_pp": 56.66666666666667,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "gap_pp": 4.375,
+      "gap_pp": 3.333333333333343,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "improved_prob_main",
-      "gap_pp": 5.625,
+      "gap_pp": 3.8888888888889,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 6.25,
+      "gap_pp": 5.0,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "wmh_megastarmie",
-      "gap_pp": 7.5,
+      "gap_pp": 5.555555555555557,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "agent_core_improved",
-      "gap_pp": 9.375,
+      "gap_pp": 7.2222222222222285,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 12.5,
+      "gap_pp": 11.111111111111114,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 14.375,
+      "gap_pp": 12.222222222222229,
       "separated": false
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 16.25,
+      "gap_pp": 15.000000000000007,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "tb_alakazam",
-      "gap_pp": 18.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@alakazam",
-      "b": "rule_baseline",
-      "gap_pp": 20.0,
+      "gap_pp": 17.777777777777786,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 20.625,
+      "gap_pp": 19.44444444444445,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@alakazam",
+      "b": "rule_baseline",
+      "gap_pp": 20.555555555555557,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "tb_rulecore",
-      "gap_pp": 31.875,
+      "gap_pp": 30.000000000000007,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "tb_search",
-      "gap_pp": 36.875,
+      "gap_pp": 36.111111111111114,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "wmh_typhlosion",
-      "gap_pp": 38.125,
+      "gap_pp": 36.66666666666667,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 40.625,
+      "gap_pp": 40.0,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "mcts_il_agent",
-      "gap_pp": 43.125,
+      "gap_pp": 40.55555555555556,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "wmh_bellibolt",
-      "gap_pp": 45.625,
+      "gap_pp": 47.777777777777786,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "grunt",
-      "gap_pp": 49.375,
+      "gap_pp": 50.55555555555556,
       "separated": true
     },
     {
       "a": "il_alldays_3ep@alakazam",
       "b": "tb_starmie",
-      "gap_pp": 55.0,
+      "gap_pp": 56.111111111111114,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "improved_prob_main",
-      "gap_pp": 1.25,
+      "gap_pp": 0.5555555555555571,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 1.875,
+      "gap_pp": 1.6666666666666572,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "wmh_megastarmie",
-      "gap_pp": 3.125,
+      "gap_pp": 2.2222222222222143,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "agent_core_improved",
-      "gap_pp": 5.0,
+      "gap_pp": 3.8888888888888857,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 8.125,
+      "gap_pp": 7.7777777777777715,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 10.0,
+      "gap_pp": 8.888888888888886,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 11.875,
+      "gap_pp": 11.666666666666664,
       "separated": false
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "tb_alakazam",
-      "gap_pp": 14.375,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "b": "rule_baseline",
-      "gap_pp": 15.625,
+      "gap_pp": 14.444444444444443,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 16.25,
+      "gap_pp": 16.111111111111107,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "b": "rule_baseline",
+      "gap_pp": 17.222222222222214,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "tb_rulecore",
-      "gap_pp": 27.5,
+      "gap_pp": 26.666666666666664,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "tb_search",
-      "gap_pp": 32.5,
+      "gap_pp": 32.77777777777777,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "wmh_typhlosion",
-      "gap_pp": 33.75,
+      "gap_pp": 33.33333333333333,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 36.25,
+      "gap_pp": 36.66666666666666,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 38.75,
+      "gap_pp": 37.222222222222214,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 41.25,
+      "gap_pp": 44.44444444444444,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "b": "grunt",
+      "gap_pp": 47.222222222222214,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "b": "tb_starmie",
+      "gap_pp": 52.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 1.1111111111111,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "wmh_megastarmie",
+      "gap_pp": 1.6666666666666572,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "agent_core_improved",
+      "gap_pp": 3.3333333333333286,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 7.222222222222214,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 8.333333333333329,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 11.111111111111107,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "tb_alakazam",
+      "gap_pp": 13.888888888888886,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 15.55555555555555,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "rule_baseline",
+      "gap_pp": 16.666666666666657,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "tb_rulecore",
+      "gap_pp": 26.111111111111107,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "tb_search",
+      "gap_pp": 32.222222222222214,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "wmh_typhlosion",
+      "gap_pp": 32.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 36.1111111111111,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "mcts_il_agent",
+      "gap_pp": 36.66666666666666,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "wmh_bellibolt",
+      "gap_pp": 43.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "grunt",
+      "gap_pp": 46.66666666666666,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "tb_starmie",
+      "gap_pp": 52.222222222222214,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "wmh_megastarmie",
+      "gap_pp": 0.5555555555555571,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "agent_core_improved",
+      "gap_pp": 2.2222222222222285,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 6.111111111111114,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 7.2222222222222285,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 10.000000000000007,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "tb_alakazam",
+      "gap_pp": 12.777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 14.44444444444445,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "rule_baseline",
+      "gap_pp": 15.555555555555557,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "tb_rulecore",
+      "gap_pp": 25.000000000000007,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "tb_search",
+      "gap_pp": 31.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "wmh_typhlosion",
+      "gap_pp": 31.66666666666667,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 35.0,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "mcts_il_agent",
+      "gap_pp": 35.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "wmh_bellibolt",
+      "gap_pp": 42.777777777777786,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "grunt",
+      "gap_pp": 45.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
+      "b": "tb_starmie",
+      "gap_pp": 51.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "agent_core_improved",
+      "gap_pp": 1.6666666666666714,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 5.555555555555557,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 6.666666666666671,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 9.44444444444445,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "tb_alakazam",
+      "gap_pp": 12.222222222222229,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 13.888888888888893,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "rule_baseline",
+      "gap_pp": 15.0,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "tb_rulecore",
+      "gap_pp": 24.44444444444445,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "tb_search",
+      "gap_pp": 30.555555555555557,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "wmh_typhlosion",
+      "gap_pp": 31.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 34.44444444444444,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "mcts_il_agent",
+      "gap_pp": 35.0,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
+      "b": "wmh_bellibolt",
+      "gap_pp": 42.22222222222223,
+      "separated": true
+    },
+    {
+      "a": "wmh_megastarmie",
       "b": "grunt",
       "gap_pp": 45.0,
       "separated": true
     },
     {
-      "a": "il_small_comb_2ep@cynthias_garchomp_ex",
-      "b": "tb_starmie",
-      "gap_pp": 50.625,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_small_comb_2ep@alakazam",
-      "gap_pp": 0.625,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "wmh_megastarmie",
-      "gap_pp": 1.875,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "agent_core_improved",
-      "gap_pp": 3.75,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 6.875,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 8.75,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 10.625,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "tb_alakazam",
-      "gap_pp": 13.125,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "rule_baseline",
-      "gap_pp": 14.375,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 15.0,
-      "separated": false
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "tb_rulecore",
-      "gap_pp": 26.25,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "tb_search",
-      "gap_pp": 31.25,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "wmh_typhlosion",
-      "gap_pp": 32.5,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 35.0,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "mcts_il_agent",
-      "gap_pp": 37.5,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "wmh_bellibolt",
-      "gap_pp": 40.0,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "grunt",
-      "gap_pp": 43.75,
-      "separated": true
-    },
-    {
-      "a": "improved_prob_main",
-      "b": "tb_starmie",
-      "gap_pp": 49.375,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "wmh_megastarmie",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "agent_core_improved",
-      "gap_pp": 3.125,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 6.25,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 8.125,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 10.0,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "tb_alakazam",
-      "gap_pp": 12.5,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "rule_baseline",
-      "gap_pp": 13.75,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 14.375,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "tb_rulecore",
-      "gap_pp": 25.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "tb_search",
-      "gap_pp": 30.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "wmh_typhlosion",
-      "gap_pp": 31.875,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 34.375,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "mcts_il_agent",
-      "gap_pp": 36.875,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "wmh_bellibolt",
-      "gap_pp": 39.375,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "grunt",
-      "gap_pp": 43.125,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@alakazam",
-      "b": "tb_starmie",
-      "gap_pp": 48.75,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "agent_core_improved",
-      "gap_pp": 1.875,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 5.0,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 6.875,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 8.75,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "tb_alakazam",
-      "gap_pp": 11.25,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "rule_baseline",
-      "gap_pp": 12.5,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 13.125,
-      "separated": false
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "tb_rulecore",
-      "gap_pp": 24.375,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "tb_search",
-      "gap_pp": 29.375,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "wmh_typhlosion",
-      "gap_pp": 30.625,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 33.125,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "mcts_il_agent",
-      "gap_pp": 35.625,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "wmh_bellibolt",
-      "gap_pp": 38.125,
-      "separated": true
-    },
-    {
-      "a": "wmh_megastarmie",
-      "b": "grunt",
-      "gap_pp": 41.875,
-      "separated": true
-    },
-    {
       "a": "wmh_megastarmie",
       "b": "tb_starmie",
-      "gap_pp": 47.5,
+      "gap_pp": 50.55555555555556,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "il_alldays_equalsteps@mega_lucario_ex",
-      "gap_pp": 3.125,
+      "gap_pp": 3.8888888888888857,
       "separated": false
     },
     {
@@ -4894,619 +5139,619 @@
     {
       "a": "agent_core_improved",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 6.875,
+      "gap_pp": 7.777777777777779,
       "separated": false
     },
     {
       "a": "agent_core_improved",
       "b": "tb_alakazam",
-      "gap_pp": 9.375,
-      "separated": false
-    },
-    {
-      "a": "agent_core_improved",
-      "b": "rule_baseline",
-      "gap_pp": 10.625,
+      "gap_pp": 10.555555555555557,
       "separated": false
     },
     {
       "a": "agent_core_improved",
       "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 11.25,
+      "gap_pp": 12.222222222222221,
+      "separated": false
+    },
+    {
+      "a": "agent_core_improved",
+      "b": "rule_baseline",
+      "gap_pp": 13.333333333333329,
       "separated": false
     },
     {
       "a": "agent_core_improved",
       "b": "tb_rulecore",
-      "gap_pp": 22.5,
+      "gap_pp": 22.77777777777778,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "tb_search",
-      "gap_pp": 27.5,
+      "gap_pp": 28.888888888888886,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "wmh_typhlosion",
-      "gap_pp": 28.75,
+      "gap_pp": 29.444444444444443,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 31.25,
+      "gap_pp": 32.77777777777777,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "mcts_il_agent",
-      "gap_pp": 33.75,
+      "gap_pp": 33.33333333333333,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "wmh_bellibolt",
-      "gap_pp": 36.25,
+      "gap_pp": 40.55555555555556,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "grunt",
-      "gap_pp": 40.0,
+      "gap_pp": 43.33333333333333,
       "separated": true
     },
     {
       "a": "agent_core_improved",
       "b": "tb_starmie",
-      "gap_pp": 45.625,
+      "gap_pp": 48.888888888888886,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
-      "gap_pp": 1.875,
+      "gap_pp": 1.1111111111111143,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 3.75,
+      "gap_pp": 3.888888888888893,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "tb_alakazam",
-      "gap_pp": 6.25,
+      "gap_pp": 6.666666666666671,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 8.333333333333336,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "rule_baseline",
-      "gap_pp": 7.5,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 8.125,
+      "gap_pp": 9.444444444444443,
       "separated": false
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "tb_rulecore",
-      "gap_pp": 19.375,
+      "gap_pp": 18.888888888888893,
       "separated": true
     },
     {
       "a": "il_alldays_equalsteps@mega_lucario_ex",
       "b": "tb_search",
-      "gap_pp": 24.375,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 25.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 28.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 30.625,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "wmh_bellibolt",
-      "gap_pp": 33.125,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "grunt",
-      "gap_pp": 36.875,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_equalsteps@mega_lucario_ex",
-      "b": "tb_starmie",
-      "gap_pp": 42.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "il_small_comb_2ep@team_rockets_spidops",
-      "gap_pp": 1.875,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "tb_alakazam",
-      "gap_pp": 4.375,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "rule_baseline",
-      "gap_pp": 5.625,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 6.25,
-      "separated": false
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "tb_rulecore",
-      "gap_pp": 17.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "tb_search",
-      "gap_pp": 22.5,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 23.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 26.25,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 28.75,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "wmh_bellibolt",
-      "gap_pp": 31.25,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "grunt",
-      "gap_pp": 35.0,
-      "separated": true
-    },
-    {
-      "a": "il_alldays_3ep@mega_lucario_ex",
-      "b": "tb_starmie",
-      "gap_pp": 40.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "tb_alakazam",
-      "gap_pp": 2.5,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "rule_baseline",
-      "gap_pp": 3.75,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 4.375,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "tb_rulecore",
-      "gap_pp": 15.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "tb_search",
-      "gap_pp": 20.625,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "wmh_typhlosion",
-      "gap_pp": 21.875,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 24.375,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "mcts_il_agent",
-      "gap_pp": 26.875,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "wmh_bellibolt",
-      "gap_pp": 29.375,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "grunt",
-      "gap_pp": 33.125,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@team_rockets_spidops",
-      "b": "tb_starmie",
-      "gap_pp": 38.75,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "rule_baseline",
-      "gap_pp": 1.25,
-      "separated": false
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 1.875,
-      "separated": false
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "tb_rulecore",
-      "gap_pp": 13.125,
-      "separated": false
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "tb_search",
-      "gap_pp": 18.125,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "wmh_typhlosion",
-      "gap_pp": 19.375,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 21.875,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "mcts_il_agent",
-      "gap_pp": 24.375,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "wmh_bellibolt",
-      "gap_pp": 26.875,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "grunt",
-      "gap_pp": 30.625,
-      "separated": true
-    },
-    {
-      "a": "tb_alakazam",
-      "b": "tb_starmie",
-      "gap_pp": 36.25,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "il_small_comb_2ep@mega_lucario_ex",
-      "gap_pp": 0.625,
-      "separated": false
-    },
-    {
-      "a": "rule_baseline",
-      "b": "tb_rulecore",
-      "gap_pp": 11.875,
-      "separated": false
-    },
-    {
-      "a": "rule_baseline",
-      "b": "tb_search",
-      "gap_pp": 16.875,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "wmh_typhlosion",
-      "gap_pp": 18.125,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 20.625,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "mcts_il_agent",
-      "gap_pp": 23.125,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "wmh_bellibolt",
-      "gap_pp": 25.625,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "grunt",
-      "gap_pp": 29.375,
-      "separated": true
-    },
-    {
-      "a": "rule_baseline",
-      "b": "tb_starmie",
-      "gap_pp": 35.0,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "tb_rulecore",
-      "gap_pp": 11.25,
-      "separated": false
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "tb_search",
-      "gap_pp": 16.25,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "wmh_typhlosion",
-      "gap_pp": 17.5,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 20.0,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "mcts_il_agent",
-      "gap_pp": 22.5,
-      "separated": true
-    },
-    {
-      "a": "il_small_comb_2ep@mega_lucario_ex",
-      "b": "wmh_bellibolt",
       "gap_pp": 25.0,
       "separated": true
     },
     {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 25.555555555555557,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 28.88888888888889,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 29.444444444444446,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 36.66666666666667,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "grunt",
+      "gap_pp": 39.44444444444444,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "tb_starmie",
+      "gap_pp": 45.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 2.7777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 5.555555555555557,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 7.222222222222221,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "rule_baseline",
+      "gap_pp": 8.333333333333329,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 17.77777777777778,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "tb_search",
+      "gap_pp": 23.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 24.444444444444443,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 27.777777777777775,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 28.333333333333332,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 35.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "grunt",
+      "gap_pp": 38.33333333333333,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "tb_starmie",
+      "gap_pp": 43.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "tb_alakazam",
+      "gap_pp": 2.7777777777777786,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 4.444444444444443,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "rule_baseline",
+      "gap_pp": 5.55555555555555,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "tb_rulecore",
+      "gap_pp": 15.0,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "tb_search",
+      "gap_pp": 21.111111111111107,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "wmh_typhlosion",
+      "gap_pp": 21.666666666666664,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 24.999999999999996,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "mcts_il_agent",
+      "gap_pp": 25.555555555555554,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "wmh_bellibolt",
+      "gap_pp": 32.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "grunt",
+      "gap_pp": 35.55555555555556,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@team_rockets_spidops",
+      "b": "tb_starmie",
+      "gap_pp": 41.11111111111111,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 1.6666666666666643,
+      "separated": false
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "rule_baseline",
+      "gap_pp": 2.7777777777777715,
+      "separated": false
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "tb_rulecore",
+      "gap_pp": 12.222222222222221,
+      "separated": false
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "tb_search",
+      "gap_pp": 18.33333333333333,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "wmh_typhlosion",
+      "gap_pp": 18.888888888888886,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 22.222222222222218,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "mcts_il_agent",
+      "gap_pp": 22.777777777777775,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "wmh_bellibolt",
+      "gap_pp": 29.999999999999996,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "grunt",
+      "gap_pp": 32.77777777777777,
+      "separated": true
+    },
+    {
+      "a": "tb_alakazam",
+      "b": "tb_starmie",
+      "gap_pp": 38.33333333333333,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "rule_baseline",
+      "gap_pp": 1.1111111111111072,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 10.555555555555557,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "tb_search",
+      "gap_pp": 16.666666666666664,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 17.22222222222222,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 20.555555555555554,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 21.11111111111111,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@mega_lucario_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 28.333333333333332,
+      "separated": true
+    },
+    {
       "a": "il_small_comb_2ep@mega_lucario_ex",
       "b": "grunt",
-      "gap_pp": 28.75,
+      "gap_pp": 31.11111111111111,
       "separated": true
     },
     {
       "a": "il_small_comb_2ep@mega_lucario_ex",
       "b": "tb_starmie",
-      "gap_pp": 34.375,
+      "gap_pp": 36.666666666666664,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "tb_rulecore",
+      "gap_pp": 9.44444444444445,
+      "separated": false
+    },
+    {
+      "a": "rule_baseline",
+      "b": "tb_search",
+      "gap_pp": 15.555555555555557,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "wmh_typhlosion",
+      "gap_pp": 16.111111111111114,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 19.444444444444446,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "mcts_il_agent",
+      "gap_pp": 20.000000000000004,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "wmh_bellibolt",
+      "gap_pp": 27.222222222222225,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "grunt",
+      "gap_pp": 30.000000000000004,
+      "separated": true
+    },
+    {
+      "a": "rule_baseline",
+      "b": "tb_starmie",
+      "gap_pp": 35.55555555555556,
       "separated": true
     },
     {
       "a": "tb_rulecore",
       "b": "tb_search",
-      "gap_pp": 5.0,
+      "gap_pp": 6.111111111111107,
       "separated": false
     },
     {
       "a": "tb_rulecore",
       "b": "wmh_typhlosion",
-      "gap_pp": 6.25,
+      "gap_pp": 6.666666666666664,
       "separated": false
     },
     {
       "a": "tb_rulecore",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 8.75,
+      "gap_pp": 9.999999999999996,
       "separated": false
     },
     {
       "a": "tb_rulecore",
       "b": "mcts_il_agent",
-      "gap_pp": 11.25,
+      "gap_pp": 10.555555555555554,
       "separated": false
     },
     {
       "a": "tb_rulecore",
       "b": "wmh_bellibolt",
-      "gap_pp": 13.75,
-      "separated": false
+      "gap_pp": 17.777777777777775,
+      "separated": true
     },
     {
       "a": "tb_rulecore",
       "b": "grunt",
-      "gap_pp": 17.5,
+      "gap_pp": 20.555555555555554,
       "separated": true
     },
     {
       "a": "tb_rulecore",
       "b": "tb_starmie",
-      "gap_pp": 23.125,
+      "gap_pp": 26.111111111111107,
       "separated": true
     },
     {
       "a": "tb_search",
       "b": "wmh_typhlosion",
-      "gap_pp": 1.25,
+      "gap_pp": 0.5555555555555571,
       "separated": false
     },
     {
       "a": "tb_search",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 3.75,
+      "gap_pp": 3.8888888888888893,
       "separated": false
     },
     {
       "a": "tb_search",
       "b": "mcts_il_agent",
-      "gap_pp": 6.25,
+      "gap_pp": 4.444444444444446,
       "separated": false
     },
     {
       "a": "tb_search",
       "b": "wmh_bellibolt",
-      "gap_pp": 8.75,
+      "gap_pp": 11.666666666666668,
       "separated": false
     },
     {
       "a": "tb_search",
       "b": "grunt",
-      "gap_pp": 12.5,
-      "separated": false
+      "gap_pp": 14.444444444444446,
+      "separated": true
     },
     {
       "a": "tb_search",
       "b": "tb_starmie",
-      "gap_pp": 18.125,
+      "gap_pp": 20.0,
       "separated": true
     },
     {
       "a": "wmh_typhlosion",
       "b": "il_bc_3ep@mega_lucario_ex",
-      "gap_pp": 2.5,
+      "gap_pp": 3.333333333333332,
       "separated": false
     },
     {
       "a": "wmh_typhlosion",
       "b": "mcts_il_agent",
-      "gap_pp": 5.0,
+      "gap_pp": 3.8888888888888893,
       "separated": false
     },
     {
       "a": "wmh_typhlosion",
       "b": "wmh_bellibolt",
-      "gap_pp": 7.5,
+      "gap_pp": 11.11111111111111,
       "separated": false
     },
     {
       "a": "wmh_typhlosion",
       "b": "grunt",
-      "gap_pp": 11.25,
-      "separated": false
+      "gap_pp": 13.88888888888889,
+      "separated": true
     },
     {
       "a": "wmh_typhlosion",
       "b": "tb_starmie",
-      "gap_pp": 16.875,
+      "gap_pp": 19.444444444444443,
       "separated": true
     },
     {
       "a": "il_bc_3ep@mega_lucario_ex",
       "b": "mcts_il_agent",
-      "gap_pp": 2.5,
+      "gap_pp": 0.5555555555555571,
       "separated": false
     },
     {
       "a": "il_bc_3ep@mega_lucario_ex",
       "b": "wmh_bellibolt",
-      "gap_pp": 5.0,
+      "gap_pp": 7.777777777777779,
       "separated": false
     },
     {
       "a": "il_bc_3ep@mega_lucario_ex",
       "b": "grunt",
-      "gap_pp": 8.75,
+      "gap_pp": 10.555555555555557,
       "separated": false
     },
     {
       "a": "il_bc_3ep@mega_lucario_ex",
       "b": "tb_starmie",
-      "gap_pp": 14.375,
+      "gap_pp": 16.111111111111114,
       "separated": true
     },
     {
       "a": "mcts_il_agent",
       "b": "wmh_bellibolt",
-      "gap_pp": 2.5,
+      "gap_pp": 7.222222222222221,
       "separated": false
     },
     {
       "a": "mcts_il_agent",
       "b": "grunt",
-      "gap_pp": 6.25,
+      "gap_pp": 10.0,
       "separated": false
     },
     {
       "a": "mcts_il_agent",
       "b": "tb_starmie",
-      "gap_pp": 11.875,
-      "separated": false
+      "gap_pp": 15.555555555555555,
+      "separated": true
     },
     {
       "a": "wmh_bellibolt",
       "b": "grunt",
-      "gap_pp": 3.75,
+      "gap_pp": 2.7777777777777786,
       "separated": false
     },
     {
       "a": "wmh_bellibolt",
       "b": "tb_starmie",
-      "gap_pp": 9.375,
+      "gap_pp": 8.333333333333334,
       "separated": false
     },
     {
       "a": "grunt",
       "b": "tb_starmie",
-      "gap_pp": 5.625,
+      "gap_pp": 5.555555555555555,
       "separated": false
     }
   ]
