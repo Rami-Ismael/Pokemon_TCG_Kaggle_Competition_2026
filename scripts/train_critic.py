@@ -84,6 +84,26 @@ def set_seed(seed: int) -> None:
     torch.manual_seed(seed)
 
 
+def _relabeled_outcome(
+    outcome: torch.Tensor, episode_id: torch.Tensor, seed: int
+) -> torch.Tensor:
+    """NEGATIVE CONTROL (--shuffle-outcomes): deterministic pseudo-random
+    relabel per episode.
+
+    Severs the state<->outcome link while keeping the ~0.5 marginal base rate.
+    The fake label is a hash bit of episode_id ONLY — deliberately not of
+    seat: seat is partially readable from the observation (turn-order
+    features), so a seat-dependent fake label would be legitimately
+    predictable and the control would "pass" spuriously. Unknown-outcome
+    sentinel rows (-1.0) stay excluded, matching the real arm. Validated
+    2026-08-05 (critic-calibration card): control lands at chance AUC 0.494,
+    MSE 0.350 — worse than the constant, as a clean eval demands.
+    """
+    h = episode_id.to(torch.int64) * 2654435761 + int(seed)  # Knuth hash; fits int64
+    fake = ((h >> 16) % 2).to(outcome.dtype)
+    return torch.where(outcome >= 0.0, fake, outcome)
+
+
 class TDPairDataset(IterableDataset):
     """Streams (s_t, s_{t+1}, terminal, outcome) pairs per seat-trajectory.
 
@@ -168,6 +188,7 @@ class TDPairDataset(IterableDataset):
                     out.update({f"next_{k}": v for k, v in nxt.items()})
                     out["terminal"] = torch.tensor(terminal)
                     out["outcome"] = torch.tensor(outcome, dtype=torch.float32)
+                    out["episode_id"] = torch.tensor(eid, dtype=torch.long)
                     yield out
 
     def __iter__(self):
@@ -261,6 +282,11 @@ def main() -> None:
     ap.add_argument("--log-every", type=int, default=200)
     ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "critic_td")
     ap.add_argument("--device", default=None)
+    ap.add_argument("--shuffle-outcomes", action="store_true",
+                    help="NEGATIVE CONTROL: train on pseudo-randomly relabeled "
+                         "outcomes (per-episode hash bit). Eval stays on REAL "
+                         "outcomes — this arm must NOT beat the constant "
+                         "baseline; if it does, the eval leaks.")
     ap.add_argument("--dry-run", action="store_true",
                     help="fresh tiny trunk, 40 train / 15 eval episodes -- smoke test")
     args = ap.parse_args()
@@ -347,7 +373,9 @@ def main() -> None:
         int(n_episodes * ROWS_PER_EPISODE / args.batch_size * args.epochs), 1
     )
     print(f"schedule: {total_steps} steps ({n_episodes} episodes x "
-          f"{ROWS_PER_EPISODE} rows/ep / batch {args.batch_size} x {args.epochs})",
+          f"{ROWS_PER_EPISODE} rows/ep / batch {args.batch_size} x {args.epochs})"
+          + ("  [NEGATIVE CONTROL: training on relabeled outcomes; "
+             "eval stays on real outcomes]" if args.shuffle_outcomes else ""),
           flush=True)
 
     train_loader = DataLoader(train_ds, batch_size=args.batch_size,
@@ -369,6 +397,9 @@ def main() -> None:
                 v = critic(**_feats_of(batch, device))
                 terminal = batch["terminal"].to(device)
                 outcome = batch["outcome"].to(device)
+                if args.shuffle_outcomes:
+                    outcome = _relabeled_outcome(
+                        outcome, batch["episode_id"].to(device), args.seed)
                 target = outcome.clone()
                 live = ~terminal
                 live_cpu = ~batch["terminal"]  # index cpu-resident batch tensors
@@ -389,6 +420,9 @@ def main() -> None:
                 loss = ((v - target) ** 2).mean()
             else:
                 outcome = batch.pop("outcome").to(device)
+                if args.shuffle_outcomes:
+                    outcome = _relabeled_outcome(
+                        outcome, batch["episode_id"].to(device), args.seed)
                 known = outcome >= 0.0
                 if not bool(known.any()):
                     continue
@@ -429,6 +463,7 @@ def main() -> None:
         "init_from": init_desc,
         "data_source": source,
         "hub_days": hub_days,
+        "shuffle_outcomes": args.shuffle_outcomes,
         "seed": args.seed,
         **res,
         "beats_constant_baseline": beats_mse,
