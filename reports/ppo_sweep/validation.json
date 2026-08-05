@@ -1,0 +1,74 @@
+{
+  "best": {
+    "idx": 18,
+    "ts": 1785910087.4,
+    "params": {
+      "learning_rate": 6.757558352519965e-05,
+      "ent_coef": 0.0035679217291045796,
+      "kl_coef": 0.03459509159294605,
+      "update_epochs": 3,
+      "minibatch_size": 1024,
+      "gae_lambda": 0.9325608480024878
+    },
+    "run_tag": "sweep0804_r18",
+    "cost_s": 1441.0,
+    "failure": false,
+    "score": 0.72,
+    "global_step": 60416,
+    "snap": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/protean-hyperparameter-ppo-5397a4/models/ppo_sweep/run18/u60416_final",
+    "gate": {
+      "wins": 72,
+      "losses": 28,
+      "draws": 0,
+      "games": 100,
+      "win_rate": 0.72,
+      "seconds": 25.131293773651123
+    }
+  },
+  "incumbent": {
+    "idx": 1,
+    "ts": 1785873788.5,
+    "params": {
+      "learning_rate": 3.000000000000001e-05,
+      "ent_coef": 0.001000000000000001,
+      "kl_coef": 0.05000000000000002,
+      "update_epochs": 3,
+      "minibatch_size": 512,
+      "gae_lambda": 0.95
+    },
+    "run_tag": "sweep0804_r01",
+    "cost_s": 665.6,
+    "failure": false,
+    "score": 0.65,
+    "global_step": 60416,
+    "snap": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/protean-hyperparameter-ppo-5397a4/models/ppo_sweep/run01/u60416_final",
+    "gate": {
+      "wins": 65,
+      "losses": 35,
+      "draws": 0,
+      "games": 100,
+      "win_rate": 0.65,
+      "seconds": 19.420897006988525
+    }
+  },
+  "verdict": {
+    "games": 300,
+    "wins": 162,
+    "losses": 138,
+    "draws": 0,
+    "decisive": 300,
+    "win_rate": 0.54,
+    "threshold": 0.5,
+    "min_decisive": 20,
+    "promote": true,
+    "live": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/protean-hyperparameter-ppo-5397a4/models/ppo_sweep/run18/u60416_final",
+    "ref": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/protean-hyperparameter-ppo-5397a4/models/ppo_sweep/run01/u60416_final",
+    "pairs": 150,
+    "seconds": 110.99606204032898
+  },
+  "wilson_ci": [
+    0.4834506745713475,
+    0.5955378510288337
+  ],
+  "adopt": false
+}

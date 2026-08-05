@@ -44,6 +44,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
+from pokemon_tcg.deck_pool import DeckPool  # noqa: E402
 from pokemon_tcg.device import resolve_device  # noqa: E402
 from pokemon_tcg.promotion import evaluate_gate  # noqa: E402
 from pokemon_tcg.puffer_env import make_puffer_env  # noqa: E402
@@ -123,6 +124,7 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-5)
     ap.add_argument("--ent-coef", type=float, default=0.001)
     ap.add_argument("--gamma", type=float, default=1.0)
+    ap.add_argument("--gae-lambda", type=float, default=0.95)
     ap.add_argument("--kl-coef", type=float, default=0.05,
                     help="beta for the frozen-reference anchor "
                          "beta*KL(pi_theta||pi_ref); sweepable. 0 = stock "
@@ -170,6 +172,35 @@ def main() -> None:
                     help="comma-separated draw weights for the public-pool trio "
                          "(kiyotah,mechi22,plamen06), e.g. '0.6,0.25,0.15' for "
                          "PFSP-style frontier weighting; default uniform")
+    ap.add_argument("--deck-pool", default=None,
+                    help="deck-diversity sweep: pool spec sampled once per "
+                         "episode. Forms: comma-separated deck refs (a path, a "
+                         "configs/deck_lists stem, or an agents/<name>), "
+                         "'@manifest.txt' (one ref per line), 'all:decklists', "
+                         "or 'all:agents' (content-deduped). Default None keeps "
+                         "the single hardcoded deck — pre-sweep behaviour")
+    ap.add_argument("--deck-pool-k", type=int, default=None,
+                    help="take a K-sized subset of --deck-pool (the swept axis)")
+    ap.add_argument("--deck-pool-seed", type=int, default=None,
+                    help="which K-subset to take (the sweep's nesting seed); "
+                         "default None = first K by name. Subsets are nested: "
+                         "for a fixed seed, P_4 subset-of P_16 subset-of P_33")
+    ap.add_argument("--deck-pool-pin", default=None,
+                    help="comma-separated refs forced to the front of the "
+                         "subset order, matched by deck CONTENT. The sweep "
+                         "pins il_agent so K=1 is exactly the v1 baseline deck")
+    ap.add_argument("--mirror-deck", action="store_true",
+                    help="both seats play the episode's pooled deck. Required "
+                         "for the mirror control: without it a module opponent "
+                         "keeps serving its own bundled deck and a K>1 pool "
+                         "silently becomes a cross-deck matchup")
+    ap.add_argument("--mix", default="0.625,0.375,0",
+                    help="mirror,league,public-pool draw shares (must sum to 1). "
+                         "Default drops the public pool entirely — pure "
+                         "self-play + fictitious-self-play league, per the "
+                         "2026-08-04 decision (external decks now unseen in "
+                         "training; see notes/experiments/2026-08-04-league-"
+                         "pool-composition.md). Old behavior: '0.5,0.3,0.2'")
     ap.add_argument("--init-policy-full", type=Path, default=None,
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
@@ -222,7 +253,7 @@ def main() -> None:
         "learning_rate": args.lr,
         "anneal_lr": True,
         "gamma": args.gamma,
-        "gae_lambda": 0.95,
+        "gae_lambda": args.gae_lambda,
         "update_epochs": args.update_epochs,
         "ent_coef": args.ent_coef,
         "vf_coef": 0.5,
@@ -243,8 +274,16 @@ def main() -> None:
     league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
+    mix = tuple(float(x) for x in args.mix.split(","))
+    if len(mix) != 3 or abs(sum(mix) - 1.0) > 1e-6:
+        ap.error(f"--mix needs 3 shares summing to 1, got {args.mix}")
+    if mix[2] == 0 and not league:
+        # _draw_opponent falls through to the public pool when the league
+        # bucket is empty; with a zero pool share that would silently
+        # reintroduce external opponents.
+        ap.error("--mix with zero public-pool share requires a non-empty --league")
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                  "league": league, "pool_weights": pool_weights}
+                  "league": league, "pool_weights": pool_weights, "mix": mix}
     if args.opponent_module:
         # Exploiter mode: every draw lands in the league bucket, whose single
         # entry is the frozen module agent. No mirror (the opponent must never
@@ -258,6 +297,19 @@ def main() -> None:
                       "alternate_seats": True}
         print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
               f"(100% of episodes, seats strictly alternating)")
+
+    if args.deck_pool:
+        pool = DeckPool.from_spec(
+            args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
+            pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
+        env_kwargs["deck_pool"] = pool
+        env_kwargs["mirror_deck"] = args.mirror_deck
+        print(f"DECK POOL: K={len(pool)} mirror={args.mirror_deck} :: "
+              f"{', '.join(pool.names)}")
+        if len(pool) > 1 and not args.mirror_deck:
+            print("WARNING: K>1 without --mirror-deck. The opponent will keep "
+                  "playing its own bundled deck while the learner varies, so "
+                  "this measures deck MATCHUP, not policy exploitability.")
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs=env_kwargs,

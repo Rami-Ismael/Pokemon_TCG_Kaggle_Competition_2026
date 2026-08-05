@@ -1,0 +1,64 @@
+{
+  "device": "cpu",
+  "torch_threads": 1,
+  "mcts_cost_by_search_count": {
+    "5": {
+      "games": 4,
+      "decisions": 136,
+      "decision_ms_mean": 2.586652033428168,
+      "decision_ms_p50": 2.0433340687304735,
+      "decision_ms_p95": 3.000207943841815,
+      "decision_ms_max": 39.931542007252574,
+      "search_steps": 680,
+      "search_step_ms_mean": 0.10057578192037694,
+      "search_step_ms_p95": 0.22754212841391563
+    },
+    "10": {
+      "games": 4,
+      "decisions": 133,
+      "decision_ms_mean": 3.680864387520946,
+      "decision_ms_p50": 3.5507078282535076,
+      "decision_ms_p95": 4.8172499518841505,
+      "decision_ms_max": 6.5984169486910105,
+      "search_steps": 1330,
+      "search_step_ms_mean": 0.09502833288975228,
+      "search_step_ms_p95": 0.15566707588732243
+    },
+    "20": {
+      "games": 4,
+      "decisions": 158,
+      "decision_ms_mean": 7.702406973259736,
+      "decision_ms_p50": 7.18483398668468,
+      "decision_ms_p95": 11.337999952957034,
+      "decision_ms_max": 52.73529211990535,
+      "search_steps": 3118,
+      "search_step_ms_mean": 0.13373610790582366,
+      "search_step_ms_p95": 0.206290977075696
+    },
+    "40": {
+      "games": 4,
+      "decisions": 207,
+      "decision_ms_mean": 18.218852651579944,
+      "decision_ms_p50": 15.344874933362007,
+      "decision_ms_p95": 31.549707986414433,
+      "decision_ms_max": 75.2237499691546,
+      "search_steps": 8280,
+      "search_step_ms_mean": 0.13824089560747724,
+      "search_step_ms_p95": 0.2557921689003706
+    }
+  },
+  "battle_api_throughput": {
+    "games": 60,
+    "decisions": 4103,
+    "secs": 0.9668218749575317,
+    "games_per_sec": 62.05900130531856,
+    "decisions_per_sec": 4243.801372595368
+  },
+  "env_run_throughput": {
+    "games": 20,
+    "env_steps": 1503,
+    "secs": 4.727822083979845,
+    "games_per_sec": 4.23027762989849,
+    "steps_per_sec": 317.90536388687156
+  }
+}
