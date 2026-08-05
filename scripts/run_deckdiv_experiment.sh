@@ -19,9 +19,11 @@ mkdir -p $LOGDIR
 QLOG=$LOGDIR/queue.log
 log() { echo "$(date '+%F %T') $*" | tee -a $QLOG; }
 
-other_trainers() {  # any trainer that isn't ours (match by script name)
-  ps -axo pid=,command= | grep -E "train_il\.py|train_ppo_puffer\.py" \
-    | grep -v grep | grep -v "deckdiv_arm" | wc -l | tr -d ' '
+other_trainers() {  # real trainers that aren't ours; --smoke runs are CPU-only
+  # (and one has been observed hung for 20h), wrapper shells die with children
+  ps -axo pid=,command= | grep -E "python[0-9.]* .*train_(il|ppo_puffer)\.py" \
+    | grep -v grep | grep -v "deckdiv_arm" | grep -v -- "--smoke" \
+    | wc -l | tr -d ' '
 }
 heavy_benchmarks() {
   ps -axo pcpu=,command= | grep "benchmark_agents.py" | grep -v grep \
