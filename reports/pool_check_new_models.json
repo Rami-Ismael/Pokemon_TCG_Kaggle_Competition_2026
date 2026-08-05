@@ -1,0 +1,80 @@
+{
+  "original|agent_core_improved": {
+    "model": "original",
+    "opponent": "agent_core_improved",
+    "wins": 0,
+    "losses": 50,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.0,
+    "wilson95": [
+      0.0,
+      0.07135003417431873
+    ]
+  },
+  "original|improved_prob_main": {
+    "model": "original",
+    "opponent": "improved_prob_main",
+    "wins": 1,
+    "losses": 49,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.02,
+    "wilson95": [
+      0.0035391680889764604,
+      0.10495686471836953
+    ]
+  },
+  "original|rule_baseline": {
+    "model": "original",
+    "opponent": "rule_baseline",
+    "wins": 16,
+    "losses": 34,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.32,
+    "wilson95": [
+      0.20758044093999403,
+      0.45810557136276076
+    ]
+  },
+  "equalsteps|agent_core_improved": {
+    "model": "equalsteps",
+    "opponent": "agent_core_improved",
+    "wins": 15,
+    "losses": 35,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.3,
+    "wilson95": [
+      0.1910338908960936,
+      0.4375061227736339
+    ]
+  },
+  "equalsteps|improved_prob_main": {
+    "model": "equalsteps",
+    "opponent": "improved_prob_main",
+    "wins": 17,
+    "losses": 33,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.34,
+    "wilson95": [
+      0.2243676963506106,
+      0.47846431458517147
+    ]
+  },
+  "equalsteps|rule_baseline": {
+    "model": "equalsteps",
+    "opponent": "rule_baseline",
+    "wins": 18,
+    "losses": 32,
+    "draws": 0,
+    "games": 50,
+    "win_rate": 0.36,
+    "wilson95": [
+      0.24138562967182875,
+      0.49859237989698046
+    ]
+  }
+}

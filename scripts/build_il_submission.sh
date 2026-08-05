@@ -12,12 +12,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-# Both overridable so any IL-lineage checkpoint can be bundled without
-# editing this script, e.g.:
-#   CHECKPOINT=models/il_agent_full_0804 BUNDLE=submissions/il_agent_full_0804 \
+# Both overridable so a non-default checkpoint can be bundled without editing
+# this script, e.g.
+#   CHECKPOINT=models/il_alldays_0804 BUNDLE=submissions/il_alldays_0804 \
 #     ./scripts/build_il_submission.sh
-BUNDLE=${BUNDLE:-submissions/il_agent}
-CHECKPOINT=${CHECKPOINT:-models/il_agent}
+BUNDLE="${BUNDLE:-submissions/il_agent}"
+CHECKPOINT="${CHECKPOINT:-models/il_agent}"
 
 if [ ! -f "$CHECKPOINT/model.safetensors" ]; then
   echo "no checkpoint at $CHECKPOINT -- run scripts/train_il.py first" >&2

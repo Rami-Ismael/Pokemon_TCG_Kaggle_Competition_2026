@@ -6,6 +6,9 @@ Hypothesis (a) is correct, in a stronger form than stated — ctx 30 is not mere
 Hypothesis (d) is ruled out. Hypothesis (b) is confirmed as a real encoder defect
 but is far too small to move this metric. Hypothesis (c) is true but downstream of (a).
 
+> **Follow-up (2026-08-04, PR #40):** the (b) encoder gap was measured properly and
+> the fix was **declined** — realizable ceiling 0.045% of decisions. See §6.2.
+
 Model: `models/il_agent`. Data: `--data-source hub`, `--eval-split eval`,
 `PTCG_DEVICE=cpu`. Reproduced the reported row exactly at 100 episodes
 (20,888 rows scored; ctx 30 n=224, top1 86.6%, majority 87.5%, gap −0.9%).
@@ -77,10 +80,10 @@ already saturating the information available to it.
 ## 4. Hypothesis (b) — confirmed defect, wrong scale
 
 The encoder genuinely drops the field that distinguishes these options.
-`_resolve_option_refs` (il_dataset.py:533) maps `OptionType.ENERGY` to
+`_resolve_option_refs` (il_dataset.py:478) maps `OptionType.ENERGY` to
 `ref1 = (option.area, option.index, playerIndex)`, and `_encode_options`
-(il_dataset.py:731) reads only `type / attackId / specialConditionType / number`
-plus that ref. **`energyIndex`, `count`, `toolIndex`, `serial` and `cardId` are
+(il_dataset.py:649, reads at 676-684) reads only
+`type / attackId / specialConditionType / number` plus that ref. **`energyIndex`, `count`, `toolIndex`, `serial` and `cardId` are
 never read anywhere in `il_dataset.py`** (verified by grep). For DISCARD_ENERGY
 every option targets the same Pokémon, so all options collapse to one identical
 feature row — confirmed bitwise across all seven option tensors.
@@ -98,7 +101,7 @@ not the explanation for this number.
 
 - **(d) multi-select unroll label noise — ruled out.** All 1,105 ctx-30 rows have
   `minCount == maxCount == 1` and `exclude == frozenset()`. The `maxCount > 1`
-  unroll branch (il_dataset.py:1005) never fires in this context, and no ctx-30
+  unroll branch (il_dataset.py:950) never fires in this context, and no ctx-30
   row carries a DECLINE label.
 - **(c) undertrained — true but not causal.** Ctx 30 is 0.83% of training rows
   (134 of 16,234 over 100 train episodes), rank 17 of 30 contexts present; 65.7%
@@ -112,11 +115,17 @@ not the explanation for this number.
    is to flag contexts, it should suppress rows where `n_real_options == 1`
    (61.6% of ctx 30, 6.71% of the corpus per the existing forced-row measurement)
    and attach a CI, or the flag will keep firing on noise.
-2. **Separately, fix the encoder.** Add `energyIndex`-resolved energy type (and
-   `count`) to the option features. Justify it on the ATTACH/DETACH/`SWITCH_ENERGY`
-   contexts where it plausibly matters more — not on ctx 30. Needs its own
-   before/after measurement; do not assume it helps (cf. the feature-ablation
-   negative result).
+2. ~~**Separately, fix the encoder.** Add `energyIndex`-resolved energy type (and
+   `count`) to the option features.~~ **SUPERSEDED — measured and declined.**
+   Followed up in `notes/experiments/2026-08-04-energy-option-identity.md` /
+   `reports/energy_option_identity/report.md`: over 500 held-out-day episodes
+   (93,621 rows), the *semantic* collision ceiling — options whose resolved
+   energy type / `count` / `cardId` genuinely differ — is **0.170% of decisions**,
+   95% CI [0.127%, 0.218%] (episode-cluster bootstrap). The realizable ceiling is
+   **0.045%**, because `models/il_agent` already gets 117 of the 159 affected rows
+   right via `opt_pos_emb`. That fails the pre-registered gate, so no feature group
+   was added and no training arm ran. The encoder gap is real but not worth paying
+   for; do not re-open it without a new reason.
 3. The in-context "majority" in `eval_rung1` is computed **on the eval rows
    themselves**, so it is an oracle baseline and slightly optimistic. Worth noting
    wherever the gap column is quoted.

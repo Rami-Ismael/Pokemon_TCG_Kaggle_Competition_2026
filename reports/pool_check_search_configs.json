@@ -1,0 +1,254 @@
+{
+  "heuristic_only|random_legal": {
+    "config": "heuristic_only",
+    "opponent": "random_legal",
+    "w": 99,
+    "l": 1,
+    "d": 0,
+    "secs": 22.2,
+    "games": 100,
+    "win_rate": 0.99,
+    "wilson95": [
+      0.9455124752390653,
+      0.9982326134344526
+    ]
+  },
+  "heuristic_only|rule_baseline": {
+    "config": "heuristic_only",
+    "opponent": "rule_baseline",
+    "w": 62,
+    "l": 37,
+    "d": 1,
+    "secs": 46.7,
+    "games": 100,
+    "win_rate": 0.62,
+    "wilson95": [
+      0.5220957382071033,
+      0.7090255079986562
+    ]
+  },
+  "heuristic_only|improved_prob_main": {
+    "config": "heuristic_only",
+    "opponent": "improved_prob_main",
+    "w": 48,
+    "l": 52,
+    "d": 0,
+    "secs": 42.2,
+    "games": 100,
+    "win_rate": 0.48,
+    "wilson95": [
+      0.38464384320080547,
+      0.5768359490982345
+    ]
+  },
+  "heuristic_only|il_agent": {
+    "config": "heuristic_only",
+    "opponent": "il_agent",
+    "w": 66,
+    "l": 33,
+    "d": 1,
+    "secs": 75.4,
+    "games": 100,
+    "win_rate": 0.66,
+    "wilson95": [
+      0.5627754565831095,
+      0.74538620502457
+    ]
+  },
+  "heuristic_only|kiyotah_dragapult": {
+    "config": "heuristic_only",
+    "opponent": "kiyotah_dragapult",
+    "w": 70,
+    "l": 30,
+    "d": 0,
+    "secs": 43.2,
+    "games": 100,
+    "win_rate": 0.7,
+    "wilson95": [
+      0.6041496156718804,
+      0.7810524613377188
+    ]
+  },
+  "heuristic_only|dedquoc_rule_engine": {
+    "config": "heuristic_only",
+    "opponent": "dedquoc_rule_engine",
+    "w": 99,
+    "l": 1,
+    "d": 0,
+    "secs": 22.3,
+    "games": 100,
+    "win_rate": 0.99,
+    "wilson95": [
+      0.9455124752390653,
+      0.9982326134344526
+    ]
+  },
+  "heuristic_only|ryotasueyoshi_alakazam": {
+    "config": "heuristic_only",
+    "opponent": "ryotasueyoshi_alakazam",
+    "w": 41,
+    "l": 59,
+    "d": 0,
+    "secs": 40.2,
+    "games": 100,
+    "win_rate": 0.41,
+    "wilson95": [
+      0.31867157095664655,
+      0.5079874943890338
+    ]
+  },
+  "heuristic_only|mechi22_alakazam": {
+    "config": "heuristic_only",
+    "opponent": "mechi22_alakazam",
+    "w": 40,
+    "l": 60,
+    "d": 0,
+    "secs": 38.9,
+    "games": 100,
+    "win_rate": 0.4,
+    "wilson95": [
+      0.3093997461136028,
+      0.4979992153815976
+    ]
+  },
+  "heuristic_only|makthanithin_improved_prob": {
+    "config": "heuristic_only",
+    "opponent": "makthanithin_improved_prob",
+    "w": 43,
+    "l": 57,
+    "d": 0,
+    "secs": 41.6,
+    "games": 100,
+    "win_rate": 0.43,
+    "wilson95": [
+      0.3373313900052838,
+      0.5278478830413564
+    ]
+  },
+  "search_alldays|random_legal": {
+    "config": "search_alldays",
+    "opponent": "random_legal",
+    "w": 99,
+    "l": 1,
+    "d": 0,
+    "secs": 20.2,
+    "games": 100,
+    "win_rate": 0.99,
+    "wilson95": [
+      0.9455124752390653,
+      0.9982326134344526
+    ]
+  },
+  "search_alldays|rule_baseline": {
+    "config": "search_alldays",
+    "opponent": "rule_baseline",
+    "w": 63,
+    "l": 37,
+    "d": 0,
+    "secs": 41.6,
+    "games": 100,
+    "win_rate": 0.63,
+    "wilson95": [
+      0.5322034757513312,
+      0.7181778743049083
+    ]
+  },
+  "search_alldays|improved_prob_main": {
+    "config": "search_alldays",
+    "opponent": "improved_prob_main",
+    "w": 51,
+    "l": 49,
+    "d": 0,
+    "secs": 40.2,
+    "games": 100,
+    "win_rate": 0.51,
+    "wilson95": [
+      0.4134784047743415,
+      0.6057816990761385
+    ]
+  },
+  "search_alldays|il_agent": {
+    "config": "search_alldays",
+    "opponent": "il_agent",
+    "w": 58,
+    "l": 42,
+    "d": 0,
+    "secs": 71.7,
+    "games": 100,
+    "win_rate": 0.58,
+    "wilson95": [
+      0.4820630799889527,
+      0.672017750814887
+    ]
+  },
+  "search_alldays|kiyotah_dragapult": {
+    "config": "search_alldays",
+    "opponent": "kiyotah_dragapult",
+    "w": 66,
+    "l": 34,
+    "d": 0,
+    "secs": 47.9,
+    "games": 100,
+    "win_rate": 0.66,
+    "wilson95": [
+      0.5627754565831095,
+      0.74538620502457
+    ]
+  },
+  "search_alldays|dedquoc_rule_engine": {
+    "config": "search_alldays",
+    "opponent": "dedquoc_rule_engine",
+    "w": 99,
+    "l": 1,
+    "d": 0,
+    "secs": 21.7,
+    "games": 100,
+    "win_rate": 0.99,
+    "wilson95": [
+      0.9455124752390653,
+      0.9982326134344526
+    ]
+  },
+  "search_alldays|ryotasueyoshi_alakazam": {
+    "config": "search_alldays",
+    "opponent": "ryotasueyoshi_alakazam",
+    "w": 43,
+    "l": 57,
+    "d": 0,
+    "secs": 42.5,
+    "games": 100,
+    "win_rate": 0.43,
+    "wilson95": [
+      0.3373313900052838,
+      0.5278478830413564
+    ]
+  },
+  "search_alldays|mechi22_alakazam": {
+    "config": "search_alldays",
+    "opponent": "mechi22_alakazam",
+    "w": 33,
+    "l": 67,
+    "d": 0,
+    "secs": 39.2,
+    "games": 100,
+    "win_rate": 0.33,
+    "wilson95": [
+      0.24562983793895452,
+      0.4269483966028862
+    ]
+  },
+  "search_alldays|makthanithin_improved_prob": {
+    "config": "search_alldays",
+    "opponent": "makthanithin_improved_prob",
+    "w": 46,
+    "l": 54,
+    "d": 0,
+    "secs": 45.8,
+    "games": 100,
+    "win_rate": 0.46,
+    "wilson95": [
+      0.36560643853331865,
+      0.5573531460647615
+    ]
+  }
+}
