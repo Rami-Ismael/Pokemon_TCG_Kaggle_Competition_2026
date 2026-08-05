@@ -21,6 +21,7 @@ from pokemon_tcg.kl_math import (  # noqa: E402
     masked_kl,
     masked_kl_per_row,
     masks_agree,
+    same_policy_weights,
 )
 
 
@@ -87,3 +88,53 @@ def test_random_batch_kl_finite_nonnegative_and_per_row_consistent():
     assert bool(torch.isfinite(per_row).all())
     assert float(per_row.min()) > -1e-5  # KL >= 0 up to float error
     assert abs(float(per_row.mean() - masked_kl(cur, prior))) < 1e-6
+
+
+# --- second reference: the never-retargeted IL prior (rl_pipeline_v4 §3.3) ---
+#
+# `PuffeRLPriorKL` logs kl_to_prior against the anchor (which moves on every
+# promotion) and kl_to_il_prior against the original IL checkpoint (which never
+# does). It skips the second forward pass while the two references hold the
+# same weights, which is true in generation 1 (one checkpoint passed as both)
+# and FALSE from generation 2 on (anchor = a promoted teacher, IL reference =
+# the human prior — run_selfplay_g3.sh is exactly this shape). Taking the
+# shortcut in that case would log the anchor's KL under both names, so the
+# decision is made from the weights by `same_policy_weights`.
+
+
+def _tiny(seed: int, *, bias: float = 0.0) -> torch.nn.Module:
+    torch.manual_seed(seed)
+    m = torch.nn.Sequential(torch.nn.Linear(4, 3), torch.nn.Linear(3, 2))
+    if bias:
+        with torch.no_grad():
+            m[0].bias += bias
+    return m
+
+
+def test_same_weights_true_for_a_load_state_dict_copy():
+    a, b = _tiny(0), _tiny(1)
+    assert not same_policy_weights(a, b)
+    b.load_state_dict(a.state_dict())  # how retarget_prior copies the anchor
+    assert same_policy_weights(a, b)
+
+
+def test_same_weights_false_for_gen2_shape_and_after_a_retarget():
+    # gen 2+: anchor and IL reference are different checkpoints from update 1
+    anchor, il_prior = _tiny(0), _tiny(1)
+    assert not same_policy_weights(anchor, il_prior)
+
+    # gen 1: same checkpoint as both -> equal until the anchor is retargeted
+    anchor, il_prior = _tiny(0), _tiny(0)
+    assert same_policy_weights(anchor, il_prior)
+    live = _tiny(0, bias=0.5)
+    anchor.load_state_dict(live.state_dict())  # retarget_prior()
+    assert not same_policy_weights(anchor, il_prior), (
+        "retargeting the anchor must leave the IL reference behind -- if this "
+        "fails the two series measure the same thing and forgetting the human "
+        "prior is unmeasurable")
+
+
+def test_same_weights_false_on_key_or_shape_mismatch():
+    assert not same_policy_weights(_tiny(0), torch.nn.Linear(4, 3))
+    wider = torch.nn.Sequential(torch.nn.Linear(4, 5), torch.nn.Linear(5, 2))
+    assert not same_policy_weights(_tiny(0), wider)

@@ -152,6 +152,16 @@ def main() -> None:
                          "(default: --init-from, i.e. the IL-lineage checkpoint "
                          "training starts from, so the anchor and the init "
                          "always match unless deliberately overridden)")
+    ap.add_argument("--il-prior", type=Path, default=None,
+                    help="ORIGINAL IL checkpoint, used as a second frozen "
+                         "reference that is NEVER retargeted, so kl_to_il_prior "
+                         "answers 'has it forgotten the human prior' after the "
+                         "anchor has moved (rl_pipeline_v4 §3.3). Diagnostic "
+                         "only -- never enters the loss. Default: --kl-prior, "
+                         "which is right for generation 1 and WRONG from gen 2 "
+                         "on, where --init-from is a promoted self-play "
+                         "checkpoint: pass the real IL checkpoint explicitly. "
+                         "'none' disables the second reference")
     ap.add_argument("--promote-every", type=int, default=20,
                     help="run the promotion gate every N updates (0 = never). "
                          "Needs --kl-coef > 0: the gate plays live vs the "
@@ -256,6 +266,10 @@ def main() -> None:
     args.device = resolve_device(args.device)
     if args.kl_prior is None:
         args.kl_prior = args.init_from
+    if args.il_prior is None:
+        args.il_prior = args.kl_prior
+    elif str(args.il_prior).lower() == "none":
+        args.il_prior = None
     if args.promote_every > 0 and args.kl_coef <= 0:
         print("NOTE: --kl-coef 0 runs stock PuffeRL (no reference policy), "
               "so the promotion gate is disabled for this run")
@@ -379,9 +393,27 @@ def main() -> None:
             from pokemon_tcg.pufferl_kl import PuffeRLPriorKL
 
             prior = PTCGPufferPolicy(str(args.kl_prior)).to(args.device)
+            # Separate module instance on purpose: retarget_prior() mutates
+            # `prior` in place, and sharing the object would drag the
+            # never-retargeted IL reference along with it (§3.3).
+            il_prior = None
+            if args.il_prior is not None:
+                il_prior = PTCGPufferPolicy(str(args.il_prior)).to(args.device)
             trainer = PuffeRLPriorKL(train_config, vecenv, policy, None,
-                                     kl_prior_policy=prior, kl_coef=args.kl_coef)
+                                     kl_prior_policy=prior, kl_coef=args.kl_coef,
+                                     il_prior_policy=il_prior)
             print(f"KL anchor ON: coef={args.kl_coef} prior={args.kl_prior}")
+            if il_prior is not None:
+                same = str(args.il_prior) == str(args.kl_prior)
+                print(f"  second reference (diagnostic, never retargeted): "
+                      f"{args.il_prior}"
+                      + ("  [identical to the anchor until the first retarget: "
+                         "kl_to_il_prior is a copy of kl_to_prior until then]"
+                         if same else ""))
+            else:
+                print("  second reference DISABLED: kl_to_il_prior will not be "
+                      "logged, so forgetting the human prior is unmeasurable "
+                      "after the first retarget")
         else:
             trainer = pufferl.PuffeRL(train_config, vecenv, policy, None)
         # PuffeRL hardcodes torch.amp.autocast(device_type='cuda'); on mps/cpu
@@ -491,6 +523,14 @@ def main() -> None:
             pc = getattr(trainer, "per_context", None)
             if pc:
                 row["per_context"] = pc
+            # Name BOTH references in every row. `ref` moves on promotion;
+            # `il_ref` never does. kl_refs_distinct=False means the two are
+            # still the same policy, so kl_to_il_prior duplicates kl_to_prior
+            # and the pair carries one measurement, not two (§3.3).
+            if args.il_prior is not None:
+                row["il_ref"] = str(args.il_prior)
+                row["kl_refs_distinct"] = bool(
+                    getattr(trainer, "kl_refs_distinct", False))
             append_jsonl(metrics_path, row)
 
             if gate_on and epoch % args.promote_every == 0:
