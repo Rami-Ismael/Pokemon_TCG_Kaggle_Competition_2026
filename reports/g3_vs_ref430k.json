@@ -1,0 +1,84 @@
+{
+  "agents": [
+    "selfplay_g3_final",
+    "selfplay_g1_ref430k"
+  ],
+  "games_per_pair": 100,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 100,
+      "selfplay_g1_ref430k": 112
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g3_final": 88,
+      "selfplay_g1_ref430k": 100
+    }
+  },
+  "games": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 200,
+      "selfplay_g1_ref430k": 200
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g3_final": 200,
+      "selfplay_g1_ref430k": 200
+    }
+  },
+  "wall_clock_sec": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 263.043888092041,
+      "selfplay_g1_ref430k": 256.8541753292084
+    },
+    "selfplay_g1_ref430k": {
+      "selfplay_g3_final": 256.8541753292084,
+      "selfplay_g1_ref430k": 283.0178322792053
+    }
+  },
+  "total_wall_clock_sec": 529.8998019695282,
+  "overall_win_pct": {
+    "selfplay_g3_final": 53.0,
+    "selfplay_g1_ref430k": 47.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "selfplay_g3_final": {
+      "p": 53.0,
+      "lo": 48.10352595014986,
+      "hi": 57.839398206252056
+    },
+    "selfplay_g1_ref430k": {
+      "p": 47.0,
+      "lo": 42.16060179374794,
+      "hi": 51.89647404985014
+    }
+  },
+  "glicko": {
+    "selfplay_g3_final": {
+      "rating": 1561.6354440507341,
+      "rd": 36.51835531580816,
+      "gxe": 55.889452204108814
+    },
+    "selfplay_g1_ref430k": {
+      "rating": 1438.3645559492659,
+      "rd": 36.51835531580816,
+      "gxe": 44.11054779589118
+    }
+  },
+  "fallback_diag": {
+    "selfplay_g3_final": {
+      "decisions": 26211,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "selfplay_g1_ref430k": {
+      "decisions": 26841,
+      "too_many_options": 1,
+      "enabled": true,
+      "fallbacks": 1,
+      "fallback_rate": 3.725643604932752e-05
+    }
+  },
+  "fallback_first": {}
+}

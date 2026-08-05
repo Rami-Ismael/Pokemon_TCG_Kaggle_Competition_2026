@@ -1,0 +1,194 @@
+{
+  "agents": [
+    "selfplay_g3_final",
+    "tb_dragapult",
+    "tb_search",
+    "dedquoc_rule_engine",
+    "kojimar_lucario"
+  ],
+  "games_per_pair": 12,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 12,
+      "tb_dragapult": 17,
+      "tb_search": 22,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 9
+    },
+    "tb_dragapult": {
+      "selfplay_g3_final": 7,
+      "tb_dragapult": 12,
+      "tb_search": 14,
+      "dedquoc_rule_engine": 21,
+      "kojimar_lucario": 11
+    },
+    "tb_search": {
+      "selfplay_g3_final": 2,
+      "tb_dragapult": 10,
+      "tb_search": 12,
+      "dedquoc_rule_engine": 20,
+      "kojimar_lucario": 5
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g3_final": 0,
+      "tb_dragapult": 3,
+      "tb_search": 4,
+      "dedquoc_rule_engine": 12,
+      "kojimar_lucario": 2
+    },
+    "kojimar_lucario": {
+      "selfplay_g3_final": 15,
+      "tb_dragapult": 13,
+      "tb_search": 19,
+      "dedquoc_rule_engine": 22,
+      "kojimar_lucario": 12
+    }
+  },
+  "games": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "tb_dragapult": {
+      "selfplay_g3_final": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "tb_search": {
+      "selfplay_g3_final": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g3_final": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    },
+    "kojimar_lucario": {
+      "selfplay_g3_final": 24,
+      "tb_dragapult": 24,
+      "tb_search": 24,
+      "dedquoc_rule_engine": 24,
+      "kojimar_lucario": 24
+    }
+  },
+  "wall_clock_sec": {
+    "selfplay_g3_final": {
+      "selfplay_g3_final": 35.880916118621826,
+      "tb_dragapult": 23.341015100479126,
+      "tb_search": 23.211632013320923,
+      "dedquoc_rule_engine": 15.792977094650269,
+      "kojimar_lucario": 21.666873693466187
+    },
+    "tb_dragapult": {
+      "selfplay_g3_final": 23.341015100479126,
+      "tb_dragapult": 9.595838069915771,
+      "tb_search": 11.023557901382446,
+      "dedquoc_rule_engine": 7.091139078140259,
+      "kojimar_lucario": 8.625165224075317
+    },
+    "tb_search": {
+      "selfplay_g3_final": 23.211632013320923,
+      "tb_dragapult": 11.023557901382446,
+      "tb_search": 7.1049041748046875,
+      "dedquoc_rule_engine": 5.517950057983398,
+      "kojimar_lucario": 8.212893009185791
+    },
+    "dedquoc_rule_engine": {
+      "selfplay_g3_final": 15.792977094650269,
+      "tb_dragapult": 7.091139078140259,
+      "tb_search": 5.517950057983398,
+      "dedquoc_rule_engine": 4.357151985168457,
+      "kojimar_lucario": 3.5110890865325928
+    },
+    "kojimar_lucario": {
+      "selfplay_g3_final": 21.666873693466187,
+      "tb_dragapult": 8.625165224075317,
+      "tb_search": 8.212893009185791,
+      "dedquoc_rule_engine": 3.5110890865325928,
+      "kojimar_lucario": 7.238156318664551
+    }
+  },
+  "total_wall_clock_sec": 160.14973902702332,
+  "overall_win_pct": {
+    "selfplay_g3_final": 70.0,
+    "tb_dragapult": 54.166666666666664,
+    "tb_search": 40.833333333333336,
+    "dedquoc_rule_engine": 17.5,
+    "kojimar_lucario": 67.5
+  },
+  "overall_win_pct_wilson_ci": {
+    "selfplay_g3_final": {
+      "p": 70.0,
+      "lo": 61.28469049643513,
+      "hi": 77.47449866132769
+    },
+    "tb_dragapult": {
+      "p": 54.166666666666664,
+      "lo": 45.26080815617851,
+      "hi": 62.81402291835539
+    },
+    "tb_search": {
+      "p": 40.833333333333336,
+      "lo": 32.455990283507155,
+      "hi": 49.77938135251822
+    },
+    "dedquoc_rule_engine": {
+      "p": 17.5,
+      "lo": 11.740448670592563,
+      "hi": 25.275868948042856
+    },
+    "kojimar_lucario": {
+      "p": 67.5,
+      "lo": 58.690016921877906,
+      "hi": 75.22427359116458
+    }
+  },
+  "glicko": {
+    "selfplay_g3_final": {
+      "rating": 1753.820874263411,
+      "rd": 52.40160815925333,
+      "gxe": 72.5435911317866
+    },
+    "tb_dragapult": {
+      "rating": 1552.8793488048773,
+      "rd": 52.40160815925333,
+      "gxe": 55.04314725975683
+    },
+    "tb_search": {
+      "rating": 1383.66543262927,
+      "rd": 52.40160815925333,
+      "gxe": 39.04761522407627
+    },
+    "dedquoc_rule_engine": {
+      "rating": 1087.541079321957,
+      "rd": 52.40160815925333,
+      "gxe": 17.09611701688721
+    },
+    "kojimar_lucario": {
+      "rating": 1722.0932649804845,
+      "rd": 52.40160815925333,
+      "gxe": 70.05964092240644
+    }
+  },
+  "fallback_diag": {
+    "selfplay_g3_final": {
+      "decisions": 7690,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}
