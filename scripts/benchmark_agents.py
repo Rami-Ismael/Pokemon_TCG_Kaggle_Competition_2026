@@ -736,7 +736,14 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
 
 def main():
     ap = argparse.ArgumentParser(description="Benchmark agent vs agent performance.")
-    ap.add_argument("--agents", default=",".join(AGENT_FILES.keys()),
+    # NB: the default must exclude BENCHMARK_ONLY_AGENTS. It enumerates
+    # AGENT_FILES directly rather than going through the `all` group, so the
+    # group-level exclusion does NOT cover it -- without this filter a bare
+    # `benchmark_agents.py` run would pull in the exploiter and trip the
+    # force-no-glicko-persist guard, silently stopping rating persistence.
+    ap.add_argument("--agents",
+                    default=",".join(k for k in AGENT_FILES
+                                     if k not in BENCHMARK_ONLY_AGENTS),
                     help="comma-separated agents or group names (ours, rung2, "
                          "floor, all). Agents: " + ", ".join(AGENT_FILES))
     ap.add_argument("--games", type=int, default=8, dest="games_per_pair",
