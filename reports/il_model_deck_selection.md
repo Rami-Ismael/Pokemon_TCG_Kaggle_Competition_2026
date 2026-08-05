@@ -270,3 +270,58 @@ Grimmsnarl ex. What is decisive is the **deck**, and — only on a data-poor dec
 - **More games on the Grimmsnarl ex column.** The top-5 arms there are one tie; ~6,900
   games/arm would be needed to order adjacent pairs, and that ordering could differ
   from the one printed above.
+
+## ⑤ Local leaderboard — how do our agents compare to everyone else?
+
+Added 12 more challengers against the *same* 8-agent pool (our shipped agents plus
+ladder-anchored public ones), then recomputed Glicko once over the union of all 39
+agents. Challengers never play each other; the shared pool is what places them on a
+single scale. Full table: the **Local leaderboard** sheet in the xlsx.
+
+Top of the board, and the entries that matter:
+
+| # | agent | Glicko | RD | 95% CI | real ladder |
+|---:|---|---:|---:|---|---:|
+| 1 | `il_alldays_3ep@marnies_grimmsnarl_ex` | 1877.1 | 30 | [1818, 1936] | — |
+| 3 | `il_bc_3ep@marnies_grimmsnarl_ex` | 1826.5 | 41 | [1746, 1907] | — |
+| 14 | `tb_archaludon` | 1685.9 | 30 | [1627, 1745] | **1196.1** |
+| 15 | `romanrozen_strong_start` | 1665.5 | 30 | [1607, 1724] | 950.0 |
+| 16 | `makthanithin_1084_baseline` | 1655.3 | 30 | [1596, 1714] | 1084.5 |
+| 18 | `improved_prob_main` | 1640.9 | 41 | [1560, 1721] | 701.6 |
+| 22 | `agent_core_improved` | 1602.4 | 41 | [1522, 1682] | **804.0** |
+| 28 | `rule_baseline` | 1493.6 | 41 | [1413, 1574] | — |
+| 33 | `il_bc_3ep@mega_lucario_ex` | 1282.3 | 41 | [1202, 1363] | — |
+| 34 | `mcts_il_agent` | 1256.7 | 41 | [1177, 1337] | — |
+| 39 | `random_legal` | 1045.6 | 30 | [987, 1104] | — |
+
+**Predictiveness on the expanded set: Spearman ρ = +0.803 (n=16, permutation
+p = 0.0004).** Lower than the 8-agent pool's +0.929, but over twice the agents and
+still highly significant.
+
+### What this does and does not license
+
+**The deck effect, restated as rating points.** `il_bc_3ep@marnies_grimmsnarl_ex`
+(1826.5) and `il_bc_3ep@mega_lucario_ex` (1282.3) are the **same weights, 544 Glicko
+points apart** — 23rd place separating rank 3 from rank 33. Nothing else in this study
+moves a number that far.
+
+**Our IL arms occupy ranks 1–13, above every public agent — and this is exactly the
+shape that has misled us three times.** `tb_archaludon` sits at local 1685.9 with a
+**real ladder score of 1196.1**, while our top arm has never played a ladder game on
+this deck. Local rank 1 is a hypothesis about the ladder, not a claim on it.
+
+**The sharpest internal warning** comes from our own two ladder-scored agents:
+`improved_prob_main` (local 1640.9, ladder **701.6**) sits *above* `agent_core_improved`
+(local 1602.4, ladder **804.0**). The ladder ranks them the other way. Their local CIs
+overlap ([1560, 1721] vs [1522, 1682]), so this is not a clean inversion — but it is a
+direct demonstration that this pool cannot resolve a ~100-point real ladder difference
+between two of our own agents. It should not be trusted to resolve the 4.7pp gap between
+`il_alldays_3ep` and `il_bc_3ep` either.
+
+**`mcts_il_agent` ranks 34/39** (1256.7), statistically tied with
+`il_bc_3ep@mega_lucario_ex` (1282.3; CIs overlap) and clearly below `rule_baseline`
+(1493.6). Consistent with its ladder history (600 → 294.7) — the local board does not
+contradict the ladder here.
+
+**Biggest anchor outlier:** `wmh_bellibolt`, ladder **836.0** but local 1231.1 (rank 35
+of 39). Whatever it does well on the ladder, this pool does not reward.

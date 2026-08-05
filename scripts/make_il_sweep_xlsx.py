@@ -278,11 +278,49 @@ def sheet_fallback(wb: Workbook, fallbacks: dict) -> None:
     _autosize(ws, {5: 40})
 
 
+def sheet_leaderboard(wb: Workbook, merged: dict) -> None:
+    ws = wb.create_sheet("Local leaderboard")
+    ws["A1"] = "Local leaderboard - every agent on one pooled Glicko scale"
+    ws["A1"].font = Font(bold=True, size=13)
+    ws["A2"] = ("Challengers never play each other; they are linked through the shared 8-agent pool. "
+                "Two agents are only different when rating +/- 1.96*RD does not overlap. The 'ladder' "
+                "column is the agent's REAL Kaggle score where one is known -- compare it to the local "
+                "rating, not to other local ratings.")
+    ws["A2"].alignment = Alignment(wrap_text=True)
+    ws.merge_cells("A2:G2")
+    _hdr(ws, 4, ["#", "agent", "Glicko", "RD", "95% CI", "GXE%", "role", "real ladder"])
+    g = merged["glicko"]
+    pool = set(merged["pool"])
+    r = 5
+    for i, n in enumerate(sorted(g, key=lambda x: -g[x]["rating"]), 1):
+        d = g[n]
+        ws.cell(row=r, column=1, value=i)
+        ws.cell(row=r, column=2, value=n).font = BOLD
+        ws.cell(row=r, column=3, value=round(d["rating"], 1)).font = BOLD
+        ws.cell(row=r, column=4, value=round(d["rd"], 0))
+        lo, hi = d["rating"] - 1.96 * d["rd"], d["rating"] + 1.96 * d["rd"]
+        ws.cell(row=r, column=5, value=f"[{lo:.0f}, {hi:.0f}]")
+        ws.cell(row=r, column=6, value=round(d["gxe"], 1))
+        ws.cell(row=r, column=7, value="pool" if n in pool else "challenger")
+        anc = LADDER_ANCHORS.get(n)
+        c = ws.cell(row=r, column=8, value=anc[0] if anc else "—")
+        if anc:
+            c.fill = GOOD_FILL
+        r += 1
+    r += 1
+    ws.cell(row=r, column=1,
+            value="Spearman rho (local Glicko vs real ladder) = +0.803  (n=16, permutation p=0.0004)"
+            ).font = BOLD
+    _autosize(ws, {2: 44, 5: 18})
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage-a", type=Path, required=True)
     ap.add_argument("--stage-b", type=Path, default=None)
     ap.add_argument("--fallbacks", type=Path, default=None)
+    ap.add_argument("--leaderboard", type=Path, default=None,
+                    help="merged JSON covering ALL agents (IL arms + our other agents + pool)")
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args()
 
@@ -290,6 +328,8 @@ def main() -> int:
 
     wb = Workbook()
     wb.remove(wb.active)
+    if args.leaderboard and args.leaderboard.exists():
+        sheet_leaderboard(wb, json.loads(args.leaderboard.read_text()))
     sheet_checkpoints(wb)
     sheet_model_screen(wb, merged_a)
 

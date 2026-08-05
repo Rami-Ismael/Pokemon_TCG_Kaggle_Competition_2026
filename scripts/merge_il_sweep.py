@@ -52,14 +52,25 @@ def sigma(wins: int, n: int) -> float:
     return 100 * math.sqrt(p * (1 - p) / n)
 
 
-def is_arm(name: str) -> bool:
-    return "@" in name
+# The shared opponent pool every challenger is measured against. Membership is
+# declared rather than inferred, because challengers are no longer only
+# "<arm>@<deck>" labels -- plain agent names (rule_baseline, mcts_il_agent, the
+# ladder-anchored public agents) are rated on the same scale.
+DEFAULT_POOL = [
+    "tb_archaludon", "makthanithin_1084_baseline", "romanrozen_strong_start",
+    "tb_dragapult", "wmh_alakazam", "wmh_garchomp", "tb_heuristic", "random_legal",
+]
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dirs", nargs="+", required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--pool", default=None,
+                    help="comma-separated shared-opponent pool (default: DEFAULT_POOL). "
+                         "Everything else in the merged results is rated as a challenger.")
+    ap.add_argument("--anchors", action="store_true",
+                    help="print each agent's real ladder score next to its local Glicko")
     args = ap.parse_args()
 
     files: list[Path] = []
@@ -106,8 +117,9 @@ def main() -> int:
                 glicko_games.extend([(a, b, 0.5)] * draws)
     new_ratings = glicko1.run_rating_period({}, glicko_games)
 
-    arms = [n for n in names if is_arm(n)]
-    field = [n for n in names if not is_arm(n)]
+    pool_set = set(args.pool.split(",")) if args.pool else set(DEFAULT_POOL)
+    field = [n for n in names if n in pool_set]
+    arms = [n for n in names if n not in pool_set]
 
     out: dict = {
         "sources": sources,
@@ -183,6 +195,31 @@ def main() -> int:
             c = out["per_opponent"][a].get(b)
             cells += f"{c['win_pct']:10.1f}+-{c['sigma']:4.1f}" if c else f"{'-':>17s}"
         print(f"{a:38s}{cells}")
+
+    # --- unified local leaderboard: challengers AND pool on one Glicko scale ---
+    anchors: dict[str, tuple[float, str]] = {}
+    if args.anchors:
+        try:
+            from pool_predictiveness import LADDER_ANCHORS
+            anchors = LADDER_ANCHORS
+        except Exception as exc:  # noqa: BLE001
+            print(f"(ladder anchors unavailable: {exc})")
+
+    print("\n=== LOCAL LEADERBOARD (pooled Glicko, all agents on one scale) ===")
+    print(f"{'#':>3} {'agent':40s} {'Glicko':>8s} {'RD':>5s} {'GXE%':>6s} "
+          f"{'role':>10s} {'ladder':>8s}")
+    print("-" * 92)
+    everyone = sorted(names, key=lambda n: -new_ratings[n].rating)
+    for i, n in enumerate(everyone, 1):
+        r = new_ratings[n]
+        role = "pool" if n in pool_set else "challenger"
+        anc = anchors.get(n)
+        anc_s = f"{anc[0]:.1f}" if anc else "—"
+        print(f"{i:>3} {n:40s} {r.rating:8.1f} {r.rd:5.0f} {glicko1.gxe(r):6.1f} "
+              f"{role:>10s} {anc_s:>8s}")
+    print("\nNote: challengers never play each other; they are placed on one scale\n"
+          "through the shared pool. RD is the confidence interval -- overlapping\n"
+          "rating +/- 1.96*RD means NOT separated.")
 
     print("\nseparation (95% CI non-overlap):")
     sep_yes = [s for s in seps if s["separated"]]
