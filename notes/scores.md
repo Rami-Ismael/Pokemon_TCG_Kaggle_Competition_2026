@@ -12,6 +12,9 @@ first read-back; append a new row instead if a submission is rebuilt.
 | 2026-08-02 | 55191752 | 699.0 (read 2026-08-03) | same bundle as 55162376 (submit msg: "unchanged from the build that scored 804.0") | see 55162376 row | Mega Lucario ex | AdvancedPolicy heuristic, USE_SEARCH=0 default | n/a — same-build resubmit | Deliberate resubmit of the top build after the Alakazam ablations. Its twin reads 804.0 → same-build spread ~100 pts, the ladder-variance yardstick |
 | 2026-08-02 | 55196434 | 395.0 (read 2026-08-03) | not recorded in submit msg (arm `s2_e1_s43`) | not recorded in submit msg | Alakazam | Stage-2 REWEIGHT winners-only BC (arm E1, seed 43): 3.32M-param option-scoring transformer warm-started from 3-epoch il_agent PRIOR, 12,900 steps @ LR 1e-4 over 822k winner-seat rows | Rung-1 75.9% top-1 held-out day (PRIOR 75.3%, majority 38.1%); Rung-2 pooled 3 seeds beats PRIOR 62.5% [51.0,72.8]; Glicko 1460 in 15-agent round-robin | First Stage-2 arm on the ladder |
 | 2026-08-03 | 55215267 | 265.5 (read 2026-08-03 ~16:50 UTC; earlier same-day read 232.1 — live rating) | not recorded in submit msg (run `ppo_u120832`) | not recorded in submit msg | Alakazam (s2 lineage) | Stage-3 self-play: PufferLib 3.0 PPO fine-tune of s2_e1_s43, ~121k on-policy steps, league mix (50% mirror / 30% PRIOR / 20% public trio), lr 3e-5, masked Discrete(48) | Beats s2_e1_s43 head-to-head 87.5% [69.0,95.7], PRIOR 79.2%; Glicko 1478±71 vs 1300±71 (non-overlap); rung-3 clean | First Stage-3 (RL) submission — and second confirmed local-vs-ladder inversion (see below) |
+| 2026-08-03 | 55219194 | 685.5 (read 2026-08-03 evening) | 758dd7bc55fb...884a67a (byte-identical to 55162376) | e42f3bb | Mega Lucario ex | AdvancedPolicy heuristic (USE_SEARCH=1/USE_BC_PRIOR=1 present but dead) | n/a — same-build resubmit | Restored the 804.0 build to the active set after 08-02/08-03 experiments displaced it (team had fallen to 395.0 / rank ~5408) |
+| 2026-08-03 | 55224682 | 600.0 (read 2026-08-04 ~01:30 UTC, first read after COMPLETE) | 758dd7bc55fb...884a67a (byte-identical to 55162376; tarball sha256 3b90d8c8...9b28) | e42f3bb | Mega Lucario ex | AdvancedPolicy heuristic (USE_SEARCH=1/USE_BC_PRIOR=1 present but dead) | n/a — same-build resubmit | Filled the second active slot, displacing ppo_u120832 (275.1) so both slots hold the best build. Lowest same-build roll yet: lineage now 827.8→804.0, 699.0, 685.5, 600.0 — observed same-build spread widened to ~230 pts |
+| 2026-08-04 | 55248781 | 600.0 (read 2026-08-04 ~19:55, first reading — live rating, same-build spread ~±100) | bce726e56bb2...d738e132 (same il_agent checkpoint as 55190924) | 5b0cf63 | Grimmsnarl ex (il_agent's list) | IL-prior MCTS via official Search API: SEARCH_COUNT=30, determinized lookahead (public counts only), prior-only (critic failed calibration 0.266 vs 0.250 and was not shipped) | Beats plain il_agent 67.2% [58.4,75.0] pooled n=119 decided (2 independent post-fix runs), 0 fallbacks/15.8K decisions; 209 ms/decision forced-CPU | Best il-family ladder read yet (il_agent lineage was 397–400): local gain TRANSFERRED, +200 over base — contrast with the 08-02/03 inversions. Displaced the 804-family active resubmit (683–696) per plan; recovery = same-build 804 resubmit. Reports: search_prior_phase3.md |
 
 ## Read-back 2026-08-03 (`scripts/check_leaderboard.py`)
 
@@ -33,3 +36,16 @@ first read-back; append a new row instead if a submission is rebuilt.
   approached it. Process guard now lives in the `leaderboard-check` skill +
   `scripts/check_leaderboard.py`; snapshots append to
   `reports/leaderboard_history.jsonl`.
+
+## Read-back 2026-08-04 ~01:30 UTC (after 55219194 + 55224682)
+
+- **Standing recovered: rank 2496 / 6215, team score 685.5** (was 5408 @ 395.0
+  before the two same-build resubmits). Both active slots now hold the
+  804.0-lineage bundle; the team score rests on 55219194's 685.5 roll.
+- **Same-build spread is wider than the earlier ±100 estimate.** Four rolls of
+  the byte-identical bundle: 827.8→804.0, 699.0, 685.5, 600.0 — a ~230-pt
+  range. Any single-submission ladder delta inside ~±150 of a baseline roll is
+  noise; treat only repeated reads or margins beyond that as signal.
+- Top-8 cutoff 1122.3; gap from our team score +436.8 — beyond what same-build
+  rerolling can close. Closing it needs a genuinely stronger agent, and the
+  local benchmark pool is not currently predictive across method families.

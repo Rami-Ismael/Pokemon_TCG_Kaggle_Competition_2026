@@ -62,7 +62,12 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
 from pokemon_tcg.device import log_device_info, resolve_device  # noqa: E402
-from pokemon_tcg.il_dataset import ILDataset, ShardILDataset, resolve_split_dir  # noqa: E402
+from pokemon_tcg.il_dataset import (  # noqa: E402
+    ILDataset,
+    ShardILDataset,
+    resolve_split_dir,
+    split_meta,
+)
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 from pokemon_tcg.logging_utils import TensorBoardLogger  # noqa: E402
 
@@ -283,21 +288,36 @@ def main() -> None:
                      help="'local' = raw JSON split folders (original path); 'hub' = "
                           "zstd Parquet shards from the private HF repo (ADR-001; each "
                           "shard is cached after first use, so pass 2+ reads from "
-                          "disk); 'auto' = local if the split folder exists, else hub. "
-                          "NOTE: hub trains on ALL train days in the repo (the growing "
-                          "corpus), not just splits.json's single day -- restrict with "
-                          "--hub-days for a like-for-like comparison")
+                          "disk); 'auto' = local only when BOTH split folders are "
+                          "COMPLETE per splits.json (raw days are pruned after "
+                          "Hub-verify, and the union splits are symlink folders whose "
+                          "targets may be gone -- an existence check alone would train "
+                          "on whatever fraction still resolves), else hub. Both "
+                          "sources follow the --train-split/--eval-split day lists "
+                          "from splits.json")
     ap.add_argument("--hub-days", default=None,
-                     help="comma-separated YYYY-MM-DD list restricting TRAIN days when "
-                          "--data-source hub (eval always uses the repo's eval days)")
+                     help="comma-separated YYYY-MM-DD list overriding the "
+                          "splits.json-derived TRAIN day list when --data-source hub "
+                          "(e.g. to fold in a freshly ingested day without editing "
+                          "splits.json)")
     ap.add_argument("--hub-repo", default=None,
                      help=f"dataset repo id (default {config.HF_EPISODES_REPO})")
+    ap.add_argument("--episode-ids-file", type=Path, default=None,
+                     help="text file of episode_ids (one per line): restrict TRAIN "
+                          "episodes to this allowlist (hub source only). Used for "
+                          "skill-filtered-demonstration arms.")
     ap.add_argument("--num-workers", type=int, default=0,
                      help="DataLoader workers for the train stream (hub source only; "
                           "needs >= that many shards). 0 reproduces the old "
                           "single-process loader, which was 56%% data-wait on MPS")
     ap.add_argument("--eval-every-steps", type=int, default=None,
                      help="eval+checkpoint at this step interval (default: once, at the end)")
+    ap.add_argument("--features", default="",
+                     help="comma-separated deterministic-future feature groups the model "
+                          "consumes (names from il_dataset.GLOBAL_FEATURE_SPECS / "
+                          "OPT_FEATURE_SPECS, e.g. 'ko_race,attack_tactical'). The "
+                          "encoder always computes every group; this only selects which "
+                          "columns the model sees. Empty = baseline architecture.")
     ap.add_argument("--hidden-size", type=int, default=192)
     ap.add_argument("--num-layers", type=int, default=6)
     ap.add_argument("--num-heads", type=int, default=6)
@@ -320,6 +340,11 @@ def main() -> None:
         args.eval_batches = 20
         args.log_every = 20
         args.warmup_steps = 10
+        if args.out == config.MODELS_DIR / "il_agent":
+            # never let a smoke test overwrite the production checkpoint
+            # (a --dry-run once clobbered the deployed model this way)
+            args.out = config.MODELS_DIR / "il_agent_dryrun"
+            print(f"dry-run: redirecting --out to {args.out}")
 
     set_seed(args.seed)
     device = resolve_device(args.device)
@@ -334,10 +359,40 @@ def main() -> None:
     logger = TensorBoardLogger(run_dir)
     print(f"run dir: {run_dir}  device: {device}  git sha: {git_sha()[:12]}")
 
+    def _n_local_complete(split: str) -> tuple[int, int]:
+        """(resolvable raw files, expected count) for a splits.json key.
+
+        p.exists() follows symlinks: the union splits (train-combined-*) are
+        folders of symlinks whose targets may have been pruned after
+        Hub-verify, and raw day folders may hold a partially restored test
+        sample -- a bare glob or dir-exists check counts those as data, then
+        the loader silently skips what it can't read, shrinking the corpus
+        without a word (observed live: 9,820-link union, 24 readable).
+        """
+        _, _, expected = split_meta(split)
+        raw_dir = resolve_split_dir(split)
+        n = (
+            sum(1 for p in raw_dir.glob("*.json") if p.exists())
+            if raw_dir.is_dir()
+            else 0
+        )
+        return n, expected
+
     source = args.data_source
     if source == "auto":
         try:
-            source = "local" if resolve_split_dir(args.train_split).exists() else "hub"
+            n_train_raw, n_train_expected = _n_local_complete(args.train_split)
+            n_eval_raw, n_eval_expected = _n_local_complete(args.eval_split)
+            complete = (
+                n_train_raw == n_train_expected and n_eval_raw == n_eval_expected
+            )
+            source = "local" if complete else "hub"
+            if not complete:
+                print(
+                    f"auto data source -> hub (local raw incomplete: "
+                    f"train {n_train_raw}/{n_train_expected}, "
+                    f"eval {n_eval_raw}/{n_eval_expected})"
+                )
         except (FileNotFoundError, KeyError):
             source = "hub"
     if args.num_workers > 0 and source != "hub":
@@ -346,6 +401,8 @@ def main() -> None:
             "has no worker sharding, so every worker would duplicate the data."
         )
 
+    if args.episode_ids_file is not None and source != "hub":
+        sys.exit("--episode-ids-file requires --data-source hub")
     weighted = args.weight_arm != "none"
     critic = None
     if args.weight_arm.startswith("adv-"):
@@ -356,14 +413,25 @@ def main() -> None:
         critic = load_critic(args.critic_dir, device=device)
         print(f"critic loaded from {args.critic_dir} (frozen, train-time only)")
     if source == "hub":
-        hub_days = args.hub_days.split(",") if args.hub_days else None
+        # --train-split/--eval-split select Hub days via splits.json, exactly
+        # as they select folders locally; --hub-days is an explicit override.
+        train_kind, train_days, _ = split_meta(args.train_split)
+        eval_kind, eval_days, _ = split_meta(args.eval_split)
+        hub_days = args.hub_days.split(",") if args.hub_days else train_days
+        episode_ids = None
+        if args.episode_ids_file is not None:
+            episode_ids = {
+                int(line) for line in args.episode_ids_file.read_text().split() if line
+            }
+            print(f"episode allowlist: {len(episode_ids)} ids from {args.episode_ids_file}")
         train_ds = ShardILDataset(
-            "train", days=hub_days, repo_id=args.hub_repo,
+            train_kind, days=hub_days, repo_id=args.hub_repo,
             max_episodes=args.max_train_episodes, seed=args.seed,
             winner_only=args.winner_only, with_meta=weighted,
+            episode_ids=episode_ids,
         )
         eval_ds = ShardILDataset(
-            "eval", repo_id=args.hub_repo,
+            eval_kind, days=eval_days, repo_id=args.hub_repo,
             max_episodes=args.max_eval_episodes, shuffle_buffer=1,
         )
         n_episodes = train_ds.n_episodes()  # parquet footers only, no downloads
@@ -372,9 +440,10 @@ def main() -> None:
                   f"train shards; clamping to {train_ds.n_shards}")
             args.num_workers = train_ds.n_shards
         print(f"train source: hub {train_ds.repo_id} ({train_ds.n_shards} shards, "
-              f"{n_episodes} episodes{', days ' + args.hub_days if hub_days else ''}, "
+              f"{n_episodes} episodes, days {','.join(hub_days)}, "
               f"{args.num_workers} workers)")
-        print(f"eval source:  hub {eval_ds.repo_id} ({eval_ds.n_shards} shards)")
+        print(f"eval source:  hub {eval_ds.repo_id} ({eval_ds.n_shards} shards, "
+              f"days {','.join(eval_days)})")
     else:
         train_dir = resolve_split_dir(args.train_split)
         eval_dir = resolve_split_dir(args.eval_split)
@@ -383,14 +452,29 @@ def main() -> None:
         train_ds = ILDataset(train_dir, max_episodes=args.max_train_episodes, seed=args.seed,
                              winner_only=args.winner_only, with_meta=weighted)
         eval_ds = ILDataset(eval_dir, max_episodes=args.max_eval_episodes, shuffle_buffer=1)
-        n_episodes = len(list(train_dir.glob("*.json")))
+        # resolvable files only -- see _n_local_complete; a forced
+        # --data-source local on a partial folder should at least get an
+        # honest schedule
+        n_episodes = sum(1 for p in train_dir.glob("*.json") if p.exists())
 
     train_loader = DataLoader(
         train_ds, batch_size=args.batch_size, num_workers=args.num_workers
     )
     eval_loader = DataLoader(eval_ds, batch_size=args.batch_size)
 
+    feature_names = [f for f in args.features.split(",") if f]
+    from pokemon_tcg.il_dataset import GLOBAL_FEATURE_SPECS, OPT_FEATURE_SPECS
+    unknown_features = [
+        f for f in feature_names
+        if f not in GLOBAL_FEATURE_SPECS and f not in OPT_FEATURE_SPECS
+    ]
+    if unknown_features:
+        sys.exit(f"unknown feature group(s) {unknown_features}; known: "
+                 f"{list(GLOBAL_FEATURE_SPECS) + list(OPT_FEATURE_SPECS)}")
     if args.init_from is not None:
+        if feature_names:
+            sys.exit("--features cannot be combined with --init-from: the "
+                     "warm-start checkpoint's config already fixes its feature set")
         model = PTCGImitationPolicy.from_pretrained(args.init_from).to(device)
         print(f"warm-started from {args.init_from}")
     else:
@@ -398,6 +482,8 @@ def main() -> None:
             hidden_size=args.hidden_size,
             num_hidden_layers=args.num_layers,
             num_attention_heads=args.num_heads,
+            global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
+            opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
         )
         model = PTCGImitationPolicy(model_config).to(device)
     n_params = sum(p.numel() for p in model.parameters())

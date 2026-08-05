@@ -68,3 +68,15 @@ sample_lucario,kiyotah/a-sample-rule-based-agent-mega-lucario-ex-deck,https://ww
 sample_dragapult,kiyotah/a-sample-rule-based-agent-dragapult-ex-deck,https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-dragapult-ex-deck,Official sample Dragapult ex,kiyotah_dragapult,true
 sample_iono,kiyotah/a-sample-rule-based-agent-iono-s-deck,https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-iono-s-deck,Official sample Iono,kiyotah_iono,true
 sample_abomasnow,kiyotah/a-sample-rule-based-agent-mega-abomasnow-ex-deck,https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-mega-abomasnow-ex-deck,Official sample Mega Abomasnow ex,kiyotah_abomasnow,true
+wmh_alakazam,wmh/ptcg-abc#agents/alakazam,https://github.com/wmh/ptcg-abc/tree/main/agents/alakazam,wmh Alakazam v4.x ladder ~860,wmh_alakazam,true
+wmh_megastarmie,wmh/ptcg-abc#agents/megastarmie,https://github.com/wmh/ptcg-abc/tree/main/agents/megastarmie,wmh Mega Starmie (keidroid clone) ladder 871.5,wmh_megastarmie,true
+wmh_bellibolt,wmh/ptcg-abc#agents/bellibolt,https://github.com/wmh/ptcg-abc/tree/main/agents/bellibolt,wmh Iono's Bellibolt ex ladder 836,wmh_bellibolt,true
+wmh_garchomp,wmh/ptcg-abc#agents/garchomp,https://github.com/wmh/ptcg-abc/tree/main/agents/garchomp,wmh Cynthia's Garchomp ex ladder 713.8,wmh_garchomp,true
+wmh_typhlosion,wmh/ptcg-abc#agents/typhlosion,https://github.com/wmh/ptcg-abc/tree/main/agents/typhlosion,wmh Ethan's Typhlosion ladder 532,wmh_typhlosion,true
+wmh_trevenant,wmh/ptcg-abc#agents/trevenant,https://github.com/wmh/ptcg-abc/tree/main/agents/trevenant,wmh Hop's Trevenant bespoke policy,wmh_trevenant,true
+wmh_mewtwo,wmh/ptcg-abc#agents/mewtwo,https://github.com/wmh/ptcg-abc/tree/main/agents/mewtwo,wmh Team Rocket's Mewtwo ex bespoke policy,wmh_mewtwo,true
+wmh_grimmsnarl,wmh/ptcg-abc#agents/grimmsnarl,https://github.com/wmh/ptcg-abc/tree/main/agents/grimmsnarl,wmh Grimmsnarl ex GenericPolicy top-player list,wmh_grimmsnarl,true
+wmh_kangaskhan,wmh/ptcg-abc#agents/kangaskhan,https://github.com/wmh/ptcg-abc/tree/main/agents/kangaskhan,wmh Kangaskhan ex GenericPolicy top-player list,wmh_kangaskhan,true
+wmh_ogerpon,wmh/ptcg-abc#agents/ogerpon,https://github.com/wmh/ptcg-abc/tree/main/agents/ogerpon,wmh Ogerpon GenericPolicy top-player list,wmh_ogerpon,true
+wmh_chandelure,wmh/ptcg-abc#agents/chandelure,https://github.com/wmh/ptcg-abc/tree/main/agents/chandelure,wmh Chandelure GenericPolicy,wmh_chandelure,true
+wmh_froslass,wmh/ptcg-abc#agents/froslass,https://github.com/wmh/ptcg-abc/tree/main/agents/froslass,wmh Mega Froslass ex GenericPolicy,wmh_froslass,true

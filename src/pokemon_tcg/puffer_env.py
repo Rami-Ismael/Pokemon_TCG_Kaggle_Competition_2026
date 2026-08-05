@@ -39,6 +39,7 @@ import torch
 
 from . import config
 from .il_dataset import MAX_OPTIONS, encode_observation
+from .deck_pool import DeckPool, mirror_deck_agent
 from .selfplay import SamplingPolicy, _safe_choice, as_env_agent, load_deck
 
 _CG_DIR = config.PROJECT_ROOT / "data" / "external" / "cg-lib"
@@ -153,13 +154,21 @@ class PTCGGym(gymnasium.Env):
                  pool_weights: list[float] | None = None,
                  pool_weights_path: str | None = None,
                  opp_hold: int = 4,
+                 alternate_seats: bool = False,
+                 deck_pool: DeckPool | None = None,
+                 mirror_deck: bool = False,
                  seed: int = 0) -> None:
         super().__init__()
         self.observation_space = gymnasium.spaces.Box(
             low=-np.inf, high=np.inf, shape=(OBS_SIZE,), dtype=np.float32)
         self.action_space = gymnasium.spaces.Discrete(MAX_OPTIONS)
         self.rng = random.Random(seed)
-        self.deck = load_deck()
+        # Deck pool (deck-diversity sweep): None keeps the historical single
+        # hardcoded deck, so every pre-sweep run reproduces bit-for-bit.
+        self.deck_pool = deck_pool
+        self.mirror_deck = mirror_deck
+        self.deck = load_deck() if deck_pool is None else deck_pool.entries[0][1]
+        self.deck_name = "load_deck" if deck_pool is None else deck_pool.names[0]
         anchor = anchor_ckpt or str(config.MODELS_DIR / "s2" / "e1_seed43")
         self.anchor = anchor
         self.mix = mix
@@ -183,6 +192,12 @@ class PTCGGym(gymnasium.Env):
         self._opp_slug = "mirror"
         self._mirror = (LatestCheckpointOpponent(mirror_root, anchor)
                         if mirror_root else None)
+        # Strict seat alternation (exploiter runs): a policy trained vs a
+        # FROZEN opponent must not specialize in first-player-only exploits,
+        # so flip seats every episode instead of sampling 50/50. First seat
+        # comes from the per-env rng so parallel workers desynchronize.
+        self.alternate_seats = alternate_seats
+        self._next_seat = self.rng.randint(0, 1)
         self._opp_cache: dict = {}
         self._env = None
         self._illegal = 0
@@ -300,9 +315,23 @@ class PTCGGym(gymnasium.Env):
             self.rng.seed(seed)
         self._env = self._make("cabt")
         self._env.reset(2)
-        self.learner_seat = self.rng.randint(0, 1)
+        if self.alternate_seats:
+            self.learner_seat = self._next_seat
+            self._next_seat = 1 - self._next_seat
+        else:
+            self.learner_seat = self.rng.randint(0, 1)
+        if self.deck_pool is not None:
+            self.deck_name, self.deck = self.deck_pool.sample(self.rng)
         if self._opp_left <= 0:
             self.opponent, self._opp_slug = self._draw_opponent()
+            if self.mirror_deck:
+                # Both seats play this episode's deck; without this the opponent
+                # module keeps serving its own bundled list and the "mirror"
+                # becomes a cross-deck matchup (see deck_pool module docstring).
+                # The wrapper's lambda reads self.deck at call time, so a HELD
+                # opponent (opp_hold persistence) keeps tracking the deck the
+                # pool samples for each new episode.
+                self.opponent = mirror_deck_agent(self.opponent, lambda: self.deck)
             self._opp_left = self.opp_hold
         self._opp_left -= 1
         self._illegal = 0
@@ -361,13 +390,21 @@ class PTCGGym(gymnasium.Env):
 
 def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
                     pool_weights=None, pool_weights_path=None, opp_hold=4,
+                    mix=(0.5, 0.3, 0.2),
+                    alternate_seats=False, deck_pool=None, mirror_deck=False,
                     seed=0, buf=None):
-    """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call."""
+    """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call.
+
+    `deck_pool` is a built DeckPool, passed by value so every spawned worker
+    samples from an identical pool (rebuilding per worker would re-read files
+    and could drift if the tree changes mid-run).
+    """
     import pufferlib.emulation
 
     torch.set_num_threads(1)
     env = PTCGGym(league=league, mirror_root=mirror_root,
                   anchor_ckpt=anchor_ckpt, pool_weights=pool_weights,
                   pool_weights_path=pool_weights_path, opp_hold=opp_hold,
-                  seed=seed)
+                  mix=mix, alternate_seats=alternate_seats,
+                  deck_pool=deck_pool, mirror_deck=mirror_deck, seed=seed)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)

@@ -121,6 +121,10 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
+    # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
+    # comparison is therefore policy-vs-policy+search, deck held fixed.
+    "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
     # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
     # bare module (literal DECK -> my_deck). Distinct 60-card list from
     # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
@@ -233,6 +237,32 @@ AGENT_FILES = {
     "tb_heuristic": REPO / "agents" / "tb_heuristic" / "agent_core.py",    # mu 633.0 archetype
     "tb_rulecore": REPO / "agents" / "tb_rulecore" / "agent_core.py",      # mu 535.6
     "tb_lucario": REPO / "agents" / "tb_lucario" / "agent_core.py",        # LucarioScorer
+    # ------------------------------------------------------------------
+    # wmh pool (github.com/wmh/ptcg-abc @ 7854fde, vendored 2026-08-03) --
+    # a solo competitor's rule-based ladder agents, divergence-mined from
+    # the era's ladder top (Majkel1337 #1, keidroid #1, Yushin #2) and
+    # validated by real-ladder A/B (their repo's own lesson: local sims
+    # mispredicted their rank, so they tuned on the ladder). Wired for the
+    # NINE deck archetypes the pool had zero coverage for, plus three
+    # ladder-scored stronger pilots of covered decks. Safety-reviewed
+    # 2026-08-03: stdlib + cg.api only, no network/subprocess/exec/eval,
+    # module-relative deck.csv reads; AGENT_FILES points at their verbatim
+    # main.py (module-level `my_deck` + `agent`). The five Generic* agents
+    # carry byte-identical vendored policy_base/generic_policy siblings
+    # (identical hashes, so first-import module caching is behavior-safe).
+    # Ladder Elo where their docs record one:
+    "wmh_alakazam": REPO / "agents" / "wmh_alakazam" / "main.py",        # Alakazam v4.x, ladder ~860 lineage (their best-developed)
+    "wmh_megastarmie": REPO / "agents" / "wmh_megastarmie" / "main.py",  # keidroid (#1, 1341) clone; their v3 scored 871.5
+    "wmh_bellibolt": REPO / "agents" / "wmh_bellibolt" / "main.py",      # Iono's Bellibolt ex, ladder 836
+    "wmh_garchomp": REPO / "agents" / "wmh_garchomp" / "main.py",        # NEW deck: Cynthia's Garchomp ex, ladder 713.8
+    "wmh_typhlosion": REPO / "agents" / "wmh_typhlosion" / "main.py",    # NEW deck: Ethan's Typhlosion, ladder 532
+    "wmh_trevenant": REPO / "agents" / "wmh_trevenant" / "main.py",      # NEW deck: Hop's Trevenant (bespoke policy)
+    "wmh_mewtwo": REPO / "agents" / "wmh_mewtwo" / "main.py",            # NEW deck: Team Rocket's Mewtwo ex (bespoke policy)
+    "wmh_grimmsnarl": REPO / "agents" / "wmh_grimmsnarl" / "main.py",    # NEW deck: Grimmsnarl ex (GenericPolicy, top-player list)
+    "wmh_kangaskhan": REPO / "agents" / "wmh_kangaskhan" / "main.py",    # NEW deck: Kangaskhan ex (GenericPolicy, top-player list)
+    "wmh_ogerpon": REPO / "agents" / "wmh_ogerpon" / "main.py",          # NEW deck: Ogerpon (GenericPolicy, top-player list)
+    "wmh_chandelure": REPO / "agents" / "wmh_chandelure" / "main.py",    # NEW deck: Chandelure (GenericPolicy)
+    "wmh_froslass": REPO / "agents" / "wmh_froslass" / "main.py",        # NEW deck: Mega Froslass ex (GenericPolicy)
     # Stage-2 REWEIGHT arms (rl_pipeline_v1.md §2.1): il_agent's inference core
     # pointed at each fine-tuned checkpoint via thin wrappers (agents/s2_arms/).
     # One entry per (arm, seed) -- distinct names on purpose, because Glicko

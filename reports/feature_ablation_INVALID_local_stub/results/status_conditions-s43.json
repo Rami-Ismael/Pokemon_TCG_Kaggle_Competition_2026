@@ -1,0 +1,12 @@
+{
+  "arm": "status_conditions",
+  "features": "status_conditions",
+  "seed": 43,
+  "total_steps": 4000,
+  "eval_rows": 2171,
+  "majority_pct": 40.8,
+  "top1_pct": 57.5,
+  "top3_pct": 85.2,
+  "train_secs": 622.6,
+  "eval_secs": 35.0
+}

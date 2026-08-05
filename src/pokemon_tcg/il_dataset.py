@@ -105,6 +105,235 @@ N_GLOBAL_SCALARS = 13
 N_OPT_SCALARS = 2  # number_norm, has_ref
 N_REF_SCALARS = 3  # hp_frac, energy_norm, tool_norm (per referenced card)
 
+# --- Deterministic-future features (notes/feature_ablation_candidates.md).
+# Hand-computed board arithmetic a strong player does before deciding:
+# damage-race turns, prize arithmetic, energy timelines. ALL groups are
+# always computed into two extra tensors (`extra_global` [N_EXTRA_GLOBAL],
+# `extra_opt` [MAX_OPTIONS, N_EXTRA_OPT]); which columns a model actually
+# consumes is chosen per-checkpoint by PTCGILConfig.global_features /
+# .opt_features (see il_model.py), so one encoder serves every ablation
+# arm and legacy checkpoints (no feature fields) simply ignore the extras.
+# Inputs are ONLY the POV-filtered observation plus the static public card
+# database (cg.api.all_card_data/all_attack -- the rulebook every player
+# has memorized); privacy invariant unchanged, see module docstring.
+# Spec order defines column order -- append only, never reorder.
+GLOBAL_FEATURE_SPECS: dict[str, int] = {
+    "ko_race": 5,             # t_my_active_ko/10, t_opp_active_ko/10, race_win, my_dmg/300, opp_dmg/300
+    "prize_race": 4,          # pv_opp_active/3, pv_my_active/3, ko_opp_wins_game, my_ko_loses_game
+    "energy_deficit": 3,      # my_active_min_def/4, my_bench_min_def/4, opp_active_min_def/4
+    "status_conditions": 10,  # poisoned..confused for me, then for opp
+}
+OPT_FEATURE_SPECS: dict[str, int] = {
+    "attack_tactical": 3,     # dmg_vs_opp_active/300, kos_now, ko_wins_game
+    "attach_enable": 2,       # post_attach_min_def/4, enables_attack
+    "retreat_switch": 2,      # candidate_survival_turns/10, candidate_payable_dmg/300
+}
+N_EXTRA_GLOBAL = sum(GLOBAL_FEATURE_SPECS.values())
+N_EXTRA_OPT = sum(OPT_FEATURE_SPECS.values())
+
+_KO_TURNS_CAP = 10
+_DEFICIT_CAP = 4
+_DMG_NORM = 300.0
+
+
+def feature_columns(names: Iterable[str], specs: dict[str, int]) -> list[int]:
+    """Column indices (into extra_global / extra_opt) for the named groups.
+
+    Raises on unknown names -- a checkpoint asking for a feature this
+    encoder build doesn't produce must fail loudly, not silently misalign.
+    """
+    offsets: dict[str, int] = {}
+    off = 0
+    for name, dim in specs.items():
+        offsets[name] = off
+        off += dim
+    cols: list[int] = []
+    for name in names:
+        if name not in offsets:
+            raise KeyError(f"unknown feature group {name!r}; known: {list(specs)}")
+        cols.extend(range(offsets[name], offsets[name] + specs[name]))
+    return cols
+
+
+_CARD_DB: dict | None = None
+_ATTACK_DB: dict | None = None
+
+
+def _static_db() -> tuple[dict, dict]:
+    """Lazy one-time {cardId: CardData}, {attackId: Attack} from cg's public DB.
+
+    Wrapped so a lib failure degrades to empty dicts (features all-zero)
+    instead of crashing -- on the evaluator an uncaught exception is an
+    instant loss, and a zeroed feature is strictly recoverable noise.
+    """
+    global _CARD_DB, _ATTACK_DB
+    if _CARD_DB is None:
+        try:
+            from cg.api import all_attack, all_card_data
+
+            _CARD_DB = {c.cardId: c for c in all_card_data()}
+            _ATTACK_DB = {a.attackId: a for a in all_attack()}
+        except Exception:
+            _CARD_DB, _ATTACK_DB = {}, {}
+    return _CARD_DB, _ATTACK_DB
+
+
+# EnergyType constants used by the greedy cost matcher (values pinned by
+# cg.api.EnergyType; imported as ints to keep this pure integer math).
+_E_COLORLESS, _E_PSYCHIC, _E_DARKNESS, _E_RAINBOW, _E_TEAM_ROCKET = 0, 5, 7, 10, 11
+
+
+def _energy_deficit(required: list[int], attached: list[int]) -> int:
+    """Unmatched cost symbols under greedy matching (0 = payable now).
+
+    Colored requirements consume a same-type attached energy, else a
+    wildcard (RAINBOW matches anything; TEAM_ROCKET matches {PSYCHIC,
+    DARKNESS}); COLORLESS requirements consume any leftover. Greedy is not
+    a perfect bipartite matcher but is exact for every real cost list in
+    this format (costs are same-type runs + colorless padding).
+    """
+    pool: dict[int, int] = {}
+    for e in attached:
+        pool[e] = pool.get(e, 0) + 1
+    deficit = 0
+    n_colorless = 0
+    for r in required:
+        if r == _E_COLORLESS:
+            n_colorless += 1
+            continue
+        if pool.get(r, 0) > 0:
+            pool[r] -= 1
+        elif pool.get(_E_RAINBOW, 0) > 0:
+            pool[_E_RAINBOW] -= 1
+        elif r in (_E_PSYCHIC, _E_DARKNESS) and pool.get(_E_TEAM_ROCKET, 0) > 0:
+            pool[_E_TEAM_ROCKET] -= 1
+        else:
+            deficit += 1
+    remaining = sum(pool.values())
+    deficit += max(0, n_colorless - remaining)
+    return deficit
+
+
+def _damage_vs(attack, attacker_cd, defender_cd) -> int:
+    """Printed damage with weakness x2 / resistance -30 vs a known defender.
+
+    Weakness x2 and the 1:1 base rule were verified from visible episode
+    logs (modal ATTACK->HP_CHANGE ratios 2.0 / 1.0); resistance -30 is the
+    standard-format rule, unconfirmed in our sparse log sample -- treated
+    as an approximation. Variable-damage attacks contribute their printed
+    base (often 0): a deliberate lower bound, the attack-id embedding
+    still identifies them to the model.
+    """
+    dmg = attack.damage or 0
+    if dmg <= 0:
+        return 0
+    if defender_cd is not None:
+        if defender_cd.weakness is not None and defender_cd.weakness == attacker_cd.energyType:
+            dmg *= 2
+        if defender_cd.resistance is not None and defender_cd.resistance == attacker_cd.energyType:
+            dmg = max(dmg - 30, 0)
+    return dmg
+
+
+def _attack_profile(pokemon, defender) -> tuple[int, int]:
+    """(best payable damage vs defender, min energy deficit over attacks).
+
+    `pokemon`/`defender` are cg Pokemon dataclasses (defender may be None
+    -- facedown or empty active -- in which case damage skips modifiers).
+    Returns (0, _DEFICIT_CAP) when the attacker is None/unknown/attackless.
+    """
+    card_db, attack_db = _static_db()
+    if pokemon is None:
+        return 0, _DEFICIT_CAP
+    cd = card_db.get(getattr(pokemon, "id", None))
+    if cd is None or not cd.attacks:
+        return 0, _DEFICIT_CAP
+    defender_cd = card_db.get(getattr(defender, "id", None)) if defender is not None else None
+    attached = list(getattr(pokemon, "energies", None) or [])
+    best_dmg = 0
+    min_def = _DEFICIT_CAP
+    for atk_id in cd.attacks:
+        atk = attack_db.get(atk_id)
+        if atk is None:
+            continue
+        deficit = _energy_deficit(list(atk.energies or []), attached)
+        min_def = min(min_def, deficit)
+        if deficit == 0:
+            best_dmg = max(best_dmg, _damage_vs(atk, cd, defender_cd))
+    return best_dmg, min_def
+
+
+def _ko_turns(hp: int | None, dmg: int) -> int:
+    """Turns of this incoming damage rate until KO, capped (cap = 'not soon')."""
+    if not hp or hp <= 0:
+        return 0
+    if dmg <= 0:
+        return _KO_TURNS_CAP
+    return min(_KO_TURNS_CAP, -(-hp // dmg))
+
+
+def _prize_value(card_id) -> int:
+    """Prizes taken for KOing this Pokemon: 3 megaEx / 2 ex / 1 (0 unknown)."""
+    card_db, _ = _static_db()
+    cd = card_db.get(card_id)
+    if cd is None:
+        return 0
+    return 3 if cd.megaEx else 2 if cd.ex else 1
+
+
+def _extra_global_features(state: State, my_index: int) -> list[float]:
+    """All GLOBAL_FEATURE_SPECS groups, in spec order. Pure visible-state math."""
+    me = state.players[my_index]
+    opp = state.players[1 - my_index]
+    my_active = me.active[0] if me.active else None
+    opp_active = opp.active[0] if opp.active else None
+
+    my_dmg, my_def = _attack_profile(my_active, opp_active)
+    opp_dmg, opp_def = _attack_profile(opp_active, my_active)
+    t_my_ko = _ko_turns(getattr(my_active, "hp", 0), opp_dmg)
+    t_opp_ko = _ko_turns(getattr(opp_active, "hp", 0), my_dmg)
+    # It is my decision, so I move first: I win the race on ties.
+    race_win = 1.0 if (my_dmg > 0 and opp_active is not None and t_opp_ko <= t_my_ko) else 0.0
+
+    pv_opp = _prize_value(getattr(opp_active, "id", None)) if opp_active is not None else 0
+    pv_mine = _prize_value(getattr(my_active, "id", None)) if my_active is not None else 0
+    ko_opp_wins = 1.0 if pv_opp > 0 and pv_opp >= len(me.prize) else 0.0
+    my_ko_loses = 1.0 if pv_mine > 0 and pv_mine >= len(opp.prize) else 0.0
+
+    bench_def = min(
+        (_attack_profile(p, opp_active)[1] for p in (me.bench or [])),
+        default=_DEFICIT_CAP,
+    )
+
+    return [
+        # ko_race
+        t_my_ko / _KO_TURNS_CAP,
+        t_opp_ko / _KO_TURNS_CAP,
+        race_win,
+        min(my_dmg / _DMG_NORM, 2.0),
+        min(opp_dmg / _DMG_NORM, 2.0),
+        # prize_race
+        pv_opp / 3.0,
+        pv_mine / 3.0,
+        ko_opp_wins,
+        my_ko_loses,
+        # energy_deficit
+        my_def / _DEFICIT_CAP,
+        bench_def / _DEFICIT_CAP,
+        opp_def / _DEFICIT_CAP,
+        # status_conditions
+        1.0 if me.poisoned else 0.0,
+        1.0 if me.burned else 0.0,
+        1.0 if me.asleep else 0.0,
+        1.0 if me.paralyzed else 0.0,
+        1.0 if me.confused else 0.0,
+        1.0 if opp.poisoned else 0.0,
+        1.0 if opp.burned else 0.0,
+        1.0 if opp.asleep else 0.0,
+        1.0 if opp.paralyzed else 0.0,
+        1.0 if opp.confused else 0.0,
+    ]  # length must equal N_EXTRA_GLOBAL; pinned by tests/test_il_features.py
+
 
 class DecisionMeta(NamedTuple):
     """Per-row provenance for outcome weighting / filtering (Stage 2, REWEIGHT).
@@ -166,6 +395,27 @@ def resolve_split_dir(split: str) -> Path:
     splits_json = config.EPISODES_DIR / "splits" / "splits.json"
     meta = json.loads(splits_json.read_text())[split]
     return config.EPISODES_DIR / meta["folder"]
+
+
+def split_meta(split: str) -> tuple[str, list[str], int]:
+    """splits.json key -> (hub split kind, calendar days, expected episode count).
+
+    Kind is 'train' or 'eval' -- the ``{split}/day=.../`` prefix on the Hub
+    and the prefix of the local folder name. Multi-day unions (e.g.
+    ``train_combined``) list their days in a ``dates`` field; single-day
+    splits derive the day from the folder name (``train-2026-07-26`` ->
+    ``2026-07-26``), mirroring pack_episodes.py. This is how a splits.json
+    key selects Hub days for ShardILDataset without hand-listing them, so
+    hub-sourced training follows the SAME split definition as local raw --
+    not simply "every day currently uploaded under train/" (which would
+    silently absorb new ingest days into the corpus).
+    """
+    splits_json = config.EPISODES_SPLITS_DIR / "splits.json"
+    meta = json.loads(splits_json.read_text())[split]
+    folder_name = Path(meta["folder"]).name
+    kind = folder_name.split("-", 1)[0]
+    days = meta.get("dates") or [folder_name.split("-", 1)[1]]
+    return kind, days, int(meta["episodes"])
 
 
 def _card_features(card: object | None) -> tuple[int, float, float, float]:
@@ -253,6 +503,93 @@ def _resolve_option_refs(option, my_index: int):
     return ref1, ref2
 
 
+def _min_deficit(pokemon, extra_energies: list[int]) -> int:
+    """Min energy deficit over a Pokemon's attacks, with hypothetical extra energy."""
+    card_db, attack_db = _static_db()
+    if pokemon is None:
+        return _DEFICIT_CAP
+    cd = card_db.get(getattr(pokemon, "id", None))
+    if cd is None or not cd.attacks:
+        return _DEFICIT_CAP
+    attached = list(getattr(pokemon, "energies", None) or []) + extra_energies
+    best = _DEFICIT_CAP
+    for atk_id in cd.attacks:
+        atk = attack_db.get(atk_id)
+        if atk is None:
+            continue
+        best = min(best, _energy_deficit(list(atk.energies or []), attached))
+    return best
+
+
+# int values pinned by cg.api enums; kept as ints so this stays pure arithmetic
+_OT_CARD, _OT_ATTACH, _OT_ATTACK = 3, 8, 13
+_CTX_SWITCH, _CTX_TO_ACTIVE = 3, 4
+_AREA_ACTIVE, _AREA_BENCH = 4, 5
+_CT_BASIC_ENERGY, _CT_SPECIAL_ENERGY = 5, 6
+
+
+def _extra_opt_row(state: State, select: SelectData, option, my_index: int) -> list[float]:
+    """All OPT_FEATURE_SPECS groups for one option, in spec order.
+
+    Rows are zero except where the group applies (ATTACK options for
+    attack_tactical, ATTACH for attach_enable, own-Pokemon CARD options in
+    switch/promote contexts for retreat_switch). Uses only visible state +
+    the static card DB -- see _extra_global_features.
+    """
+    row = [0.0] * N_EXTRA_OPT
+    card_db, attack_db = _static_db()
+    me = state.players[my_index]
+    opp = state.players[1 - my_index]
+    my_active = me.active[0] if me.active else None
+    opp_active = opp.active[0] if opp.active else None
+    ot = int(option.type)
+
+    if ot == _OT_ATTACK and option.attackId is not None:
+        atk = attack_db.get(option.attackId)
+        my_cd = card_db.get(getattr(my_active, "id", None)) if my_active is not None else None
+        opp_cd = card_db.get(getattr(opp_active, "id", None)) if opp_active is not None else None
+        if atk is not None and my_cd is not None:
+            dmg = _damage_vs(atk, my_cd, opp_cd)
+            opp_hp = getattr(opp_active, "hp", 0) or 0
+            kos_now = dmg > 0 and opp_hp > 0 and dmg >= opp_hp
+            wins = kos_now and _prize_value(opp_active.id) >= len(me.prize)
+            row[0] = min(dmg / _DMG_NORM, 2.0)
+            row[1] = 1.0 if kos_now else 0.0
+            row[2] = 1.0 if wins else 0.0
+
+    elif ot == _OT_ATTACH:
+        attached_card = _get_card(state, select, option.area, option.index, my_index)
+        target = _get_card(state, select, option.inPlayArea, option.inPlayIndex, my_index)
+        cd = card_db.get(getattr(attached_card, "id", None)) if attached_card is not None else None
+        if cd is not None and target is not None:
+            if cd.cardType == _CT_BASIC_ENERGY:
+                new_energy = [int(cd.energyType)]
+            elif cd.cardType == _CT_SPECIAL_ENERGY:
+                new_energy = [_E_RAINBOW]  # approximation: special energy as wildcard
+            else:
+                new_energy = None  # tool etc.: no energy timeline change
+            if new_energy is not None:
+                pre = _min_deficit(target, [])
+                post = _min_deficit(target, new_energy)
+                row[3] = post / _DEFICIT_CAP
+                row[4] = 1.0 if (pre > 0 and post == 0) else 0.0
+
+    elif (
+        ot == _OT_CARD
+        and int(select.context) in (_CTX_SWITCH, _CTX_TO_ACTIVE)
+        and (option.playerIndex is None or option.playerIndex == my_index)
+        and option.area in (_AREA_ACTIVE, _AREA_BENCH)
+    ):
+        candidate = _get_card(state, select, option.area, option.index, my_index)
+        if candidate is not None and getattr(candidate, "hp", None) is not None:
+            incoming, _ = _attack_profile(opp_active, candidate)
+            outgoing, _ = _attack_profile(candidate, opp_active)
+            row[5] = _ko_turns(candidate.hp, incoming) / _KO_TURNS_CAP
+            row[6] = min(outgoing / _DMG_NORM, 2.0)
+
+    return row
+
+
 def _build_state_slots(
     state: State, my_index: int
 ) -> tuple[torch.Tensor, torch.Tensor]:
@@ -333,10 +670,12 @@ def _encode_options(
     opt_scalar = [[0.0] * N_OPT_SCALARS for _ in range(MAX_OPTIONS)]
     opt_ref_card_id = [[0, 0] for _ in range(MAX_OPTIONS)]
     opt_ref_scalar = [[0.0] * (2 * N_REF_SCALARS) for _ in range(MAX_OPTIONS)]
+    opt_extra = [[0.0] * N_EXTRA_OPT for _ in range(MAX_OPTIONS)]
     opt_mask = [False] * MAX_OPTIONS
 
     for i in range(n):
         o = select.option[i]
+        opt_extra[i] = _extra_opt_row(state, select, o, my_index)
         opt_type[i] = int(o.type)
         opt_attack[i] = _clamp_id(o.attackId or 0, ATTACK_VOCAB_SIZE)
         opt_special[i] = (
@@ -369,6 +708,7 @@ def _encode_options(
         torch.tensor(opt_scalar, dtype=torch.float32),
         torch.tensor(opt_ref_card_id, dtype=torch.long),
         torch.tensor(opt_ref_scalar, dtype=torch.float32),
+        torch.tensor(opt_extra, dtype=torch.float32),
         torch.tensor(opt_mask, dtype=torch.bool),
         n,
     )
@@ -412,16 +752,21 @@ def encode_observation(
         opt_scalar,
         opt_ref_card_id,
         opt_ref_scalar,
+        opt_extra,
         opt_mask,
         n_real,
     ) = _encode_options(state, select, my_index, add_decline, exclude)
     global_scalar = _global_scalars(state, my_index, len(select.option))
+    extra_global = torch.tensor(
+        _extra_global_features(state, my_index), dtype=torch.float32
+    )
 
     select_context = min(int(select.context), SELECT_CONTEXT_VOCAB_SIZE - 1)
     return {
         "slot_card_id": slot_card_id,
         "slot_scalar": slot_scalar,
         "global_scalar": global_scalar,
+        "extra_global": extra_global,
         "select_type": torch.tensor(int(select.type), dtype=torch.long),
         "select_context": torch.tensor(select_context, dtype=torch.long),
         "opt_type": opt_type,
@@ -430,6 +775,7 @@ def encode_observation(
         "opt_scalar": opt_scalar,
         "opt_ref_card_id": opt_ref_card_id,
         "opt_ref_scalar": opt_ref_scalar,
+        "extra_opt": opt_extra,
         "opt_mask": opt_mask,
         "n_real_options": n_real,
     }
@@ -765,6 +1111,7 @@ class ShardILDataset(IterableDataset):
         seed: int = 0,
         winner_only: bool = False,
         with_meta: bool = False,
+        episode_ids: set[int] | None = None,
     ) -> None:
         self.split = split
         self.repo_id = repo_id or config.HF_EPISODES_REPO
@@ -774,6 +1121,10 @@ class ShardILDataset(IterableDataset):
         self.seed = seed
         self.winner_only = winner_only
         self.with_meta = with_meta
+        # Optional allowlist (skill-filtered demonstrations): only episodes
+        # whose shard `episode_id` is in this set are decoded/streamed. None
+        # = no filter. Filtering happens BEFORE max_episodes counting.
+        self.episode_ids = episode_ids
         self._epoch = 0
         if local_root is not None:
             self.files = sorted(
@@ -853,6 +1204,8 @@ class ShardILDataset(IterableDataset):
                     for eid, raw in zip(
                         rb.column(0).to_pylist(), rb.column(1).to_pylist(), strict=True
                     ):
+                        if self.episode_ids is not None and eid not in self.episode_ids:
+                            continue
                         if self.max_episodes is not None and n >= self.max_episodes:
                             return
                         n += 1
