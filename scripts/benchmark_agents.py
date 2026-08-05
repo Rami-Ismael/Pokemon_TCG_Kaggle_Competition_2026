@@ -115,12 +115,30 @@ for _cand in _cg_cands:
         break
 
 
+# Registered but DELIBERATELY EXCLUDED from the `all` group and from Glicko
+# persistence. These are diagnostics, not players: they exist to be pointed at
+# a candidate on purpose (`--agents mycandidate,exploiter_regression`), never to
+# be swept up by `--agents all`.
+#
+# Why exclusion is enforced rather than documented: `agent_groups()["all"]` is
+# `list(AGENT_FILES)`, and Glicko COMPOUNDS across runs in
+# reports/glicko_ratings.json -- so one accidental `--agents all` would inject a
+# permanent rating for an agent that plays nothing like a real opponent and
+# would drag every other agent's rating with it.
+BENCHMARK_ONLY_AGENTS = {"exploiter_regression"}
+
 AGENT_FILES = {
     "rule_baseline": REPO / "agents" / "mega_lucario" / "agent_core.py",
     "improved_prob_main": REPO / "agents" / "improved_probabilistic" / "main.py",
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # Standing regression opponent (BENCHMARK_ONLY_AGENTS). The PPO exploiter
+    # trained against frozen il_agent. NEVER SUBMIT IT -- it loses to
+    # rule_baseline (0.440) and improved_prob_main (0.230); it beats only its
+    # training target and the random floor. Samples at T=1.0, so it is
+    # stochastic: quote CIs. See agents/exploiter_regression/main.py.
+    "exploiter_regression": REPO / "agents" / "exploiter_regression" / "main.py",
     # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
     # bare module (literal DECK -> my_deck). Distinct 60-card list from
     # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
@@ -336,7 +354,8 @@ def agent_groups() -> dict[str, list[str]]:
         "ours": [a for a in OUR_AGENTS if a in AGENT_FILES],
         "rung2": rung2_pool(),
         "floor": [a for a in FLOOR_AGENTS if a in AGENT_FILES],
-        "all": list(AGENT_FILES),
+        # Diagnostics are never swept up by a group; name them explicitly.
+        "all": [a for a in AGENT_FILES if a not in BENCHMARK_ONLY_AGENTS],
     }
 
 
@@ -747,8 +766,20 @@ def main():
                  f"groups: {list(agent_groups())}")
     if not agents:
         sys.exit("no agents selected")
+    # Diagnostics must never enter the standing, COMPOUNDING ratings file: one
+    # such run would permanently bias every other agent's rating. Including one
+    # forces this run to be Glicko-isolated (it is still scored for the
+    # printout, exactly like --no-glicko-persist).
+    diagnostics = [a for a in agents if a.partition("@")[0] in BENCHMARK_ONLY_AGENTS]
+    persist_glicko = not args.no_glicko_persist
+    if diagnostics and persist_glicko:
+        persist_glicko = False
+        print(f"NOTE: {diagnostics} is benchmark-only -- forcing --no-glicko-persist "
+              f"so {args.glicko_path.name} is not polluted. Win rates below are "
+              f"still valid; the exploiter samples at T=1.0, so quote CIs.",
+              file=sys.stderr)
     run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
-                  out_path=args.out, persist_glicko=not args.no_glicko_persist,
+                  out_path=args.out, persist_glicko=persist_glicko,
                   tb_dir=None if args.no_tb else args.tb_dir)
 
 
