@@ -1,0 +1,8 @@
+sweep: 2 cells, games_per_pair=10, concurrency=3
+pool:  tb_archaludon,makthanithin_1084_baseline,romanrozen_strong_start,tb_dragapult,wmh_alakazam,wmh_garchomp,tb_heuristic,random_legal
+out:   /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/stageC
+START il_alldays_equalsteps@marnies_grimmsnarl_ex
+START il_alldays_equalsteps@mega_lucario_ex
+DONE  il_alldays_equalsteps@mega_lucario_ex
+DONE  il_alldays_equalsteps@marnies_grimmsnarl_ex
+SWEEP-COMPLETE stageC

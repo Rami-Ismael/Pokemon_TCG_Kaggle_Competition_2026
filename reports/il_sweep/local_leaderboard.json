@@ -23,6 +23,8 @@
     "il_small_comb_2ep__cynthias_garchomp_ex.json",
     "il_small_comb_2ep__mega_lucario_ex.json",
     "il_small_comb_2ep__team_rockets_spidops.json",
+    "il_alldays_equalsteps__marnies_grimmsnarl_ex.json",
+    "il_alldays_equalsteps__mega_lucario_ex.json",
     "agent_core_improved.json",
     "grunt.json",
     "improved_prob_main.json",
@@ -54,6 +56,8 @@
     "il_alldays_3ep@marnies_grimmsnarl_ex",
     "il_alldays_3ep@mega_lucario_ex",
     "il_alldays_3ep@team_rockets_spidops",
+    "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+    "il_alldays_equalsteps@mega_lucario_ex",
     "il_bc_2ep@marnies_grimmsnarl_ex",
     "il_bc_3ep@alakazam",
     "il_bc_3ep@cynthias_garchomp_ex",
@@ -428,6 +432,106 @@
         "games": 20,
         "win_pct": 95.0,
         "sigma": 4.873397172404484
+      }
+    },
+    "il_alldays_equalsteps@marnies_grimmsnarl_ex": {
+      "makthanithin_1084_baseline": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "random_legal": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "romanrozen_strong_start": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_archaludon": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_dragapult": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "tb_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_garchomp": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      }
+    },
+    "il_alldays_equalsteps@mega_lucario_ex": {
+      "makthanithin_1084_baseline": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "random_legal": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "romanrozen_strong_start": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_archaludon": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_dragapult": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_heuristic": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_alakazam": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "wmh_garchomp": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
       }
     },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
@@ -1716,6 +1820,30 @@
       "glicko": 1717.6997033790901,
       "glicko_rd": 40.77331556802718
     },
+    "il_alldays_equalsteps@marnies_grimmsnarl_ex": {
+      "wins": 127,
+      "games": 160,
+      "win_pct": 79.375,
+      "sigma": 3.198739375715064,
+      "wilson95": [
+        72.45248445564205,
+        84.92000214116851
+      ],
+      "glicko": 1800.9378252593306,
+      "glicko_rd": 40.77331556802718
+    },
+    "il_alldays_equalsteps@mega_lucario_ex": {
+      "wins": 91,
+      "games": 160,
+      "win_pct": 56.875,
+      "sigma": 3.915302011818501,
+      "wilson95": [
+        49.12859643792512,
+        64.29900680813692
+      ],
+      "glicko": 1570.432256975588,
+      "glicko_rd": 40.77331556802718
+    },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
       "wins": 125,
       "games": 160,
@@ -2012,44 +2140,44 @@
       "gxe": 59.702896997839595
     },
     "tb_archaludon": {
-      "rating": 1685.9410823347532,
+      "rating": 1684.4869733016158,
       "rd": 30.0,
-      "gxe": 67.14385006475455
+      "gxe": 67.02043091750839
     },
     "makthanithin_1084_baseline": {
-      "rating": 1655.259876824878,
+      "rating": 1653.3591807530988,
       "rd": 30.0,
-      "gxe": 64.49168934115227
+      "gxe": 64.32421356592884
     },
     "romanrozen_strong_start": {
-      "rating": 1665.5487403040204,
+      "rating": 1665.1965103138025,
       "rd": 30.0,
-      "gxe": 65.39203751758437
+      "gxe": 65.36139212937988
     },
     "tb_dragapult": {
-      "rating": 1583.608602325995,
+      "rating": 1584.7026693010257,
       "rd": 30.0,
-      "gxe": 57.965684802466875
+      "gxe": 58.06811316118744
     },
     "wmh_alakazam": {
-      "rating": 1633.4771478375058,
+      "rating": 1634.857873069332,
       "rd": 30.0,
-      "gxe": 62.551972019333576
+      "gxe": 62.67620429688593
     },
     "wmh_garchomp": {
-      "rating": 1520.9484968133868,
+      "rating": 1518.7643594517801,
       "rd": 30.0,
-      "gxe": 52.011897138551255
+      "gxe": 51.80232454721305
     },
     "tb_heuristic": {
-      "rating": 1103.9251022849614,
+      "rating": 1102.8795142191207,
       "rd": 30.0,
-      "gxe": 17.911044330291332
+      "gxe": 17.852030553702367
     },
     "random_legal": {
-      "rating": 1045.6215425698408,
+      "rating": 1045.6219127144027,
       "rd": 30.0,
-      "gxe": 14.84909260653538
+      "gxe": 14.84911059558575
     },
     "grunt": {
       "rating": 1192.6592422883432,
@@ -2080,6 +2208,16 @@
       "rating": 1717.6997033790901,
       "rd": 40.77331556802718,
       "gxe": 69.74827643835069
+    },
+    "il_alldays_equalsteps@marnies_grimmsnarl_ex": {
+      "rating": 1800.9378252593306,
+      "rd": 40.77331556802718,
+      "gxe": 76.03745539958031
+    },
+    "il_alldays_equalsteps@mega_lucario_ex": {
+      "rating": 1570.432256975588,
+      "rd": 40.77331556802718,
+      "gxe": 56.71559756817428
     },
     "il_bc_2ep@marnies_grimmsnarl_ex": {
       "rating": 1788.131960354678,
@@ -2223,6 +2361,12 @@
     },
     {
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "gap_pp": 7.1875,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "il_medium_3ep@marnies_grimmsnarl_ex",
       "gap_pp": 7.5,
       "separated": false
@@ -2303,6 +2447,12 @@
       "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
       "gap_pp": 26.5625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 29.6875,
       "separated": true
     },
     {
@@ -2397,6 +2547,12 @@
     },
     {
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "gap_pp": 3.75,
+      "separated": false
+    },
+    {
+      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "il_medium_3ep@marnies_grimmsnarl_ex",
       "gap_pp": 4.0625,
       "separated": false
@@ -2477,6 +2633,12 @@
       "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
       "gap_pp": 23.125,
+      "separated": true
+    },
+    {
+      "a": "il_hfstream_comb_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 26.25,
       "separated": true
     },
     {
@@ -2565,6 +2727,12 @@
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "gap_pp": 2.5,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_medium_3ep@marnies_grimmsnarl_ex",
       "gap_pp": 2.8125,
       "separated": false
@@ -2649,6 +2817,12 @@
     },
     {
       "a": "il_bc_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 25.0,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 26.875,
       "separated": true
@@ -2724,6 +2898,12 @@
       "b": "tb_starmie",
       "gap_pp": 67.5,
       "separated": true
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "gap_pp": 1.25,
+      "separated": false
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
@@ -2811,6 +2991,12 @@
     },
     {
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 23.75,
+      "separated": true
+    },
+    {
+      "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 25.625,
       "separated": true
@@ -2885,6 +3071,174 @@
       "a": "il_bc_4ep@marnies_grimmsnarl_ex",
       "b": "tb_starmie",
       "gap_pp": 66.25,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "gap_pp": 0.3125,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@cynthias_garchomp_ex",
+      "gap_pp": 1.25,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 1.25,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "gap_pp": 4.375,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@cynthias_garchomp_ex",
+      "gap_pp": 5.625,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@team_rockets_spidops",
+      "gap_pp": 8.125,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@alakazam",
+      "gap_pp": 8.75,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@team_rockets_spidops",
+      "gap_pp": 9.375,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@alakazam",
+      "gap_pp": 10.0,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "gap_pp": 14.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "improved_prob_main",
+      "gap_pp": 15.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@alakazam",
+      "gap_pp": 16.25,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "wmh_megastarmie",
+      "gap_pp": 17.5,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "agent_core_improved",
+      "gap_pp": 19.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 22.5,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 24.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 26.25,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 28.75,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "rule_baseline",
+      "gap_pp": 30.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 30.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 41.875,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "tb_search",
+      "gap_pp": 46.875,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 48.125,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 50.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 53.125,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 55.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "grunt",
+      "gap_pp": 59.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@marnies_grimmsnarl_ex",
+      "b": "tb_starmie",
+      "gap_pp": 65.0,
       "separated": true
     },
     {
@@ -2963,6 +3317,12 @@
       "a": "il_medium_3ep@marnies_grimmsnarl_ex",
       "b": "agent_core_improved",
       "gap_pp": 19.0625,
+      "separated": true
+    },
+    {
+      "a": "il_medium_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 22.1875,
       "separated": true
     },
     {
@@ -3117,6 +3477,12 @@
     },
     {
       "a": "il_alldays_3ep@cynthias_garchomp_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 21.25,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 23.125,
       "separated": true
@@ -3261,6 +3627,12 @@
     },
     {
       "a": "il_bc_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 21.25,
+      "separated": true
+    },
+    {
+      "a": "il_bc_2ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 23.125,
       "separated": true
@@ -3399,6 +3771,12 @@
     },
     {
       "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 18.125,
+      "separated": true
+    },
+    {
+      "a": "il_small_comb_2ep@marnies_grimmsnarl_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 20.0,
       "separated": true
@@ -3531,6 +3909,12 @@
     },
     {
       "a": "il_bc_3ep@cynthias_garchomp_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 16.875,
+      "separated": true
+    },
+    {
+      "a": "il_bc_3ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 18.75,
       "separated": true
@@ -3657,6 +4041,12 @@
     },
     {
       "a": "il_alldays_3ep@team_rockets_spidops",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 14.375,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@team_rockets_spidops",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 16.25,
       "separated": true
@@ -3777,6 +4167,12 @@
     },
     {
       "a": "il_bc_3ep@alakazam",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 13.75,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@alakazam",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 15.625,
       "separated": true
@@ -3891,6 +4287,12 @@
     },
     {
       "a": "il_bc_3ep@team_rockets_spidops",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 13.125,
+      "separated": false
+    },
+    {
+      "a": "il_bc_3ep@team_rockets_spidops",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 15.0,
       "separated": false
@@ -3999,6 +4401,12 @@
     },
     {
       "a": "il_alldays_3ep@alakazam",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 12.5,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@alakazam",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 14.375,
       "separated": false
@@ -4101,6 +4509,12 @@
     },
     {
       "a": "il_small_comb_2ep@cynthias_garchomp_ex",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 8.125,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@cynthias_garchomp_ex",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 10.0,
       "separated": false
@@ -4197,6 +4611,12 @@
     },
     {
       "a": "improved_prob_main",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 6.875,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 8.75,
       "separated": false
@@ -4287,6 +4707,12 @@
     },
     {
       "a": "il_small_comb_2ep@alakazam",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 6.25,
+      "separated": false
+    },
+    {
+      "a": "il_small_comb_2ep@alakazam",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 8.125,
       "separated": false
@@ -4371,6 +4797,12 @@
     },
     {
       "a": "wmh_megastarmie",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 5.0,
+      "separated": false
+    },
+    {
+      "a": "wmh_megastarmie",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 6.875,
       "separated": false
@@ -4449,6 +4881,12 @@
     },
     {
       "a": "agent_core_improved",
+      "b": "il_alldays_equalsteps@mega_lucario_ex",
+      "gap_pp": 3.125,
+      "separated": false
+    },
+    {
+      "a": "agent_core_improved",
       "b": "il_alldays_3ep@mega_lucario_ex",
       "gap_pp": 5.0,
       "separated": false
@@ -4523,6 +4961,84 @@
       "a": "agent_core_improved",
       "b": "tb_starmie",
       "gap_pp": 45.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 1.875,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_small_comb_2ep@team_rockets_spidops",
+      "gap_pp": 3.75,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "tb_alakazam",
+      "gap_pp": 6.25,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "rule_baseline",
+      "gap_pp": 7.5,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_small_comb_2ep@mega_lucario_ex",
+      "gap_pp": 8.125,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "tb_rulecore",
+      "gap_pp": 19.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "tb_search",
+      "gap_pp": 24.375,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "wmh_typhlosion",
+      "gap_pp": 25.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 28.125,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "mcts_il_agent",
+      "gap_pp": 30.625,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "wmh_bellibolt",
+      "gap_pp": 33.125,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "grunt",
+      "gap_pp": 36.875,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_equalsteps@mega_lucario_ex",
+      "b": "tb_starmie",
+      "gap_pp": 42.5,
       "separated": true
     },
     {

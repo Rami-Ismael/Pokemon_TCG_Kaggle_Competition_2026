@@ -12,8 +12,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-BUNDLE=submissions/il_agent
-CHECKPOINT=models/il_agent
+# Both overridable so a non-default checkpoint can be bundled without editing
+# this script, e.g.
+#   CHECKPOINT=models/il_alldays_0804 BUNDLE=submissions/il_alldays_0804 \
+#   DECK=configs/deck_lists/marnies_grimmsnarl_ex.csv \
+#     ./scripts/build_il_submission.sh
+BUNDLE="${BUNDLE:-submissions/il_agent}"
+CHECKPOINT="${CHECKPOINT:-models/il_agent}"
 
 if [ ! -f "$CHECKPOINT/model.safetensors" ]; then
   echo "no checkpoint at $CHECKPOINT -- run scripts/train_il.py first" >&2
@@ -23,7 +28,19 @@ fi
 rm -rf "$BUNDLE"
 mkdir -p "$BUNDLE/model" "$BUNDLE/pokemon_tcg"
 
-cp agents/il_agent/agent_core.py agents/il_agent/main.py agents/il_agent/deck.csv "$BUNDLE/"
+cp agents/il_agent/agent_core.py agents/il_agent/main.py "$BUNDLE/"
+# DECK override. The bundle's main.py reads deck.csv at submission time, so the
+# deck is decided HERE, not by the checkpoint. Defaulting to agents/il_agent's
+# Mega Lucario ex list is what made every past IL bundle a Lucario bundle even
+# when the checkpoint changed -- see reports/il_model_deck_selection.md, which
+# measures that deck at 28.8% field win rate (1 corpus episode) against 81.9%
+# for Marnie's Grimmsnarl ex (3488 episodes) on the SAME weights.
+DECK="${DECK:-agents/il_agent/deck.csv}"
+if [ ! -f "$DECK" ]; then
+  echo "no deck list at $DECK" >&2
+  exit 1
+fi
+cp "$DECK" "$BUNDLE/deck.csv"
 cp -R data/external/cg-lib/cg "$BUNDLE/cg"
 cp "$CHECKPOINT/config.json" "$CHECKPOINT/model.safetensors" "$BUNDLE/model/"
 cp src/pokemon_tcg/config.py src/pokemon_tcg/device.py src/pokemon_tcg/il_dataset.py src/pokemon_tcg/il_model.py "$BUNDLE/pokemon_tcg/"
@@ -37,6 +54,8 @@ tar -czf "$TARBALL" -C "$BUNDLE" \
   agent_core.py main.py deck.csv cg model pokemon_tcg
 
 echo "built: $TARBALL ($(du -h "$TARBALL" | cut -f1))"
+echo "  checkpoint: $CHECKPOINT  ($(shasum -a 256 "$CHECKPOINT/model.safetensors" | cut -c1-16))"
+echo "  deck:       $DECK  ($(grep -c . "$BUNDLE/deck.csv") cards)"
 echo ""
 echo "NOT submitted. To submit (spends one of your 5 daily / 2-scored slots):"
 echo "  uv run kaggle competitions submit pokemon-tcg-ai-battle \\"

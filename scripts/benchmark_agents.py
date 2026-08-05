@@ -303,6 +303,11 @@ AGENT_FILES = {
     "il_small_comb_2ep": REPO / "agents" / "il_arms" / "il_small_comb_2ep" / "agent_core.py",
     "il_hfstream_comb_3ep": REPO / "agents" / "il_arms" / "il_hfstream_comb_3ep" / "agent_core.py",
     "il_alldays_3ep": REPO / "agents" / "il_arms" / "il_alldays_3ep" / "agent_core.py",
+    # Equal-steps control for il_alldays_3ep (standing rule 4: compare at equal
+    # STEPS, not equal epochs). 38,562 steps vs 127,748; offline acc .7414 vs
+    # .7583 but ECE .0124 -- the best calibration of any checkpoint here.
+    # Trained by a concurrent session; lives in that worktree, symlinked in.
+    "il_alldays_equalsteps": REPO / "agents" / "il_arms" / "il_alldays_equalsteps" / "agent_core.py",
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.

@@ -387,3 +387,33 @@ checkpoint alone is enough" option. Submitting this checkpoint on Lucario has no
 tried and lands at 422.8, in the same 395–450 band as every prior BC submission. If the
 deck-switch hypothesis is right, the Grimmsnarl-ex build is the thing that has to move
 that number, and it has never been submitted.
+
+## ⑦ Equal-steps control — the gain is data breadth, not training longer
+
+A concurrent session trained `models/il_alldays_equalsteps_0804` (sha `ee493052d8f4`):
+the same all-days corpus at **38,562 steps instead of 127,748** — the equal-steps
+control standing rule #4 asks for. Offline accuracy 0.7414 (vs 0.7583) but **ECE 0.0124,
+the best-calibrated checkpoint in the family**. It was not in the original sweep; wired,
+verified, and run against the identical pool.
+
+| arm | Grimmsnarl ex | Mega Lucario ex |
+|---|---|---|
+| `il_alldays_3ep` (127,748 steps) | 86.6 ± 1.9% | 55.0 ± 3.9% |
+| `il_alldays_equalsteps` (38,562 steps) | 79.4 ± 3.2% | 56.9 ± 3.9% |
+| `il_bc_3ep` (07-26 only) | 81.9 ± 3.0% | 28.8 ± 3.6% |
+
+- On **Grimmsnarl ex**, equal-steps is **not separated** from either `il_alldays_3ep`
+  (−7.2pp) or `il_bc_3ep` (−2.5pp) — consistent with the rest of the model axis.
+- On **Mega Lucario ex**, equal-steps scores **56.9%**, statistically identical to the
+  full 127,748-step run (+1.9pp, not separated) and **separated from `il_bc_3ep` by
+  +28.1pp** — the same clean robustness gap.
+
+**This isolates the cause.** The 3.3× extra optimisation steps buy nothing measurable;
+the robustness on the data-poor deck reproduces at **less than a third of the training
+compute**, purely from training on more days. It is the *breadth of the corpus*, not the
+length of the run, that makes the model hold up on a deck it barely saw. It also removes
+one horn of the ②-confound: the effect survives at matched steps, so it is not an
+artifact of the longer run.
+
+Calibration again fails to predict play: equal-steps is the best-calibrated checkpoint
+(ECE 0.0124) and mid-pack on Grimmsnarl ex.
