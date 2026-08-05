@@ -2,3 +2,10 @@ testbed: 5 candidate(s) vs 42 opponents, 10 pairs/cell, conc=2
 out: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/verified_anchors
 START improved_prob_main
 START agent_core_improved
+DONE  improved_prob_main
+START mcts_il_agent
+DONE  agent_core_improved
+START il_alldays_3ep@mega_lucario_ex
+DONE  il_alldays_3ep@mega_lucario_ex
+START il_bc_3ep@mega_lucario_ex
+DONE  il_bc_3ep@mega_lucario_ex

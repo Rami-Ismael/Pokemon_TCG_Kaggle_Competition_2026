@@ -54,6 +54,9 @@ LADDER_ANCHORS: dict[str, tuple[float, str]] = {
     # correlation includes points where both sides are ours and measured.
     "il_alldays_3ep@mega_lucario_ex": (422.8, "our sub 55248985, settled read 3 (600.0 was the mu0 prior)"),
     "mcts_il_agent": (291.4, "our sub 55248781, latest of 4 reads"),
+    # same weights as `il_agent` on the same deck -> same verified anchor
+    "il_bc_3ep@mega_lucario_ex": (398.7, "our subs 55190924/55149903 mean (il_agent weights, Lucario)"),
+    "il_alldays_3ep@marnies_grimmsnarl_ex": (311.3, "our sub 55270787, settled over 3 reads"),
 }
 
 # Which anchors WE measured on the real ladder vs which are third-party claims.
@@ -63,6 +66,7 @@ LADDER_ANCHORS: dict[str, tuple[float, str]] = {
 VERIFIED_ANCHORS = {
     "improved_prob_main", "agent_core_improved", "il_agent", "s2_e1_s43",
     "ppo_u120832", "il_alldays_3ep@mega_lucario_ex", "mcts_il_agent",
+    "il_bc_3ep@mega_lucario_ex", "il_alldays_3ep@marnies_grimmsnarl_ex",
 }
 
 

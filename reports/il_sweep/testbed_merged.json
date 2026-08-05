@@ -1,0 +1,1997 @@
+{
+  "sources": [
+    "agent_core_improved.json",
+    "il_alldays_3ep__mega_lucario_ex.json",
+    "il_bc_3ep__mega_lucario_ex.json",
+    "improved_prob_main.json",
+    "il_alldays_3ep__grimmsnarl_toplayer.json",
+    "il_alldays_3ep__marnies_grimmsnarl_ex.json",
+    "pool_round_robin.json"
+  ],
+  "pool": [
+    "avikdas567_heuristic",
+    "biohack44_day2",
+    "daniilkrasnovvv_conservative_prob",
+    "jek1wantaufik_lucario",
+    "kiyotah_abomasnow",
+    "kiyotah_dragapult",
+    "kiyotah_iono",
+    "kojimar_lucario",
+    "makimakiai_rl",
+    "makthanithin_1084_baseline",
+    "makthanithin_improved_prob",
+    "mechi22_alakazam",
+    "pixiux_lucario_v63",
+    "plamen06_steel",
+    "pllinas_alakazam",
+    "prvsiyan_control_v11",
+    "prvsiyan_grimbelief_alakazam",
+    "random_legal",
+    "romanrozen_strong_start",
+    "ryotasueyoshi_alakazam",
+    "tb_abomasnow",
+    "tb_alakazam",
+    "tb_archaludon",
+    "tb_dragapult",
+    "tb_heuristic",
+    "tb_iono",
+    "tb_lucario",
+    "tb_rulecore",
+    "tb_search",
+    "tb_starmie",
+    "wmh_alakazam",
+    "wmh_bellibolt",
+    "wmh_chandelure",
+    "wmh_froslass",
+    "wmh_garchomp",
+    "wmh_grimmsnarl",
+    "wmh_kangaskhan",
+    "wmh_megastarmie",
+    "wmh_mewtwo",
+    "wmh_ogerpon",
+    "wmh_trevenant",
+    "wmh_typhlosion"
+  ],
+  "arms": [
+    "agent_core_improved",
+    "il_alldays_3ep@grimmsnarl_toplayer",
+    "il_alldays_3ep@marnies_grimmsnarl_ex",
+    "il_alldays_3ep@mega_lucario_ex",
+    "il_bc_3ep@mega_lucario_ex",
+    "improved_prob_main"
+  ],
+  "per_opponent": {
+    "agent_core_improved": {
+      "avikdas567_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "biohack44_day2": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "kiyotah_abomasnow": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "kiyotah_dragapult": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "kiyotah_iono": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "kojimar_lucario": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "makimakiai_rl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "makthanithin_improved_prob": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "mechi22_alakazam": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "pixiux_lucario_v63": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "plamen06_steel": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "pllinas_alakazam": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "prvsiyan_control_v11": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "random_legal": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "romanrozen_strong_start": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_abomasnow": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "tb_alakazam": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_archaludon": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "tb_dragapult": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "tb_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "tb_iono": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_lucario": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_rulecore": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_search": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_starmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "wmh_bellibolt": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_chandelure": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_froslass": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "wmh_garchomp": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_kangaskhan": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_megastarmie": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "wmh_mewtwo": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_ogerpon": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_trevenant": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "wmh_typhlosion": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      }
+    },
+    "il_alldays_3ep@grimmsnarl_toplayer": {
+      "avikdas567_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "biohack44_day2": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "kiyotah_abomasnow": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "kiyotah_dragapult": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "kiyotah_iono": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "kojimar_lucario": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "makimakiai_rl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "makthanithin_improved_prob": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "mechi22_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "pixiux_lucario_v63": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "plamen06_steel": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "pllinas_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "prvsiyan_control_v11": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "random_legal": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "romanrozen_strong_start": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_abomasnow": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_alakazam": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_archaludon": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_dragapult": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "tb_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "tb_iono": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_lucario": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_rulecore": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_search": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_starmie": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_bellibolt": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_chandelure": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_froslass": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "wmh_garchomp": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_kangaskhan": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_megastarmie": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "wmh_mewtwo": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_ogerpon": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_trevenant": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "wmh_typhlosion": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      }
+    },
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "avikdas567_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "biohack44_day2": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "kiyotah_abomasnow": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "kiyotah_dragapult": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "kiyotah_iono": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "kojimar_lucario": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "makimakiai_rl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "makthanithin_improved_prob": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "mechi22_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "pixiux_lucario_v63": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "plamen06_steel": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "pllinas_alakazam": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "prvsiyan_control_v11": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "random_legal": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "romanrozen_strong_start": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_abomasnow": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "tb_archaludon": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_dragapult": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "tb_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "tb_iono": {
+        "wins": 13,
+        "games": 20,
+        "win_pct": 65.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_lucario": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_rulecore": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_search": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_starmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_bellibolt": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_chandelure": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_froslass": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "wmh_garchomp": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_grimmsnarl": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_kangaskhan": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_megastarmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_mewtwo": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_ogerpon": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_trevenant": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_typhlosion": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      }
+    },
+    "il_alldays_3ep@mega_lucario_ex": {
+      "avikdas567_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "biohack44_day2": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "kiyotah_abomasnow": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "kiyotah_dragapult": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "kiyotah_iono": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "kojimar_lucario": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "makimakiai_rl": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "makthanithin_improved_prob": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "mechi22_alakazam": {
+        "wins": 3,
+        "games": 20,
+        "win_pct": 15.0,
+        "sigma": 7.984359711335657
+      },
+      "pixiux_lucario_v63": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "plamen06_steel": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "pllinas_alakazam": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "prvsiyan_control_v11": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "random_legal": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "romanrozen_strong_start": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_abomasnow": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_alakazam": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "tb_archaludon": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "tb_dragapult": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "tb_heuristic": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_iono": {
+        "wins": 8,
+        "games": 20,
+        "win_pct": 40.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_lucario": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_rulecore": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_search": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "tb_starmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "wmh_bellibolt": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_chandelure": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "wmh_froslass": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "wmh_garchomp": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "wmh_grimmsnarl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_kangaskhan": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_megastarmie": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "wmh_mewtwo": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "wmh_ogerpon": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_trevenant": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "wmh_typhlosion": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      }
+    },
+    "il_bc_3ep@mega_lucario_ex": {
+      "avikdas567_heuristic": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "biohack44_day2": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "kiyotah_abomasnow": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "kiyotah_dragapult": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "kiyotah_iono": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "kojimar_lucario": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "makimakiai_rl": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "makthanithin_improved_prob": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "mechi22_alakazam": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "pixiux_lucario_v63": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "plamen06_steel": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "pllinas_alakazam": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "prvsiyan_control_v11": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "random_legal": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "romanrozen_strong_start": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "tb_abomasnow": {
+        "wins": 3,
+        "games": 20,
+        "win_pct": 15.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_alakazam": {
+        "wins": 3,
+        "games": 20,
+        "win_pct": 15.0,
+        "sigma": 7.984359711335657
+      },
+      "tb_archaludon": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "tb_dragapult": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "tb_heuristic": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "tb_iono": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "tb_lucario": {
+        "wins": 4,
+        "games": 20,
+        "win_pct": 20.0,
+        "sigma": 8.944271909999161
+      },
+      "tb_rulecore": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_search": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_starmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "wmh_bellibolt": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "wmh_chandelure": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_froslass": {
+        "wins": 2,
+        "games": 20,
+        "win_pct": 10.0,
+        "sigma": 6.708203932499369
+      },
+      "wmh_garchomp": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "wmh_grimmsnarl": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "wmh_kangaskhan": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "wmh_megastarmie": {
+        "wins": 1,
+        "games": 20,
+        "win_pct": 5.0,
+        "sigma": 4.873397172404482
+      },
+      "wmh_mewtwo": {
+        "wins": 6,
+        "games": 20,
+        "win_pct": 30.0,
+        "sigma": 10.246950765959598
+      },
+      "wmh_ogerpon": {
+        "wins": 17,
+        "games": 20,
+        "win_pct": 85.0,
+        "sigma": 7.984359711335657
+      },
+      "wmh_trevenant": {
+        "wins": 0,
+        "games": 20,
+        "win_pct": 0.0,
+        "sigma": 0.0
+      },
+      "wmh_typhlosion": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      }
+    },
+    "improved_prob_main": {
+      "avikdas567_heuristic": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "biohack44_day2": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "daniilkrasnovvv_conservative_prob": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "jek1wantaufik_lucario": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "kiyotah_abomasnow": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "kiyotah_dragapult": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "kiyotah_iono": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "kojimar_lucario": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "makimakiai_rl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "makthanithin_1084_baseline": {
+        "wins": 12,
+        "games": 20,
+        "win_pct": 60.0,
+        "sigma": 10.954451150103322
+      },
+      "makthanithin_improved_prob": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "mechi22_alakazam": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "pixiux_lucario_v63": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "plamen06_steel": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "pllinas_alakazam": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "prvsiyan_control_v11": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "prvsiyan_grimbelief_alakazam": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "random_legal": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "romanrozen_strong_start": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "ryotasueyoshi_alakazam": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_abomasnow": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_alakazam": {
+        "wins": 9,
+        "games": 20,
+        "win_pct": 45.0,
+        "sigma": 11.124297730643494
+      },
+      "tb_archaludon": {
+        "wins": 7,
+        "games": 20,
+        "win_pct": 35.0,
+        "sigma": 10.66536450385077
+      },
+      "tb_dragapult": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "tb_heuristic": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "tb_iono": {
+        "wins": 15,
+        "games": 20,
+        "win_pct": 75.0,
+        "sigma": 9.682458365518542
+      },
+      "tb_lucario": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "tb_rulecore": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_search": {
+        "wins": 18,
+        "games": 20,
+        "win_pct": 90.0,
+        "sigma": 6.708203932499368
+      },
+      "tb_starmie": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_alakazam": {
+        "wins": 11,
+        "games": 20,
+        "win_pct": 55.0,
+        "sigma": 11.124297730643494
+      },
+      "wmh_bellibolt": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_chandelure": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_froslass": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "wmh_garchomp": {
+        "wins": 14,
+        "games": 20,
+        "win_pct": 70.0,
+        "sigma": 10.2469507659596
+      },
+      "wmh_grimmsnarl": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_kangaskhan": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      },
+      "wmh_megastarmie": {
+        "wins": 10,
+        "games": 20,
+        "win_pct": 50.0,
+        "sigma": 11.180339887498949
+      },
+      "wmh_mewtwo": {
+        "wins": 16,
+        "games": 20,
+        "win_pct": 80.0,
+        "sigma": 8.944271909999157
+      },
+      "wmh_ogerpon": {
+        "wins": 20,
+        "games": 20,
+        "win_pct": 100.0,
+        "sigma": 0.0
+      },
+      "wmh_trevenant": {
+        "wins": 5,
+        "games": 20,
+        "win_pct": 25.0,
+        "sigma": 9.682458365518542
+      },
+      "wmh_typhlosion": {
+        "wins": 19,
+        "games": 20,
+        "win_pct": 95.0,
+        "sigma": 4.873397172404484
+      }
+    }
+  },
+  "aggregate": {
+    "agent_core_improved": {
+      "wins": 578,
+      "games": 840,
+      "win_pct": 68.80952380952381,
+      "sigma": 1.598437411847582,
+      "wilson95": [
+        65.59692268489566,
+        71.8508637243072
+      ],
+      "glicko": 1694.8382997951096,
+      "glicko_rd": 30.0
+    },
+    "il_alldays_3ep@grimmsnarl_toplayer": {
+      "wins": 709,
+      "games": 840,
+      "win_pct": 84.4047619047619,
+      "sigma": 1.25181409233077,
+      "wilson95": [
+        81.79516379300617,
+        86.70110375294085
+      ],
+      "glicko": 1856.3814470935895,
+      "glicko_rd": 30.0
+    },
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "wins": 724,
+      "games": 840,
+      "win_pct": 86.19047619047619,
+      "sigma": 1.1903628063918839,
+      "wilson95": [
+        83.69210092938425,
+        88.35933621237317
+      ],
+      "glicko": 1874.8787540361639,
+      "glicko_rd": 30.0
+    },
+    "il_alldays_3ep@mega_lucario_ex": {
+      "wins": 472,
+      "games": 840,
+      "win_pct": 56.19047619047619,
+      "sigma": 1.7118904909537973,
+      "wilson95": [
+        52.8145162283294,
+        59.5100717038133
+      ],
+      "glicko": 1564.1239974009227,
+      "glicko_rd": 30.0
+    },
+    "il_bc_3ep@mega_lucario_ex": {
+      "wins": 242,
+      "games": 840,
+      "win_pct": 28.80952380952381,
+      "sigma": 1.5625695103856148,
+      "wilson95": [
+        25.848814346322115,
+        31.963173116727816
+      ],
+      "glicko": 1280.4986242814591,
+      "glicko_rd": 30.0
+    },
+    "improved_prob_main": {
+      "wins": 593,
+      "games": 840,
+      "win_pct": 70.5952380952381,
+      "sigma": 1.5720157547225087,
+      "wilson95": [
+        67.42591911767384,
+        73.57703688733943
+      ],
+      "glicko": 1713.335606737683,
+      "glicko_rd": 30.0
+    }
+  },
+  "glicko": {
+    "agent_core_improved": {
+      "rating": 1694.8382997951096,
+      "rd": 30.0,
+      "gxe": 67.893819763641
+    },
+    "avikdas567_heuristic": {
+      "rating": 1138.957910254595,
+      "rd": 30.0,
+      "gxe": 19.97702390236629
+    },
+    "biohack44_day2": {
+      "rating": 1559.2334678488558,
+      "rd": 30.0,
+      "gxe": 55.66740532322262
+    },
+    "daniilkrasnovvv_conservative_prob": {
+      "rating": 1641.0320663067996,
+      "rd": 30.0,
+      "gxe": 63.229670779237374
+    },
+    "jek1wantaufik_lucario": {
+      "rating": 1459.1007007710282,
+      "rd": 30.0,
+      "gxe": 46.077976257902954
+    },
+    "kiyotah_abomasnow": {
+      "rating": 1618.4669356977117,
+      "rd": 30.0,
+      "gxe": 61.191030599174866
+    },
+    "kiyotah_dragapult": {
+      "rating": 1559.2334678488558,
+      "rd": 30.0,
+      "gxe": 55.66740532322262
+    },
+    "kiyotah_iono": {
+      "rating": 1528.20641326136,
+      "rd": 30.0,
+      "gxe": 52.70776032075821
+    },
+    "kojimar_lucario": {
+      "rating": 1655.1352729374796,
+      "rd": 30.0,
+      "gxe": 64.48072094967385
+    },
+    "makimakiai_rl": {
+      "rating": 1127.675344950051,
+      "rd": 30.0,
+      "gxe": 19.292772620847618
+    },
+    "makthanithin_1084_baseline": {
+      "rating": 1624.1082183499836,
+      "rd": 30.0,
+      "gxe": 61.704690471572306
+    },
+    "makthanithin_improved_prob": {
+      "rating": 1646.6733489590715,
+      "rd": 30.0,
+      "gxe": 63.73234051414297
+    },
+    "mechi22_alakazam": {
+      "rating": 1683.3416861988394,
+      "rd": 30.0,
+      "gxe": 66.92305785404338
+    },
+    "pixiux_lucario_v63": {
+      "rating": 1581.7985984579436,
+      "rd": 30.0,
+      "gxe": 57.796078927066716
+    },
+    "plamen06_steel": {
+      "rating": 1728.4719474170154,
+      "rd": 30.0,
+      "gxe": 70.64435855607421
+    },
+    "pllinas_alakazam": {
+      "rating": 1751.0370780261032,
+      "rd": 30.0,
+      "gxe": 72.41031321848115
+    },
+    "prvsiyan_control_v11": {
+      "rating": 1578.9779571318077,
+      "rd": 30.0,
+      "gxe": 57.53140603235879
+    },
+    "prvsiyan_grimbelief_alakazam": {
+      "rating": 1147.4198342330028,
+      "rd": 30.0,
+      "gxe": 20.502055095675864
+    },
+    "romanrozen_strong_start": {
+      "rating": 1632.5701423283915,
+      "rd": 30.0,
+      "gxe": 62.470272974301814
+    },
+    "ryotasueyoshi_alakazam": {
+      "rating": 1593.0811637624877,
+      "rd": 30.0,
+      "gxe": 58.85015712658573
+    },
+    "tb_abomasnow": {
+      "rating": 1570.5160331533998,
+      "rd": 30.0,
+      "gxe": 56.73485022005545
+    },
+    "tb_alakazam": {
+      "rating": 1542.3096198920398,
+      "rd": 30.0,
+      "gxe": 54.05668154160823
+    },
+    "tb_archaludon": {
+      "rating": 1652.3146316113434,
+      "rd": 30.0,
+      "gxe": 64.23202572969282
+    },
+    "tb_dragapult": {
+      "rating": 1581.7985984579439,
+      "rd": 30.0,
+      "gxe": 57.79607892706673
+    },
+    "tb_heuristic": {
+      "rating": 1136.137268928459,
+      "rd": 30.0,
+      "gxe": 19.804271045736936
+    },
+    "tb_iono": {
+      "rating": 1553.5921851965838,
+      "rd": 30.0,
+      "gxe": 55.131650081375945
+    },
+    "tb_lucario": {
+      "rating": 1375.8917816500164,
+      "rd": 30.0,
+      "gxe": 38.29530952842769
+    },
+    "tb_rulecore": {
+      "rating": 1363.1988956824043,
+      "rd": 30.0,
+      "gxe": 37.14923462613743
+    },
+    "tb_search": {
+      "rating": 1319.4789551272966,
+      "rd": 30.0,
+      "gxe": 33.31737274202551
+    },
+    "tb_starmie": {
+      "rating": 1085.3657250580122,
+      "rd": 30.0,
+      "gxe": 16.88608390600703
+    },
+    "wmh_alakazam": {
+      "rating": 1610.0050117193036,
+      "rd": 30.0,
+      "gxe": 60.41588785253684
+    },
+    "wmh_bellibolt": {
+      "rating": 1212.2945847341293,
+      "rd": 30.0,
+      "gxe": 24.86457355140947
+    },
+    "wmh_chandelure": {
+      "rating": 1237.6803566693527,
+      "rd": 30.0,
+      "gxe": 26.731790568674576
+    },
+    "wmh_froslass": {
+      "rating": 1466.152304086368,
+      "rd": 30.0,
+      "gxe": 46.75208537965478
+    },
+    "wmh_garchomp": {
+      "rating": 1545.1302612181757,
+      "rd": 30.0,
+      "gxe": 54.325817570885256
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1234.8597153432167,
+      "rd": 30.0,
+      "gxe": 26.519983473438856
+    },
+    "wmh_kangaskhan": {
+      "rating": 1093.82764903642,
+      "rd": 30.0,
+      "gxe": 17.34749008354074
+    },
+    "wmh_megastarmie": {
+      "rating": 1559.2334678488558,
+      "rd": 30.0,
+      "gxe": 55.66740532322262
+    },
+    "wmh_mewtwo": {
+      "rating": 1282.8106178875287,
+      "rd": 30.0,
+      "gxe": 30.26296322937881
+    },
+    "wmh_ogerpon": {
+      "rating": 1107.9308556670996,
+      "rd": 30.0,
+      "gxe": 18.138543443224396
+    },
+    "wmh_trevenant": {
+      "rating": 1590.2605224363517,
+      "rd": 30.0,
+      "gxe": 58.58735808754612
+    },
+    "wmh_typhlosion": {
+      "rating": 1313.8376724750246,
+      "rd": 30.0,
+      "gxe": 32.837392180039515
+    },
+    "random_legal": {
+      "rating": 1059.9799531227889,
+      "rd": 30.0,
+      "gxe": 15.560532980099824
+    },
+    "il_alldays_3ep@mega_lucario_ex": {
+      "rating": 1564.1239974009227,
+      "rd": 30.0,
+      "gxe": 56.13080131150094
+    },
+    "il_bc_3ep@mega_lucario_ex": {
+      "rating": 1280.4986242814591,
+      "rd": 30.0,
+      "gxe": 30.075746305424413
+    },
+    "improved_prob_main": {
+      "rating": 1713.335606737683,
+      "rd": 30.0,
+      "gxe": 69.42351162291725
+    },
+    "il_alldays_3ep@grimmsnarl_toplayer": {
+      "rating": 1856.3814470935895,
+      "rd": 30.0,
+      "gxe": 79.73505787765647
+    },
+    "il_alldays_3ep@marnies_grimmsnarl_ex": {
+      "rating": 1874.8787540361639,
+      "rd": 30.0,
+      "gxe": 80.85962617283344
+    }
+  },
+  "separation": [
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@grimmsnarl_toplayer",
+      "gap_pp": 1.7857142857142918,
+      "separated": false
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "improved_prob_main",
+      "gap_pp": 15.595238095238088,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "agent_core_improved",
+      "gap_pp": 17.38095238095238,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 30.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@marnies_grimmsnarl_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 57.38095238095238,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@grimmsnarl_toplayer",
+      "b": "improved_prob_main",
+      "gap_pp": 13.809523809523796,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@grimmsnarl_toplayer",
+      "b": "agent_core_improved",
+      "gap_pp": 15.595238095238088,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@grimmsnarl_toplayer",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 28.214285714285708,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@grimmsnarl_toplayer",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 55.59523809523809,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "agent_core_improved",
+      "gap_pp": 1.7857142857142918,
+      "separated": false
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 14.404761904761912,
+      "separated": true
+    },
+    {
+      "a": "improved_prob_main",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 41.78571428571429,
+      "separated": true
+    },
+    {
+      "a": "agent_core_improved",
+      "b": "il_alldays_3ep@mega_lucario_ex",
+      "gap_pp": 12.61904761904762,
+      "separated": true
+    },
+    {
+      "a": "agent_core_improved",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 40.0,
+      "separated": true
+    },
+    {
+      "a": "il_alldays_3ep@mega_lucario_ex",
+      "b": "il_bc_3ep@mega_lucario_ex",
+      "gap_pp": 27.38095238095238,
+      "separated": true
+    }
+  ]
+}

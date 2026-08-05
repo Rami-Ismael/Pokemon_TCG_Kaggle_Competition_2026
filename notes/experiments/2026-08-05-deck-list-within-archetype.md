@@ -76,3 +76,43 @@
   Caveat retained: measured in a regime where the agent wins ~85%. A list difference that
   only matters against opponents that actually beat us would not show up here — the same
   blind spot that limits the compounding-error test.
+
+
+## CORRECTION (same day) — the independent variable was much smaller than intended
+
+Card-by-card diff of the two lists: they differ by **4 cards out of 60 (56/60
+identical)** — ours has Switch x1 + Antique Plume Fossil x1, the "top-player" list has
+Binding Mochi x2. So this experiment did NOT test "a genuinely different real list"; it
+tested a 4-card perturbation. The -1.8pp null is therefore much weaker evidence than the
+card originally claimed, and "deck format is excluded" was over-stated on its strength.
+
+**The hypothesis still dies, but from inspection rather than from the benchmark:** our
+modal reconstruction is 56/60 identical to a documented top-player list and is fully
+legal (only >4-copy cards are Basic Energy, which is exempt). It is demonstrably not an
+incoherent reconstruction. That is the stronger argument and should have led.
+
+Lesson: check the magnitude of the independent variable BEFORE running, not after. A
+null result only means "X doesn't matter" if X actually varied.
+
+## What the experiment accidentally found instead
+
+Chasing why the Grimmsnarl arm is mis-measured led to the real cause. Verified-only
+predictiveness on the 42-agent bed, using the five agents whose ladder scores we read
+ourselves:
+
+  rho over all 5                              = +0.000
+  rho with il_alldays_3ep@marnies_grimmsnarl_ex removed = +1.000
+  rho with ANY other single agent removed      = -0.200
+
+The bed ranks our agents in EXACT ladder order except for one build. Cause, from pool
+archetype coverage:
+
+  Mega Lucario ex     : 13 pilots in the pool, 6 of them in the pool's top 10 (1437-1705)
+  Marnie's Grimmsnarl : 2 pilots, Glicko 1307.5 and 1198.7 -> ranks 32nd and 36th of 42
+
+**A deck's local win rate is trustworthy only if the pool contains COMPETENT pilots of
+that deck.** Our Lucario arms face 13 strong Lucario pilots and are measured correctly;
+the Grimmsnarl arm faces two floor-tier pilots and is overrated by ~1560 Glicko points
+relative to its ladder placement. The original 9-agent pool had ZERO Grimmsnarl pilots,
+which is why the deck-switch recommendation was made against a field that could not
+contest it.

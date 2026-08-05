@@ -1,0 +1,7 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 43 agents: mcts_il_agent, avikdas567_heuristic, biohack44_day2, daniilkrasnovvv_conservative_prob, jek1wantaufik_lucario, kiyotah_abomasnow, kiyotah_dragapult, kiyotah_iono, kojimar_lucario, makimakiai_rl, makthanithin_1084_baseline, makthanithin_improved_prob, mechi22_alakazam, pixiux_lucario_v63, plamen06_steel, pllinas_alakazam, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, romanrozen_strong_start, ryotasueyoshi_alakazam, tb_abomasnow, tb_alakazam, tb_archaludon, tb_dragapult, tb_heuristic, tb_iono, tb_lucario, tb_rulecore, tb_search, tb_starmie, wmh_alakazam, wmh_bellibolt, wmh_chandelure, wmh_froslass, wmh_garchomp, wmh_grimmsnarl, wmh_kangaskhan, wmh_megastarmie, wmh_mewtwo, wmh_ogerpon, wmh_trevenant, wmh_typhlosion, random_legal
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 5707.11it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/models/critic_search_prior missing -> prior-only search
+/Users/ramiismael/.local/share/uv/python/cpython-3.13-macos-aarch64-none/lib/python3.13/multiprocessing/resource_tracker.py:400: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-67096-jhr2i4kv'}
+  warnings.warn(
