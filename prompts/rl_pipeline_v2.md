@@ -464,6 +464,27 @@ Source: <https://www.kaggle.com/competitions/orbit-wars/writeups/3rd-place-ab-in
   (e.g. attack-selection) with a flat aggregate is exactly the failure the
   aggregate hides; the per-context lines are the stop-signal instrument.
 
+### 3.2b Held-out evaluation opponents (registered 2026-08-04, per Rami)
+
+The public trio wears two hats — 20% of TRAINING games AND the local
+evaluation's transfer proxy. That is training on the test set: a candidate
+can fit the trio's habits and read as "transfers" without generalizing
+(plausibly a thread in the four local-vs-ladder inversions). Fix, binding
+for every Stage-3 candidate evaluation from gen 1 on:
+
+- **Transfer column = never-trained-on publics** (from the wired registry:
+  `tb_dragapult` — strongest public at ~880 local rating — `tb_search`,
+  `tb_alakazam`, `dedquoc_rule_engine`, `kojimar_lucario`). These never
+  enter any training mix. Caveat noted: `kiyotah_iono`/`kiyotah_abomasnow`
+  share an author with a trained-on agent and don't count as held out.
+- The trio column is relabeled **in-sample diagnostic** — reported, never
+  cited as transfer evidence.
+- Weak-agent cheese guard (already in force, restated): training pool =
+  strong trio only; selection ignores the weak-agent-inflated "overall"
+  column.
+- Registered-not-run: a pool-free training-mix ablation (mirror+league
+  only) — one variable, equal budget — if attribution is ever wanted.
+
 ### 3.3 PFSP-lite (3rd place's mechanism, translated to this architecture)
 
 v1's 50/30/20 mix stays. The 3rd-place mechanism — "fix the sampled
