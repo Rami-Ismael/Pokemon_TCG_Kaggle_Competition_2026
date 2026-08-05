@@ -48,3 +48,25 @@ first read-back; append a new row instead if a submission is rebuilt.
 - Top-8 cutoff 1122.3; gap from our team score +436.8 — beyond what same-build
   rerolling can close. Closing it needs a genuinely stronger agent, and the
   local benchmark pool is not currently predictive across method families.
+
+## Submitted 2026-08-05 ~13:10 UTC — 55270787, deck-switch test (score PENDING)
+
+- **What:** `il_alldays_0804` (all-days BC, 127,748 steps) piloting **Marnie's
+  Grimmsnarl ex** instead of Mega Lucario ex. Full detail:
+  `submission_ledger.py show --ref 55270787`; study in
+  `reports/il_model_deck_selection.md`.
+- **Why it is a clean test:** 55248985 is the *same checkpoint* on Mega Lucario ex
+  and settled at **418.0**. The ONLY variable changed is the deck, so this isolates
+  the deck effect against a real ladder baseline rather than a local proxy.
+- **Local evidence:** 86.6 ± 1.9% (320 games) on Grimmsnarl ex vs 55.0 ± 3.9% for
+  identical weights on Lucario, against an 8-agent pool anchored to ladder
+  532–1196. Pooled Glicko 1877.1 vs 1551.2. The shipped `il_bc_3ep` on Lucario is
+  28.8 ± 3.6% — a 544-Glicko spread from the same weights on a different deck.
+  0 silent fallbacks in 4,694 measured decisions.
+- **Pre-registered prediction: >450.** Every prior BC-family submission landed
+  395–450 (il_agent 397.3/400.0, s2_e1_s43 395.0, 55248985 418.0). Landing in that
+  band again falsifies the transfer and would be the 4th local-vs-ladder divergence.
+- **Displaces** 55248985 (418.0); active set becomes this + 55253900 (267.4, a
+  concurrent session's self-play candidate). Team = max(this, 267.4), so this must
+  clear 418.0 to avoid a net loss. Best-ever 804.0 still displaced.
+- **Score: PENDING** — fill once, on read-back.
