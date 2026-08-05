@@ -572,6 +572,29 @@ judge ~08-08. Gen 2 queued overnight: init = gen-1 final + warmed critic
 
 ---
 
+## Stage-3 STATUS — generation 2 (2026-08-05 morning)
+
+Run: 1,293,312 steps / 6h from gen-1's final with the warmed critic,
+anchored to ref430k. **63 gates, zero promotions** — but the last dozen ran
+57–67% against a far stronger teacher than gen 1 faced; KL bounded (0.24),
+no stop signals. Tournament + focused matches:
+
+- vs ref430k (current best): **52.5% [45.6, 59.3] over 200 games — parity.
+  Formal candidate gate NOT met → non-promotion #1 of 2.**
+- vs the all-days base: **68.0% [61.2, 74.1]** — cleaner separation than
+  ref430k's own 62.5%.
+- Held-out transfer (never-trained-on publics): **78.1% [69, 85] — best
+  number any artifact has posted** (ref430k 65.6, all-days 60.4 same run).
+
+Decisions: no slot for g2_final (statistical twin of the already-submitted
+55253900; wait for its reads before spending on this lineage again);
+gen 3 launched from g2_final (warm critic; teacher stays ref430k per the
+ratchet — never beaten >70%; league unchanged). Ladder morning reads:
+55253900 first read 248.6 (RL line's familiar low open; judge ~08-08),
+all-days 418.9 on read 3, heuristic pair 683/666 carrying the team.
+
+---
+
 ## Measurement protocol (binding, all stages)
 
 After EVERY phase gate / candidate promotion: bundle → printed MiB →
