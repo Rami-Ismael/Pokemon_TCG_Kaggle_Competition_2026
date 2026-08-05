@@ -194,6 +194,13 @@ def main() -> None:
                          "for the mirror control: without it a module opponent "
                          "keeps serving its own bundled deck and a K>1 pool "
                          "silently becomes a cross-deck matchup")
+    ap.add_argument("--opp-deck-pool", default=None,
+                    help="deck-diversity generalization experiment: pool spec "
+                         "(same forms as --deck-pool) sampled per episode for "
+                         "the OPPONENT's deck. The learner's deck stays fixed, "
+                         "and only checkpoint-based opponents (mirror/league) "
+                         "are re-decked — module opponents keep their bundled "
+                         "decks. Mutually exclusive with --deck-pool")
     ap.add_argument("--mix", default="0.625,0.375,0",
                     help="mirror,league,public-pool draw shares (must sum to 1). "
                          "Default drops the public pool entirely — pure "
@@ -310,6 +317,12 @@ def main() -> None:
             print("WARNING: K>1 without --mirror-deck. The opponent will keep "
                   "playing its own bundled deck while the learner varies, so "
                   "this measures deck MATCHUP, not policy exploitability.")
+    if args.opp_deck_pool:
+        opp_pool = DeckPool.from_spec(args.opp_deck_pool)
+        env_kwargs["opp_deck_pool"] = opp_pool
+        print(f"OPPONENT DECK POOL: K={len(opp_pool)} (learner deck fixed; "
+              f"ckpt opponents re-decked per episode) :: "
+              f"{', '.join(opp_pool.names)}")
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs=env_kwargs,
