@@ -544,6 +544,34 @@ collapse in any single SelectContext.
 
 ---
 
+## Stage-3 STATUS — generation 1 (2026-08-04 evening)
+
+Run: 963,584 steps / 4h on the all-days base (provisional per the re-base
+rule), full v2 stack. 42 anchor gates; **one promotion** — step 430,080,
+live beat the frozen teacher 73–27; post-promotion gates re-centered at
+~50% vs the stronger reference, confirming a real ratchet click. KL bounded
+(0.14–0.28) throughout; no stop signal fired (one 34% gate dip recovered
+next gate; low per-context entropies tracked, judged schedule-not-collapse).
+
+Candidate tournament (14 agents incl. the §3.2b held-out five,
+`selfplay_g1_tournament.json`): candidate gate leg 1 initially unresolved
+at n=24 (ref430k 66.7% [47,82] vs the all-days base), settled by a focused
+200-game match: **ref430k beats the base 62.5% [55.6, 68.9] — non-
+overlapping. Gate leg 1 MET.** Transfer column (never-trained-on publics):
+ref430k **68.3%** — best in the table including all bases — so the gains
+generalize, they are not pool-fit. In-sample trio 40.3% where the imitation
+lineage lived at 7–19%. The budget-end final policy (45.8% vs base) did NOT
+pass; the promoted teacher is the artifact that did.
+
+Ladder: submitted as **55253900** (2026-08-05 00:5x UTC, CPU rehearsal
+4.99 ms/dec, displaces the mcts experiment from the active set). Gate
+leg 2 = settled score above the all-days base's settle AND above 400;
+judge ~08-08. Gen 2 queued overnight: init = gen-1 final + warmed critic
+(`policy_full.pt`), teacher = ref430k, league = all four prior artifacts,
+6h budget.
+
+---
+
 ## Measurement protocol (binding, all stages)
 
 After EVERY phase gate / candidate promotion: bundle → printed MiB →
