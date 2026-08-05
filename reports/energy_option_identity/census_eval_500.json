@@ -1,0 +1,5502 @@
+{
+ "total_rows": 93621,
+ "ceiling_semantic": {
+  "rows": 159,
+  "frac": 0.0016983369115903483,
+  "ci95": [
+   0.0012716629357547478,
+   0.002184816066470069
+  ],
+  "n_episodes": 500
+ },
+ "ceiling_arbitrary": {
+  "rows": 1328,
+  "frac": 0.014184851689257752
+ },
+ "per_ctx": {
+  "0": {
+   "name": "MAIN",
+   "rows": 44492,
+   "multi": 43140,
+   "collide_rows": 21570,
+   "full_collide": 0,
+   "n_colliding_opts": 117443,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 21570,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "1": {
+   "name": "SETUP_ACTIVE_POKEMON",
+   "rows": 1000,
+   "multi": 437,
+   "collide_rows": 134,
+   "full_collide": 63,
+   "n_colliding_opts": 281,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 134,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "2": {
+   "name": "SETUP_BENCH_POKEMON",
+   "rows": 598,
+   "multi": 287,
+   "collide_rows": 111,
+   "full_collide": 75,
+   "n_colliding_opts": 227,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 111,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "3": {
+   "name": "SWITCH",
+   "rows": 1947,
+   "multi": 1894,
+   "collide_rows": 863,
+   "full_collide": 28,
+   "n_colliding_opts": 2083,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 863,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "4": {
+   "name": "TO_ACTIVE",
+   "rows": 2231,
+   "multi": 2145,
+   "collide_rows": 1109,
+   "full_collide": 25,
+   "n_colliding_opts": 2617,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 1109,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "5": {
+   "name": "TO_BENCH",
+   "rows": 2134,
+   "multi": 1915,
+   "collide_rows": 1748,
+   "full_collide": 606,
+   "n_colliding_opts": 5944,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 1748,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "7": {
+   "name": "TO_HAND",
+   "rows": 14502,
+   "multi": 13113,
+   "collide_rows": 11519,
+   "full_collide": 4690,
+   "n_colliding_opts": 62774,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 11519,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "8": {
+   "name": "DISCARD",
+   "rows": 1427,
+   "multi": 1427,
+   "collide_rows": 1104,
+   "full_collide": 0,
+   "n_colliding_opts": 4948,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 1104,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "9": {
+   "name": "TO_DECK",
+   "rows": 304,
+   "multi": 301,
+   "collide_rows": 241,
+   "full_collide": 0,
+   "n_colliding_opts": 1212,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 241,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "13": {
+   "name": "DAMAGE_COUNTER",
+   "rows": 2906,
+   "multi": 2864,
+   "collide_rows": 1255,
+   "full_collide": 1,
+   "n_colliding_opts": 3047,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 1255,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "14": {
+   "name": "DAMAGE_COUNTER_ANY",
+   "rows": 834,
+   "multi": 798,
+   "collide_rows": 266,
+   "full_collide": 0,
+   "n_colliding_opts": 582,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 266,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "15": {
+   "name": "DAMAGE",
+   "rows": 1875,
+   "multi": 1816,
+   "collide_rows": 747,
+   "full_collide": 21,
+   "n_colliding_opts": 1745,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 747,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "16": {
+   "name": "REMOVE_DAMAGE_COUNTER",
+   "rows": 2899,
+   "multi": 2044,
+   "collide_rows": 573,
+   "full_collide": 160,
+   "n_colliding_opts": 1241,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 573,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "17": {
+   "name": "HEAL",
+   "rows": 7,
+   "multi": 0,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "19": {
+   "name": "EVOLVES_TO",
+   "rows": 11,
+   "multi": 11,
+   "collide_rows": 11,
+   "full_collide": 11,
+   "n_colliding_opts": 26,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 11,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "21": {
+   "name": "ATTACH_FROM",
+   "rows": 3531,
+   "multi": 3150,
+   "collide_rows": 832,
+   "full_collide": 25,
+   "n_colliding_opts": 1779,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 832,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "22": {
+   "name": "ATTACH_TO",
+   "rows": 4256,
+   "multi": 3805,
+   "collide_rows": 3759,
+   "full_collide": 3611,
+   "n_colliding_opts": 20441,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 3759,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "26": {
+   "name": "DISCARD_ENERGY_CARD",
+   "rows": 164,
+   "multi": 138,
+   "collide_rows": 123,
+   "full_collide": 27,
+   "n_colliding_opts": 393,
+   "etype_differ": 71,
+   "etype_same": 52,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 34,
+   "label_sep_arbitrary": 42,
+   "field_varies": {
+    "energyIndex": 117
+   }
+  },
+  "27": {
+   "name": "DISCARD_TOOL_CARD",
+   "rows": 39,
+   "multi": 4,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "28": {
+   "name": "SWITCH_ENERGY_CARD",
+   "rows": 76,
+   "multi": 73,
+   "collide_rows": 68,
+   "full_collide": 0,
+   "n_colliding_opts": 270,
+   "etype_differ": 45,
+   "etype_same": 23,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 18,
+   "label_sep_arbitrary": 18,
+   "field_varies": {
+    "energyIndex": 68
+   }
+  },
+  "30": {
+   "name": "DISCARD_ENERGY",
+   "rows": 1105,
+   "multi": 424,
+   "collide_rows": 417,
+   "full_collide": 389,
+   "n_colliding_opts": 1126,
+   "etype_differ": 47,
+   "etype_same": 370,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 44,
+   "label_sep_arbitrary": 354,
+   "field_varies": {
+    "energyIndex": 412,
+    "count": 4
+   }
+  },
+  "32": {
+   "name": "TO_DECK_ENERGY",
+   "rows": 87,
+   "multi": 58,
+   "collide_rows": 58,
+   "full_collide": 58,
+   "n_colliding_opts": 145,
+   "etype_differ": 55,
+   "etype_same": 3,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 55,
+   "label_sep_arbitrary": 3,
+   "field_varies": {
+    "energyIndex": 58
+   }
+  },
+  "33": {
+   "name": "SWITCH_ENERGY",
+   "rows": 68,
+   "multi": 57,
+   "collide_rows": 57,
+   "full_collide": 57,
+   "n_colliding_opts": 135,
+   "etype_differ": 7,
+   "etype_same": 50,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 8,
+   "label_sep_arbitrary": 49,
+   "field_varies": {
+    "energyIndex": 57,
+    "count": 3
+   }
+  },
+  "34": {
+   "name": "SKILL_ORDER",
+   "rows": 862,
+   "multi": 862,
+   "collide_rows": 862,
+   "full_collide": 862,
+   "n_colliding_opts": 1788,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 862,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 862,
+   "field_varies": {
+    "serial": 862
+   }
+  },
+  "35": {
+   "name": "ATTACK",
+   "rows": 22,
+   "multi": 0,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "37": {
+   "name": "EVOLVE",
+   "rows": 630,
+   "multi": 345,
+   "collide_rows": 295,
+   "full_collide": 244,
+   "n_colliding_opts": 832,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 295,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "38": {
+   "name": "DRAW_COUNT",
+   "rows": 201,
+   "multi": 201,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "40": {
+   "name": "REMOVE_DAMAGE_COUNTER_COUNT",
+   "rows": 2694,
+   "multi": 2694,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "41": {
+   "name": "IS_FIRST",
+   "rows": 500,
+   "multi": 500,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  },
+  "43": {
+   "name": "ACTIVATE",
+   "rows": 2219,
+   "multi": 2219,
+   "collide_rows": 0,
+   "full_collide": 0,
+   "n_colliding_opts": 0,
+   "etype_differ": 0,
+   "etype_same": 0,
+   "etype_unresolved": 0,
+   "label_sep_semantic": 0,
+   "label_sep_arbitrary": 0,
+   "field_varies": {}
+  }
+ },
+ "examples": {
+  "0": [
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 8,
+      "area": 2,
+      "index": 3,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 4,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 8,
+      "area": 2,
+      "index": 3,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 8,
+      "area": 2,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 4,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 8,
+      "area": 2,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 14,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 7,
+    "groups": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 7,
+      "area": null,
+      "index": 0,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 2,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 8,
+      "area": 2,
+      "index": 3,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 7,
+      "area": null,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 5,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 7,
+      "area": null,
+      "index": 6,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 14,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 4,
+    "n_real": 6,
+    "groups": [
+     [
+      0,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 9,
+      "area": 2,
+      "index": 1,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 8,
+      "area": 2,
+      "index": 2,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 7,
+      "area": null,
+      "index": 6,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 10,
+      "area": 7,
+      "index": 0,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 14,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "7": [
+   {
+    "label": 7,
+    "n_real": 25,
+    "groups": [
+     [
+      1,
+      4,
+      15
+     ],
+     [
+      2,
+      12,
+      24
+     ],
+     [
+      5,
+      6,
+      17,
+      20
+     ],
+     [
+      7,
+      18,
+      23
+     ],
+     [
+      8,
+      10,
+      14
+     ],
+     [
+      9,
+      21
+     ],
+     [
+      11,
+      13
+     ],
+     [
+      16,
+      19,
+      22
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 6,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 8,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 9,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 10,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 11,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 16,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 20,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 23,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 24,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 26,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 28,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 29,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 30,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 32,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 35,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 38,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 40,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 41,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 42,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 4,
+    "n_real": 9,
+    "groups": [
+     [
+      1,
+      8
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      4,
+      6,
+      7
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 8,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 10,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 16,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 17,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 21,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 22,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 24,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 37,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 5,
+    "groups": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 13,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 16,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 29,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 32,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 35,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "5": [
+   {
+    "label": 0,
+    "n_real": 4,
+    "groups": [
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 23,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 26,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 2,
+    "n_real": 4,
+    "groups": [
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 23,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 26,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 4,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 35,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 42,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 44,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "33": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 2,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "4": [
+   {
+    "label": 1,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      2,
+      3,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "37": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 9,
+      "area": 2,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 4,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 4,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 3
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 9,
+      "area": 2,
+      "index": 1,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 4,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 1,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 2
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 1,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 3
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 9,
+      "area": 2,
+      "index": 1,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     },
+     {
+      "type": 9,
+      "area": 2,
+      "index": 2,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": 5,
+      "inPlayIndex": 0
+     }
+    ]
+   }
+  ],
+  "22": [
+   {
+    "label": 0,
+    "n_real": 9,
+    "groups": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 5,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 13,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 14,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 17,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 24,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 25,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 9,
+    "groups": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 5,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 13,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 14,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 17,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 24,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 25,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 2,
+    "n_real": 9,
+    "groups": [
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 5,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 7,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 13,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 14,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 17,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 24,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 25,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "3": [
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      2,
+      3,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "28": [
+   {
+    "label": 1,
+    "n_real": 6,
+    "groups": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 2,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 2,
+    "n_real": 6,
+    "groups": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 4,
+    "groups": [
+     [
+      0,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "32": [
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 2,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 2,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "13": [
+   {
+    "label": 5,
+    "n_real": 6,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 6,
+    "groups": [
+     [
+      2,
+      5
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 6,
+    "groups": [
+     [
+      2,
+      5
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "16": [
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 4,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "15": [
+   {
+    "label": 2,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      2,
+      3,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 4,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "21": [
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 3,
+    "groups": [
+     [
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "30": [
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 2,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 6,
+      "area": 4,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": 1,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "34": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 73,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 74,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 73,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 74,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 73,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 15,
+      "area": null,
+      "index": null,
+      "playerIndex": null,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": 74,
+      "cardId": 104,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "8": [
+   {
+    "label": 0,
+    "n_real": 9,
+    "groups": [
+     [
+      1,
+      3
+     ],
+     [
+      4,
+      7
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 5,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 8,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 9,
+    "groups": [
+     [
+      1,
+      3
+     ],
+     [
+      4,
+      7
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 5,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 8,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 2,
+    "n_real": 9,
+    "groups": [
+     [
+      1,
+      3
+     ],
+     [
+      4,
+      7
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 5,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 8,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "9": [
+   {
+    "label": 0,
+    "n_real": 5,
+    "groups": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 3,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 12,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 13,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 14,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 5,
+    "groups": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 3,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 12,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 13,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 14,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 2,
+    "n_real": 5,
+    "groups": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 3,
+      "index": 6,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 7,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 12,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 13,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 3,
+      "index": 14,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "1": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 5,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 2,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 5,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "26": [
+   {
+    "label": 0,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 2,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 3,
+    "groups": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 1,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": 2,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 5,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 5,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 0,
+      "energyIndex": 0,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "14": [
+   {
+    "label": 3,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 3,
+    "n_real": 5,
+    "groups": [
+     [
+      1,
+      4
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 5,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 2,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 3,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 5,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "2": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 1,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 1,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 2,
+      "index": 0,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 2,
+      "index": 4,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ],
+  "19": [
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 15,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 36,
+      "playerIndex": 1,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 8,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 19,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   },
+   {
+    "label": 0,
+    "n_real": 2,
+    "groups": [
+     [
+      0,
+      1
+     ]
+    ],
+    "options": [
+     {
+      "type": 3,
+      "area": 1,
+      "index": 18,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     },
+     {
+      "type": 3,
+      "area": 1,
+      "index": 31,
+      "playerIndex": 0,
+      "energyIndex": null,
+      "count": null,
+      "toolIndex": null,
+      "serial": null,
+      "cardId": null,
+      "inPlayArea": null,
+      "inPlayIndex": null
+     }
+    ]
+   }
+  ]
+ }
+}
