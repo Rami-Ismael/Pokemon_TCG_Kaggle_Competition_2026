@@ -94,3 +94,5 @@
 {"event": "score", "ref": "55279487", "at_utc": "2026-08-05T19:50:22+00:00", "score": 493.9, "status": "SubmissionStatus.COMPLETE"}
 {"event": "score", "ref": "55270787", "at_utc": "2026-08-05T19:50:22+00:00", "score": 353.9, "status": "SubmissionStatus.COMPLETE"}
 {"event": "score", "ref": "55253900", "at_utc": "2026-08-05T19:50:22+00:00", "score": 254.9, "status": "SubmissionStatus.COMPLETE"}
+{"event": "score", "ref": "55279487", "at_utc": "2026-08-05T20:57:22+00:00", "score": 547.7, "status": "SubmissionStatus.COMPLETE"}
+{"event": "score", "ref": "55270787", "at_utc": "2026-08-05T20:57:22+00:00", "score": 366.5, "status": "SubmissionStatus.COMPLETE"}

@@ -23,9 +23,22 @@ path (`reports/submission_ledger.jsonl`, read 2026-08-05):
 | **Learned** (BC / offline RL / PPO / MCTS-with-BC-prior) | 418.0, 400.0, 397.3, 395.0, 353.9, 320.4, 291.4, 275.1, 254.9, 190.3 | 10 | 190–418 | ~325 |
 | **Hand-written heuristic / search**, no ML in the acting path | 804.0, 701.6, 699.0, 692.7, 683.2, 677.1, 666.1, 602.6 | 8 | 602–804 | ~688 |
 
-*(Re-read 2026-08-05 19:50; `55270787` 311.3 → 353.9 and `55253900` 267.4 →
-254.9. `55279487` at 493.9 is excluded: one reading, four minutes old, still
-descending from the μ₀ = 600 prior — §9.7.)*
+*(Re-read 2026-08-05 20:57; `55270787` 311.3 → 366.5, `55253900` 267.4 → 254.9.)*
+
+⚠️ **`55279487` is excluded from this table and that exclusion is now load-bearing,
+so state the reason honestly.** It is a learned agent reading **547.7** on 2
+readings and **rising** (493.9 → 547.7). It is excluded because 2 readings do not
+settle a score, not because the number is decaying — an earlier note in this doc
+claimed it was still falling through the μ₀ = 600 prior, and the next reading
+went up instead.
+
+The consequence for the claim above: the lowest heuristic score is 602.6, so the
+gap between the families is now **55 points against a ~±100 same-build spread**.
+"The two families do not overlap" is still literally true of settled scores, but
+it is no longer the clean separation the ~377-point median gap describes, and the
+whole §0 argument is built on that separation. If `55279487` settles above 602.6,
+the FAIL branch is reasoning from a premise the ladder has withdrawn. Re-read it
+before acting on the gate on 08-08.
 
 **The two families do not overlap.** No learned agent has ever outscored any
 heuristic agent on this ladder, across 18 submissions. The gap between medians
@@ -43,7 +56,8 @@ is worth doing only if the learned line can plausibly close ~300 points. So:
 `55253900` (`selfplay_g1_ref430k`) is the first properly anchored self-play
 candidate — KL leash to a frozen teacher, PFSP league, promotion ratchet, all
 of it. It settles ~08-08. Readings so far: 248.6 → 267.4 → 267.4 → **254.9**
-(2026-08-05 19:50) — flat-to-down across five reads, ~295 below the PASS line.
+— flat-to-down across five reads, ~295 below the PASS line and ~195 below the
+FAIL line. Unchanged as of the 2026-08-05 20:57 read; no new reading landed.
 
 - **Gate PASS** (settled ≥ 550): the learned line is closing. Execute this
   document as written.
@@ -510,9 +524,11 @@ candidates.
 
 `il_agent_v2` is excluded as contaminated — it read back before the slate was
 locked. Recorded as an unregistered observation only: the frozen map puts it at
-**831.0**, against its submitter's own 380–460 prediction and a first read of
-493.9. If it settles near the submitter's band, the map is badly miscalibrated
-upward for learned agents — the same direction as all four recorded inversions.
+**831.0**, its submitter predicted **380–460**, and it is reading **547.7** on 2
+readings and rising (493.9 → 547.7). It currently sits *between* the two, above
+the human prediction and below the pool's. Both cannot be right, and whichever
+way it settles is informative about the map's direction of error — but it is not
+part of the out-of-sample ρ and must not be counted toward it.
 
 ---
 
@@ -612,10 +628,10 @@ arm.** Do not bake either deck into Phase 3.
 
 ## §9 — Ladder: a standing daily task
 
-### 9.1 State as of 2026-08-05 19:50 UTC
+### 9.1 State as of 2026-08-05 20:57 UTC
 
-Rank **4761 / 6359**, team score **493.9**, top-8 cutoff 1139.3 (gap +645.4).
-Active set: `55279487` (493.9) + `55270787` (353.9). Best-ever **804.0** is
+Rank **4235 / 6361**, team score **547.7**, top-8 cutoff 1134.8 (gap +587.1).
+Active set: `55279487` (547.7) + `55270787` (366.5). Best-ever **804.0** is
 still displaced.
 
 **Both active slots hold learned experiments.** The §9.4 slot-1 restore was not
@@ -708,10 +724,32 @@ is recorded here before the next phase starts.
 | 55248781 | 08-04 | IL-prior MCTS | 291.4 | beats il_agent 67.2% | **inverted** |
 | 55248985 | 08-04 | il_alldays_0804 (Lucario) | 418.0 | not stronger locally | consistent |
 | 55253900 | 08-05 | selfplay_g1_ref430k | **254.9** *(5 reads: 248.6 → 267.4 → 267.4 → 254.9)* | beats teacher 73–27; 62.5% [55.6,68.9] | **§0 kill-gate, 08-08 — tracking FAIL** |
-| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | **353.9** *(4 reads: 361.8 → 314.1 → 353.9)* | deck axis = 544 Glicko pts | **falsified** |
-| 55279487 | 08-05 | il_agent_v2 (BC, 9-day corpus, Grimmsnarl) | 493.9 *(1 read, 4 min post-submit — see below)* | beats current il_agent vs every shared opponent, agg 63% vs 32%, H2H 15–1; predicted 380–460 | **too early to read** |
+| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | **366.5** *(5 reads: 361.8 → 314.1 → 353.9 → 366.5)* | deck axis = 544 Glicko pts | **falsified** |
+| 55279487 | 08-05 | il_agent_v2 (BC, 9-day corpus, Grimmsnarl) | **547.7** *(2 reads: 493.9 → 547.7, rising)* | beats current il_agent vs every shared opponent, agg 63% vs 32%, H2H 15–1; predicted 380–460 | **unsettled, and rising away from its own prediction** |
 
-Read 2026-08-05 19:50 UTC. Changes since the table was written:
+Read 2026-08-05 20:57 UTC. Team **547.7**, rank **4235 / 6361**.
+
+**Correction to the 19:50 entry below.** That reading guessed `55279487` at 493.9
+was "still falling through the μ₀ = 600 prior." Its next reading went **up**, to
+547.7. The direction was wrong, and the interpretation that followed from it —
+that the number would decay toward the learned band — is not supported. What is
+true is only that it has 2 readings, which is not enough to settle anything, and
+that it is now *above* its submitter's pre-registered 380–460 band rather than
+inside it.
+
+**This puts pressure on §0's central premise, and that should be said before the
+gate is read rather than after.** §0 rests on the two families not overlapping.
+The lowest heuristic score is 602.6; `55279487` is at 547.7 and rising, a gap of
+55 points against a documented same-build spread of ~±100. The separation is no
+longer clean. It is *not* yet a contradiction — 2 readings, unsettled, and one
+learned agent near the bottom of the heuristic band is not the same as the
+families overlapping — but if it settles above 602.6 then the §0 FAIL branch is
+arguing from a premise the ladder has stopped supporting. Re-read before 08-08.
+
+**The kill-gate ref did not move.** `55253900` is unchanged at 254.9 on 5
+readings. The gate is still unresolved and still due 08-08.
+
+Earlier reading, 2026-08-05 19:50 UTC:
 
 - **`55253900`, the kill-gate ref, has moved down, not up** — 267.4 → 254.9 on
   its 5th reading. Three days from the 08-08 verdict it sits ~295 points below

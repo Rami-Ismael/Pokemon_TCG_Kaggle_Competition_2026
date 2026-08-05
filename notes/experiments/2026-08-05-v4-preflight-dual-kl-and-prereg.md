@@ -9,16 +9,16 @@ and work item 7. No training run was started, no submission was made.
 
 ## 1. Standing daily item — the ladder moved, and not the way §9 assumed
 
-`submission_ledger.py refresh` → 3 new score readings, 1 new ref.
-`check_leaderboard.py` → rank **4761 / 6359**, team score **493.9**.
+`submission_ledger.py refresh` → 3 new readings + 1 new ref at 19:50; 2 more at 20:57.
+`check_leaderboard.py` → rank **4235 / 6361**, team score **547.7** (19:50 read: 4761/6359, 493.9).
 
 | Ref | What | Reading trail | Latest |
 |---|---|---|---:|
-| `55253900` | selfplay_g1_ref430k (**the kill-gate**) | 248.6 → 267.4 → 267.4 → 254.9 | **254.9** |
-| `55270787` | il_alldays_0804, Grimmsnarl redeck | 361.8 → 314.1 → 353.9 | **353.9** |
-| `55279487` | il_agent_v2, BC on the 9-day corpus | *(one read, 4 min post-submit)* | 493.9 |
+| `55253900` | selfplay_g1_ref430k (**the kill-gate**) | 248.6 → 267.4 → 267.4 → 254.9 | **254.9** *(unchanged at 20:57)* |
+| `55270787` | il_alldays_0804, Grimmsnarl redeck | 361.8 → 314.1 → 353.9 → 366.5 | **366.5** |
+| `55279487` | il_agent_v2, BC on the 9-day corpus | 493.9 → 547.7 *(2 reads)* | **547.7** |
 
-Three things follow, and one of them is a correction to `rl_pipeline_v4.md`.
+Four things follow, and one of them is a correction to this note.
 
 **The kill-gate ref is drifting down, not up.** 267.4 → 254.9 on its fifth
 reading, three days from the verdict. It sits ~295 below the 550 PASS line and
@@ -26,19 +26,27 @@ reading, three days from the verdict. It sits ~295 below the 550 PASS line and
 not call the gate — but the trajectory is not ambiguous-band behaviour.
 
 **§7.4's deck finding weakened rather than reversed.** The Lucario/Grimmsnarl
-gap on identical weights went 107 points → 64 (418.0 vs 353.9), i.e. further
+gap on identical weights went 107 points → 52 (418.0 vs 366.5), i.e. further
 *inside* the ~±100 same-build band. The confident local claim that the deck axis
 was worth 544 Glicko points stays falsified; the reverse is still not
 established, and n is still 1 per arm.
 
 **`55279487` is the highest number a learned agent has posted, and it is not yet
-a number.** One reading, taken four minutes after submission. Every submission
-starts at the μ₀ = 600 prior and descends — its own cousin `55248985` read
-600.0 → 418.0 across nine readings. 493.9 four minutes in is consistent with a
-submission still falling through the prior, and it is *above* the submitter's
-own pre-registered 380–460 prediction, which is the prediction that has to
-survive. §0's family separation (learned ≤ 418.0 with more than one read,
-heuristic ≥ 602.6) is intact across all 19 submissions.
+a number.** Two readings: 493.9, then 547.7 an hour later.
+
+*(Corrected at 20:57. The first version of this note read 493.9 as "still
+falling through the μ₀ = 600 prior," reasoning from `55248985`'s 600.0 → 418.0
+descent. The next reading went **up**. The directional guess was wrong; what
+survives is only that 2 readings do not settle a score.)*
+
+**This is the one thing here that could undercut §0.** §0's argument is that the
+learned and heuristic families do not overlap, with a ~377-point median gap
+against a ~±100 same-build spread. The lowest heuristic score is 602.6 and
+`55279487` is at 547.7 and rising — a 55-point gap. Still literally
+non-overlapping among settled scores, but no longer the clean separation the
+argument leans on. If it settles above 602.6, the §0 FAIL branch is reasoning
+from a premise the ladder has withdrawn, and that has to be checked before
+08-08 rather than discovered after.
 
 **Both active slots hold learned experiments.** The §9.4 slot-1 heuristic
 restore was not executed; a concurrent session spent the slot on `il_agent_v2`.
@@ -168,11 +176,13 @@ non-tunable when they do.
 **`il_agent_v2` is excluded, on purpose.** It was submitted before this session
 and already has a reading, so any prediction for it would be post-hoc and would
 contaminate the out-of-sample number. Worth recording as an unregistered
-observation, though: the frozen map puts it at **831.0** against its own
-submitter's 380–460 and a first read of 493.9. If it settles anywhere near its
-submitter's band, the pool's score-level map is badly miscalibrated upward for
-learned agents — which is the same direction as all four recorded local-vs-ladder
-inversions.
+observation, though: the frozen map puts it at **831.0**, its submitter
+predicted **380–460**, and it is reading **547.7** on 2 reads and rising. It
+sits *between* the two — above the human prediction, below the pool's. Both
+cannot be right. If it settles low, the pool's map is miscalibrated upward for
+learned agents, the same direction as all four recorded local-vs-ladder
+inversions; if it settles high, the human prediction was the pessimistic one and
+that is itself worth knowing. Either way it is excluded from the out-of-sample ρ.
 
 **Tooling.** `scripts/prereg_pool_prediction.py` with `lock` / `show` /
 `expects` / `bind` / `score`. `expects` prints the string to hand to
