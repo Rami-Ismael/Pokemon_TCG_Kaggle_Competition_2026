@@ -1,15 +1,17 @@
-"""All-days imitation wrapper (plain-name scheme): il_agent inference core, checkpoint il_agent_full_0804 (all-days imitation).
+"""All-days imitation wrapper: il_agent inference core on models/il_alldays_0804.
+
+Registry role: candidate-alldays-3ep (scripts/model_registry.py).
 
 Same pattern as agents/s2_arms/: loads agents/il_agent/agent_core.py as a
-private module with IL_MODEL_DIR pointed at models/s2v2/e0_s43, env var
-restored afterward so a later plain il_agent load still gets the PRIOR.
+private module with IL_MODEL_DIR pointed at this checkpoint, env var restored
+afterward so a later plain il_agent load still gets the PRIOR.
 """
 import importlib.util
 import os
 from pathlib import Path
 
 _REPO = Path(__file__).resolve().parents[2]
-_CKPT = _REPO / "models" / "il_agent_full_0804"
+_CKPT = _REPO / "models" / "il_alldays_0804"
 _CORE = _REPO / "agents" / "il_agent" / "agent_core.py"
 
 _prev = os.environ.get("IL_MODEL_DIR")

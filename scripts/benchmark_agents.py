@@ -281,19 +281,9 @@ AGENT_FILES = {
     "wmh_ogerpon": REPO / "agents" / "wmh_ogerpon" / "main.py",          # NEW deck: Ogerpon (GenericPolicy, top-player list)
     "wmh_chandelure": REPO / "agents" / "wmh_chandelure" / "main.py",    # NEW deck: Chandelure (GenericPolicy)
     "wmh_froslass": REPO / "agents" / "wmh_froslass" / "main.py",        # NEW deck: Mega Froslass ex (GenericPolicy)
-    # Stage-2 REWEIGHT arms (rl_pipeline_v1.md §2.1): il_agent's inference core
-    # pointed at each fine-tuned checkpoint via thin wrappers (agents/s2_arms/).
-    # One entry per (arm, seed) -- distinct names on purpose, because Glicko
-    # history compounds by name and these are genuinely different policies.
-    "s2_e0_s42": REPO / "agents" / "s2_arms" / "e0_seed42" / "agent_core.py",
-    "s2_e0_s43": REPO / "agents" / "s2_arms" / "e0_seed43" / "agent_core.py",
-    "s2_e0_s44": REPO / "agents" / "s2_arms" / "e0_seed44" / "agent_core.py",
-    "s2_e1_s42": REPO / "agents" / "s2_arms" / "e1_seed42" / "agent_core.py",
-    "s2_e1_s43": REPO / "agents" / "s2_arms" / "e1_seed43" / "agent_core.py",
-    "s2_e1_s44": REPO / "agents" / "s2_arms" / "e1_seed44" / "agent_core.py",
-    "s2_e2_s42": REPO / "agents" / "s2_arms" / "e2_seed42" / "agent_core.py",
-    "s2_e2_s43": REPO / "agents" / "s2_arms" / "e2_seed43" / "agent_core.py",
-    "s2_e2_s44": REPO / "agents" / "s2_arms" / "e2_seed44" / "agent_core.py",
+    # (The nine s2_* REWEIGHT arms are registered once, above -- they used to be
+    # repeated here, which Python silently resolved to whichever block came
+    # last. Add new arms in one place only.)
     # RESTARTED Stage-2 arms (rl_pipeline_v2.md §2.B2, 2026-08-04): advantage-
     # weighted BC on the restored streamed corpus, critic-first. e0=control,
     # e1=binary advantage, e2b{05,1,2}=exp advantage at beta 0.5/1/2, e3=
