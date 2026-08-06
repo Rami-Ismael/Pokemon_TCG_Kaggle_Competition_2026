@@ -1,0 +1,104 @@
+# Working rules for this repo
+
+Rami owns this project. These rules exist because every one of them was broken
+by a past Claude Code session. Breaking them again wastes his day. Read them as
+hard constraints, not suggestions.
+
+## Language
+
+- Say **steps**, never "phases". Rami's notes and the Metamon paper use steps.
+  "Phase 0 / Phase 2.5 / gate" structure was invented by a past session, not by him.
+- Use plain verbs: **download, upload, train, evaluate, submit**. Never
+  "harvest", "collect", "reap", or other decorative vocabulary.
+- No new markdown files unless Rami asks for one. Append to an existing note
+  instead. Every unread file a session mints becomes misinformation for the
+  next session — deletion of unrequested docs is a valid and welcome action.
+
+## Never claim completion without verification
+
+A past session claimed "all days uploaded to HuggingFace" when the upload was
+partial, and claimed episode downloads were complete when they were not. This
+cost Rami an entire day of planned work.
+
+- **Uploads:** after any HuggingFace upload, list the remote repo's actual
+  files (`HfApi().list_repo_files`) and count them against what was supposed
+  to go up. Report the two numbers. If they differ, the task is NOT complete.
+- **Downloads:** "download the episodes" means **every available day**, not a
+  subset. After downloading, count days/episodes on disk against the source's
+  full listing and report both numbers. Do not stop early for any reason
+  without saying so in the report; never mark a partial download complete.
+- Never report a task done based on your own earlier statement that it was
+  done. Re-check the filesystem or the remote.
+
+## Leaderboard and ranking claims
+
+- Follow the `leaderboard-check` skill before any quality claim. Additionally:
+  **report the CURRENT rank of the LATEST submission**, never a stale
+  best-ever rank. A past session kept repeating rank 804 (an old high-water
+  mark it could no longer reproduce) while the live resubmission sat in the
+  high 600s. Best-ever may be mentioned only alongside, and clearly labeled.
+- Local agent quality is measured against the **full verified local agent
+  pool** (~9 agents) with Glicko-2 plus the Metamon-paper metrics — not a
+  hand-picked subset. If the full round-robin takes an hour, it takes an
+  hour. A comparison against a subset must be labeled "subset — not
+  comparable to pool numbers" everywhere it is quoted.
+- When Rami asks to compare against all agents, do exactly that. Do not
+  substitute a cheaper default behavior.
+- Do not introduce statistics Rami hasn't asked for (e.g. Spearman) without
+  one sentence saying what it measures and why, and flagging it as optional.
+  He takes recommendations seriously; unlabeled speculation becomes his plan.
+
+## The scale confound — read before interpreting ANY negative result
+
+Our agents are trained on ~**9 days** of episodes. Competitive leaderboard
+teams train on ~**40 days (~800 GB)**. Most "X doesn't work" conclusions in
+this repo were recorded on an undertrained model and are void or suspect:
+
+| Negative result | Recorded finding | Void because of scale? |
+|---|---|---|
+| Skill filter (×3: pooled, within-day, e3 arm) | top25 within-day −4.6pp all seeds; e3 −2.1pp | Mostly no — different mechanism (but see note below) |
+| Outcome weighting (efb ≈ e0) | null, 3 seeds, offline only | Yes — and it never tested the real method |
+| Bigger model (10.99M ≈ 3.32M) | "3.3× params bought nothing" | Yes — textbook data-limited null |
+| Critic can't learn value | MC/TD audit FAIL → "arms blocked" | Was mislabeled a scale verdict — fixed by init at same scale |
+| Feature ablation (0/7 features) | no feature helps BC accuracy | No — population-quality, not quantity |
+| Search+prior, PPO/self-play family | no gain / 254.9 flat | Confounded by scale and more; cannot attribute |
+
+Consequences:
+- **Never recommend abandoning a method (especially the Metamon replication)
+  because an undertrained run scored badly.** "The agent did badly" and "the
+  method is bad" are different claims; at 9/40 days of data, the first almost
+  never supports the second.
+- Skill filtering shrinks the dataset. On a data-limited model, quantity and
+  action diversity can matter more than purity — say so whenever proposing it.
+- "Try a bigger model" is not a fix for undertraining; more data is.
+- Any new negative result must state, in the write-up, whether it survives
+  the scale confound.
+
+## Attribution and history
+
+- Before claiming code is new, self-created, or unchanged, check
+  `git log`/`git blame`. The default competition code has changed over time;
+  a past session claimed credit for pre-existing behavior and blamed a
+  self-play win-rate drop on new code when the real cause was Rami deleting
+  agents from the local pool. Diff against actual history, not memory.
+
+## Checkpoint and artifact naming
+
+- Names like `efb_s42`, `e3_s44` are banned. A checkpoint name must be
+  readable without a decoder ring: method, data window, and seed spelled out —
+  e.g. `bc_outcomeweighted_days1-9_seed42`. Same rule for HF repo names,
+  report files, and agents. Record any abbreviation's meaning in
+  `train_metadata.json` anyway.
+
+## Following instructions
+
+- Execute Rami's prompt as written. Do not add extra steps, extra scope, or
+  extra deliverables he didn't ask for. If something genuinely useful is
+  missing (e.g. "these weights should be backed up to HuggingFace"), say it
+  **up front as a one-line suggestion** — don't silently do it, and don't sit
+  on it for days.
+- Rami sets the research direction. He is doing **reinforcement learning**;
+  do not steer him toward heuristics or other families because a stale number
+  (see rank 804 above) makes them look better.
+- If an instruction can't be completed, say which part failed and stop —
+  never report partial work in completed-work language.
