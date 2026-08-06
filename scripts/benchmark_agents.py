@@ -44,14 +44,26 @@ rows are reference-only (a notebook URL we have not mirrored). The subset with a
 here -- those form the `rung2` group below. Run `--list-pool` to see the roster
 and how much of it is actually runnable locally.
 
-Named groups usable anywhere `--agents` is: `ours`, `rung2`, `floor`, `all`.
+Named groups usable anywhere `--agents` is: `ours`, `rung2`, `floor`, `anchors`,
+`heuristics`, `all`.
+
+WHAT COUNTS AS A RESULT (Rami, 2026-08-06)
+------------------------------------------
+`ours` means our TRAINED agents -- policies driven by a checkpoint. Our
+hand-written heuristics (`rule_baseline`, `improved_prob_main`,
+`agent_core_improved`) are no longer part of it and must not be reported as
+opponents our models beat; that comparison is not what we are trying to learn.
+They stay registered only as ladder ANCHORS: `agent_core_improved` has a real
+ladder score we verified ourselves, which is what lets a local Glicko number be
+read against the ladder at all. Report trained-vs-trained and trained-vs-`rung2`;
+let anchors do their calibration job silently (they print marked "(anchor)").
 
 USAGE
 -----
     uv run python scripts/benchmark_agents.py            # default 8 games/pair
     uv run python scripts/benchmark_agents.py --games 12
-    uv run python scripts/benchmark_agents.py --agents rule_baseline,agent_core_improved
-    uv run python scripts/benchmark_agents.py --agents ours,rung2   # us vs the public field
+    uv run python scripts/benchmark_agents.py --agents ours,rung2   # our models vs the public field
+    uv run python scripts/benchmark_agents.py --agents ours,rung2,anchors  # + silent ladder calibration
     uv run python scripts/benchmark_agents.py --list-pool           # show the roster, then exit
 
     # Deck-arm sweep: same il_agent policy/weights, different submitted deck
@@ -377,11 +389,65 @@ AGENT_MAIN = {
     "agent_core_improved": REPO / "submissions" / "mega_lucario_improved" / "main.py",
 }
 
-# Our own algorithms + the random floor. Everything here is authored/adopted in
-# this repo, as opposed to the public opponent field pulled from Kaggle.
-OUR_AGENTS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
-              "proto", "il_agent", "grunt"]
+# Our own algorithms, split by whether a learned policy is in the loop.
+#
+# OUR_TRAINED is what `--agents ours` now means, and what results should be
+# reported about: agents whose behaviour comes from a checkpoint we trained.
+#
+# OUR_HEURISTICS are hand-written policies with no ML in them at all
+# (improved_prob_main in particular is pure rules -- see memory
+# `search-bc-prior-no-measurable-gain`). Rami, 2026-08-06: do not report our
+# trained agents against these. They are kept registered for ONE reason --
+# `agent_core_improved` is one of the few agents whose real ladder score we
+# read ourselves (685.3), so leaving it in a pool keeps local Glicko tied to
+# a verified ladder reference point. That is an instrument-calibration role,
+# not a rival. Get them with the explicit `heuristics` / `anchors` groups; they
+# are no longer swept in by `ours`.
+# Verified 2026-08-06 by grepping each entry point: only `il_agent` and
+# `mcts_il_agent` load a checkpoint at all. `proto` (search + hand-written
+# eval) and `grunt` (greedy MaxDamage one-ply) have no ML in them despite
+# living in our tree, so they moved to OUR_HEURISTICS.
+#
+# `ours` is deliberately just the two STANDING trained agents. The arm
+# families (s2v2_*, il_*, selfplay_*, ppo_*, grid_*) are trained too but have
+# always been named explicitly per experiment, and sweeping ~30 of them into a
+# default group would silently change every benchmark's cost and its Glicko
+# field. Name your arms; `ours` is the reference point you compare them to.
+# Caveat when reading mcts_il_agent: it spends unbudgeted local think time,
+# which flatters it relative to the ladder (see memory `anchored-pool-rho-0.93`).
+OUR_TRAINED = ["il_agent", "mcts_il_agent"]
+OUR_HEURISTICS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
+                  "proto", "grunt"]
+
+# Silent ladder anchors: included in a pool so ratings stay calibrated, marked
+# "(anchor)" in the report, never quoted as a head-to-head result.
+ANCHOR_AGENTS = ["agent_core_improved"]
+
+# Everything authored/adopted here, as opposed to the public field pulled from
+# Kaggle. Used to keep `rung2` meaning "the external field, not us".
+OUR_AGENTS = OUR_TRAINED + OUR_HEURISTICS
 FLOOR_AGENTS = ["random_legal"]
+
+
+def is_non_learned(agent: str) -> bool:
+    """True if `agent` is a hand-written policy, not one of our checkpoints.
+
+    Handles the `name@deck` arm syntax. Used only to LABEL report rows, so a
+    reader never mistakes an anchor's rating for a result about our models.
+    """
+    return agent.split("@", 1)[0] in set(OUR_HEURISTICS) | set(FLOOR_AGENTS)
+
+
+def report_tag(agent: str) -> str:
+    """Suffix marking why a non-learned row is in the table at all."""
+    base = agent.split("@", 1)[0]
+    if base in ANCHOR_AGENTS:
+        return "  (anchor -- ladder reference, not a result)"
+    if base in FLOOR_AGENTS:
+        return "  (floor)"
+    if base in OUR_HEURISTICS:
+        return "  (hand-written, not a result)"
+    return ""
 
 
 def load_opponent_pool(path: Path = OPPONENT_POOL_CSV) -> list[dict]:
@@ -417,7 +483,11 @@ def rung2_pool() -> list[str]:
 def agent_groups() -> dict[str, list[str]]:
     """Named agent selections usable anywhere `--agents` accepts a name."""
     return {
-        "ours": [a for a in OUR_AGENTS if a in AGENT_FILES],
+        # `ours` = our TRAINED agents only. Hand-written heuristics are opt-in
+        # via `heuristics` / `anchors`; see OUR_TRAINED for why.
+        "ours": [a for a in OUR_TRAINED if a in AGENT_FILES],
+        "heuristics": [a for a in OUR_HEURISTICS if a in AGENT_FILES],
+        "anchors": [a for a in ANCHOR_AGENTS if a in AGENT_FILES],
         "rung2": rung2_pool(),
         "floor": [a for a in FLOOR_AGENTS if a in AGENT_FILES],
         # Diagnostics are never swept up by a group; name them explicitly.
@@ -726,7 +796,8 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
     print("\n=== Overall win rate (all games), Wilson 95% CI ===")
     for a in sorted(agents, key=lambda x: -overall[x]):
         lo, hi = overall_ci[a][1] * 100, overall_ci[a][2] * 100
-        print(f"  {a:22s} {overall[a]:5.1f}%  [{lo:4.1f},{hi:4.1f}]  ({totals[a]['w']}/{totals[a]['g']})")
+        print(f"  {a:22s} {overall[a]:5.1f}%  [{lo:4.1f},{hi:4.1f}]  "
+              f"({totals[a]['w']}/{totals[a]['g']}){report_tag(a)}")
 
     # ---- Glicko-1 ratings ----
     # Win-rate is a single-run snapshot; Glicko carries a rating + confidence
@@ -743,8 +814,11 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
         r = glicko[a]
         print(
             f"  {a:22s} {r.rating:7.1f}  (RD {r.rd:5.1f}, 95% CI +/-{2*r.rd:5.1f})  "
-            f"GXE {glicko1.gxe(r):5.1f}%"
+            f"GXE {glicko1.gxe(r):5.1f}%{report_tag(a)}"
         )
+    if any(is_non_learned(a) for a in ranked):
+        print("  note: rows marked (anchor)/(floor)/(hand-written) are calibration "
+              "only -- do not quote them as a comparison against a trained model.")
 
     # ---- Fallback diagnostics ----
     # Agents that expose the _DIAG/diag_snapshot pattern (see
