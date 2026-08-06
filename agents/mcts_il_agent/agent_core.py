@@ -5,12 +5,13 @@ Same `agent(obs_dict) -> list[int]` interface as agents/il_agent/agent_core.py
 and the same never-crash contract: ANY exception in the search/model path
 falls back to `_safe_choice` (always-legal), never raises (INVALID = loss).
 
-Phase-3 experiment wiring (see reports/search_api_phase2.md for the budget):
+Experiment wiring (budget from the search-API timing measurements):
 - policy prior: models/il_agent (or MCTS_IL_MODEL_DIR)
 - value head:  models/critic_search_prior (or MCTS_IL_CRITIC_DIR); if the
   critic dir is missing the agent still runs prior-only (leaf value 0) —
   that degraded mode is reported at import time, not hidden.
-- SEARCH_COUNT: MCTS_IL_SEARCH_COUNT env, default 30 (Phase-2a safe point).
+- SEARCH_COUNT: MCTS_IL_SEARCH_COUNT env, default 30 (the measured safe
+  point inside the ladder's ~1 s/turn budget).
 
 CPU is forced (evaluator parity) and torch threads are capped at 1 BEFORE
 model load, matching the evaluator envelope.

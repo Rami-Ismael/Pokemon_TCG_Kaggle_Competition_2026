@@ -17,7 +17,7 @@ CPU-only. Writing `torch.device("cuda")` or `.cuda()` is always wrong here. To r
 what the evaluator will do, force `PTCG_DEVICE=cpu` on the laptop.
 
 **The evaluator envelope: ~1.6 vCPU, ~197.7 MiB, effectively single-threaded.**
-⚠️ This came from Phase 0 discovery notes and is **not enforced anywhere in the repo** —
+⚠️ This came from the corpus discovery notes and is **not enforced anywhere in the repo** —
 no test asserts it. Treat it as a design constraint you must respect and cannot verify
 by running the test suite. Two consequences that have bitten before:
 - `torch.set_num_threads(1)` must run **before** any heavy torch work; set late it

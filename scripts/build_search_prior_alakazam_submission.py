@@ -1,21 +1,21 @@
 """Build the search + BC-prior hybrid + Alakazam-deck submission.
 
 agents/mega_lucario/agent_core_improved.py's SEARCH_ALGO (1-ply UCB1 rollout
-search, real multi-candidate lists via rank_all() -- see notes/phase0_gate0_report.md
-for why the OLD winning-827.8 source didn't) with bc_prior.py's PUCT-style
+search, real multi-candidate lists via rank_all() -- the reproducibility
+audit showed the OLD winning-827.8 source didn't) with bc_prior.py's PUCT-style
 bonus term, forced ON via main.py (HEAD defaults USE_SEARCH=0 since it lost
 to pure heuristic on the Lucario deck; Kaggle's evaluator sets no env vars,
 so the override has to happen in-process before agent_core_improved imports).
 
-Why build this at all given the weaker local result: notes/phase0_gate0_report.md's
-A0'' section found this exact config (USE_SEARCH=1 USE_BC_PRIOR=1 on the
+Why build this at all given the weaker local result: the A0'' finding was
+that this exact config (USE_SEARCH=1 USE_BC_PRIOR=1 on the
 Alakazam deck) scored only 10.0% [1.8,40.4] vs makthanithin_improved_prob,
 tied with/worse than the no-search control (20.0%) at n=10/arm -- weaker
 evidence than the pure-BC submission (build_il_alakazam_submission.py,
 62.5% [38.6,81.5]). Built and submitted anyway per explicit request, to get
 a real ladder read on both rather than assume the local benchmark predicts
-correctly (see notes/phase1_gate1_report.md's own finding that the
-local-vs-ladder residual is only collectable after a submission).
+correctly (the local-vs-ladder residual is only collectable after a
+submission).
 
 Checkpoint (for the BC prior): models/il_agent/ (current, epoch 2 step
 38562) -- same one used in the A0'' benchmark, NOT the preserved 827.8
@@ -57,7 +57,7 @@ else:
 sys.path.insert(0, _BUNDLE_DIR)
 
 # HEAD's agent_core_improved.py defaults USE_SEARCH=0 (real search lost to
-# pure heuristic on the Lucario deck, see notes/phase0_gate0_report.md).
+# pure heuristic on the Lucario deck in the local benchmark).
 # This submission is deliberately testing search+prior ON, on a deck the BC
 # prior has real trained signal for -- force it before the module-level
 # os.environ.get() read happens at import time.

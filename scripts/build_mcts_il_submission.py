@@ -1,6 +1,6 @@
 """Build the IL-prior MCTS (prior-only) submission bundle.
 
-Configuration that won locally (reports/search_prior_phase3.md): official
+Configuration that won locally in the IL-prior MCTS benchmarks: official
 Search API lookahead, SEARCH_COUNT=30, PTCGImitationPolicy (models/il_agent)
 option logits as child priors, NO critic (prior-only — the seed-42 critic
 failed calibration and erased the gain, so it deliberately does not ship;

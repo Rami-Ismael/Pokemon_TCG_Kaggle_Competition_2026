@@ -1,11 +1,11 @@
 """Does the standalone BC-cloned policy (agents/il_agent, no search, no heuristic)
 play better on a deck whose cards it actually saw in training?
 
-Direct test of the deck-embedding hypothesis in notes/phase1_decisions.md: the
-frozen Mega Lucario ex deck's defining cards (Riolu/Mega Lucario ex) appear in
-0/800 training-corpus perspectives, so the IL policy's card embeddings for
-them are untrained. Alakazam's defining cards (Abra/Kadabra/Alakazam) appear
-in 16.1% (129/800) -- see notes/phase0_gate0_report.md's "A0''" section.
+Direct test of the deck-embedding hypothesis from the architecture-decision
+notes: the frozen Mega Lucario ex deck's defining cards (Riolu/Mega Lucario
+ex) appear in 0/800 training-corpus perspectives, so the IL policy's card
+embeddings for them are untrained. Alakazam's defining cards
+(Abra/Kadabra/Alakazam) appear in 16.1% (129/800) -- the "A0''" finding.
 
 This is PURE BC cloning, not the search+prior hybrid tested in ablation_a0.py:
 agents/il_agent/agent_core.py's agent() is the trained transformer scoring
