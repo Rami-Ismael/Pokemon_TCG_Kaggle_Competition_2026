@@ -2,23 +2,29 @@
 
 Question: does behavior-cloning on episodes played by higher-rated players
 (min_score = the LOWER of the two players' ratings, so BOTH POVs cloned
-from a decision are above threshold) beat cloning everything, at equal
-training steps?
+from a decision are above threshold) beat cloning everything, when each arm
+gets the same number of PASSES over the data it actually has?
 
 Motivated by the feature-ablation negative result
 (reports/feature_ablation/report.md): BC accuracy rewards imitating the
 logged population, so making the logged population BETTER is the lever
 that feature engineering wasn't.
 
-Arms (equal --total-steps, seeds shared with the feature sweep). Filtering
+Arms (equal --epochs, seeds shared with the feature sweep). Filtering
 is WITHIN-DAY: a pooled threshold turned out to be a day filter in
 disguise (top50 came out 91% from 2026-07-01 because that day's ratings
 run ~60 points hotter -- measured 2026-08-04, one arm burned before the
 confound was caught), so every arm now holds the day mix fixed:
 - unfiltered_scored: every scored episode on every scored day
 - top50_wd / top25_wd: within each day, episodes at or above that day's
-  own median / 75th percentile of min_score. Fewer episodes, repeated
-  more -- that trade IS the treatment (equal steps, standing rule #4).
+  own median / 75th percentile of min_score.
+
+A filtered arm therefore trains on FEWER episodes and takes proportionally
+fewer gradient steps -- it is not padded back up to the unfiltered arm's
+step count by re-reading its smaller corpus. Data quality and data quantity
+move together here, which is what "filter the corpus" means in practice;
+the comparison answers "is the filtered corpus a better corpus", not "is a
+filtered row worth more than an unfiltered row at fixed compute".
 
 Scores come from the shard columns where present, with a manifest.csv
 fallback join on episode_id (the 2026-07-26 shards were packed before
@@ -54,7 +60,7 @@ sys.path.insert(0, str(REPO / "src"))
 from pokemon_tcg import config  # noqa: E402
 
 SEEDS = [42, 43, 44]
-TOTAL_STEPS = 4000
+EPOCHS = 0.3  # passes over each arm's OWN corpus; see the docstring
 EVAL_EPISODES = 150
 
 OUT_ROOT = REPO / "reports" / "skill_filter"
@@ -100,7 +106,7 @@ def collect_scores() -> dict[int, tuple[str, float]]:
     return scores
 
 
-def run_one(arm: str, ids_file: Path | None, seed: int, total_steps: int,
+def run_one(arm: str, ids_file: Path | None, seed: int, epochs: float,
             eval_min_score: float) -> dict:
     tag = f"{arm}-s{seed}"
     result_path = RESULTS_DIR / f"{tag}.json"
@@ -112,7 +118,7 @@ def run_one(arm: str, ids_file: Path | None, seed: int, total_steps: int,
     train_cmd = [
         "uv", "run", "python", str(REPO / "scripts" / "train_il.py"),
         "--seed", str(seed),
-        "--total-steps", str(total_steps),
+        "--epochs", str(epochs),
         "--data-source", "hub",
         "--num-workers", "2",
         "--out", str(out_dir),
@@ -154,7 +160,7 @@ def run_one(arm: str, ids_file: Path | None, seed: int, total_steps: int,
     result = {
         "arm": arm,
         "seed": seed,
-        "total_steps": total_steps,
+        "epochs": epochs,
         "train_secs": round(train_secs, 1),
         "eval_all": run_eval(None),
         "eval_highskill": run_eval(eval_min_score),
@@ -169,7 +175,8 @@ def run_one(arm: str, ids_file: Path | None, seed: int, total_steps: int,
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--total-steps", type=int, default=TOTAL_STEPS)
+    ap.add_argument("--epochs", type=float, default=EPOCHS,
+                    help="passes over each arm's own corpus (fractional allowed)")
     args = ap.parse_args()
 
     scores = collect_scores()
@@ -227,7 +234,7 @@ def main() -> None:
     for arm, ids_file in arms.items():
         for seed in SEEDS:
             results.setdefault(arm, {})[seed] = run_one(
-                arm, ids_file, seed, args.total_steps, eval_thr
+                arm, ids_file, seed, args.epochs, eval_thr
             )
 
     base = results["unfiltered_scored"]
@@ -258,7 +265,7 @@ def main() -> None:
     print(f"\naccepted: {accepted or 'NONE'}")
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
     (OUT_ROOT / "summary.json").write_text(json.dumps(
-        {"protocol": {"seeds": SEEDS, "total_steps": args.total_steps,
+        {"protocol": {"seeds": SEEDS, "epochs": args.epochs,
                       "eval_episodes": EVAL_EPISODES,
                       "eval_highskill_threshold": eval_thr,
                       "accept_rule": "mean paired high-skill top-1 d > spread(d), > 0, "
@@ -268,7 +275,9 @@ def main() -> None:
         indent=2))
     (OUT_ROOT / "summary.md").write_text(
         "# Skill-filtered demonstrations (accuracy gate)\n\n"
-        f"Equal steps {args.total_steps}; seeds {SEEDS}; eval {EVAL_EPISODES} episodes "
+        f"{args.epochs} passes over each arm's own corpus (filtered arms take "
+        f"proportionally fewer steps -- see per-arm train_secs); "
+        f"seeds {SEEDS}; eval {EVAL_EPISODES} episodes "
         f"(high-skill subset: eval-day min_score >= {eval_thr:.0f}).\n\n"
         + table + f"\n\nAccepted: {accepted or 'NONE'}\n\n"
         "Accuracy only gates. A full-budget retrain + benchmark_agents decides "
