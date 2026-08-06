@@ -1156,20 +1156,36 @@ class ShardILDataset(IterableDataset):
         return hf_hub_download(self.repo_id, rel, repo_type="dataset")
 
     def n_episodes(self) -> int:
-        """Total episode rows, read from shard footers only (no full downloads)."""
+        """Episodes this dataset will actually stream.
+
+        Footer row counts only (no full downloads) when there is no
+        allowlist. With ``episode_ids`` set, the footer count is the count of
+        the WHOLE shard, not of this arm -- so read the single `episode_id`
+        column (still a range read, not a download) and count the matches.
+        Callers size the training schedule off this number: returning the
+        unfiltered count would hand a filtered arm the same step budget as
+        the unfiltered one, which is exactly the step-matching the schedule
+        is meant to avoid.
+        """
         import pyarrow.parquet as pq  # lazy: keep the evaluator bundle pyarrow-free
 
-        if self.local_root is not None:
+        def count(pf) -> int:
+            if self.episode_ids is None:
+                return pf.metadata.num_rows
             return sum(
-                pq.ParquetFile(self.local_root / f).metadata.num_rows for f in self.files
+                1 for eid in pf.read(columns=["episode_id"]).to_pydict()["episode_id"]
+                if eid in self.episode_ids
             )
+
+        if self.local_root is not None:
+            return sum(count(pq.ParquetFile(self.local_root / f)) for f in self.files)
         from huggingface_hub import HfFileSystem
 
         fs = HfFileSystem()
         total = 0
         for f in self.files:
             with fs.open(f"datasets/{self.repo_id}/{f}", "rb") as fh:
-                total += pq.ParquetFile(fh).metadata.num_rows
+                total += count(pq.ParquetFile(fh))
         return total
 
     def __iter__(self):

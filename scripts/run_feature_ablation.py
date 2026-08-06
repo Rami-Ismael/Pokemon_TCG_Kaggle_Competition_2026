@@ -2,8 +2,8 @@
 
 Protocol (notes/feature_ablation_candidates.md, Step 3):
 - one feature GROUP per arm; each arm = baseline encoder + that group only
-- >= 3 seeds per arm, identical data and EQUAL --total-steps across arms
-  (standing rule #4: equal steps, not equal epochs)
+- >= 3 seeds per arm, identical data, and a fixed number of PASSES over that
+  data (--epochs). No arm is pinned to another arm's step count.
 - metric: eval_rung1 top-1/top-3 on the held-out day, vs the majority-class
   baseline computed on the same rows
 - accept a group iff the mean paired (same-seed) top-1 improvement over the
@@ -49,7 +49,11 @@ ARMS: dict[str, str] = {
     "retreat_switch": "retreat_switch",
 }
 SEEDS = [42, 43, 44]
-TOTAL_STEPS = 4000
+# Budget as data passes, not as a pinned step count. 0.3 epochs over the
+# 4,554-episode train day is ~3,900 steps at batch 64 (4,554 x 181.3 rows/ep
+# / 64), i.e. about what the first sweep spent -- but derived from the arm's
+# own corpus rather than copied from another arm.
+EPOCHS = 0.3
 EVAL_EPISODES = 150
 
 RESULTS_DIR = REPO / "reports" / "feature_ablation" / "results"
@@ -62,7 +66,7 @@ _GLOBAL_RE = re.compile(
 )
 
 
-def run_one(arm: str, features: str, seed: int, total_steps: int, dry: bool) -> dict:
+def run_one(arm: str, features: str, seed: int, epochs: float, dry: bool) -> dict:
     tag = f"{arm}-s{seed}"
     result_path = RESULTS_DIR / f"{tag}.json"
     if result_path.exists():
@@ -78,7 +82,7 @@ def run_one(arm: str, features: str, seed: int, total_steps: int, dry: bool) -> 
     train_cmd = [
         "uv", "run", "python", str(REPO / "scripts" / "train_il.py"),
         "--seed", str(seed),
-        "--total-steps", str(total_steps),
+        "--epochs", str(epochs),
         "--features", features,
         "--data-source", "hub",
         "--hub-days", "2026-07-26",
@@ -119,7 +123,7 @@ def run_one(arm: str, features: str, seed: int, total_steps: int, dry: bool) -> 
         "arm": arm,
         "features": features,
         "seed": seed,
-        "total_steps": total_steps,
+        "epochs": epochs,
         "eval_rows": int(m.group(1)),
         "majority_pct": float(m.group(2)),
         "top1_pct": float(m.group(3)),
@@ -162,18 +166,19 @@ def aggregate(results: dict[str, dict[int, dict]]) -> tuple[list[str], str]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dry-run", action="store_true", help="2 arms, tiny models, smoke only")
-    ap.add_argument("--total-steps", type=int, default=TOTAL_STEPS)
+    ap.add_argument("--epochs", type=float, default=EPOCHS,
+                    help="passes over each arm's own corpus (fractional allowed)")
     ap.add_argument("--skip-combined", action="store_true")
     args = ap.parse_args()
 
     arms = dict(list(ARMS.items())[:2]) if args.dry_run else ARMS
-    total_steps = 60 if args.dry_run else args.total_steps
+    epochs = 0.01 if args.dry_run else args.epochs
 
     results: dict[str, dict[int, dict]] = {}
     for arm, features in arms.items():
         for seed in SEEDS:
             results.setdefault(arm, {})[seed] = run_one(
-                arm, features, seed, total_steps, args.dry_run
+                arm, features, seed, epochs, args.dry_run
             )
 
     accepted, table = aggregate(results)
@@ -186,7 +191,7 @@ def main() -> None:
         combined_results = {}
         for seed in SEEDS:
             combined_results[seed] = run_one(
-                "combined", feats, seed, total_steps, args.dry_run
+                "combined", feats, seed, epochs, args.dry_run
             )
         base = results["baseline"]
         d = [combined_results[s]["top1_pct"] - base[s]["top1_pct"] for s in SEEDS]
@@ -201,7 +206,7 @@ def main() -> None:
         print(table.splitlines()[-1])
 
     summary = {
-        "protocol": {"seeds": SEEDS, "total_steps": total_steps,
+        "protocol": {"seeds": SEEDS, "epochs": epochs,
                      "eval_episodes": EVAL_EPISODES,
                      "accept_rule": "mean paired top-1 diff vs baseline > across-seed spread (max-min) of the diffs, and > 0"},
         "accepted": accepted,
@@ -213,7 +218,9 @@ def main() -> None:
     out.write_text(json.dumps(summary, indent=2))
     (REPO / "reports" / "feature_ablation" / "summary.md").write_text(
         "# Feature ablation (accuracy gate)\n\n"
-        f"Equal steps per arm: {total_steps}; seeds {SEEDS}; eval on first "
+        f"{epochs} passes over each arm's own corpus (arms here share one "
+        f"corpus, so the realised step counts coincide -- no arm is pinned to "
+        f"another's); seeds {SEEDS}; eval on first "
         f"{EVAL_EPISODES} held-out-day episodes via eval_rung1.\n\n" + table + "\n\n"
         f"Accepted: {accepted or 'NONE'}\n\n"
         "Accuracy only gates features -- the ship decision belongs to "

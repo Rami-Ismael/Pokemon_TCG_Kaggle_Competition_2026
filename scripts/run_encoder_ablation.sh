@@ -2,13 +2,15 @@
 # Stage 1 of notes/experiments/2026-08-05-modernbert-vs-bert-encoder.md:
 # BertModel vs ModernBERT-XXS, 2x2 factorial (block type x geometry), 3 seeds.
 #
-# Equal STEPS across every arm (repo rule 4), not equal epochs: --total-steps
-# 12900 = one pass over the 4,554-episode 2026-07-26 train day at batch 64.
+# Budget: ONE pass over each arm's own corpus (--epochs 1). Every arm here
+# reads the same 4,554-episode 2026-07-26 train day, so that pass works out
+# to the ~12,900 steps at batch 64 that the Stage-1 arms already ran -- the
+# budget is unchanged, it is just no longer pinned to a hardcoded count.
 # Runs serially and nice'd so MPS is never contended.
 set -u
 cd "$(dirname "$0")/.."
 
-STEPS=12900
+EPOCHS=1
 DAY=2026-07-26
 OUT=models/encoder_ablation
 LOG=runs/encoder_ablation.log
@@ -25,7 +27,7 @@ SEEDS=(42 43 44)
 
 log() { echo "[$(date '+%m-%d %H:%M:%S')] $*" | tee -a "$LOG"; }
 
-log "ENCODER ABLATION BEGIN -- ${#ARMS[@]} arms x ${#SEEDS[@]} seeds, ${STEPS} steps each, train day ${DAY}"
+log "ENCODER ABLATION BEGIN -- ${#ARMS[@]} arms x ${#SEEDS[@]} seeds, ${EPOCHS} epoch(s) each, train day ${DAY}"
 for seed in $SEEDS; do
   for spec in $ARMS; do
     arm=${spec%%|*}; rest=${spec#*|}
@@ -44,7 +46,7 @@ for seed in $SEEDS; do
         --data-source hub --hub-days "$DAY" --num-workers 4 \
         --encoder-type "$enc" --hidden-size "$h" --num-layers "$L" \
         --num-heads "$heads" --intermediate-size "$inter" \
-        --total-steps "$STEPS" --lr 3e-4 --batch-size 64 --seed "$seed" \
+        --epochs "$EPOCHS" --lr 3e-4 --batch-size 64 --seed "$seed" \
         --eval-batches 20 \
         --out "$dir" --run-dir "runs/encoder_ablation/${arm}_s${seed}" \
         >>"$LOG" 2>&1; then
