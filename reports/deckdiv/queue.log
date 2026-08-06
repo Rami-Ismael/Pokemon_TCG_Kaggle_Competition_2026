@@ -1,0 +1,72 @@
+2026-08-05 11:42:17 queue start (pid 70027)
+2026-08-05 11:42:17 waiting: 5 other trainer(s) hold MPS
+2026-08-05 11:43:40 queue start (pid 70300)
+2026-08-05 11:43:40 waiting: 3 other trainer(s) hold MPS
+2026-08-05 11:48:40 waiting: 3 other trainer(s) hold MPS
+2026-08-05 11:53:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 11:58:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:03:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:08:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:13:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:18:41 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:23:42 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:28:42 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:33:42 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:38:42 waiting: 3 other trainer(s) hold MPS
+2026-08-05 12:43:42 MPS free
+2026-08-05 12:43:42 soft-wait: 5 heavy benchmark proc(s); waited 0s
+2026-08-05 12:53:43 soft-wait: 5 heavy benchmark proc(s); waited 600s
+2026-08-05 13:03:43 soft-wait: 5 heavy benchmark proc(s); waited 1200s
+2026-08-05 13:13:43 soft-wait: 4 heavy benchmark proc(s); waited 1800s
+2026-08-05 13:23:43 soft-wait: 4 heavy benchmark proc(s); waited 2400s
+2026-08-05 13:33:43 soft-wait: 3 heavy benchmark proc(s); waited 3000s
+2026-08-05 13:43:43 soft-wait: 3 heavy benchmark proc(s); waited 3600s
+2026-08-05 13:53:43 soft-wait: 3 heavy benchmark proc(s); waited 4200s
+2026-08-05 14:03:43 soft-wait: 3 heavy benchmark proc(s); waited 4800s
+2026-08-05 14:13:43 soft-wait: 3 heavy benchmark proc(s); waited 5400s
+2026-08-05 14:23:44 soft-wait: 2 heavy benchmark proc(s); waited 6000s
+2026-08-05 14:28:33 queue start (pid 88670)
+2026-08-05 14:28:33 MPS free
+2026-08-05 14:28:33 soft-wait: 1 heavy benchmark proc(s); waited 0s
+2026-08-05 14:33:44 soft-wait: 2 heavy benchmark proc(s); waited 6600s
+2026-08-05 14:43:44 soft-wait: 2 heavy benchmark proc(s); waited 7200s
+2026-08-05 14:53:44 soft-wait: 2 heavy benchmark proc(s); waited 7800s
+2026-08-05 15:03:44 soft-wait: 2 heavy benchmark proc(s); waited 8400s
+2026-08-05 15:13:44 soft-wait: 2 heavy benchmark proc(s); waited 9000s
+2026-08-05 15:23:44 soft-wait: 3 heavy benchmark proc(s); waited 9600s
+2026-08-05 15:28:33 soft-wait: 3 heavy benchmark proc(s); waited 3600s
+2026-08-05 15:33:45 soft-wait: 3 heavy benchmark proc(s); waited 10200s
+2026-08-05 15:43:45 soft-wait: 3 heavy benchmark proc(s); waited 10800s
+2026-08-05 15:53:45 soft-wait: 3 heavy benchmark proc(s); waited 11400s
+2026-08-05 16:03:45 soft-wait: 3 heavy benchmark proc(s); waited 12000s
+2026-08-05 16:13:45 soft-wait: 3 heavy benchmark proc(s); waited 12600s
+2026-08-05 16:23:45 soft-wait: 3 heavy benchmark proc(s); waited 13200s
+2026-08-05 16:28:33 soft-wait: 3 heavy benchmark proc(s); waited 7200s
+2026-08-05 16:33:45 soft-wait: 2 heavy benchmark proc(s); waited 13800s
+2026-08-05 16:43:45 soft-wait: 1 heavy benchmark proc(s); waited 14400s
+2026-08-05 16:53:45 soft-wait: 2 heavy benchmark proc(s); waited 15000s
+2026-08-05 17:03:46 soft-wait: 2 heavy benchmark proc(s); waited 15600s
+2026-08-05 17:13:46 soft-wait: 2 heavy benchmark proc(s); waited 16200s
+2026-08-05 17:23:46 soft-wait: 2 heavy benchmark proc(s); waited 16800s
+2026-08-05 17:28:33 soft-wait: 1 heavy benchmark proc(s); waited 10800s
+2026-08-05 17:33:46 soft-wait: 1 heavy benchmark proc(s); waited 17400s
+2026-08-05 17:43:46 soft-wait: 1 heavy benchmark proc(s); waited 18000s
+2026-08-05 17:53:46 soft-wait: 1 heavy benchmark proc(s); waited 18600s
+2026-08-05 18:03:46 soft-wait: 1 heavy benchmark proc(s); waited 19200s
+2026-08-05 18:13:46 soft-wait: 1 heavy benchmark proc(s); waited 19800s
+2026-08-05 18:23:46 soft-wait: 1 heavy benchmark proc(s); waited 20400s
+2026-08-05 18:28:34 soft-wait: 1 heavy benchmark proc(s); waited 14400s
+2026-08-05 18:33:46 ARM deckdiv_armA: start -> models/deckdiv_armA_control (500000 steps)
+2026-08-05 19:28:37 ARM deckdiv_armA: start -> models/deckdiv_armA_control (500000 steps)
+2026-08-05 21:41:59 ARM deckdiv_armA: exit rc=0
+2026-08-05 21:41:59 ARM deckdiv_armB: start -> models/deckdiv_armB_opppool (500000 steps)
+2026-08-05 23:39:17 ARM deckdiv_armB: exit rc=137
+2026-08-05 23:39:17 arm B failed
+2026-08-05 23:40:43 armB-resume queue start (pid 82789)
+2026-08-05 23:40:44 wait: trainers=2 avail=4GB
+2026-08-06 00:40:44 wait: trainers=3 avail=6GB
+2026-08-06 01:40:44 wait: trainers=1 avail=3GB
+2026-08-06 02:40:44 wait: trainers=1 avail=6GB
+2026-08-06 03:40:45 wait: trainers=1 avail=3GB
+2026-08-06 04:40:45 wait: trainers=1 avail=7GB
+2026-08-06 05:40:45 wait: trainers=1 avail=7GB
