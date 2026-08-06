@@ -125,6 +125,12 @@ AGENT_FILES = {
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
     "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
+    # A0-family search arm: agent_core_improved with USE_SEARCH/USE_BC_PRIOR
+    # forced on and the PUCT prior served by models/il_alldays_0804 (strongest
+    # BC clone by exploit-robustness evidence). Distinct name on purpose --
+    # Glicko history compounds by name and this is a different policy from the
+    # search-off `agent_core_improved` control.
+    "search_prior_alldays": REPO / "agents" / "search_arms" / "prior_alldays_lucario" / "agent_core.py",
     # kojimar's "Simple Baseline + Matchup Tests" Mega Lucario ex, ported as a
     # bare module (literal DECK -> my_deck). Distinct 60-card list from
     # rule_baseline/mega_lucario; see agents/kojimar_lucario/agent_core.py.
