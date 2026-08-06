@@ -10,12 +10,18 @@ score an arbitrarily-ordered, variable-count list of legal moves -- there is
 no fixed global action vocabulary to enumerate (option ``type=ATTACH`` at
 index 3 means a completely different move from decision to decision).
 
-We reuse ``transformers.BertModel`` purely as that self-attention encoder
+We reuse a stock ``transformers`` encoder purely as that self-attention block
 (fed ``inputs_embeds`` directly -- it never sees ``input_ids`` or its own
-token vocabulary). That is why an AutoModel/BertModel backbone is a good
-fit even though this isn't an NLP task: it is a well-tested block with
-``from_pretrained``/``save_pretrained`` support we get for free instead of
-hand-rolling and debugging attention from scratch.
+token vocabulary, and no pretrained weights are ever loaded). That is why an
+AutoModel-style backbone is a good fit even though this isn't an NLP task: it
+is a well-tested block with ``from_pretrained``/``save_pretrained`` support we
+get for free instead of hand-rolling and debugging attention from scratch.
+
+``config.encoder_type`` selects which block: ``"bert"`` (``BertModel``, the
+default and every checkpoint trained before this field existed) or
+``"modernbert"`` (``ModernBertModel``, the Orbit Wars 2nd-place backbone).
+See ``_build_encoder`` and the ablation card at
+``notes/experiments/2026-08-05-modernbert-vs-bert-encoder.md``.
 
 Illegal-move masking: option slots beyond the true ``len(select.option))``
 are padding, not real moves -- the game engine only ever offers legal
@@ -31,7 +37,14 @@ from __future__ import annotations
 
 import torch
 from torch import nn
-from transformers import BertConfig, BertModel, PretrainedConfig, PreTrainedModel
+from transformers import (
+    BertConfig,
+    BertModel,
+    ModernBertConfig,
+    ModernBertModel,
+    PretrainedConfig,
+    PreTrainedModel,
+)
 
 from .il_dataset import (
     ATTACK_VOCAB_SIZE,
@@ -62,6 +75,7 @@ class PTCGILConfig(PretrainedConfig):
         num_attention_heads: int = 4,
         intermediate_size: int | None = None,
         dropout: float = 0.1,
+        encoder_type: str = "bert",
         global_features: list[str] | None = None,
         opt_features: list[str] | None = None,
         **kwargs,
@@ -72,6 +86,10 @@ class PTCGILConfig(PretrainedConfig):
         self.num_attention_heads = num_attention_heads
         self.intermediate_size = intermediate_size or hidden_size * 4
         self.dropout = dropout
+        # Which self-attention block backs the encoder (see _build_encoder).
+        # Defaults to "bert" so every checkpoint saved before this field
+        # existed still loads as exactly the model it was trained as.
+        self.encoder_type = encoder_type
         # Deterministic-future feature groups this checkpoint consumes
         # (il_dataset.GLOBAL_FEATURE_SPECS / OPT_FEATURE_SPECS names). The
         # encoder always emits every group; these lists select columns, so
@@ -79,6 +97,65 @@ class PTCGILConfig(PretrainedConfig):
         # absent -> empty) ignore the extra tensors entirely.
         self.global_features = list(global_features or [])
         self.opt_features = list(opt_features or [])
+
+
+SEQ_LEN = 1 + N_STATE_SLOTS + MAX_OPTIONS
+
+
+def _build_encoder(config: PTCGILConfig) -> PreTrainedModel:
+    """The bidirectional self-attention block, per ``config.encoder_type``.
+
+    Both branches are fed ``inputs_embeds`` + an ``attention_mask`` and return
+    ``last_hidden_state``, so ``forward`` is identical either way.
+
+    ``modernbert`` follows the Orbit Wars 2nd-place solution's backbone (the
+    Ettin XXS config, arXiv 2507.11412) with the same two of his three
+    modifications that apply to us: no token embedding table (``vocab_size=1``
+    is a dummy -- we never pass ``input_ids``), and global attention only. We
+    keep positional information, which he dropped, because our option token's
+    position IS the action index the score head must emit; see
+    ``notes/experiments/2026-08-05-modernbert-vs-bert-encoder.md``.
+    """
+    h = config.hidden_size
+    if config.encoder_type == "bert":
+        return BertModel(
+            BertConfig(
+                vocab_size=1,  # unused: we always feed inputs_embeds, never input_ids
+                hidden_size=h,
+                num_hidden_layers=config.num_hidden_layers,
+                num_attention_heads=config.num_attention_heads,
+                intermediate_size=config.intermediate_size,
+                hidden_dropout_prob=config.dropout,
+                attention_probs_dropout_prob=config.dropout,
+                max_position_embeddings=SEQ_LEN,
+            ),
+            add_pooling_layer=False,
+        )
+    if config.encoder_type == "modernbert":
+        return ModernBertModel(
+            ModernBertConfig(
+                vocab_size=1,
+                pad_token_id=0,  # must index into the 1-row dummy table
+                hidden_size=h,
+                num_hidden_layers=config.num_hidden_layers,
+                num_attention_heads=config.num_attention_heads,
+                intermediate_size=config.intermediate_size,
+                embedding_dropout=config.dropout,
+                mlp_dropout=config.dropout,
+                attention_dropout=config.dropout,
+                max_position_embeddings=SEQ_LEN,
+                # "Global attention only" (author's 3rd modification). Setting
+                # global_attn_every_n_layers=1 is the direct spelling but trips
+                # a rope-parameter validation bug in transformers 5.14.1 when
+                # every layer is global; a local window wider than the sequence
+                # is the same computation and does not.
+                local_attention=2 * SEQ_LEN,
+                attn_implementation="eager",  # CPU evaluator: no flash-attn
+            )
+        )
+    raise ValueError(
+        f"unknown encoder_type {config.encoder_type!r} (expected 'bert' or 'modernbert')"
+    )
 
 
 class PTCGImitationPolicy(PreTrainedModel):
@@ -121,18 +198,7 @@ class PTCGImitationPolicy(PreTrainedModel):
         # position IS the action index to output -> required input, not decorative
         self.opt_pos_emb = nn.Embedding(MAX_OPTIONS, h)
 
-        seq_len = 1 + N_STATE_SLOTS + MAX_OPTIONS
-        bert_config = BertConfig(
-            vocab_size=1,  # unused: we always feed inputs_embeds, never input_ids
-            hidden_size=h,
-            num_hidden_layers=config.num_hidden_layers,
-            num_attention_heads=config.num_attention_heads,
-            intermediate_size=config.intermediate_size,
-            hidden_dropout_prob=config.dropout,
-            attention_probs_dropout_prob=config.dropout,
-            max_position_embeddings=seq_len,
-        )
-        self.encoder = BertModel(bert_config, add_pooling_layer=False)
+        self.encoder = _build_encoder(config)
         self.score_head = nn.Sequential(nn.Linear(h, h), nn.GELU(), nn.Linear(h, 1))
 
         self.post_init()
