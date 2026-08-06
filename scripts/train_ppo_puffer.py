@@ -37,6 +37,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 import time
@@ -120,6 +121,53 @@ def _git_sha() -> str | None:
                               timeout=5).stdout.strip() or None
     except (OSError, subprocess.SubprocessError):
         return None
+
+
+def _slug(text: str) -> str:
+    """Filesystem-safe name component: anything odd collapses to '-'."""
+    return re.sub(r"[^A-Za-z0-9.-]+", "-", str(text)).strip("-")
+
+
+def _checkpoint_slug(path: Path) -> str:
+    """Cite a checkpoint by its path under models/ with slashes folded, so
+    models/selfplay_g1/refs/u430080 reads selfplay_g1-refs-u430080 instead of
+    the bare u430080."""
+    p = Path(path)
+    try:
+        parts = p.resolve().relative_to(config.MODELS_DIR.resolve()).parts
+    except ValueError:
+        parts = (p.name,)
+    return _slug("-".join(parts))
+
+
+def build_run_tag(label: str | None, mix: tuple[float, float, float],
+                  opponent_module: str | None, deck_pool,
+                  mirror_deck: bool, init_from: Path) -> str:
+    """The run's name, with every axis that has burned us spelled out.
+
+    ppo_puffer/u120832 trained with 20% external opponents and selfplay_g1
+    with 0%; the names said neither, so the 275.1-vs-254.9 ladder gap was
+    unattributable without exhuming shell scripts and git history. Same story
+    for the deck (see _deck_fingerprint). So the tag always carries the
+    opponent mix, the deck, the init checkpoint, and the seed. A --run-tag
+    label is kept as a prefix, never as a replacement.
+    """
+    def pct(x: float) -> str:
+        return format(round(x * 100, 1), "g")
+
+    if opponent_module:
+        opponents = f"exploit100-{_slug(opponent_module)}"
+    else:
+        opponents = (f"mirror{pct(mix[0])}-league{pct(mix[1])}"
+                     f"-external{pct(mix[2])}")
+    if deck_pool is not None:
+        deck = f"deckpool{len(deck_pool)}" + ("-mirror" if mirror_deck else "")
+    else:
+        from pokemon_tcg import selfplay as _sp
+        deck = f"deck-{_slug(_sp.DECK_PATH.parent.name)}"
+    return "_".join([_slug(label) if label else "ppo", opponents, deck,
+                     f"from-{_checkpoint_slug(init_from)}",
+                     f"seed{config.RANDOM_SEED}"])
 MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 
@@ -241,9 +289,14 @@ def main() -> None:
     ap.add_argument("--promote-workers", type=int, default=8,
                     help="spawned eval-game processes per gate (cg engine is "
                          "a per-process singleton, so parallelism = processes)")
-    ap.add_argument("--run-tag", default=time.strftime("ppo_%Y%m%d_%H%M%S"),
-                    help="tag stamped into snapshots, promoted-ref metadata, "
-                         "and every metrics/promotion log row")
+    ap.add_argument("--run-tag", default=None,
+                    help="optional human label, kept as a PREFIX: the final "
+                         "tag always appends the derived descriptor (opponent "
+                         "mix, deck, init checkpoint, seed — see "
+                         "build_run_tag) so no run can hide its opponent mix "
+                         "behind a nickname again. The full tag is stamped "
+                         "into snapshot dir names, promoted-ref metadata, and "
+                         "every metrics/promotion log row")
     ap.add_argument("--max-seconds", type=float, default=None,
                     help="internal wall-clock budget: stop cleanly (with a final "
                          "snapshot) once exceeded -- replaces external kill timers")
@@ -316,7 +369,9 @@ def main() -> None:
                          "resolve_device (PTCG_DEVICE env var, then auto)")
     ap.add_argument("--snapshot-every-s", type=float, default=300.0,
                     help="actor save_pretrained cadence (mirror hot-reload + benchmark)")
-    ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "ppo_puffer")
+    ap.add_argument("--out", type=Path, default=None,
+                    help="snapshot dir; default models/<full run tag>, so "
+                         "runs stop piling into one anonymous models/ppo_puffer")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="launch even if disk/RAM/contention checks fail")
     ap.add_argument("--smoke", action="store_true",
@@ -329,6 +384,8 @@ def main() -> None:
         args.bptt_horizon, args.minibatch_size = 32, 64
         args.total_timesteps = 3 * args.num_envs * args.bptt_horizon
         args.device = "cpu"
+        if args.run_tag is None:
+            args.run_tag = "smoke"  # a smoke run must never look like a real one
     args.device = resolve_device(args.device)
     if args.kl_prior is None:
         args.kl_prior = args.init_from
@@ -346,6 +403,31 @@ def main() -> None:
     assert args.num_envs == args.num_workers, (
         f"cg engine is a per-process singleton: need num_envs == num_workers, "
         f"got {args.num_envs} != {args.num_workers}")
+
+    # Run identity BEFORE anything is created on disk: parse the opponent/deck
+    # config, derive the full run tag from it, and only then resolve --out
+    # (default models/<tag>), so every directory this run writes is named
+    # after what the run actually is.
+    league = [("ckpt", p) for p in args.league.split(",") if p]
+    mix = tuple(float(x) for x in args.mix.split(","))
+    if len(mix) != 3 or abs(sum(mix) - 1.0) > 1e-6:
+        ap.error(f"--mix needs 3 shares summing to 1, got {args.mix}")
+    if mix[2] == 0 and not league:
+        # _draw_opponent falls through to the public pool when the league
+        # bucket is empty; with a zero pool share that would silently
+        # reintroduce external opponents.
+        ap.error("--mix with zero public-pool share requires a non-empty --league")
+    deck_pool = None
+    if args.deck_pool:
+        deck_pool = DeckPool.from_spec(
+            args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
+            pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
+    args.run_tag = build_run_tag(args.run_tag, mix, args.opponent_module,
+                                 deck_pool, args.mirror_deck, args.init_from)
+    if args.out is None:
+        args.out = config.MODELS_DIR / args.run_tag
+    print(f"run tag: {args.run_tag}")
+    print(f"out dir: {args.out}")
 
     if not args.skip_preflight:
         preflight(args.num_workers)
@@ -381,7 +463,6 @@ def main() -> None:
     mirror_root = str(args.out)  # env workers hot-reload newest snapshot from here
     args.out.mkdir(parents=True, exist_ok=True)
 
-    league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
     POOL_NAMES = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
@@ -393,14 +474,6 @@ def main() -> None:
         weights_path = args.out / "pool_weights.json"
         init_w = pool_weights or [1.0] * len(POOL_NAMES)
         weights_path.write_text(json.dumps(dict(zip(POOL_NAMES, init_w))))
-    mix = tuple(float(x) for x in args.mix.split(","))
-    if len(mix) != 3 or abs(sum(mix) - 1.0) > 1e-6:
-        ap.error(f"--mix needs 3 shares summing to 1, got {args.mix}")
-    if mix[2] == 0 and not league:
-        # _draw_opponent falls through to the public pool when the league
-        # bucket is empty; with a zero pool share that would silently
-        # reintroduce external opponents.
-        ap.error("--mix with zero public-pool share requires a non-empty --league")
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
                   "league": league, "pool_weights": pool_weights, "mix": mix,
                   "pool_weights_path": str(weights_path) if weights_path else None,
@@ -419,15 +492,12 @@ def main() -> None:
         print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
               f"(100% of episodes, seats strictly alternating)")
 
-    if args.deck_pool:
-        pool = DeckPool.from_spec(
-            args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
-            pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
-        env_kwargs["deck_pool"] = pool
+    if deck_pool is not None:
+        env_kwargs["deck_pool"] = deck_pool
         env_kwargs["mirror_deck"] = args.mirror_deck
-        print(f"DECK POOL: K={len(pool)} mirror={args.mirror_deck} :: "
-              f"{', '.join(pool.names)}")
-        if len(pool) > 1 and not args.mirror_deck:
+        print(f"DECK POOL: K={len(deck_pool)} mirror={args.mirror_deck} :: "
+              f"{', '.join(deck_pool.names)}")
+        if len(deck_pool) > 1 and not args.mirror_deck:
             print("WARNING: K>1 without --mirror-deck. The opponent will keep "
                   "playing its own bundled deck while the learner varies, so "
                   "this measures deck MATCHUP, not policy exploitability.")
@@ -530,6 +600,13 @@ def main() -> None:
         # only known once the loop is running.
         run_state = {"t_run": None, "gates": 0, "promotions": 0}
 
+        def snap_name(step: int, final: bool = False) -> str:
+            """Snapshot dir names carry the full run tag: a bare u<step> dir
+            copied into agents/ becomes an agent named u120832 that says
+            nothing about how it trained. Steps are zero-padded so lexical
+            sort equals step order."""
+            return f"{args.run_tag}_step{step:08d}" + ("_final" if final else "")
+
         def save_actor(snap: Path, **extra) -> Path:
             """save_pretrained snapshot + run/step-tagged metadata.
 
@@ -565,7 +642,7 @@ def main() -> None:
         gate_on = args.kl_coef > 0 and args.promote_every > 0
 
         # Seed snapshot so mirror opponents have something to load from step 0.
-        save_actor(args.out / "u0")
+        save_actor(args.out / snap_name(0))
 
         # PFSP-lite harvest state (§3.3): per-opponent win-rate EMAs from the
         # wr_<slug> terminal infos, consumed-length bookkeeping because
@@ -651,7 +728,7 @@ def main() -> None:
             if gate_on and epoch % args.promote_every == 0:
                 # Promotion gate (the ratchet): mirrored pairs of live vs the
                 # frozen reference; training is paused for its duration.
-                live_snap = save_actor(args.out / f"u{trainer.global_step}")
+                live_snap = save_actor(args.out / snap_name(trainer.global_step))
                 print(f"promotion gate at update {epoch} (step "
                       f"{trainer.global_step}): live vs {ref_dir}, "
                       f"{args.promote_pairs} mirrored pairs...")
@@ -663,7 +740,7 @@ def main() -> None:
                 if verdict["promote"]:
                     run_state["promotions"] += 1
                     ref_snap = save_actor(
-                        args.out / "refs" / f"u{trainer.global_step}",
+                        args.out / "refs" / snap_name(trainer.global_step),
                         promoted_from=str(live_snap), gate=verdict)
                     trainer.retarget_prior(policy)
                     ref_dir = str(ref_snap)
@@ -681,7 +758,7 @@ def main() -> None:
                 # The gate's live snapshot doubles as the periodic one.
                 last_snap = time.time()
             elif time.time() - last_snap >= args.snapshot_every_s:
-                snap = save_actor(args.out / f"u{trainer.global_step}")
+                snap = save_actor(args.out / snap_name(trainer.global_step))
                 last_snap = time.time()
                 print(f"  snapshot -> {snap}")
 
@@ -690,7 +767,7 @@ def main() -> None:
               f"{trainer.global_step / max(elapsed, 1e-9):.1f} steps/s "
               f"(kl_coef={args.kl_coef}, includes gate pauses)")
 
-        snap = args.out / f"u{trainer.global_step}_final"
+        snap = args.out / snap_name(trainer.global_step, final=True)
         policy.actor.to("cpu").save_pretrained(snap)
         (snap / "ppo_metadata.json").write_text(json.dumps(
             {"global_step": trainer.global_step, "epoch": epoch,
