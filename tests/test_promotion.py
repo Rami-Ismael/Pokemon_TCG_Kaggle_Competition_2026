@@ -25,7 +25,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
 from pokemon_tcg import config  # noqa: E402
-from pokemon_tcg.promotion import MIN_DECISIVE, gate_verdict  # noqa: E402
+from pokemon_tcg.promotion import (  # noqa: E402
+    MIN_DECISIVE, evaluate_gate, gate_verdict)
 
 
 def outcomes(wins: int = 0, losses: int = 0, draws: int = 0) -> list[float]:
@@ -92,3 +93,46 @@ def test_retarget_mechanics_copy_weights_without_thawing():
         assert torch.equal(p, live_params[name]), f"{name} not copied"
         assert not p.requires_grad, f"{name} thawed by retarget"
     assert not ref.training, "reference left eval mode"
+
+
+def test_gate_samples_decks_from_the_pool():
+    """The gate must pilot the SAME deck distribution the run trains on.
+
+    Left on selfplay.load_deck it would ratchet the KL reference on the single
+    Mega Lucario ex mirror while the policy trains on a pool — selecting for
+    exactly the overfit the deck pool exists to remove. This runs real games,
+    because the failure mode that shipped was a TypeError inside the spawned
+    worker (random.Random rejects tuple seeds), which presents as a crashed
+    seat = a silent gate loss, not as an error the caller sees.
+    """
+    from pokemon_tcg.deck_pool import DeckPool
+
+    ckpt = str(config.MODELS_DIR / "il_agent")
+    if not Path(ckpt).exists():
+        pytest.skip("models/il_agent not present in this worktree")
+    pool = DeckPool.from_spec("il_agent,wmh_grimmsnarl")
+    v = evaluate_gate(ckpt, ckpt, pairs=2, workers=2, deck_pool=pool)
+    assert v["games"] == 4
+    assert v["deck_pool_k"] == 2 and v["mirror_deck"] is False
+    # A crashed seat scores as that seat's loss, so a broken deck override
+    # yields 0 draws and a lopsided record between two IDENTICAL checkpoints.
+    assert v["wins"] + v["losses"] + v["draws"] == 4
+
+
+def test_gate_pair_seeding_is_deterministic_and_pairs_share_a_matchup():
+    import random as _random
+
+    from pokemon_tcg.deck_pool import DeckPool
+    pool = DeckPool.from_spec("il_agent,wmh_grimmsnarl")
+    draws = []
+    for game_idx in range(6):
+        rng = _random.Random(f"7:{game_idx // 2}")          # the gate's seeding
+        draws.append((pool.sample(rng)[0], pool.sample(rng)[0]))
+    for k in range(3):
+        assert draws[2 * k] == draws[2 * k + 1], (
+            "the two games of a mirrored pair must be the same deck matchup "
+            "with the seats swapped, not two unrelated games")
+    again = [(_p := _random.Random(f"7:{i // 2}")) and (pool.sample(_p)[0],
+                                                       pool.sample(_p)[0])
+             for i in range(6)]
+    assert draws == again, "gate deck draws are not reproducible"

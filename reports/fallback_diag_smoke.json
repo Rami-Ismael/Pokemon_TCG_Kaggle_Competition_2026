@@ -6,20 +6,20 @@
   "pairs_per_opponent": 1,
   "games": 2,
   "record": {
-    "wins": 1,
-    "losses": 1,
+    "wins": 2,
+    "losses": 0,
     "draws": 0
   },
   "per_opponent": {
     "random_legal": {
-      "wins": 1,
-      "losses": 1,
+      "wins": 2,
+      "losses": 0,
       "draws": 0,
-      "seconds": 0.9
+      "seconds": 1.6
     }
   },
   "fallback": {
-    "decisions": 120,
+    "decisions": 101,
     "enabled": true,
     "fallbacks": 0,
     "fallback_rate": 0.0
