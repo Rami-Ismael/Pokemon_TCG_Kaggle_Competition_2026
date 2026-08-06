@@ -295,9 +295,53 @@ def test_winner_only_drops_losing_seat_decisions():
     assert win < both, "winner_only must drop loser-side rows, so it cannot equal both-seats"
 
 
+def test_n_episodes_counts_only_allowlisted_episodes():
+    """A filtered arm must not report the unfiltered shard size.
+
+    Training schedules are sized off n_episodes(). If the allowlist is
+    ignored here, a filtered arm silently receives the SAME step budget as
+    the unfiltered arm -- reintroducing the step-matching the --epochs
+    budget exists to avoid (see run_skill_filter_ablation.py).
+    """
+    import tempfile
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from pokemon_tcg.il_dataset import ShardILDataset
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        shard_dir = root / "train" / "day=2026-07-26"
+        shard_dir.mkdir(parents=True)
+        pq.write_table(
+            pa.table({"episode_id": list(range(100))}), shard_dir / "shard-000.parquet"
+        )
+
+        unfiltered = ShardILDataset("train", local_root=root).n_episodes()
+        assert unfiltered == 100, unfiltered
+
+        allowed = {3, 17, 42}
+        filtered = ShardILDataset(
+            "train", local_root=root, episode_ids=allowed
+        ).n_episodes()
+        assert filtered == len(allowed), (
+            f"allowlist of {len(allowed)} reported as {filtered} episodes -- "
+            "n_episodes ignored episode_ids, so filtered arms would be "
+            "step-matched to the unfiltered arm"
+        )
+
+        # ids outside the shard must not be counted as present
+        absent = ShardILDataset(
+            "train", local_root=root, episode_ids={5, 999_999}
+        ).n_episodes()
+        assert absent == 1, absent
+
+
 if __name__ == "__main__":
     tests = [
         test_resolve_device,
+        test_n_episodes_counts_only_allowlisted_episodes,
         test_main_py_survives_kaggle_exec_loading,
         test_agent_degrades_gracefully_when_torch_unavailable,
         test_lr_schedule_does_not_prematurely_decay_to_zero,
