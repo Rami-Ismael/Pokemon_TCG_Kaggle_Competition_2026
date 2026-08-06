@@ -625,15 +625,27 @@ def main() -> None:
         # deck and losing on the rest. Running SUM and COUNT, not an EMA: the
         # reportable number is a cumulative win rate with its own n attached,
         # and a cell's n is what says whether to read it at all.
-        # `seen` is consumed-length bookkeeping -- pufferl's stats lists
-        # accumulate until its throttled log clears them.
+        # Consumed-position bookkeeping, keyed on LIST IDENTITY.
+        #
+        # pufferl.train() does `self.stats = defaultdict(list)` every update, so
+        # each evaluate() hands back brand-new list objects. Tracking only a
+        # consumed LENGTH across that boundary silently drops samples: a sparse
+        # key reappears in the fresh dict with len(v)==1 while the stale count
+        # is also 1, so `v[1:]` is empty and that episode is lost. The loss
+        # scales with key sparsity -- measured on g4_treatment_s42, 3 opponent
+        # keys captured ~100%, 29 deck keys 59%, 841 matchup keys 20%.
+        #
+        # Holding a REFERENCE to the previous list makes `is` a sound identity
+        # test (id() alone could be recycled by the allocator): same object ->
+        # take the delta, new object -> take everything.
         from collections import defaultdict as _dd
         PREFIXES = {"wr_": "opp", "wrd_": "deck", "wrm_": "matchup"}
         wr_sum: dict[str, dict[str, float]] = {v: _dd(float)
                                                for v in PREFIXES.values()}
         wr_n: dict[str, dict[str, int]] = {v: _dd(int)
                                            for v in PREFIXES.values()}
-        seen: dict[str, int] = _dd(int)
+        prev_list: dict[str, list] = {}
+        consumed: dict[str, int] = _dd(int)
 
         def harvest(stats) -> None:
             for k, v in list(stats.items()):
@@ -642,9 +654,9 @@ def main() -> None:
                             if k.startswith(p_)), None)
                 if pre is None or not isinstance(v, list):
                     continue
-                if len(v) < seen[k]:
-                    seen[k] = 0  # upstream cleared its stats on a log tick
-                fresh, seen[k] = v[seen[k]:], len(v)
+                fresh = v[consumed[k]:] if prev_list.get(k) is v else v[:]
+                prev_list[k] = v
+                consumed[k] = len(v)
                 fam, slug = PREFIXES[pre], k[len(pre):]
                 for x in fresh:
                     wr_sum[fam][slug] += float(x)
