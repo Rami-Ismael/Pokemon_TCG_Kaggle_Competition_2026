@@ -1,20 +1,34 @@
-"""Deck pools — the swept axis of the deck-diversity exploitability study
-(notes/experiments/2026-08-04-deck-diversity-exploitability-sweep.md).
+"""Deck pools — the diversity axis of self-play.
 
-Until now the training/eval env played ONE hardcoded deck
-(`selfplay.load_deck()` reading a fixed `DECK_PATH`), which is why the v1
-exploiter diagnostic is scoped to the Mega Lucario ex mirror. This module adds
-a pool that is sampled per episode.
+Until 2026-08-05 the training env played ONE hardcoded deck
+(`selfplay.load_deck()` reading a fixed `DECK_PATH`) on BOTH seats, so three
+self-play generations learned a single mirror matchup rather than the game.
+This module supplies a pool that is sampled per episode.
 
-MIRROR SEMANTICS, and why they are not optional. A module opponent supplies its
-own deck when the engine asks for one (`select is None`), so widening only the
-learner's pool would silently produce *cross-deck* matchups — the learner on a
-sampled deck, the opponent forever on its bundled one. That measures deck
-matchup, not policy exploitability, and it is exactly the confound the v1 report
-controlled for by using one deck on both sides. `mirror_deck_agent` therefore
-intercepts the opponent's deck step and substitutes the episode's deck, so both
-seats always play the same list. A pool of size 1 holding il_agent's own deck
-reproduces the v1 setup exactly.
+WHO SUPPLIES A DECK. When the engine asks a seat for its list (`select is
+None`), the learner's side is answered by the env (`PTCGGym.deck`) but the
+opponent answers for itself: a checkpoint opponent returns
+`SamplingPolicy.deck` (= `load_deck()`, one fixed list) and a module opponent
+returns its own bundled `deck.csv`. So widening only the learner's pool leaves
+every opponent on the same deck forever. `deck_override_agent` intercepts that
+step and substitutes whatever the caller's getter returns.
+
+TWO MODES, both built on that one wrapper:
+  independent (default with a pool) — learner deck and opponent deck are two
+    separate uniform draws per episode. This is the diversity treatment.
+  mirror (`--mirror-deck`) — one draw, both seats. The same-deck-both-seats
+    control, and what the 2026-08-04 exploitability sweep needs to keep deck
+    MATCHUP out of an exploitability measurement.
+
+SAMPLING IS UNIFORM over pool members (`DeckPool.sample`), deliberately. We
+have no ladder meta-share data, so uniform is the honest choice and it targets
+worst-case robustness. A policy trained this way has NOT been "trained on the
+meta distribution" — meta-weighting is a separate experiment.
+
+Pool members must be cg-LEGAL: an illegal list returns INVALID at deck
+submission and hands away every episode it is drawn for. Gate a pool through
+`scripts/probe_deck_legality.py` and feed the resulting manifest back as
+`@configs/deck_pools/<name>.txt`.
 """
 from __future__ import annotations
 
@@ -38,13 +52,15 @@ def parse_deck(path: Path) -> list[int]:
 def resolve_deck_ref(ref: str) -> tuple[str, Path]:
     """Resolve a deck reference to (name, path).
 
-    Accepted, in order: an existing path; a `configs/deck_lists/<ref>.csv`
+    Accepted, in order: an existing path (absolute, cwd-relative, or
+    PROJECT_ROOT-relative — manifests store repo-relative paths so they do not
+    bake in the worktree that generated them); a `configs/deck_lists/<ref>.csv`
     stem; an `agents/<ref>/deck.csv` agent name.
     """
-    p = Path(ref)
-    if p.exists() and p.is_file():
-        name = p.parent.name if p.name == "deck.csv" else p.stem
-        return name, p
+    for p in (Path(ref), config.PROJECT_ROOT / ref):
+        if p.exists() and p.is_file():
+            name = p.parent.name if p.name == "deck.csv" else p.stem
+            return name, p
     cand = DECK_LISTS_DIR / f"{ref}.csv"
     if cand.exists():
         return ref, cand
@@ -56,27 +72,57 @@ def resolve_deck_ref(ref: str) -> tuple[str, Path]:
         f"or an agents/<name>/deck.csv")
 
 
-def _dedup_by_content(pairs: list[tuple[str, Path]]) -> list[tuple[str, Path]]:
-    """Keep one entry per distinct deck content, first name wins.
+def deck_digest(path: Path) -> str:
+    """Identity of a deck = its SORTED 60-card multiset, not its file bytes.
 
-    agents/ holds 47 deck.csv files but only 33 distinct lists; counting
-    duplicates as pool members would overstate K.
+    Hashing the raw bytes (what this did until 2026-08-05) treats lists that
+    differ only in card ORDER or whitespace as distinct. scripts/census_deck_pool.py
+    found four such groups among the 35 legality-passed lists — e.g. tb_starmie
+    and wmh_froslass are the same 60 cards at jaccard 1.000. Left in, they
+    inflate K and hand their archetype extra sampling weight under a flag whose
+    whole point is a controlled uniform draw.
+    """
+    return hashlib.md5(str(sorted(parse_deck(path))).encode()).hexdigest()
+
+
+def _dedup_by_content(pairs: list[tuple[str, Path]],
+                      keep_order: bool = False) -> list[tuple[str, Path]]:
+    """Keep one entry per distinct deck content; duplicates would overstate K.
+
+    By default entries are sorted first, so the alphabetically-first name wins
+    and the result is machine-independent. `keep_order=True` respects the
+    caller's order instead — used by the union spec so a curated
+    configs/deck_lists name wins over an agent directory holding the same list.
     """
     seen: dict[str, tuple[str, Path]] = {}
-    for name, path in sorted(pairs):
-        digest = hashlib.md5(path.read_bytes()).hexdigest()
-        seen.setdefault(digest, (name, path))
-    return sorted(seen.values())
+    for name, path in (pairs if keep_order else sorted(pairs)):
+        seen.setdefault(deck_digest(path), (name, path))
+    return list(seen.values()) if keep_order else sorted(seen.values())
+
+
+def _decklists() -> list[tuple[str, Path]]:
+    return sorted((p.stem, p) for p in DECK_LISTS_DIR.glob("*.csv"))
+
+
+def _agent_decks() -> list[tuple[str, Path]]:
+    return _dedup_by_content(
+        [(p.parent.name, p) for p in AGENTS_DIR.glob("*/deck.csv")])
 
 
 def _expand_spec(spec: str) -> list[tuple[str, Path]]:
     if spec == "all:decklists":
-        return sorted((p.stem, p) for p in DECK_LISTS_DIR.glob("*.csv"))
+        return _decklists()
     if spec == "all:agents":
-        return _dedup_by_content(
-            [(p.parent.name, p) for p in AGENTS_DIR.glob("*/deck.csv")])
+        return _agent_decks()
+    if spec == "all:decks":
+        # Union of both sources, content-deduped across them. Curated lists go
+        # first so their human-readable stems survive dedup and become the
+        # wrd_/wrm_ stat slugs.
+        return _dedup_by_content(_decklists() + _agent_decks(), keep_order=True)
     if spec.startswith("@"):
         manifest = Path(spec[1:])
+        if not manifest.exists():
+            manifest = config.PROJECT_ROOT / spec[1:]
         refs = [ln.split("#", 1)[0].strip()
                 for ln in manifest.read_text().splitlines()]
         return [resolve_deck_ref(r) for r in refs if r]
@@ -121,10 +167,9 @@ class DeckPool:
             # (e.g. il_agent) is often present under some other agent's name.
             # The pinned entry replaces that duplicate and keeps its own name.
             head = [resolve_deck_ref(r) for r in pin]
-            pinned_digests = {hashlib.md5(p.read_bytes()).hexdigest()
-                              for _, p in head}
+            pinned_digests = {deck_digest(p) for _, p in head}
             rest = [(n, p) for n, p in pairs
-                    if hashlib.md5(p.read_bytes()).hexdigest() not in pinned_digests]
+                    if deck_digest(p) not in pinned_digests]
         else:
             head, rest = [], list(pairs)
         if seed is not None:
@@ -155,8 +200,8 @@ class DeckPool:
         return f"DeckPool(K={len(self)}, {', '.join(self.names)})"
 
 
-def mirror_deck_agent(fn, deck_getter):
-    """Wrap an opponent so its deck step returns the episode's pooled deck.
+def deck_override_agent(fn, deck_getter):
+    """Wrap an opponent so its deck step returns a caller-chosen deck.
 
     `deck_getter` is a zero-arg callable read at deck-submission time, not a
     fixed list, because the deck changes every episode. The wrapper is a plain

@@ -51,7 +51,7 @@ def main() -> None:
     mask_i = [k for k, _, _ in OBS_LAYOUT].index("opt_mask")
     off, size = int(_OFFSETS[mask_i]), int(_SIZES[mask_i])
 
-    env = PTCGGym(league=[("module", args.opponent)], mix=(0.0, 1.0, 0.0),
+    env = PTCGGym(league=[("module", args.opponent)], mix=(0.0, 1.0),
                   seed=args.seed)
     rng = np.random.default_rng(args.seed)
 

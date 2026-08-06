@@ -26,7 +26,6 @@ Reward: terminal only, {0, 0.5, 1} (win/draw/loss remap; never -1).
 from __future__ import annotations
 
 import glob
-import json
 import os
 import random
 import sys
@@ -39,7 +38,7 @@ import torch
 
 from . import config
 from .il_dataset import MAX_OPTIONS, encode_observation
-from .deck_pool import DeckPool, mirror_deck_agent
+from .deck_pool import DeckPool, deck_override_agent
 from .selfplay import SamplingPolicy, _safe_choice, as_env_agent, load_deck
 
 _CG_DIR = config.PROJECT_ROOT / "data" / "external" / "cg-lib"
@@ -143,16 +142,21 @@ class LatestCheckpointOpponent:
 
 
 class PTCGGym(gymnasium.Env):
-    """Single-agent view of one cabt game vs a league-sampled opponent."""
+    """Single-agent view of one cabt game vs a lineage-sampled opponent.
+
+    OPPONENTS ARE LINEAGE-ONLY: the live mirror (hot-reloaded learner weights)
+    and our own frozen checkpoints. Rule-based baselines and other competitors'
+    submissions ("externals") are deliberately NOT training opponents — keeping
+    them unseen is what makes the local evaluation pool a real out-of-sample
+    filter. The diversity axis here is the DECK, not the opponent.
+    """
 
     metadata = {"render_modes": []}
 
     def __init__(self, league: list[tuple[str, str]] | None = None,
                  mirror_root: str | None = None,
                  anchor_ckpt: str | None = None,
-                 mix: tuple[float, float, float] = (0.5, 0.3, 0.2),
-                 pool_weights: list[float] | None = None,
-                 pool_weights_path: str | None = None,
+                 mix: tuple[float, float] = (0.625, 0.375),
                  opp_hold: int = 4,
                  alternate_seats: bool = False,
                  deck_pool: DeckPool | None = None,
@@ -163,30 +167,28 @@ class PTCGGym(gymnasium.Env):
             low=-np.inf, high=np.inf, shape=(OBS_SIZE,), dtype=np.float32)
         self.action_space = gymnasium.spaces.Discrete(MAX_OPTIONS)
         self.rng = random.Random(seed)
-        # Deck pool (deck-diversity sweep): None keeps the historical single
-        # hardcoded deck, so every pre-sweep run reproduces bit-for-bit.
+        # Deck pool: None keeps the historical single hardcoded deck, so every
+        # pre-pool run reproduces bit-for-bit. With a pool, BOTH seats' decks
+        # are redrawn every episode -- independently by default, or as a pair
+        # under mirror_deck (the same-deck-both-seats control). Without the
+        # opponent-side draw a checkpoint opponent keeps serving
+        # selfplay.load_deck()'s single list, which is how three self-play
+        # generations trained on one mirror matchup.
         self.deck_pool = deck_pool
         self.mirror_deck = mirror_deck
         self.deck = load_deck() if deck_pool is None else deck_pool.entries[0][1]
         self.deck_name = "load_deck" if deck_pool is None else deck_pool.names[0]
+        self.opp_deck = self.deck
+        self.opp_deck_name = self.deck_name
         anchor = anchor_ckpt or str(config.MODELS_DIR / "s2" / "e1_seed43")
         self.anchor = anchor
         self.mix = mix
         self.league = league or [("ckpt", str(config.MODELS_DIR / "il_agent"))]
-        self.pool_names = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
-        # PFSP-style frontier weighting: overweight the strongest opponent the
-        # learner beats often enough to learn from (near-zero-win matchups
-        # yield ~no gradient under terminal-only reward). None = uniform.
-        # pool_weights_path points at a JSON {agent_name: weight} the driver
-        # rewrites from rollout-harvested win rates (rl_pipeline_v2 §3.3);
-        # re-read periodically, same hot-reload idiom as the mirror opponent.
-        self.pool_weights = pool_weights
-        self.pool_weights_path = pool_weights_path
-        self._weights_next_check = 0.0
-        # PFSP-lite opponent persistence: keep the drawn opponent for
-        # `opp_hold` consecutive episodes so per-opponent win-rate estimates
-        # harvested from rollouts are runs, not single samples (§3.3's
-        # translation of "fix the opponent for 2 consecutive PPO updates").
+        # Opponent persistence: keep the drawn opponent for `opp_hold`
+        # consecutive episodes so per-opponent win-rate estimates harvested
+        # from rollouts are runs, not single samples. Purely a variance knob
+        # now -- it used to feed PFSP pool weighting, which was deleted with
+        # the public-pool bucket. The DECK still redraws every episode.
         self.opp_hold = max(1, int(opp_hold))
         self._opp_left = 0
         self._opp_slug = "mirror"
@@ -206,37 +208,20 @@ class PTCGGym(gymnasium.Env):
         self._make = kaggle_make
 
     # -- opponent plumbing ---------------------------------------------------
-    def _maybe_reload_weights(self) -> None:
-        if not self.pool_weights_path:
-            return
-        now = time.time()
-        if now < self._weights_next_check:
-            return
-        self._weights_next_check = now + 60.0
-        try:
-            data = json.loads(Path(self.pool_weights_path).read_text())
-            w = [float(data.get(n, 0.0)) for n in self.pool_names]
-            if sum(w) > 0:
-                self.pool_weights = w
-        except (OSError, ValueError):
-            pass  # keep current weights; the file may be mid-write or absent
-
     def _draw_opponent(self):
-        """Returns (agent_fn, slug); slug feeds the wr_<slug> terminal info."""
+        """Two buckets only -- mirror and league, both LINEAGE.
+
+        Returns (agent_fn, slug); slug feeds the wr_<slug> terminal info. An
+        empty league falls back to the mirror rather than to anything external:
+        there is no third bucket to fall through into any more.
+        """
         u = self.rng.random()
-        if u < self.mix[0]:
+        if u < self.mix[0] or not self.league:
             if self._mirror is not None:
                 return self._mirror.agent, "mirror"
             return self._cached(("ckpt", self.anchor)), "mirror"
-        if u < self.mix[0] + self.mix[1] and self.league:
-            spec = self.league[self.rng.randrange(len(self.league))]
-            return self._cached(spec), f"league_{Path(spec[1]).name}"
-        self._maybe_reload_weights()
-        if self.pool_weights:
-            name = self.rng.choices(self.pool_names, weights=self.pool_weights, k=1)[0]
-        else:
-            name = self.pool_names[self.rng.randrange(len(self.pool_names))]
-        return self._cached(("module", name)), name
+        spec = self.league[self.rng.randrange(len(self.league))]
+        return self._cached(spec), f"league_{Path(spec[1]).name}"
 
     def _cached(self, spec: tuple[str, str]):
         if spec in self._opp_cache:
@@ -321,17 +306,27 @@ class PTCGGym(gymnasium.Env):
         else:
             self.learner_seat = self.rng.randint(0, 1)
         if self.deck_pool is not None:
+            # Two independent draws per episode: the learner's deck and the
+            # opponent's. mirror_deck collapses them to one draw (the control
+            # arm). Drawn BEFORE the opponent draw so the wrapper installed
+            # below already sees this episode's values.
             self.deck_name, self.deck = self.deck_pool.sample(self.rng)
+            if self.mirror_deck:
+                self.opp_deck_name, self.opp_deck = self.deck_name, self.deck
+            else:
+                self.opp_deck_name, self.opp_deck = self.deck_pool.sample(self.rng)
         if self._opp_left <= 0:
             self.opponent, self._opp_slug = self._draw_opponent()
-            if self.mirror_deck:
-                # Both seats play this episode's deck; without this the opponent
-                # module keeps serving its own bundled list and the "mirror"
-                # becomes a cross-deck matchup (see deck_pool module docstring).
-                # The wrapper's lambda reads self.deck at call time, so a HELD
-                # opponent (opp_hold persistence) keeps tracking the deck the
-                # pool samples for each new episode.
-                self.opponent = mirror_deck_agent(self.opponent, lambda: self.deck)
+            if self.deck_pool is not None:
+                # Force the opponent onto the pooled deck. Without this a
+                # checkpoint opponent submits SamplingPolicy's own load_deck()
+                # list and a module opponent submits its bundled one, so
+                # widening only the learner's side leaves every opponent on the
+                # same deck forever. The wrapper's lambda reads self.opp_deck at
+                # call time, so a HELD opponent (opp_hold persistence) keeps
+                # tracking each new episode's draw.
+                self.opponent = deck_override_agent(self.opponent,
+                                                    lambda: self.opp_deck)
             self._opp_left = self.opp_hold
         self._opp_left -= 1
         self._illegal = 0
@@ -380,17 +375,24 @@ class PTCGGym(gymnasium.Env):
             scored = [float("-inf") if x is None else x for x in r]
             mine, theirs = scored[self.learner_seat], scored[1 - self.learner_seat]
             reward = 0.5 if mine == theirs else (1.0 if mine > theirs else 0.0)
-            # wr_<slug>: the free per-opponent outcome harvest (§3.3) — flows
-            # through pufferl's info->stats aggregation; the driver EMAs these
-            # into PFSP pool weights instead of running separate eval games.
+            # Free outcome harvest through pufferl's info->stats aggregation.
+            # Three cuts, because a POOLED win rate is exactly the number that
+            # hides a policy dominating one deck and losing the rest:
+            #   wr_<opp slug>   opponent type (mirror / league_<ckpt>)
+            #   wrd_<deck>      the learner's deck this episode
+            #   wrm_<a>~<b>     the full matchup, learner deck ~ opponent deck
+            info = {"illegal_picks": self._illegal,
+                    f"wr_{self._opp_slug}": reward}
+            if self.deck_pool is not None:
+                info[f"wrd_{self.deck_name}"] = reward
+                info[f"wrm_{self.deck_name}~{self.opp_deck_name}"] = reward
             return (np.zeros(OBS_SIZE, dtype=np.float32), reward, True, False,
-                    {"illegal_picks": self._illegal, f"wr_{self._opp_slug}": reward})
+                    info)
         return obs, 0.0, False, False, {}
 
 
 def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
-                    pool_weights=None, pool_weights_path=None, opp_hold=4,
-                    mix=(0.5, 0.3, 0.2),
+                    opp_hold=4, mix=(0.625, 0.375),
                     alternate_seats=False, deck_pool=None, mirror_deck=False,
                     seed=0, buf=None):
     """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call.
@@ -403,8 +405,7 @@ def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
 
     torch.set_num_threads(1)
     env = PTCGGym(league=league, mirror_root=mirror_root,
-                  anchor_ckpt=anchor_ckpt, pool_weights=pool_weights,
-                  pool_weights_path=pool_weights_path, opp_hold=opp_hold,
+                  anchor_ckpt=anchor_ckpt, opp_hold=opp_hold,
                   mix=mix, alternate_seats=alternate_seats,
                   deck_pool=deck_pool, mirror_deck=mirror_deck, seed=seed)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)

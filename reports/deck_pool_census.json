@@ -1,0 +1,120 @@
+{
+  "spec": "@configs/deck_pools/legal_decks.txt",
+  "k": 29,
+  "archetypes": {
+    "Fezandipiti ex": [
+      "alakazam",
+      "mechi22_alakazam",
+      "wmh_alakazam"
+    ],
+    "Mega Lucario ex": [
+      "avikdas567_heuristic",
+      "mega_lucario_ex",
+      "pixiux_lucario_v63"
+    ],
+    "Archaludon ex": [
+      "plamen06_steel",
+      "tb_archaludon"
+    ],
+    "Crustle": [
+      "biohack44_day2",
+      "prvsiyan_control_v11"
+    ],
+    "Dragapult ex": [
+      "dragapult_ex",
+      "tb_heuristic"
+    ],
+    "Marnie's Grimmsnarl ex": [
+      "grimmsnarl_toplayer",
+      "marnies_grimmsnarl_ex"
+    ],
+    "Mega Abomasnow ex": [
+      "kiyotah_abomasnow",
+      "tb_abomasnow"
+    ],
+    "Mega Kangaskhan ex": [
+      "mega_kangaskhan_ex",
+      "wmh_kangaskhan"
+    ],
+    "Mega Starmie ex": [
+      "tb_starmie",
+      "wmh_megastarmie"
+    ],
+    "Team Rocket's Mewtwo ex": [
+      "team_rockets_spidops",
+      "wmh_mewtwo"
+    ],
+    "Chandelure": [
+      "wmh_chandelure"
+    ],
+    "Cornerstone Mask Ogerpon ex": [
+      "wmh_ogerpon"
+    ],
+    "Cynthia's Garchomp ex": [
+      "cynthias_garchomp_ex"
+    ],
+    "Dudunsparce": [
+      "pllinas_alakazam"
+    ],
+    "Ethan's Typhlosion": [
+      "wmh_typhlosion"
+    ],
+    "Hop\u2019s Snorlax": [
+      "wmh_trevenant"
+    ],
+    "Iono\u2019s Bellibolt ex": [
+      "kiyotah_iono"
+    ]
+  },
+  "archetype_share": {
+    "Fezandipiti ex": 0.1034,
+    "Mega Lucario ex": 0.1034,
+    "Archaludon ex": 0.069,
+    "Crustle": 0.069,
+    "Dragapult ex": 0.069,
+    "Marnie's Grimmsnarl ex": 0.069,
+    "Mega Abomasnow ex": 0.069,
+    "Mega Kangaskhan ex": 0.069,
+    "Mega Starmie ex": 0.069,
+    "Team Rocket's Mewtwo ex": 0.069,
+    "Chandelure": 0.0345,
+    "Cornerstone Mask Ogerpon ex": 0.0345,
+    "Cynthia's Garchomp ex": 0.0345,
+    "Dudunsparce": 0.0345,
+    "Ethan's Typhlosion": 0.0345,
+    "Hop\u2019s Snorlax": 0.0345,
+    "Iono\u2019s Bellibolt ex": 0.0345
+  },
+  "near_duplicates": [
+    {
+      "jaccard": 0.967,
+      "a": "plamen06_steel",
+      "b": "tb_archaludon"
+    },
+    {
+      "jaccard": 0.967,
+      "a": "mega_lucario_ex",
+      "b": "pixiux_lucario_v63"
+    },
+    {
+      "jaccard": 0.935,
+      "a": "mega_kangaskhan_ex",
+      "b": "wmh_kangaskhan"
+    },
+    {
+      "jaccard": 0.935,
+      "a": "grimmsnarl_toplayer",
+      "b": "marnies_grimmsnarl_ex"
+    },
+    {
+      "jaccard": 0.905,
+      "a": "mega_lucario_ex",
+      "b": "avikdas567_heuristic"
+    },
+    {
+      "jaccard": 0.875,
+      "a": "avikdas567_heuristic",
+      "b": "pixiux_lucario_v63"
+    }
+  ]
+}

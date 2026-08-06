@@ -246,15 +246,16 @@ def play_one_game(task: tuple[int, tuple[str, str], int]) -> dict:
     }
 
 
-def sample_league(rng: random.Random, league_ckpts: list[str],
-                  pool_agents: list[str], mix=(0.5, 0.3, 0.2)) -> tuple[str, str]:
-    """League opponent draw per rl_pipeline_v1.md §3.1: ~mirror / past ckpts /
-    public pool. Falls back to mirror when a bucket is empty."""
-    u = rng.random()
-    if u < mix[0] or (not league_ckpts and not pool_agents):
+def sample_lineage_opponent(rng: random.Random, league_ckpts: list[str],
+                            mirror_share: float = 0.625) -> tuple[str, str]:
+    """Two-bucket opponent draw: live mirror, or one of our frozen checkpoints.
+
+    LINEAGE ONLY. The public-pool bucket this replaced (rl_pipeline_v1 §3.1's
+    three-way mirror/league/externals draw) is gone, not zeroed: externals
+    are never training opponents, so the local evaluation pool stays a genuine
+    out-of-sample filter (2026-08-04 league-composition decision, extended
+    2026-08-05). An empty league falls back to the mirror.
+    """
+    if not league_ckpts or rng.random() < mirror_share:
         return ("ckpt", "__mirror__")
-    if u < mix[0] + mix[1] and league_ckpts:
-        return ("ckpt", rng.choice(league_ckpts))
-    if pool_agents:
-        return ("module", rng.choice(pool_agents))
-    return ("ckpt", "__mirror__")
+    return ("ckpt", rng.choice(league_ckpts))
