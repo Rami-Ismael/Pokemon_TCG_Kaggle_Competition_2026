@@ -281,6 +281,21 @@ AGENT_FILES = {
     "wmh_ogerpon": REPO / "agents" / "wmh_ogerpon" / "main.py",          # NEW deck: Ogerpon (GenericPolicy, top-player list)
     "wmh_chandelure": REPO / "agents" / "wmh_chandelure" / "main.py",    # NEW deck: Chandelure (GenericPolicy)
     "wmh_froslass": REPO / "agents" / "wmh_froslass" / "main.py",        # NEW deck: Mega Froslass ex (GenericPolicy)
+    # Marnie's Grimmsnarl ex EXPERT, added 2026-08-05 to repair the pool's
+    # inability to contest the corpus's #1 archetype (51.3% of ladder seats,
+    # while our only 3 pilots ranked 39/44/46 of 52). Found by reading decks,
+    # not names: scripts/scan_public_kernel_decks.py over the top 30 public
+    # kernels turned up exactly ONE Grimmsnarl agent -- people publish Lucario
+    # and play Grimmsnarl. Source: tetsutani/grimmsnarl-ex-damage-transfer-control
+    # (89 votes). Shipped base64-tarball-wrapped; decoded, sha256-verified
+    # against the notebook's own declared hash, and audited across its 178 .py
+    # files: no subprocess/socket/network/exec/eval/ctypes, ZERO write-mode file
+    # I/O, imports stdlib + cg + its own modules. Its one pickle
+    # (models/feature_schema.pkl.gz) disassembles under pickletools to integer
+    # opcodes only -- zero GLOBAL/REDUCE/INST/OBJ/BUILD -- so unpickling cannot
+    # execute code. Deck legality PASS. Supplies its own deck (main.py:215).
+    # Strength: 84.1% [75.0, 90.3] over 88 games; beats wmh_grimmsnarl (37.5%).
+    "tetsutani_grimmsnarl": REPO / "agents" / "tetsutani_grimmsnarl" / "main.py",  # Marnie's Grimmsnarl ex expert
     # (The nine s2_* REWEIGHT arms are registered once, above -- they used to be
     # repeated here, which Python silently resolved to whichever block came
     # last. Add new arms in one place only.)
