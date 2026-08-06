@@ -37,11 +37,12 @@ cost Rami an entire day of planned work.
   best-ever rank. A past session kept repeating rank 804 (an old high-water
   mark it could no longer reproduce) while the live resubmission sat in the
   high 600s. Best-ever may be mentioned only alongside, and clearly labeled.
-- Local agent quality is measured against the **full verified local agent
-  pool** (~9 agents) with Glicko-2 plus the Metamon-paper metrics — not a
-  hand-picked subset. If the full round-robin takes an hour, it takes an
-  hour. A comparison against a subset must be labeled "subset — not
-  comparable to pool numbers" everywhere it is quoted.
+- Local agent quality is measured against **every agent in the local pool**:
+  enumerate `agents/` at run time and include ALL of them (currently ~60) —
+  not the 9 "verified" ones, not 13, not a hand-picked subset — with
+  Glicko-2 plus the Metamon-paper metrics. If the full round-robin takes
+  hours, it takes hours. A comparison against anything less must be labeled
+  "subset — not comparable to pool numbers" everywhere it is quoted.
 - When Rami asks to compare against all agents, do exactly that. Do not
   substitute a cheaper default behavior.
 - Do not introduce statistics Rami hasn't asked for (e.g. Spearman) without
