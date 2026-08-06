@@ -1,7 +1,7 @@
-"""All-days imitation wrapper (plain-name scheme): il_agent inference core, checkpoint selfplay_g2/u1293312_final (self-play gen 2).
+"""Self-play gen-3 wrapper: il_agent inference core on models/selfplay_g3/u1229824_final.
 
 Same pattern as agents/s2_arms/: loads agents/il_agent/agent_core.py as a
-private module with IL_MODEL_DIR pointed at models/s2v2/e0_s43, env var
+private module with IL_MODEL_DIR pointed at this checkpoint, env var
 restored afterward so a later plain il_agent load still gets the PRIOR.
 """
 import importlib.util

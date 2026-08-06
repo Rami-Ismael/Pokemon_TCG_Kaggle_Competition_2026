@@ -10,6 +10,16 @@ This is the source of truth for role. It is keyed on the safetensors sha256, so
 duplicates and empty/broken directories are detected rather than trusted -- a
 rename or a re-copy cannot make the registry lie.
 
+NAMING RULE
+  A directory name is an immutable ID: <method>_<data>_<date>, chosen once and
+  never changed -- the submission ledger, notes/ and runs/ logs cite it.
+  Role is MUTABLE (today's candidate is next week's archive), so it lives in
+  this file and in the `--write-aliases` symlinks, never in the real dir name.
+  Read models/by-role/ when you are choosing what to ship; read models/ when
+  you are tracing where something came from.
+  A name that turns out to be wrong is retired, not renamed: leave a symlink,
+  mark the old name DEPRECATED here, and point new code at the real dir.
+
 ROLES
   candidate   a real submission candidate; the thing you would upload
   shipped     what an agent currently ships (agents/il_agent/ reads this)
@@ -17,6 +27,8 @@ ROLES
   ablation    a variation held for comparison, not for shipping
   archive     kept for provenance (e.g. a past ladder-scoring build)
   scratch     dry runs / smoke tests, safe to delete
+  DEPRECATED  a legacy NAME kept as a symlink so old references resolve;
+              write no new code against it
   BROKEN      directory exists but has no loadable weights
 
 Usage:
@@ -24,6 +36,7 @@ Usage:
   uv run python scripts/model_registry.py --roles candidate,shipped
   uv run python scripts/model_registry.py --write-aliases   # models/by-role/<clear-name>
   uv run python scripts/model_registry.py --json
+  uv run python scripts/model_registry.py --models-dir ../../models   # from a worktree
 """
 from __future__ import annotations
 
@@ -34,7 +47,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-MODELS = REPO / "models"
+MODELS = REPO / "models"  # rebound by --models-dir; worktrees have an empty models/
 
 # dir name -> (role, clear name, one-line purpose)
 # Clear name convention:  <role>-<data>-<variant>
@@ -110,6 +123,55 @@ REGISTRY: dict[str, tuple[str, str, str]] = {
         "Byte-identical to models/il_agent_2ep_backup. Named for a ladder "
         "reading the build does not reliably reproduce (settled ~685).",
     ),
+    "il_agent_hfstream_v2_3ep": (
+        "ablation", "ablation-hfstream-v2-3ep",
+        "HF-streaming corpus v2, 3 epochs / 149,759 steps. Best offline "
+        "accuracy on record (.7583, ECE .027) -- offline only, unbenchmarked "
+        "in play.",
+    ),
+    # Legacy NAMES. The directory is a symlink to the real checkpoint above; it
+    # exists so older wrappers, notes and ledger rows still resolve. Nothing new
+    # should reference these.
+    "il_agent_full_0804": (
+        "DEPRECATED", "DEPRECATED-il_agent_full_0804",
+        "Legacy name for models/il_alldays_0804 ('full' meant the full hub "
+        "corpus, 0804 the training date). Use candidate-alldays-3ep.",
+    ),
+    # Families: a directory of checkpoints, not one checkpoint. The role
+    # describes the family; pick the specific subdir when you benchmark.
+    "s2v2": (
+        "archive", "archive-stage2-v2-arms",
+        "Stage-2 v2 arms, e0/e3 x seeds 42/43/44. e0_s43 is the checkpoint "
+        "Kaggle submission 55246108 was built from -- its provenance code is "
+        "cited in that submission's description, so the code stays.",
+    ),
+    "selfplay_g1": (
+        "archive", "archive-selfplay-gen1",
+        "Self-play generation 1 (u430080 ref, u963584 final). The league it "
+        "trained against was 100% our own checkpoints on ONE deck.",
+    ),
+    "selfplay_g2": (
+        "archive", "archive-selfplay-gen2",
+        "Self-play generation 2 (u1293312 final). Same single-deck, "
+        "own-checkpoints-only league as gen 1.",
+    ),
+    "selfplay_g3": (
+        "archive", "archive-selfplay-gen3",
+        "Self-play generation 3 (u1229824 final). Same league caveat.",
+    ),
+    "ppo_exploiter_v1": (
+        "control", "control-exploiter-regression-opponent",
+        "DIAGNOSTIC OPPONENT, NEVER SUBMIT. Trained to exploit il_agent in the "
+        "Lucario mirror (95% there, 57.6% across a 33-deck pool) and loses to "
+        "rule_baseline. Its job is to expose brittleness, not to play.",
+    ),
+    "critic_search_prior": (
+        "ablation", "ablation-critic-search-leaf",
+        "Value head for search leaves, init from models/il_agent, 3,843 steps. "
+        "train_metadata records beats_constant_baseline=false (MSE .266 vs "
+        ".250) -- a later 128k-row audit put it at AUC 0.76; do not use it as a "
+        "leaf value uncentered.",
+    ),
 }
 
 
@@ -145,22 +207,29 @@ def scan() -> list[dict]:
                 params = m.get("n_params")
             except Exception:  # noqa: BLE001
                 pass
-        # A family that legitimately stores .pt is not broken.
-        if sha is None and any(d.glob("**/*.pt")):
+        # A family directory holds per-run subdirs rather than one checkpoint;
+        # .pt (PPO/self-play) or a nested model.safetensors (arm grids).
+        is_family = any(d.glob("**/*.pt")) or any(d.glob("*/model.safetensors"))
+        if sha is None and is_family:
             pass
         elif sha is None and role != "BROKEN":
             role = "BROKEN"
             why = "No loadable model.safetensors. " + why
+        link = str(Path(d).readlink()) if d.is_symlink() else None
         rows.append({"dir": d.name, "role": role, "name": clear, "purpose": why,
-                     "sha256": sha, "steps": steps, "params": params})
+                     "sha256": sha, "steps": steps, "params": params,
+                     "symlink_to": link})
 
-    # sha collisions == the same weights under two names
+    # sha collisions == the same weights under two names. A symlink pointing at
+    # another entry is an alias, not a second copy, so it is not a duplicate.
     by_sha: dict[str, list[str]] = {}
     for r in rows:
         if r["sha256"]:
             by_sha.setdefault(r["sha256"], []).append(r["dir"])
+    links = {r["dir"]: Path(r["symlink_to"]).name for r in rows if r["symlink_to"]}
     for r in rows:
-        dupes = [d for d in by_sha.get(r["sha256"] or "", []) if d != r["dir"]]
+        dupes = [d for d in by_sha.get(r["sha256"] or "", []) if d != r["dir"]
+                 and links.get(d) != r["dir"] and links.get(r["dir"]) != d]
         r["duplicate_of"] = dupes
     missing = [k for k in REGISTRY if k not in seen_dirs]
     if missing:
@@ -170,16 +239,28 @@ def scan() -> list[dict]:
 
 
 ROLE_ORDER = ["candidate", "shipped", "control", "ablation", "archive", "scratch",
-              "BROKEN", "UNREGISTERED"]
+              "DEPRECATED", "BROKEN", "UNREGISTERED"]
+# Roles that get no models/by-role/ alias: nothing should be pointed at them.
+NO_ALIAS = {"BROKEN", "UNREGISTERED", "DEPRECATED"}
 
 
 def main() -> int:
+    global MODELS
     ap = argparse.ArgumentParser()
     ap.add_argument("--roles", default=None, help="comma-separated roles to show")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--write-aliases", action="store_true",
                     help="create models/by-role/<clear-name> symlinks to the real dirs")
+    ap.add_argument("--models-dir", default=None,
+                    help="scan this models/ instead of the repo's (worktrees "
+                         "have an empty one; point it at the main checkout)")
     args = ap.parse_args()
+
+    if args.models_dir:
+        MODELS = Path(args.models_dir).expanduser().resolve()
+        if not MODELS.is_dir():
+            print(f"error: --models-dir {MODELS} is not a directory", file=sys.stderr)
+            return 2
 
     rows = scan()
     if args.roles:
@@ -200,7 +281,7 @@ def main() -> int:
                 old.unlink()
         n = 0
         for r in rows:
-            if r["role"] in ("BROKEN", "UNREGISTERED"):
+            if r["role"] in NO_ALIAS:
                 continue
             (out / r["name"]).symlink_to(Path("..") / r["dir"])
             n += 1
@@ -214,7 +295,9 @@ def main() -> int:
             print(f"\n=== {cur.upper()} ===")
         sha = (r["sha256"] or "—")[:12]
         steps = f"{r['steps']:,}" if r["steps"] else "—"
-        print(f"  {r['name']:34s} {sha:12s} steps={steps:>9s}  <- models/{r['dir']}")
+        arrow = f"-> {Path(r['symlink_to']).name}" if r["symlink_to"] else ""
+        print(f"  {r['name']:34s} {sha:12s} steps={steps:>9s}  "
+              f"<- models/{r['dir']} {arrow}".rstrip())
         print(f"      {r['purpose']}")
         if r["duplicate_of"]:
             print(f"      DUPLICATE of: {', '.join(r['duplicate_of'])}")
