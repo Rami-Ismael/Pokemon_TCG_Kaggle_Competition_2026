@@ -74,11 +74,49 @@ A zero from a broken tracker is the exact bug class this hunts. Force a
 fallback storm and confirm ~100%:
 
 ```bash
-mkdir -p /tmp/empty_model_dir && IL_MODEL_DIR=/tmp/empty_model_dir uv run python scripts/fallback_diagnostic.py --pairs 1 --no-tb --out reports/fallback_diag_negcontrol.json
+mkdir -p /tmp/empty_model_dir && IL_MODEL_DIR=/tmp/empty_model_dir PTCG_STRICT_LOAD=0 uv run python scripts/fallback_diagnostic.py --pairs 1 --no-tb --out reports/fallback_diag_negcontrol.json
 ```
+
+`PTCG_STRICT_LOAD=0` is REQUIRED here as of 2026-08-06. Outside the Kaggle
+evaluator a checkpoint that won't load now raises at import instead of
+degrading (see "Strict load" below), so without the flag this command fails
+fast rather than producing the 100% fallback report you want. The flag asks
+for the evaluator's degraded path on purpose — which is exactly what a
+negative control is.
 
 Expect `fallback_rate=100.00%`, `model_unavailable:load_failed`, and the
 `model.safetensors`-missing traceback under `model_load_error`.
+
+## Strict load (2026-08-06): a broken checkpoint now RAISES outside the evaluator
+
+The never-crash contract is right *in the evaluator* — an uncaught exception
+there is INVALID, an instant loss, so degrading to `_safe_choice` is strictly
+better. Everywhere else that same degradation is a measurement hazard: the
+agent runs, scores badly, and nothing distinguishes "weak model" from
+"`_safe_choice` answered every decision". It cost a full benchmark launch on
+2026-08-04 and nearly invalidated the self-play field test on 2026-08-05.
+
+So `agents/il_agent/agent_core.py` now fails loudly at import unless it is
+running inside the evaluator (detected by `/kaggle_simulations/agent`, the
+same probe `main.py` uses). Three paths that used to degrade silently:
+
+| Situation | Before | Now (dev/benchmark) | Now (evaluator) |
+|---|---|---|---|
+| explicit `IL_MODEL_DIR` missing | `FileNotFoundError` | unchanged | n/a (never set) |
+| dev `models/il_agent` missing | **silent** `_safe_choice` | `FileNotFoundError` | unchanged |
+| checkpoint present but won't load | **silent** `_safe_choice` | `RuntimeError` | unchanged |
+| torch / `pokemon_tcg` not importable | **silent** `_safe_choice` | `ImportError` | unchanged |
+
+The check is `_require_model_or_raise()`, called once at the bottom of the
+module — so the failure lands at `load_agent()` time, attributable to the
+agent being loaded, instead of mid-match. This makes the model load EAGER in
+dev runs (deliberate: fail fast).
+
+`PTCG_STRICT_LOAD=0` restores the old degrading behaviour anywhere (use it for
+the negative control above, or to rehearse the evaluator's path locally);
+`PTCG_STRICT_LOAD=1` forces strictness even inside the evaluator (don't — a
+raise there is a loss). Behaviour inside a real submission bundle is
+byte-for-byte unchanged.
 
 ## Full benchmark integration
 

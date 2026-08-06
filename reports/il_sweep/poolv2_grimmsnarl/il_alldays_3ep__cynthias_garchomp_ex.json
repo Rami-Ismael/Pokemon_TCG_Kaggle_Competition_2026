@@ -1,0 +1,77 @@
+{
+  "agents": [
+    "il_alldays_3ep@cynthias_garchomp_ex",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 10,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 0,
+      "wmh_grimmsnarl": 9
+    }
+  },
+  "games": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 54.13990259170532,
+      "wmh_grimmsnarl": 26.509227991104126
+    },
+    "wmh_grimmsnarl": {
+      "il_alldays_3ep@cynthias_garchomp_ex": 26.509227991104126,
+      "wmh_grimmsnarl": 18.518847942352295
+    }
+  },
+  "total_wall_clock_sec": 62.86478781700134,
+  "overall_win_pct": {
+    "il_alldays_3ep@cynthias_garchomp_ex": 75.0,
+    "wmh_grimmsnarl": 22.5
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "p": 75.0,
+      "lo": 59.8057409330299,
+      "hi": 85.81303210445049
+    },
+    "wmh_grimmsnarl": {
+      "p": 22.5,
+      "lo": 12.31595325467853,
+      "hi": 37.503396404093046
+    }
+  },
+  "glicko": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "rating": 1967.795048606361,
+      "rd": 110.20831912594903,
+      "gxe": 85.24947142043656
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1032.204951393639,
+      "rd": 110.20831912594903,
+      "gxe": 14.750528579563424
+    }
+  },
+  "fallback_diag": {
+    "il_alldays_3ep@cynthias_garchomp_ex": {
+      "decisions": 3126,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

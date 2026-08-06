@@ -1,0 +1,29 @@
+{
+  "agent": "il_alldays_0804",
+  "opponents": [
+    "rule_baseline"
+  ],
+  "pairs_per_opponent": 20,
+  "games": 40,
+  "record": {
+    "wins": 22,
+    "losses": 18,
+    "draws": 0
+  },
+  "per_opponent": {
+    "rule_baseline": {
+      "wins": 22,
+      "losses": 18,
+      "draws": 0,
+      "seconds": 25.7
+    }
+  },
+  "fallback": {
+    "decisions": 2756,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {}
+}

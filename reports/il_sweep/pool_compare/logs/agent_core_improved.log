@@ -1,0 +1,132 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 9 agents: agent_core_improved, tb_archaludon, makthanithin_1084_baseline, romanrozen_strong_start, tb_dragapult, wmh_alakazam, wmh_garchomp, tb_heuristic, random_legal
+bc_prior available: True
+[1/45] agent_core_improved vs agent_core_improved: agent_core_improved 6-4  (10 games, 8.1s, 0.81s/game)
+[2/45] agent_core_improved vs tb_archaludon: agent_core_improved 8-12  (20 games, 15.9s, 0.80s/game)
+[3/45] agent_core_improved vs makthanithin_1084_baseline: agent_core_improved 8-12  (20 games, 14.5s, 0.73s/game)
+[4/45] agent_core_improved vs romanrozen_strong_start: agent_core_improved 7-13  (20 games, 11.8s, 0.59s/game)
+[5/45] agent_core_improved vs tb_dragapult: agent_core_improved 14-6  (20 games, 18.8s, 0.94s/game)
+[6/45] agent_core_improved vs wmh_alakazam: agent_core_improved 5-15  (20 games, 10.4s, 0.52s/game)
+[7/45] agent_core_improved vs wmh_garchomp: agent_core_improved 14-6  (20 games, 8.2s, 0.41s/game)
+[8/45] agent_core_improved vs tb_heuristic: agent_core_improved 20-0  (20 games, 6.5s, 0.32s/game)
+[9/45] agent_core_improved vs random_legal: agent_core_improved 20-0  (20 games, 3.4s, 0.17s/game)
+[10/45] tb_archaludon vs tb_archaludon: tb_archaludon 7-3  (10 games, 3.3s, 0.33s/game)
+[11/45] tb_archaludon vs makthanithin_1084_baseline: tb_archaludon 10-10  (20 games, 7.8s, 0.39s/game)
+[12/45] tb_archaludon vs romanrozen_strong_start: tb_archaludon 12-8  (20 games, 6.9s, 0.35s/game)
+[13/45] tb_archaludon vs tb_dragapult: tb_archaludon 15-5  (20 games, 8.0s, 0.40s/game)
+[14/45] tb_archaludon vs wmh_alakazam: tb_archaludon 6-14  (20 games, 4.9s, 0.24s/game)
+[15/45] tb_archaludon vs wmh_garchomp: tb_archaludon 15-5  (20 games, 8.6s, 0.43s/game)
+[16/45] tb_archaludon vs tb_heuristic: tb_archaludon 18-2  (20 games, 5.3s, 0.26s/game)
+[17/45] tb_archaludon vs random_legal: tb_archaludon 20-0  (20 games, 4.9s, 0.25s/game)
+[18/45] makthanithin_1084_baseline vs makthanithin_1084_baseline: makthanithin_1084_baseline 5-5  (10 games, 2.9s, 0.29s/game)
+[19/45] makthanithin_1084_baseline vs romanrozen_strong_start: makthanithin_1084_baseline 11-9  (20 games, 8.6s, 0.43s/game)
+[20/45] makthanithin_1084_baseline vs tb_dragapult: makthanithin_1084_baseline 11-9  (20 games, 10.0s, 0.50s/game)
+[21/45] makthanithin_1084_baseline vs wmh_alakazam: makthanithin_1084_baseline 6-14  (20 games, 7.3s, 0.37s/game)
+[22/45] makthanithin_1084_baseline vs wmh_garchomp: makthanithin_1084_baseline 15-5  (20 games, 7.1s, 0.35s/game)
+[23/45] makthanithin_1084_baseline vs tb_heuristic: makthanithin_1084_baseline 20-0  (20 games, 4.9s, 0.24s/game)
+[24/45] makthanithin_1084_baseline vs random_legal: makthanithin_1084_baseline 18-2  (20 games, 3.8s, 0.19s/game)
+[25/45] romanrozen_strong_start vs romanrozen_strong_start: romanrozen_strong_start 5-5  (10 games, 3.2s, 0.32s/game)
+[26/45] romanrozen_strong_start vs tb_dragapult: romanrozen_strong_start 14-6  (20 games, 8.0s, 0.40s/game)
+[27/45] romanrozen_strong_start vs wmh_alakazam: romanrozen_strong_start 11-9  (20 games, 6.4s, 0.32s/game)
+[28/45] romanrozen_strong_start vs wmh_garchomp: romanrozen_strong_start 15-5  (20 games, 7.4s, 0.37s/game)
+[29/45] romanrozen_strong_start vs tb_heuristic: romanrozen_strong_start 19-0-1d  (20 games, 6.5s, 0.32s/game)
+[30/45] romanrozen_strong_start vs random_legal: romanrozen_strong_start 20-0  (20 games, 4.3s, 0.22s/game)
+[31/45] tb_dragapult vs tb_dragapult: tb_dragapult 4-6  (10 games, 5.6s, 0.56s/game)
+[32/45] tb_dragapult vs wmh_alakazam: tb_dragapult 6-14  (20 games, 9.7s, 0.49s/game)
+[33/45] tb_dragapult vs wmh_garchomp: tb_dragapult 12-8  (20 games, 12.2s, 0.61s/game)
+[34/45] tb_dragapult vs tb_heuristic: tb_dragapult 20-0  (20 games, 7.7s, 0.39s/game)
+[35/45] tb_dragapult vs random_legal: tb_dragapult 19-1  (20 games, 5.6s, 0.28s/game)
+[36/45] wmh_alakazam vs wmh_alakazam: wmh_alakazam 6-4  (10 games, 4.7s, 0.47s/game)
+[37/45] wmh_alakazam vs wmh_garchomp: wmh_alakazam 12-8  (20 games, 8.8s, 0.44s/game)
+[38/45] wmh_alakazam vs tb_heuristic: wmh_alakazam 20-0  (20 games, 7.7s, 0.39s/game)
+[39/45] wmh_alakazam vs random_legal: wmh_alakazam 20-0  (20 games, 4.2s, 0.21s/game)
+[40/45] wmh_garchomp vs wmh_garchomp: wmh_garchomp 5-5  (10 games, 5.3s, 0.53s/game)
+[41/45] wmh_garchomp vs tb_heuristic: wmh_garchomp 20-0  (20 games, 8.3s, 0.42s/game)
+[42/45] wmh_garchomp vs random_legal: wmh_garchomp 20-0  (20 games, 5.1s, 0.26s/game)
+[43/45] tb_heuristic vs tb_heuristic: tb_heuristic 3-7  (10 games, 7.3s, 0.73s/game)
+[44/45] tb_heuristic vs random_legal: tb_heuristic 13-7  (20 games, 13.0s, 0.65s/game)
+[45/45] random_legal vs random_legal: random_legal 6-4  (10 games, 4.1s, 0.41s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 agent_  tb_arc  maktha  romanr  tb_dra  wmh_al  wmh_ga  tb_heu  random  win% [95% CI]
+agent_core_improved   -       8       8       7       14      5       14      20      20       58.9  [51.6,65.8]
+tb_archaludon         12      -       10      12      15      6       15      18      20       65.6  [58.4,72.1]
+makthanithin_1084_baseline12      10      -       11      11      6       15      20      18       62.8  [55.5,69.5]
+romanrozen_strong_start13      8       9       -       14      11      15      19      20       66.1  [58.9,72.6]
+tb_dragapult          6       5       9       6       -       6       12      20      19       51.7  [44.4,58.9]
+wmh_alakazam          15      14      14      9       14      -       12      20      20       71.1  [64.1,77.2]
+wmh_garchomp          6       5       5       5       8       8       -       20      20       48.3  [41.1,55.6]
+tb_heuristic          0       2       0       0       0       0       0       -       13       13.9  [ 9.6,19.7]
+random_legal          0       0       2       0       1       0       0       7       -        11.1  [ 7.3,16.5]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  agent_core_improved vs tb_archaludon: 8/20 =  40.0% [21.9,61.3]  (15.9s, 0.80s/game)
+  agent_core_improved vs makthanithin_1084_baseline: 8/20 =  40.0% [21.9,61.3]  (14.5s, 0.73s/game)
+  agent_core_improved vs romanrozen_strong_start: 7/20 =  35.0% [18.1,56.7]  (11.8s, 0.59s/game)
+  agent_core_improved vs tb_dragapult: 14/20 =  70.0% [48.1,85.5]  (18.8s, 0.94s/game)
+  agent_core_improved vs wmh_alakazam: 5/20 =  25.0% [11.2,46.9]  (10.4s, 0.52s/game)
+  agent_core_improved vs wmh_garchomp: 14/20 =  70.0% [48.1,85.5]  (8.2s, 0.41s/game)
+  agent_core_improved vs tb_heuristic: 20/20 = 100.0% [83.9,100.0]  (6.5s, 0.32s/game)
+  agent_core_improved vs random_legal: 20/20 = 100.0% [83.9,100.0]  (3.4s, 0.17s/game)
+  tb_archaludon vs tb_dragapult: 15/20 =  75.0% [53.1,88.8]  (8.0s, 0.40s/game)
+  tb_archaludon vs wmh_alakazam: 6/20 =  30.0% [14.5,51.9]  (4.9s, 0.24s/game)
+  tb_archaludon vs wmh_garchomp: 15/20 =  75.0% [53.1,88.8]  (8.6s, 0.43s/game)
+  tb_archaludon vs tb_heuristic: 18/20 =  90.0% [69.9,97.2]  (5.3s, 0.26s/game)
+  makthanithin_1084_baseline vs tb_archaludon: 10/20 =  50.0% [29.9,70.1]  (7.8s, 0.39s/game)
+  makthanithin_1084_baseline vs romanrozen_strong_start: 11/20 =  55.0% [34.2,74.2]  (8.6s, 0.43s/game)
+  makthanithin_1084_baseline vs tb_dragapult: 11/20 =  55.0% [34.2,74.2]  (10.0s, 0.50s/game)
+  makthanithin_1084_baseline vs wmh_alakazam: 6/20 =  30.0% [14.5,51.9]  (7.3s, 0.37s/game)
+  makthanithin_1084_baseline vs wmh_garchomp: 15/20 =  75.0% [53.1,88.8]  (7.1s, 0.35s/game)
+  makthanithin_1084_baseline vs tb_heuristic: 20/20 = 100.0% [83.9,100.0]  (4.9s, 0.24s/game)
+  makthanithin_1084_baseline vs random_legal: 18/20 =  90.0% [69.9,97.2]  (3.8s, 0.19s/game)
+  romanrozen_strong_start vs tb_archaludon: 8/20 =  40.0% [21.9,61.3]  (6.9s, 0.35s/game)
+  romanrozen_strong_start vs tb_dragapult: 14/20 =  70.0% [48.1,85.5]  (8.0s, 0.40s/game)
+  romanrozen_strong_start vs wmh_alakazam: 11/20 =  55.0% [34.2,74.2]  (6.4s, 0.32s/game)
+  romanrozen_strong_start vs wmh_garchomp: 15/20 =  75.0% [53.1,88.8]  (7.4s, 0.37s/game)
+  romanrozen_strong_start vs tb_heuristic: 19/20 =  95.0% [76.4,99.1]  (6.5s, 0.32s/game)
+  tb_dragapult vs wmh_alakazam: 6/20 =  30.0% [14.5,51.9]  (9.7s, 0.49s/game)
+  tb_dragapult vs wmh_garchomp: 12/20 =  60.0% [38.7,78.1]  (12.2s, 0.61s/game)[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] agent_core_improved: 0/11658 = 100.00%  by_reason={'search_fallback': 11658}
+[fallback-diag] wmh_alakazam: 0/10582 = 0.00%  by_reason={'deck_returns': 180, 'policy_ok': 10582}
+
+  tb_dragapult vs tb_heuristic: 20/20 = 100.0% [83.9,100.0]  (7.7s, 0.39s/game)
+  wmh_alakazam vs wmh_garchomp: 12/20 =  60.0% [38.7,78.1]  (8.8s, 0.44s/game)
+  tb_heuristic vs wmh_alakazam: 0/20 =   0.0% [ 0.0,16.1]  (7.7s, 0.39s/game)
+  tb_heuristic vs wmh_garchomp: 0/20 =   0.0% [ 0.0,16.1]  (8.3s, 0.42s/game)
+  random_legal vs tb_archaludon: 0/20 =   0.0% [ 0.0,16.1]  (4.9s, 0.25s/game)
+  random_legal vs romanrozen_strong_start: 0/20 =   0.0% [ 0.0,16.1]  (4.3s, 0.22s/game)
+  random_legal vs tb_dragapult: 1/20 =   5.0% [ 0.9,23.6]  (5.6s, 0.28s/game)
+  random_legal vs wmh_alakazam: 0/20 =   0.0% [ 0.0,16.1]  (4.2s, 0.21s/game)
+  random_legal vs wmh_garchomp: 0/20 =   0.0% [ 0.0,16.1]  (5.1s, 0.26s/game)
+  random_legal vs tb_heuristic: 7/20 =  35.0% [18.1,56.7]  (13.0s, 0.65s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  wmh_alakazam            71.1%  [64.1,77.2]  (128/180)
+  romanrozen_strong_start  66.1%  [58.9,72.6]  (119/180)
+  tb_archaludon           65.6%  [58.4,72.1]  (118/180)
+  makthanithin_1084_baseline  62.8%  [55.5,69.5]  (113/180)
+  agent_core_improved     58.9%  [51.6,65.8]  (106/180)
+  tb_dragapult            51.7%  [44.4,58.9]  (93/180)
+  wmh_garchomp            48.3%  [41.1,55.6]  (87/180)
+  tb_heuristic            13.9%  [ 9.6,19.7]  (25/180)
+  random_legal            11.1%  [ 7.3,16.5]  (20/180)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  wmh_alakazam            1743.3  (RD  40.8, 95% CI +/- 81.5)  GXE  71.8%
+  romanrozen_strong_start  1688.9  (RD  40.8, 95% CI +/- 81.5)  GXE  67.4%
+  tb_archaludon           1679.3  (RD  40.8, 95% CI +/- 81.5)  GXE  66.6%
+  makthanithin_1084_baseline  1647.3  (RD  40.8, 95% CI +/- 81.5)  GXE  63.8%
+  agent_core_improved     1602.4  (RD  40.8, 95% CI +/- 81.5)  GXE  59.7%
+  tb_dragapult            1519.2  (RD  40.8, 95% CI +/- 81.5)  GXE  51.8%
+  wmh_garchomp            1480.8  (RD  40.8, 95% CI +/- 81.5)  GXE  48.2%
+  tb_heuristic            1087.0  (RD  40.8, 95% CI +/- 81.5)  GXE  17.0%
+  random_legal            1051.8  (RD  40.8, 95% CI +/- 81.5)  GXE  15.2%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  agent_core_improved    fallback_rate=100.00%  decisions=11658  raw={'decisions': 11658, 'search_fallback': 11658, 'fallback_rate': 1.0}
+  wmh_alakazam           fallback_rate= 0.00%  decisions=10582  raw={'decisions': 10582, 'policy_ok': 10582, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 180, 'errors': {}, 'fallback_rate': 0.0}
+
+total wall clock: 336.9s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/pool_compare/agent_core_improved.json
+glicko: not persisted (isolated run)

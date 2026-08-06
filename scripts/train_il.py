@@ -255,6 +255,13 @@ def main() -> None:
     ap.add_argument("--adv-weight-clip", type=float, default=20.0,
                     help="max per-row weight for adv-exp (guards a badly "
                          "calibrated critic handing one row the whole gradient)")
+    ap.add_argument("--skill-min-score", type=float, default=None,
+                    help="E3 skill gate (rl_pipeline_v2 §2.B2): multiply the "
+                         "arm's weight by 1[avg_score >= this] for rows whose "
+                         "episode HAS a manifest rating; rows with unknown "
+                         "rating (-1 sentinel) keep their base weight, and the "
+                         "gated-out fraction is reported. Take the threshold "
+                         "from check_weight_plumbing.py's printed Q75.")
     ap.add_argument("--beta", type=float, default=1.0,
                     help="outcome-weighting temperature: win/loss weight ratio is e^beta")
     ap.add_argument("--init-from", type=Path, default=None,
@@ -314,6 +321,18 @@ def main() -> None:
     ap.add_argument("--hidden-size", type=int, default=192)
     ap.add_argument("--num-layers", type=int, default=6)
     ap.add_argument("--num-heads", type=int, default=6)
+    ap.add_argument("--encoder-type", choices=["bert", "modernbert"], default="bert",
+                    help="self-attention block behind the option scorer. "
+                         "'modernbert' is the Orbit Wars 2nd-place backbone "
+                         "(Ettin XXS: --hidden-size 256 --num-layers 7 "
+                         "--num-heads 4 --intermediate-size 384). Ignored with "
+                         "--init-from, which takes the checkpoint's config.")
+    ap.add_argument("--intermediate-size", type=int, default=None,
+                    help="FFN width; default 4x hidden. ModernBERT's GeGLU MLP "
+                         "is 3*d*i against BERT's 8*d^2, so a param-matched "
+                         "modernbert arm needs ~8/3*hidden (512 at d=192), not "
+                         "the 4x default -- otherwise the block-type ablation "
+                         "is secretly a capacity ablation.")
     ap.add_argument("--log-every", type=int, default=200)
     ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "il_agent")
     ap.add_argument("--run-dir", type=Path, default=None, help="defaults to runs/<timestamp>")
@@ -405,13 +424,6 @@ def main() -> None:
         from pokemon_tcg.offline_critic import load_critic  # noqa: E402
         critic = load_critic(args.critic_dir, device=device)
         print(f"critic loaded from {args.critic_dir} (frozen, train-time only)")
-    if source == "hub" and (weighted or args.winner_only):
-        sys.exit(
-            "--weight-arm/--winner-only need per-episode outcome meta, which "
-            "ShardILDataset (--data-source hub) does not carry yet; use "
-            "--data-source local for the REWEIGHT arms."
-        )
-
     if source == "hub":
         # --train-split/--eval-split select Hub days via splits.json, exactly
         # as they select folders locally; --hub-days is an explicit override.
@@ -427,6 +439,7 @@ def main() -> None:
         train_ds = ShardILDataset(
             train_kind, days=hub_days, repo_id=args.hub_repo,
             max_episodes=args.max_train_episodes, seed=args.seed,
+            winner_only=args.winner_only, with_meta=weighted,
             episode_ids=episode_ids,
         )
         eval_ds = ShardILDataset(
@@ -481,6 +494,8 @@ def main() -> None:
             hidden_size=args.hidden_size,
             num_hidden_layers=args.num_layers,
             num_attention_heads=args.num_heads,
+            intermediate_size=args.intermediate_size,
+            encoder_type=args.encoder_type,
             global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
             opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
         )
@@ -516,6 +531,8 @@ def main() -> None:
     step = 0
     best_eval_acc = -1.0
     running_loss, running_acc, running_n = 0.0, 0.0, 0
+    # E3 skill-gate accounting (only meaningful with --skill-min-score).
+    skill_gated_rows, skill_rated_rows, skill_total_rows = 0, 0, 0
     t0 = time.time()
     pass_t0 = time.time()
 
@@ -631,6 +648,17 @@ def main() -> None:
                                           beta=args.beta, clip=args.adv_weight_clip)
                 else:
                     w = torch.exp(args.beta * (outcome - 0.5)) * (outcome >= 0.0)
+                if args.skill_min_score is not None:
+                    # E3: gate by manifest rating where one exists; the -1.0
+                    # unknown-rating sentinel passes through ungated (never
+                    # silently dropped), and the gated fraction is logged.
+                    rating = meta["avg_score"]
+                    rated = rating >= 0.0
+                    keep = (~rated) | (rating >= args.skill_min_score)
+                    skill_gated_rows += int((~keep).sum())
+                    skill_rated_rows += int(rated.sum())
+                    skill_total_rows += int(keep.numel())
+                    w = w * keep.float()
                 loss = (w * per_row).sum() / w.sum().clamp_min(1e-8)
             else:
                 loss = out["loss"]
@@ -673,6 +701,14 @@ def main() -> None:
             if step % eval_every_steps == 0 or step >= total_steps:
                 run_eval_and_log(is_final=(step >= total_steps))
 
+    if args.skill_min_score is not None and skill_total_rows:
+        print(
+            f"skill gate (avg_score >= {args.skill_min_score}): "
+            f"{skill_rated_rows}/{skill_total_rows} rows rated "
+            f"({100 * skill_rated_rows / skill_total_rows:.1f}%), "
+            f"{skill_gated_rows} gated to weight 0 "
+            f"({100 * skill_gated_rows / skill_total_rows:.1f}% of all rows)"
+        )
     logger.close()
     print(f"total training time: {time.time() - t0:.1f}s")
 

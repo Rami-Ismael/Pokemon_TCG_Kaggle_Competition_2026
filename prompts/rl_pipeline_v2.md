@@ -1,454 +1,693 @@
-# RL Pipeline v2 — IL → Offline RL → On-Policy PPO Self-Play
+# RL Pipeline v2 — PRIOR → REWEIGHT (restarted) → SELFPLAY
 
-Successor to `prompts/rl_pipeline_v1.md` (left unchanged for diffing), revised
-against the 2026-08-03 review. The plan follows
-[[Human-Level Competitive Pokémon via Scalable Offline Reinforcement Learning with Transformers]]
-(Grigsby et al., RLC 2025, arXiv:2504.04395 — "the Metamon paper" hereafter,
-always cited by that wikilink). Phase names now match the authors' own
-terminology: their released checkpoints are literally named `SmallIL`,
-`SmallRL`, and `SyntheticRLV0/V1/V2`, and their abstract describes "a
-progression from imitation learning to offline RL and offline fine-tuning on
-self-play data." So:
+Successor to `prompts/rl_pipeline_v1.md` (kept unchanged for diffing). Same
+three-stage skeleton, modeled on **"Human-Level Competitive Pokémon via
+Scalable Offline Reinforcement Learning with Transformers"** (Grigsby et al.,
+RLC 2025, arXiv:2504.04395 — "the Metamon paper"): BC prior → reweighted /
+offline RL on the same data → self-play fine-tuning. Everything in v1 not
+amended here carries forward unchanged — in particular the reward remap
+{0, 0.5, 1} (never −1), masking in rollout AND loss, the 50/30/20 opponent
+mix, the critic being train-time only, no opponent-private information in the
+encoder, and the deck-confound warning.
 
-| This repo's phase | Paper's name | Old v1 name |
+Terminology (per Rami, 2026-08-04 — the old "Rung 1/2/3" ladder jargon
+is retired in prose): **offline accuracy check** = held-out action-match vs
+the majority baseline (`eval_rung1.py`); **local tournament** = the
+`benchmark_agents.py` round-robin of real games with Glicko±RD; **replay
+review** = reading full game transcripts (`eval_rung3_sanity.py`). Script
+filenames keep their historical names.
+
+**Why v2 exists — Stage 2 is being restarted from scratch (user direction,
+2026-08-03).** The previously-run Stage 2 has two strikes against it:
+
+1. **Documented suspected-error source:** `manifest.csv` had ZERO coverage
+   for the train day 2026-07-26, so `avg_score` was the −1.0 sentinel across
+   the entire training corpus (v1 §2.0). Any arm that touched ratings was
+   silently unratable, and the plumbing has been heavily rewritten since the
+   arms were trained.
+2. **Ladder refutation (read 2026-08-04 03:36 UTC, ledger
+   `reports/submission_ledger.jsonl`):** every recorded Stage-2/3 "win"
+   failed to settle above its own baseline:
+
+   | Checkpoint | Submission | First read | Settled/latest | Local claim at submit time |
+   |---|---|---:|---:|---|
+   | il_agent (PRIOR) | 55149903 (08-01) | — | **400.0** | baseline |
+   | s2_e1_s43 (old E1 winner) | 55196434 (08-02) | 516.7 | **395.0** | beat PRIOR 62.5% [51.0, 72.8] |
+   | ppo_u120832 (old Stage-3 gen 1) | 55215267 (08-03) | 532.2 | **275.1** | beat s2 87.5% [69.0, 95.7]; Glicko 1478±71 vs 1300±71, non-overlapping |
+   | heuristic AdvancedPolicy (Mega Lucario) | 55162376 (08-01) | — | 804.0 (peak 827.8) | the ladder incumbent |
+
+   The old Stage-2 gate is retroactively FAILED (395.0 < 400.0), and the old
+   Stage-3 gen-1 promotion — despite non-overlapping local Glicko — was a
+   ladder collapse. **No recorded Stage-2/3 result is trusted.** The restart
+   is empirical necessity, not procedural hygiene.
+
+Rule of precedence used throughout: where v1's text and the code's recorded
+decisions disagree, the code wins (its decisions were made later, with
+measurements); where the code looks wrong, it is flagged in the §B1 audit,
+never silently "fixed".
+
+---
+
+## Corrections to stale v1 facts — each verified at runtime 2026-08-03/04
+
+| Fact | v1 said | Measured now (this session) |
 |---|---|---|
-| Phase 1 | **IL** (imitation learning) | PRIOR |
-| Phase 2 | **Offline RL** (on the human corpus; the paper's "RL" checkpoints) | REWEIGHT |
-| Phase 3 | **On-Policy PPO Self-Play** (our adaptation of the paper's "Synthetic RL" / self-play fine-tuning) | SELFPLAY |
+| Free disk | ~16 GB | **81.9 GB** (`shutil.disk_usage`, 2026-08-03 ~23:00 local). Fluctuates with concurrent sessions; the "no episode corpus on disk" rule stands regardless — the corpus lives on the Hub (ADR-001). |
+| >1-hour runs stop for approval | Phase-6 rule, in force | **RETIRED 2026-08-03.** Report projections, do not stop for approval, chain runs so MPS is never idle and never contended (preflight is built into `train_ppo_puffer.py`; `--skip-preflight` to override). |
+| Local-vs-ladder divergence | "diverged once (2026-08-02)" | **Four data points now:** 08-02 (#1), 08-03 (#2, memory), and the two settled refutations in the table above — s2_e1_s43 516.7→395.0 and ppo_u120832 532.2→275.1. Additionally, byte-identical resubmits of the 804.0 bundle read 512.0–670.4 on early reads (55224682, 55228113): **first reads carry ~±150-point noise; only ~3-day-settled scores mean anything.** |
+| Raw episode corpus on disk | train 4,554 + eval 4,430 files | **Deleted in the 08-03 cleanup** (user-approved, after Hub verification). Resolvable files counted today: `train-2026-07-26/` **24**, `eval-2026-07-27/` **12**, `train-combined-0701-0726/` 24 of 9,820 entries (**9,796 symlinks dangle**), `train-2026-08-01/` 1,490 (new raw day, not yet on the Hub), `train-2026-08-03/` 2. **`splits.json` episode counts are stale — count resolvable files, never trust the JSON.** |
+| Manifest coverage | 07-01 + 07-27 only; train day zero | Still true for the train day: **2026-07-26 has ZERO manifest rows** (12,884 total: 07-01 5,266 all-scored, 07-27 4,430 all-scored, 08-02 2,683 with only 339 scored, 08-03 505 with 86 scored). Fixing 07-26 is §B0. |
+| Rollout throughput | 425 rows/s (game-level probe) | The probe number stands for `selfplay.py`, but the **integrated PufferLib-PPO path measured ~61 agent-steps/s** at 8 envs × 8 workers with MPS learner and league mix (v1 §3.1 STATUS). PPO batch arithmetic below uses 61/s, not 425/s. |
 
-Experiment IDs keep their `S2-`/`S3-` prefixes — trained artifacts
-(`models/s2/e1_seed43`, submission 55196434) already carry them.
-
-## What changed from v1 (review of 2026-08-03)
-
-1. Phases renamed to the paper's terminology (table above).
-2. **Training corpus doubled 2026-08-02**: new split `train-2026-07-01`
-   (5,266 episodes, median avg_score 1180.3) joins `train-2026-07-26`
-   (4,554) → **9,820 train episodes, ~2.16×**. Details in §Data.
-3. Every paper citation now carries its title in `[[wikilink]]` form.
-4. New §Hyperparameters: Protein-driven sweeps, with the specific PPO knobs
-   named and prioritized.
-5. The "frozen control deck" sentence is now spelled out (§3.1).
-6. §2 now states exactly which Metamon training Phase 2 corresponds to.
-7. PufferLib 4.0 risk front-loaded: install and stress-test it as **work
-   item 0**, not when Phase-3 plumbing needs it (§Work items).
-8. AWR is defined where first used (§2.1).
-9. "Metamon" always resolves to the full-title wikilink.
-10. Ladder submission after every phase is an explicit standing ritual, not an
-    implicit gate clause.
-11. Weighted BC situated as offline RL, with reference implementations linked.
-12. New §Model scale & architecture: size grid (Option B, rescaled) and the
-    causal-transformer question.
-13. New §Data: our corpus vs the paper's, like-for-like.
-14. The literal 15M/50M/200M grid is **rejected**; Option B (3.32M / ~10–12M /
-    50M-probe) adopted. Rationale in §Model scale.
-15. **All approval gates removed.** Long runs launch immediately; the only
-    stop conditions left are technical ones.
+Also corrected: the training corpus is now **two train days** (2026-07-01,
+5,266 episodes + 2026-07-26, 4,554 = 9,820 episodes ≈ 1.78M decision rows),
+authoritative copy on the private HF repo `Rami/ptcg-episodes` (zstd Parquet,
+all days hub-verified; local HF cache ≈ 977 MB so streaming reads at SSD
+speed). Days 08-02/08-03 also exist on the Hub and 08-01 exists raw-locally;
+they are a **registered extension** (more data, approximated ratings), not
+part of the restart corpus — the restart trains on 07-01 + 07-26 so results
+are comparable and the rating fields are (after §B0) fully real.
 
 ---
 
-## Data — ours vs the paper's
+## Ladder context the plan must respect (new in v2)
 
-Train split is now **two held-out days** (§F4 held-out-DAY rule preserved —
-train and eval remain distinct calendar days):
-
-| Split | Day | Episodes | Manifest ratings? |
-|---|---|---:|---|
-| train | 2026-07-26 | 4,554 | ⚠️ no — `manifest.csv` has zero rows for this day; `avg_score` is the −1.0 sentinel |
-| train (new 2026-08-02) | 2026-07-01 | 5,266 | **yes** — median avg_score 1180.3; this day was selected for high median rating |
-| eval | 2026-07-27 | 4,430 | yes |
-
-Consequences of the doubling:
-
-- Rows/epoch: ~826K measured on the old single train day → **~1.78M
-  estimated** at 9,820 episodes (unverified until the next dry-run epoch
-  prints it — repo rule 5).
-- All new training runs consume **both** train days. The equal-steps rule
-  (never equal-epochs) matters even more now: an epoch is ~2.16× larger, so
-  any comparison against the 12,900-step E0/E1/E2 runs is at equal *steps*.
-- S2-E3 (skill × outcome) is **half-unblocked**: the new day carries real
-  ratings, the old day still needs its manifest fetched from the Kaggle
-  episodes dataset (small CSV; `kaggle auth login` first). Until then E3 can
-  run on the 2026-07-01 day alone, or gate rows without ratings to weight 1.
-
-Scale comparison with [[Human-Level Competitive Pokémon via Scalable Offline
-Reinforcement Learning with Transformers]] (their numbers from metamon.tech
-and the repo README):
-
-| | Paper (publication era) | Paper (maintained dataset, 2026) | This repo |
-|---|---|---|---|
-| Human battles | 475k+ reconstructed | ~2.7M | **9,820** train episodes |
-| Trajectories (one side of one battle) | ~1M | ~5.3M | **~19.6K** (2 seats × 9,820) |
-| Self-play data | grows corpus by 4M–11M trajectories | 20M+ | none stored (disk budget — §3) |
-
-We sit **~50× below their battle count and ~2 orders of magnitude below their
-trajectory count**, even after doubling. Every scale decision below (model
-grid, no 200M, on-policy Phase 3) follows from this row of arithmetic.
+- Team account: hashhakim. As of 2026-08-04 03:27 UTC: rank 2,378/6,221,
+  team_score 692.7, top score 1259.4, top-8 cutoff 1135.8.
+- The **active submission set is the displacement budget**: newest
+  submissions displace oldest actives. The 08-02/08-03 experimental
+  submissions (s2, ppo) dropped the team ~4,500 ranks until same-build
+  resubmits of the 804.0-lineage heuristic bundle restored the active set
+  (55224682 → 670.4, 55228113 → 512→600, both 08-04, still early-read).
+- Consequence, binding: **an experimental submission costs an active slot
+  for days.** A Stage-2/3 candidate is submitted only when (a) its local
+  gate is decisively met (non-overlapping intervals, all three local checks) and
+  (b) the calendar leaves ≥3 days of settle time. Ladder closes
+  **2026-08-16**; ratings settle over hundreds of games (~48/day) — the
+  **last confident submission slot is ~2026-08-13**, computed backward.
+- The IL/RL lineage's real bar: beat **PRIOR's settled 400.0** (and the old
+  s2's 395.0). The heuristic incumbent at ~700–800 is the team's active set,
+  not this pipeline's gate — but it is the reason experimental slots are
+  expensive.
 
 ---
 
-## Model scale & architecture
+## Standing rules (v1's list, updated)
 
-### Size grid — Option B (adopted), literal paper grid (rejected)
-
-The paper swept 15M / 50M / 200M. Copying that grid here is rejected:
-**"200M params against ~826K rows/epoch is a 2-order-of-magnitude smaller
-ratio than the source paper ever ran"** — and even at ~1.78M rows the ratio
-is still ~50× worse than their smallest model's. A 200M model quantized to
-fit the evaluator would be a new, untested artifact on an envelope
-(~197.7 MiB, ~1.6 vCPU) with no headroom. Instead, anchor at the deployed
-size and treat the upper tiers as ceiling probes:
-
-| Tier | Params | Rationale |
-|---|---|---|
-| Small | **3.32M** (current) | Already deployed, already measured (2.85 ms/decision CPU fp32, ~20 min/epoch) — the true baseline, not a new run |
-| Medium | **~10–12M** | Inside the repo's own 2–15M soft band; large enough to test whether scaling helps at all before spending a ceiling probe |
-| Large | **~50M** (the repo's hard ceiling) | A probe, run once objective selection is settled on Small/Medium — not a tier to sweep all objectives against. ⚠️ 50M fp32 ≈ 200 MB weights alone, over the ~197.7 MiB envelope: the probe ships int8-quantized or not at all, and the quantized artifact re-runs the forced-CPU latency rehearsal before any submission |
-
-Scaling runs compare at equal steps, 3 seeds, same objective — size is an
-axis orthogonal to the S2 objective ladder, explored only after an objective
-wins on Small.
-
-### Architecture axis
-
-The paper's models are **causal transformers over the full battle trajectory**
-— the sequence dimension is turns, so the policy conditions on everything both
-players have revealed and can adapt to the opponent within one game. Our
-`PTCGImitationPolicy` (hidden 192 / 6 layers / 6 heads) is a **per-decision
-set transformer**: attention runs over the entities of the *current*
-observation; there is no cross-turn memory. That is a real representational
-gap — opponent modeling and long-game planning live in exactly the history our
-architecture cannot see.
-
-Register (do not build yet) **S-ARCH: causal-over-history variant** — same
-encoder, plus a turn-level causal transformer with a bounded context window
-(memory scales with window; the envelope must be re-measured). Run it only
-after the size grid answers whether *any* added capacity pays at our data
-scale; a history model at 9.8K episodes may simply overfit — which is itself
-the measurable answer.
+- Device via `resolve_device()` only; no CUDA branch. Training on MPS; the
+  evaluator is CPU-only (~1.6 vCPU, ~197.7 MiB — unverified envelope, design
+  to it anyway). `torch.set_num_threads(1)` before heavy torch work.
+- Everything under `uv run` (Stage 3: the `.venv-ppo` py3.12 side venv —
+  PufferLib 3.0 pins numpy<2 and 4.0 dropped Python envs). Paths from
+  `pokemon_tcg.config`. Seed 42 (+43, +44 for seed sweeps).
+- Action masking is structural (Pattern-B option-scoring head) in rollout
+  AND loss (Huang & Ontañón, arXiv:2006.14171: masking changes the
+  gradient). Mask to finite −1e9, never −inf (Categorical.entropy NaNs).
+- No opponent-private information reaches the encoder — rollouts feed the
+  acting agent's `obs_dict` as served by the env; `steps[0][0]["visualize"]`
+  is never read (`tests/test_privacy_no_leak.py`).
+- Every comparison: ≥3 seeds, RD or σ on every number, a chart in
+  `reports/figures/`, control beside the claim. Budget each arm by passes
+  over its OWN data (`--epochs`) or by wall-clock — never pin an arm to
+  another arm's step count. (Rescinded 2026-08-05; the old rule mandated
+  equal steps on the grounds that filtered arms discard rows. Fewer rows
+  meaning fewer steps is the point of filtering, not a confound to erase.)
+- **Preflight before every training launch** (disk / RAM / competing
+  processes — built into `train_ppo_puffer.py`; run the same checks by hand
+  before Stage-2 arms). Chain runs; never overlap MPS jobs.
+- **No approval gates.** Report projected wall-clock, launch, checkpoint
+  often enough to kill/resume without loss.
+- Disk budget: measured 81.9 GB free, but **no stage may write an episode
+  corpus** — allowed persistent artifacts are checkpoints (~13 MB fp32 at
+  3.32M params; `policy_full.pt` ~26 MB), TB/JSONL logs, figures, and a
+  handful of replay-review transcripts.
+- **Every "better" claim passes the ladder ritual** (§Measurement protocol).
+  Local Glicko alone never declares improvement — it has now been wrong
+  twice with non-overlapping intervals.
 
 ---
 
-## Standing rules (all phases)
+## Stage 1 — PRIOR (unchanged, identity pinned)
 
-- Device via `resolve_device()` only; no CUDA branch exists. Training on MPS,
-  the evaluator is CPU-only (~1.6 vCPU, ~197.7 MiB — unverified envelope,
-  design to it anyway). `torch.set_num_threads(1)` before heavy torch work.
-- Everything under `uv run`. Paths from `pokemon_tcg.config`. Seed 42.
-- Action masking is structural (Pattern-B option-scoring head) — never a path
-  that can emit an out-of-range index. In policy-gradient training the mask is
-  part of the objective, not a filter:
-  [[A Closer Look at Invalid Action Masking in Policy Gradient Algorithms]]
-  (Huang & Ontañón, arXiv:2006.14171) shows masking changes the gradient.
-- No opponent-private information reaches the encoder. Phase-3 rollouts feed
-  the encoder the acting agent's `obs_dict` as served by the env — the same
-  view the ladder serves — never the engine's omniscient state.
-- Every comparison: ≥3 seeds, equal **steps** not equal epochs, an RD or σ on
-  every number, a chart in `reports/figures/`, and the control beside the claim.
-- **After every phase (and every promoted Phase-3 candidate): submit to the
-  real ladder.** Local Glicko and the leaderboard have already diverged once
-  (2026-08-02). The ritual is fixed: build the bundle
-  (`scripts/build_improved_submission.py` pattern — read the printed tarball
-  MiB), forced-CPU latency rehearsal, submit with a detailed message (what
-  changed, from what baseline, expected effect), then **read the leaderboard
-  after scoring** and record the number next to the local claim. No checkpoint
-  is called "better" on local numbers alone.
-- **No approval gates.** Long runs launch immediately; log the projected
-  duration and checkpoint often enough that any run can be killed and resumed
-  without loss. The stop conditions at the end of this file are technical
-  triggers, not requests for permission.
-- **Disk budget: ~16 GB free.** No phase may write an episode corpus. Allowed
-  persistent artifacts: checkpoints (~13 MB fp32 at 3.32M), TB logs, figures,
-  a handful of Rung-3 transcripts. Anything else that wants disk is a design
-  error — redesign, don't compress.
-- Ladder closes **2026-08-16**; ratings settle only over hundreds of games
-  (~48 matches/day). A checkpoint submitted with fewer than ~3 days left
-  cannot be confidently evaluated — plan the last submission slot backward.
+`models/il_agent`: hidden 192 / 6 layers / 6 heads, 3.32M params, step
+38,562 (3 epochs over the single old train day), eval top-1 0.7534, git
+f9a1b6f9, 2.85 ms/decision CPU fp32. Ladder-settled **400.0** (55149903).
+This checkpoint is (a) the warm-start for every Stage-2 arm, (b) the control
+arm E0's init, (c) the fallback KL anchor if Stage 2 fails its gate.
+
+Note for the record: `models/il_agent_hfstream_combined_3ep` (83,454 steps
+over the combined corpus via Hub streaming, eval 0.7527, git 024e16b) exists
+as a reference point from the streaming-corpus work. It is NOT the PRIOR —
+it is unmeasured on the ladder and would confound init-vs-objective in the
+arm comparison. The restart holds the init fixed at the ladder-measured
+PRIOR and lets E0 (plain BC, continued, on the restored corpus) absorb the
+"more data, more steps" effect.
 
 ---
 
-## Phase 1 — IL (built; what it owes the later phases)
+## Stage 2 — REWEIGHT, restarted from scratch
 
-Status: complete. `scripts/train_il.py` → `PTCGImitationPolicy` at
-`models/il_agent/`, 3.32M params, 2.85 ms/decision CPU fp32
-(`notes/phase1_decisions.md`). This is the paper's IL stage: plain behavior
-cloning of human replays, the `SmallIL`-equivalent.
+### 2.B0 Data recovery (blocking; nothing trains before this passes)
 
-What Phases 2–3 consume from it:
+1. **Corpus:** stream from `Rami/ptcg-episodes` per ADR-001. The streaming
+   loader (`ShardILDataset`) must gain the **meta plumbing** the weighted
+   arms need — `with_meta` (outcome / seat / episode_id / turn / avg_score)
+   and `winner_only` — which today exist only on the raw-JSON `ILDataset`
+   path (`train_il.py` hard-exits on hub+weighted; that exit is the gap,
+   remove it by closing the gap, not by deleting the guard). `episode_id`
+   comes from the shard's own column (never parsed out of JSON); `avg_score`
+   joins from a **freshly loaded manifest at train time** (the shard-baked
+   score columns for 07-26 are permanently null — they were packed before
+   the manifest was fixed).
+2. **Train-day manifest rows (suspected-error source #1):**
+   `ingest_episodes.py backfill-manifest` extended with `--from-hub`, so the
+   episode-id universe comes from the Hub shards (4,554 ids for 07-26), not
+   from the 24 surviving local files.
+   **STATUS 2026-08-04: the Kaggle-CLI route is a measured dead end** — the
+   `episodes` listing returns one page of most-recent games per submission,
+   so a week-old day is unreachable (44 episodes listed for 07-26 across the
+   current top teams, **0 of 4,554** overlapping the corpus). Used instead:
+   the **team-name proxy** registered in `notes/phase0_discovery_report.md`
+   §0.6(b), implemented as `scripts/backfill_manifest_names.py` — a team's
+   proxy is the median `avg_score` over its episodes on the two fully-rated
+   days (07-01 train, 07-27 eval; Glicko matchmaking pairs rating-adjacent
+   opponents, so episode avg_score ≈ each participant's rating); a 07-26
+   episode's avg_score is the mean of its two teams' proxies, written only
+   when both are known. Result: 180 team proxies, **3,794/4,554 (83.3%) of
+   07-26 covered**, merged (manifest now 16,678 rows).
+   ⚠️ Scale caveat for E3, now with numbers: 07-01 carries TRUE at-the-time
+   ratings (median ~1180); the 07-26 proxies inherit the mixed 07-01+07-27
+   scale (median 1113.7). The pooled Q75 = 1189.0 therefore keeps mostly
+   07-01 episodes — the E3 report MUST chart per-day threshold sensitivity
+   so a scale artifact can't masquerade as a skill effect.
+3. **Count resolvable files, never `splits.json`** (measured counts in the
+   corrections table above). If streaming AND the Kaggle re-fetch both fail,
+   **halt and report — do NOT train on the 24 surviving train-day
+   episodes** (stop condition).
 
-1. **A frozen, independently loadable checkpoint** via `.from_pretrained()`,
-   never mutated: (a) warm-start for Phase 2, (b) KL anchor for Phase 3,
-   (c) the control arm in every experiment.
-2. **Calibrated probabilities over the option set** — the weighted objectives
-   and the KL penalty both need the full distribution, not argmax.
-3. **The encoder version.** Phases 2 and 3 use the same
-   `encode_observation()` unchanged. Any encoder change forks the pipeline
-   version and invalidates cross-stage comparisons.
+### 2.B1 Audit before retraining (cheap; all of it, findings written down)
 
-⚠️ Note: the deployed IL checkpoint was trained on the single old train day.
-It stays frozen as-is (it is the measured baseline); the doubled corpus enters
-through Phase-2 retraining, not by retraining the anchor.
+1. `scripts/check_weight_plumbing.py` (grown a `--data-source hub` mode) on
+   the restored corpus: outcome distribution ~50/50 by construction, and a
+   REAL avg_score histogram — zero −1.0-sentinel mass after the backfill.
+   Figure saved.
+2. Outcome remap verified end to end: cabt's raw −1/0/1 never leaves
+   `il_dataset._seat_outcome`; {0, 0.5, 1} everywhere; unknown-outcome rows
+   (−1.0 sentinel) get weight exactly 0 in every arm.
+3. Seat/winner pairing hand-checked on a sample: seat outcomes perfectly
+   complementary per episode; winner seats ≈52.9% of rows (the v1-measured
+   figure should roughly reproduce on the restored corpus).
+4. No opponent-private fields reach the encoder: `test_privacy_no_leak.py`
+   green on the streamed path too (same encoder, but re-run explicitly).
+5. Leaderboard-check: record the settled scores (done — table above);
+   **the restarted Stage 2's bar is s2_e1_s43's settled 395.0 and PRIOR's
+   400.0**, i.e. a candidate must convincingly clear 400 to be worth an
+   active-set slot.
 
----
+**STATUS 2026-08-04 (all five run on the restored corpus):**
+streamed scan saw **9,820 episodes / 1,663,092 decision rows**; row outcomes
+**53.0% win / 46.9% loss / 0.1% draw** (winner-row share reproduces v1's
+52.9%); episode-seat outcomes perfectly complementary (**9,815 win / 9,815
+loss / 10 draw-seats**); **zero unknown-outcome (−1 sentinel) rows** — the
+suspected-error source is gone; manifest join **92.3%** (9,060/9,820), pooled
+avg_score quartiles Q25 = 1120.7 / median = 1150.8 / **Q75 = 1189.0** (E3's
+starting threshold); figure `s2_plumbing_outcomes_avgscore.png`. Remap
+hand-checked on sample episodes (raw −1/1 → {0,1} per seat, exact);
+`test_privacy_no_leak.py` + the full IL suite green in this worktree (29
+tests). One flag, not fixed (audit discipline): `benchmark_agents.py`'s
+`AGENT_FILES` contains the s2_arms block twice — duplicate identical keys,
+harmless, left in place.
 
-## Phase 2 — Offline RL (weighted BC on the human corpus)
+### 2.B2a Critic first (blocking prerequisite for the advantage arms)
 
-**Which Metamon training this is, exactly:** the paper's second stage — the
-step that turns `SmallIL` into `SmallRL`. Same replay dataset, no new games;
-only the objective changes, from uniform cloning to value-aware training
-(actor-critic offline RL in their case). Their finding, in one line: the same
-human data trains a meaningfully stronger policy when rows are weighted or
-filtered by outcome/advantage instead of cloned uniformly.
+Train a state-value head V(s) on the restored corpus — architecture:
+`OfflineValueModel` (PRIOR trunk copy + scalar head on cls_hidden),
+train-time only, never shipped. **Target: one-step TD backups on the
+remapped terminal reward** — V(s_t) ← γ·V(s_{t+1}) for non-terminal
+decision rows, V(s_T) ← outcome ∈ {0, 0.5, 1} at the seat's last decision
+(γ ≈ 1 for this episodic terminal-reward setting; decision-level
+successor pairs within one seat's trajectory). The existing Monte-Carlo
+regression mode (fit V(s_t) = outcome for every t — what `train_critic.py`
+shipped with) is retained as an ablation arm; with γ=1 the two share a
+fixed point in expectation, TD trades variance for bootstrap bias. If TD
+and MC critics disagree materially on the audit below, that disagreement
+is itself a finding to report.
 
-**Is weighted BC an offline RL approach? Yes.** Filtered and
-advantage-weighted BC are the "one-step" corner of offline RL — policy
-improvement by regression against reweighted logged actions, no bootstrapped
-Q-learning required. The lineage:
-[[Advantage-Weighted Regression: Simple and Scalable Off-Policy Reinforcement Learning]]
-(Peng et al. 2019, arXiv:1910.00177),
-[[Exponentially Weighted Imitation Learning for Batched Historical Data]]
-(Wang et al. 2018 — MARWIL, shipped in RLlib), and
-[[Critic Regularized Regression]] (Wang et al. 2020). Reference
-implementations to crib from: the official
-[xbpeng/awr](https://github.com/xbpeng/awr), the compact
-[omardrwch/advantage-weighted-regression](https://github.com/omardrwch/advantage-weighted-regression),
-the index at
-[hanjuku-kaso/awesome-offline-rl](https://github.com/hanjuku-kaso/awesome-offline-rl),
-and Metamon's own training code in
-[UT-Austin-RPL/metamon](https://github.com/UT-Austin-RPL/metamon) (AMAGO
-trainer).
+**Critic audit — all three before ANY arm consumes advantages:**
 
-**What AWR is**, since S2-E2 is shaped by it: advantage-weighted regression
-trains the policy by maximizing `w · log π(a|s)` over logged actions with
-`w = exp(A(s,a)/β)` — a soft, exponential preference for actions that did
-better than expected. `A` is return minus a baseline (in E2 the baseline is
-the constant b = 0.5, making it outcome-weighted BC; in E4 it is a learned
-`V(s)`, full AWR). β is the temperature: large β → weights flatten toward
-plain BC; small β → approaches hard winners-only filtering. E1, E2, E4 are
-three points on that same dial.
+1. V(s) predicts the held-out day's outcomes better than the base rate
+   (report MSE vs the constant-0.5 predictor AND classification accuracy
+   at the 0.5 threshold vs majority class; both must beat baseline).
+2. Advantage distribution Â = outcome − V(s) on held-out data: roughly
+   centered at 0, sane spread (report mean/σ/quantiles; a mean far from 0
+   or a degenerate spike means a broken critic).
+3. Spot-check **10 hand-read decisions with extreme |Â|** — the sign must
+   be defensible to a human reader (e.g. "took the losing attack with
+   lethal on board" should get Â < 0). An audit script dumps the decision
+   context (turn, select type/context, options, chosen action, outcome,
+   V, Â) for human reading.
 
-### 2.0 Data plumbing — STATUS 2026-08-02: built
+**If the critic fails the audit: the advantage arms are BLOCKED; run
+E-fallback (registered below) and say so loudly in every report.**
 
-`DecisionMeta` in `il_dataset.py`, `ILDataset(with_meta=True)`,
-`load_manifest_scores()`, acceptance `scripts/check_weight_plumbing.py`,
-tests green. Rows carry `outcome` (remapped {0, 0.5, 1} — raw −1/0/1 never
-enters an objective), `seat`, `episode_id`, `avg_score`/`min_score`,
-`turn_index`. Hard `winner_only` filter exists
-(`train_il.py --winner-only`). Measured: winner seats contribute ~52.9% of
-rows — even "unweighted" BC has a mild winner tilt.
+**STATUS 2026-08-04 ~09:50 — BOTH critics trained, BOTH blocked; fallback
+path engaged.**
+- `critic_td` (one epoch, frozen-target TD(0) after fixing a measured
+  live-bootstrap divergence, MSE 0.30→284 by step 21k): audit (i) FAIL /
+  (ii) FAIL / (iii) FAIL — one epoch ≈ 27 target refreshes cannot propagate
+  terminal signal through ~68-decision games; V pinned near an
+  out-of-range floor for whole state clusters (mean Â +0.247).
+- `critic_mc` (direct outcome regression): accuracy 65.0% vs 53.8% base —
+  real ranking signal — but calibration FAILS even after clamping V to the
+  valid [0,1] range at consumption (clamped MSE 0.2679 vs constant-0.5's
+  0.2499; raw out-of-range rate 22.2%); (ii) PASS; (iii) extremes are
+  magnitude artifacts (V=0.000 on live positions with a deck-out risk).
+- **Finding:** at 9,820 episodes a 3.32M critic ranks but cannot calibrate —
+  consistent with the ~50× data-scale gap to the Metamon paper, whose
+  critic-based objectives this register imports. Full audits:
+  `reports/critic_audit_critic_{td,mc}.md` (+ figures).
+- **Consequence (registered rule applied):** E1/E2/E4 do not run. Running
+  instead: E-fallback ×3 seeds, and E3 adapted to
+  `efb weight × 1[avg_score ≥ 1189.0]` — the skill gate is orthogonal to
+  the critic and remains the most externally-validated technique in the
+  evidence base. TD-with-longer-propagation (multi-epoch, Polyak targets)
+  is registered as future work, not run now (fall back, don't knob-twiddle
+  past the deadline).
+- **Re-trigger (keeps the Metamon schema alive, registered 2026-08-04 per
+  Rami):** the corpus grows daily and the critic audit is cheap. When the
+  train corpus reaches ~2× today's 15k episodes (or before any future
+  Stage-2 iteration), retrain the MC critic on the enlarged corpus and
+  re-run `audit_critic.py`. If it passes all three parts, the true
+  advantage arms (E1 Binary / E2 Exp — the paper's actual objective
+  family) UNBLOCK and take priority over outcome-weighting. The blocked
+  state is a data-scale verdict, not a method verdict.
 
-**New task (from the corpus doubling):** point the loaders at both train
-folders via `resolve_split_dir` and re-run `check_weight_plumbing.py` on the
-union — acceptance is the printed outcome distribution (~50/50) and the
-avg_score histogram, which now has a real (non-sentinel) mode from the
-2026-07-01 day. Fetch the 2026-07-26 manifest rows when convenient to fully
-unblock E3.
+### 2.B2 The arm register — UPGRADED from v1 §2.1
 
-### 2.1 The objective ladder
+Rationale for the upgrade: v1's E1/E2 weighted by **episode outcome** — a
+poor-man's proxy for the Metamon paper's actual objective family (their
+Table 1 / Eq. 2: a unified weighted-BC actor loss with the weight computed
+from a **per-action advantage** estimated by a critic trained on the same
+data). Outcome-weighting keeps winners' blunders at full weight and
+discards losers' good moves; advantage-weighting scores each decision
+against the state's expected value. The old outcome arms are demoted to
+fallback/ablation status.
 
-All arms warm-start from the IL checkpoint, same step count, same LR
-schedule, 3 seeds, per-row weight `w` is the only difference:
+All arms: warm-start from PRIOR (`models/il_agent`), same step count
+(13,000 steps ≈ one winner-filtered epoch of the restored corpus at batch
+64), same LR schedule (warm 1e-4, cosine), 3 seeds {42, 43, 44}, streamed
+corpus (07-01 + 07-26), loss = per-row-weighted cross-entropy over the
+legal option set. The only difference between arms is the weight `w`:
 
 | ID | Arm | Weight `w` | Notes |
 |---|---|---|---|
-| S2-E0 | control | 1 (plain BC, continued) | separates "more steps" from "better objective" |
-| S2-E1 | filtered BC (winners-only) | 1 if won else 0 | the paper-adjacent simple baseline; halves the data — equal-steps rule matters |
-| S2-E2 | outcome-weighted BC | `exp(β·(outcome − 0.5))`, β ∈ {0.5, 1, 2} | AWR-shaped (see above); keeps losing data at reduced weight |
-| S2-E3 | skill × outcome | E2 weight × 1[avg_score ≥ Q75] | the manifest-rating lever; runnable now on the 2026-07-01 day |
-| S2-E4 | critic-advantage weighted | `exp(A(s)/β)`, A = outcome − V(s) | closest to the paper's actual actor-critic RL stage; value head is train-time only — the shipped bundle contains the actor alone. If built, it is the natural critic init for Phase 3 |
+| E0 | control | 1 (plain BC, continued) | separates "more steps + more data" from "better objective" |
+| E1 | **Binary advantage** (paper's "Binary", CRR-style) | `1[Â(s,a) > 0]` | the paper's strong simple performer; discards ~half the rows, and takes proportionally fewer steps for it — do NOT pad it back up to E0's step count |
+| E2 | **Exp advantage** (paper's "Exp", AWR-style) | `exp(β·Â(s,a))`, clipped at 20 | β ∈ {0.5, 1, 2}; clipping guards a miscalibrated critic handing one row the whole gradient |
+| E3 | **skill × advantage** | best-of(E1, E2) weight × `1[avg_score ≥ Q75]` | the manifest fix unblocks the rating field. Rows with unknown rating keep the base weight (gate applies only where a rating exists — the unknown fraction is reported); chart threshold sensitivity Q50–Q90 and per-day splits. Skill-filtering is the most externally-validated technique in the evidence base (Metamon; Orbit Wars 2nd place's 1500/1600 thresholds; 49th place's winner-states scaling) |
+| E-fallback | outcome-weighted (the OLD E2) | `exp(β·(outcome − 0.5))` | **registered contingency, run ONLY if the B2a critic audit fails** — the critic-free fallback, not a primary arm |
+| E4 (optional) | Binary + MaxQ (paper's fourth variant) | E1's weight, plus λ·E[Q(s,a)] term | gated on E1/E2 showing signal; leans hardest on critic quality, so it goes last |
 
-**STATUS 2026-08-02: E0/E1/E2 trained** (3 seeds, equal 12,900 steps, warm LR
-1e-4, on the *old single train day*) and Rung-2 benchmarked. Rung 1:
-three-way tie (75.8% ± 0.1, IL 75.3%) — offline accuracy didn't separate
-them, as predicted. Rung 2: every arm beats IL head-to-head (E0 62.0%
-[50.3,72.4], E1 62.5% [51.0,72.8], E2 56.9% [45.4,67.7]); arms don't separate
-from each other; all still lose ~92% to the strong public trio. Ladder:
-`s2_e1_s43` submitted 2026-08-02 (submission 55196434) — first read **516.7
-vs the IL agent's settled 400.0**, provisional until ~3 days settle it.
+Implementation note (already true in code): `train_il.py --weight-arm
+adv-binary|adv-exp --critic-dir <dir>` are E1/E2; with V frozen at 0.5 they
+collapse exactly to the old winners-only/outcome arms
+(`tests/test_e4_critic.py` asserts the equivalence — the correctness anchor
+for the whole weight path). E3 = a skill-gate multiplier composed on top of
+the winning advantage arm. Unknown-outcome rows get weight 0 in every arm.
 
-**Next runs use the doubled corpus.** The E0/E1/E2 results above stand as
-old-corpus measurements; the doubled-corpus rerun (same three arms first, then
-E3 now that ratings exist) is the cheapest expected win in the whole plan —
-the paper's central axis is data scale, and this is our only 2× data lever.
-Compare at equal steps against the 12,900-step runs, and also extend steps to
-match the larger epoch — both comparisons, charted.
+**Selection rule:** the local tournament (round-robin vs PRIOR + public
+pool, mirrored pairs, pooled seeds, Glicko with RD quoted) and the ladder
+only. The offline accuracy check is a pipeline check, never a selection
+metric (it already failed to separate arms once — expected).
 
-Known trap, restated: winners-only filtering can lower Rung-1 accuracy while
-raising Rung-2 win-rate — offline action-match is a pipeline check, never a
-selection metric. Selection is Rung 2, confirmed on the ladder.
+**STATUS 2026-08-04 12:06 — tournament run (14 agents, 12 mirrored
+pairs/pairing, isolated ratings, `reports/s2v2_tournament.json`, figure
+`s2v2_arms_tournament.png`). All numbers LOCAL — unverified on the ladder:**
 
-### 2.2 Phase-2 gate (technical, no approvals)
-
-1. Rung 1 vs the 0.381 majority line (pipeline check only).
-2. Rung 2 round-robin (`scripts/benchmark_agents.py`) — winning arm vs IL and
-   the public pool, mirrored pairs until Glicko intervals separate; quote RD.
-3. The ladder ritual from Standing rules. The Phase-2 winner becomes the
-   **Phase-3 initialization** only after the leaderboard confirms it.
-
----
-
-## Phase 3 — On-Policy PPO Self-Play (adapted from the paper's Synthetic RL)
-
-**The deviation, stated loudly (repo rule 5):** in
-[[Human-Level Competitive Pokémon via Scalable Offline Reinforcement Learning with Transformers]]
-this stage is *offline*: self-play battles are appended to an ever-growing
-corpus (their `SyntheticRLV0→V2` line, +4M–11M trajectories per generation)
-and offline RL retrains on the union — so the human prior can never be
-forgotten, because every retrain still sees it. That requires corpus storage;
-this laptop has ~16 GB free against a human dump already ~40 GB. Phase 3 here
-is therefore **on-policy PPO**
-([[Proximal Policy Optimization Algorithms]], Schulman et al. 2017): rollouts
-live in RAM, are consumed by the update, and are freed. What the deviation
-costs: PPO sees only the current policy's states, so forgetting the prior is
-a live failure mode — the KL anchor in §3.2 is the guard, and per-context
-KL/entropy logging is how the guard is watched, not assumed.
-
-### 3.1 Rollout engine
-
-- **Parallelism: game-level stdlib multiprocessing** (`pokemon_tcg/selfplay.py`).
-  PufferLib emulation is not the v1 path (cabt is callback-driven,
-  `env.run([a, b])`; games are env-bound at ~0.9 s with ~3 ms policy calls),
-  but PufferLib is the named fallback if step-level vectorization ever becomes
-  the bottleneck **and** the Protein sweep dependency regardless — which is
-  why work item 0 stress-tests it now, not later (see §Hyperparameters and
-  Work items).
-- **Measured 2026-08-02** (`scripts/probe_selfplay_throughput.py`): 8 workers
-  on the M4 Pro → 6.2 games/s mirror, 425 rollout rows/s (~1.5M rows/hour);
-  league mix 5.4 games/s; 0 fallback decisions in 176 games. A 4096-row PPO
-  update collects in ~10–15 s. Gotcha recorded: every callable handed to
-  `env.run` goes through `as_env_agent()` (bound-method `co_argcount` trap).
-- **Rollout buffer sized to RAM, not disk** — 2048–8192 decisions per update,
-  a config knob, never spilled to disk.
-- **Opponent sampling per episode** (league play, the collapse guard):
-  learner side always current policy; opponent ~50% current weights (mirror),
-  ~30% frozen past checkpoints (league), ~20% public pool from `AGENT_FILES`.
-  A league of 10 frozen checkpoints ≈ 130 MB. The mix is a knob — log it.
-- **Exploration at rollout**: sample at temperature ~1.0, never argmax
-  (argmax self-play produces near-duplicate games). Temperature goes in the
-  run manifest.
-- **Masking**: structural Pattern-B masking in rollout *and* loss
-  ([[A Closer Look at Invalid Action Masking in Policy Gradient Algorithms]]).
-- **The deck constraint, spelled out.** In this repo's harness a deck is not
-  an independent variable: each agent directory ships one fixed 60-card
-  `deck.csv`, and `load_agent` binds that list to the agent — there is no code
-  path that assigns decks per-game. "The frozen control deck" means the one
-  60-card list our agent lineage ships (the same list Phase 1 and Phase 2
-  trained against and the ladder submissions carry). So in every Phase-3
-  game, our learner, our frozen league checkpoints, and the mirror opponent
-  all pilot that identical list; only the public-pool opponents differ (their
-  own shipped decks). "Adding a deck axis" would mean building harness
-  support for varying the deck independently of the policy — new plumbing plus
-  cg-legality checks per list — and is out of scope for v2. Consequence for
-  reporting: Phase 3 improves *this deck's* policy; nothing here measures
-  general strength across decks, and reports must say so.
-
-### 3.2 PPO specifics
-
-- **Init**: actor from the Phase-2 winner. Critic head fresh (or from
-  S2-E4's value head if built), trained on the remapped terminal reward.
-- **Reward**: terminal only, win = 1, draw = 0.5, loss = 0. Never −1 for a
-  loss: negative terminal rewards under γ < 1 pay the agent to delay losing —
-  pathologically long games and rollout-throughput collapse (all four Orbit
-  Wars RL solutions hit a version of it). No reward shaping in v1;
-  prize-differential shaping is registered follow-up S3-E2, not a default.
-- **KL penalty to the frozen prior** (IL checkpoint or Phase-2 winner — pick
-  one and log which) instead of, or alongside, a naive entropy bonus. This is
-  the guard against on-policy forgetting. Log KL-to-prior and entropy per
-  SelectContext every update; KL blowup or entropy collapse is a stop signal.
-- **Critic is train-time only.** The shipped bundle contains the actor alone.
-
-### 3.3 Promotion gate (per candidate checkpoint)
-
-Snapshot every N updates (N from measured steps/s so candidates arrive a few
-times per day). Promote to current-best only if **both**:
-
-1. Rung 2: beats current best with non-overlapping Glicko intervals AND still
-   beats the public pool — a candidate that gains in the mirror but loses to
-   `kiyotah_dragapult` has collapsed, not improved.
-2. Ladder: submitted (the standing ritual), scored, reads above the current
-   best's settled score.
-
-Promoted candidates join the frozen league. Two consecutive non-promotions =
-stalled; stop and write up. Rung 3 (read five full transcripts) runs once per
-candidate regardless — self-play's failure mode is exploiting its own blind
-spots in ways transcripts show and aggregates hide.
-
----
-
-## Hyperparameters — what gets tuned, and how
-
-No manual knob-twiddling marathons. The tool is **Protein**, PufferLib's
-cost-aware Bayesian sweep (the headline results in
-[puffer.ai blog post 12](https://puffer.ai/blog.html#post-12) — note those
-landed on **PufferLib 3.0**; our risk is 4.0, see work item 0). The flat-dict
-config from work item 2 is Protein's interface. The sweep objective is the
-**Rung-2 proxy** (win-rate vs a fixed opponent set at a fixed game budget),
-never val loss — offline metrics already failed to separate arms once.
-
-Phase-2 sweep space (cheap, run first):
-- AWR temperature **β** (E2/E4) — the one knob v1 already swept by hand
-  ({0.5, 1, 2}); Protein owns it now.
-- Skill threshold quantile (E3): Q50–Q90.
-- LR and warm-start LR schedule.
-
-Phase-3 (PPO) sweep space, in priority order — the top three are where PPO
-lives or dies, the rest are refinements:
-
-| Priority | Knob | Range to search | Why |
+| Arm (seeds pooled) | vs PRIOR (n=72) | vs strong trio (n=216) | vs e3 |
 |---|---|---|---|
-| 1 | learning rate | 1e-5 – 3e-4, log | dominant sensitivity in every PPO study |
-| 2 | KL-to-prior coefficient | 0.01 – 1.0, log | *our* critical knob: too low → forgetting, too high → frozen at the prior |
-| 3 | clip ε | 0.1 – 0.3 | update aggressiveness |
-| 4 | GAE λ | 0.9 – 0.98 | credit over ~68-decision games |
-| 5 | γ | 0.99 – 1.0 | terminal-only reward argues for ≈1; sweep confirms |
-| 6 | update epochs × minibatch | 1–4 × {256, 512, 1024} | sample reuse vs staleness |
-| 7 | rollout buffer size | 2048–8192 | collect/learn balance (measured: 4096 ≈ 10–15 s) |
-| 8 | rollout temperature | 0.8 – 1.2 | exploration breadth |
-| — | entropy bonus | 0 or small | secondary to the KL anchor; include only if KL alone under-explores |
+| e0 control | **79.2% [68.4, 86.9]** | **19.4% [14.7, 25.2]** | 59.7% [53.1, 66.0] |
+| efb outcome-weighted | 72.2% [61.0, 81.2] | 12.5% [8.7, 17.6] | 63.0% [56.3, 69.1] |
+| e3 skill-gated | 69.4% [58.0, 78.9] | 13.4% [9.5, 18.6] | — |
+| (PRIOR reference) | — | 9.7% [4.8, 18.7] | — |
 
-Fixed, not swept: opponent-mix ratios (a design choice, logged), seed policy,
-reward mapping, masking (structural, non-negotiable). Sweep budget honesty:
-each Protein trial costs a real Rung-2 evaluation — size the trial count from
-measured games/s and the calendar, and log what the sweep did *not* cover.
+- Every arm beats PRIOR locally with a CI floor above 50% — necessary but
+  NOT sufficient (the old E1's 62.5% did too and settled at 395).
+- **e0 vs efb: statistical tie** (48.1% [41.6, 54.8]). The pre-registered
+  row-count tiebreak cannot separate them (neither discards rows), so
+  selection falls to the documented secondary margins: e0 nearly doubles
+  efb against the strong trio and carries zero extra assumptions.
+  **Selected arm: e0; champion checkpoint: `s2v2_e0_s43`** (20/24 vs
+  PRIOR, best-in-family 52.7% overall, best trio count 16/72).
+- **Negative result, written down: the skill gate HURT.** e3 loses to e0
+  (40.3%) and efb (37.0%) with non-overlapping-from-50 CIs. Mechanism
+  consistent with the registered scale-mix caveat: the pooled Q75=1189
+  threshold keeps mostly 07-01 (oldest, real-rated) episodes, so the gate
+  trades away both volume and recency. The most
+  externally-validated technique in the evidence base did not survive
+  contact with this corpus's rating field.
+- efb β-sweep {0.5, 2} NOT run — registered scope decision: efb tied e0 at
+  β=1, the full-corpus experiment (below) supersedes the family, and the
+  calendar prices each extra arm at ~1h + tournament time.
+- E4 never triggered (its gate required advantage-arm signal). **If arms do not separate
+(overlapping CIs), say so plainly and pick by the pre-registered tiebreak:
+fewest training rows** (E1 ties beat E2 ties, a skill-gated arm beats an
+ungated one), rather than narrating a winner.
+
+### 2.B3 Stage-2 gate (v1 §2.2 unchanged, with the v2 bar)
+
+1. Offline accuracy check vs the 0.381 majority line (pipeline check only).
+2. Local tournament with RD quoted; enough mirrored pairs that intervals
+   separate.
+3. Ladder ritual: bundle build (read the printed tarball MiB) → forced-CPU
+   rehearsal (`PTCG_DEVICE=cpu`, ms/decision recorded) → submit with a
+   DETAILED message (what changed, from which checkpoint, expected effect)
+   → ledger entry → leaderboard-check after scoring, and again at settle.
+   Only a checkpoint whose **settled** score clears PRIOR's 400.0 becomes
+   the Stage-3 init. If no arm passes, Stage 3 initializes from PRIOR and
+   the writeup says why (v1 stop-condition, still in force).
 
 ---
+
+## PRIOR-v2 re-base rule (registered 2026-08-04, per Rami)
+
+The pipeline is a function of its base imitation model; a better base
+upgrades every downstream stage. Two candidates are on the ladder as of
+08-04: **continued imitation** (`s2v2_e0_s43`, 55246108, first read 600.0)
+and **all-days imitation** (`il_agent_full_0804`, 15,032 episodes,
+submitting 08-04 PM). Whichever has the higher **settled** score (~08-07)
+becomes **PRIOR-v2**: Stage-3 init AND KL teacher re-base onto it (two
+flags + a generation restart, ~hours), the critic re-trigger trains from
+its trunk, and any future weighted-arm rerun warm-starts from it. Corpus
+recovery/audits and all machinery carry over unchanged. A provisional
+Stage-3 generation may run from the local champion before settle — labeled
+provisional, discarded without ceremony if the settle picks the other base.
+
+---
+
+## Stage 3 — SELFPLAY (on-policy PPO, nothing stored)
+
+**The core deviation from the Metamon paper, restated so it survives
+rewrites:** the paper's third stage aggregates self-play trajectories into
+an ever-growing offline corpus and retrains offline RL on the union — every
+retrain sees all past data, so the human prior can never be forgotten. That
+needs corpus storage this laptop does not have (and ADR-001 deliberately
+keeps raw corpora off-disk). Stage 3 is therefore **ON-POLICY PPO**:
+rollouts live in RAM, are consumed by the update, and are discarded; disk
+sees only checkpoints and logs. The stated cost: PPO sees only the current
+policy's states, so **forgetting the prior is a live failure mode** — the
+KL anchor below is the named guard, watched via per-context KL/entropy
+logging, never assumed.
+
+Base design = v1 §3.1–3.3 as built (code wins): PufferLib 3.0 `PuffeRL`
+trainer in `.venv-ppo` (`scripts/train_ppo_puffer.py`) over `PTCGGym`
+(cabt driven step-wise, learner decisions only) with the Multiprocessing
+backend, **one env per worker always** (the cg engine is a per-process
+singleton), 50/30/20 opponent mix (mirror hot-reload / frozen league /
+public trio), sampling at temperature 1.0 at rollout (never argmax),
+terminal-only reward {0, 0.5, 1}, structural masking in rollout and loss
+(−1e9), critic (value head) train-time only, deck fixed to the shipped
+60-card list — Stage 3 improves *this deck's* policy and reports must say
+so. Measured integrated throughput ~61 agent-steps/s at 8×8.
+
+### 3.1 KL anchor, concretized (Orbit Wars 1st place; Lux AI S1 winner)
+
+Sources, cited: Orbit Wars 1st place
+<https://www.kaggle.com/competitions/orbit-wars/writeups/1st-place-solution-scaling-reinforcement-learnin>
+and the Lux AI Season 1 winner
+<https://github.com/IsaiahPressman/Kaggle_Lux_AI_2021>.
+
+- **CONTINUAL anchoring:** the loss carries `β · KL(π_θ(·|s) ‖ π_ref(·|s))`
+  for the entire run (`PuffeRLPriorKL`, a verbatim vendored copy of
+  pufferl 3.0's `train()` with the KL addition fenced), both distributions
+  softmaxed over the **IDENTICAL legal-action mask**. A mask mismatch
+  silently corrupts the anchor gradient — guarded twice: the trainer
+  asserts mask agreement on the first minibatch after every prior swap,
+  and a unit test (`tests/test_kl_mask.py`) proves the assert fires on a
+  crafted mismatch and that KL(π‖π)=0 on identical inputs.
+- **π_ref initializes from the restarted Stage-2 winner** (logged in run
+  metadata `init_from` / `kl_prior`; if Stage 2 fails its gate, π_ref =
+  PRIOR and the writeup says so).
+- **TWO promotion gates, different purposes — do not conflate:**
+  - **(a) ANCHOR promotion (cheap, internal, frequent):** every N=20
+    updates, live vs frozen π_ref head-to-head, mirrored seats, ≥50 pairs
+    (100 games), both sides sampling at T=1.0; live wins **strictly >70%
+    of decisive games** (and ≥20 decisive) → π_ref ← frozen copy of live
+    (`promotion.evaluate_gate` + `retarget_prior`; every verdict appended
+    to `promotion_log.jsonl`). This ratchets the anchor forward so the KL
+    pull never fights genuine improvement. Evidence it works as a brake:
+    the first real KL-anchored run (62k steps, 2026-08-03) held 3 gates at
+    50/51/62% — no promotion, anchor visibly bounding drift.
+  - **(b) CANDIDATE promotion (expensive, rare) = v1 §3.3 unchanged:**
+    non-overlapping Glicko vs current best AND still beats the public pool
+    AND ladder-confirmed (settled, not first-read). **Only (b) gates
+    submissions.** Two consecutive (b)-failures = the loop has stalled;
+    stop and write up.
+- **Value-anchor** (live-vs-π_ref win-prob cross-entropy) **DEFERRED**
+  unless critic instability is observed (exploding value loss,
+  sign-flipping advantages across consecutive updates).
+
+### 3.2 Entropy schedule (Orbit Wars 3rd place: "by far the most important
+training knob"; 2nd place used per-head entropy coefficients)
+
+Source: <https://www.kaggle.com/competitions/orbit-wars/writeups/3rd-place-ab-in-den-orbit>.
+
+- The entropy coefficient gets its own config knobs: `--ent-coef-init`,
+  `--ent-coef-final`, `--ent-anneal-frac` (linear anneal over that fraction
+  of total timesteps, then flat at final).
+- **Stated initial schedule: 0.01 → 0.001 over the first 50% of the run.**
+  Rationale: the KL anchor already owns drift control (Rami's PPO notes,
+  cross-checked 08-03), so entropy starts small-but-real to keep rollout
+  diversity while the anchor is tight, and anneals to near-zero so
+  late-run convergence isn't fought by the bonus. β_KL and entropy interact
+  — sweep β_KL first (it dominates), entropy schedule second.
+- **Per-context logging every update:** mean policy entropy and mean
+  KL-to-prior **per SelectContext** (the 0–48 context id in the packed
+  obs), appended to `train_metrics.jsonl`. Entropy collapse in one context
+  (e.g. attack-selection) with a flat aggregate is exactly the failure the
+  aggregate hides; the per-context lines are the stop-signal instrument.
+
+### 3.2b Held-out evaluation opponents (registered 2026-08-04, per Rami)
+
+The public trio wears two hats — 20% of TRAINING games AND the local
+evaluation's transfer proxy. That is training on the test set: a candidate
+can fit the trio's habits and read as "transfers" without generalizing
+(plausibly a thread in the four local-vs-ladder inversions). Fix, binding
+for every Stage-3 candidate evaluation from gen 1 on:
+
+- **Transfer column = never-trained-on publics** (from the wired registry:
+  `tb_dragapult` — strongest public at ~880 local rating — `tb_search`,
+  `tb_alakazam`, `dedquoc_rule_engine`, `kojimar_lucario`). These never
+  enter any training mix. Caveat noted: `kiyotah_iono`/`kiyotah_abomasnow`
+  share an author with a trained-on agent and don't count as held out.
+- The trio column is relabeled **in-sample diagnostic** — reported, never
+  cited as transfer evidence.
+- Weak-agent cheese guard (already in force, restated): training pool =
+  strong trio only; selection ignores the weak-agent-inflated "overall"
+  column.
+- Registered-not-run: a pool-free training-mix ablation (mirror+league
+  only) — one variable, equal budget — if attribution is ever wanted.
+
+### 3.3 PFSP-lite (3rd place's mechanism, translated to this architecture)
+
+v1's 50/30/20 mix stays. The 3rd-place mechanism — "fix the sampled
+opponent for 2 consecutive PPO updates and harvest win-rate estimates from
+the rollouts (free), instead of separate eval games for opponent
+weighting" — assumes one env; with 8 parallel envs each mid-episode at
+update boundaries, a literal port is incoherent. The honest translation,
+keeping both properties (stable per-opponent estimates; no separate eval
+games):
+
+- **Opponent persistence:** each env keeps its drawn opponent for
+  K consecutive episodes (default K=4) before redrawing — the same
+  estimate-stabilizing effect the 2-update freeze bought.
+- **Free win-rate harvest:** every terminal step's info carries
+  `(opponent_id, outcome)`; the driver aggregates per-opponent win-rate
+  EMAs from rollout data alone and logs them every update.
+- **Frontier weighting:** public-pool draw weights follow the harvested
+  win-rates (PFSP: overweight the strongest opponent we beat often enough
+  to learn from — near-zero-win matchups yield ~no gradient under
+  terminal-only reward). Weights are refreshed live via a small JSON file
+  the env workers re-read periodically (the same hot-reload idiom the
+  mirror opponent already uses), and every refresh is logged.
+
+### 3.4 PPO hyperparameter table (one value + one-line justification)
+
+| Knob | Value | Why |
+|---|---|---|
+| γ | **0.997** | Rami's recorded gen-2 call: adds the time preference gen-1 lacked (observed game-dragging) while staying ≈1 for a terminal-reward episodic task. |
+| GAE λ | **0.95** | Standard credit horizon over ~68-decision seats; pufferl default, no measured reason to fight it. |
+| clip ε | **0.2** | PPO default; gen-2's clipfrac ~0.5% says the trust region is not the binding constraint. |
+| PPO epochs | **1** | Orbit Wars 3rd place: extra epochs bought instability on fresh self-play data; gen-2's under-movement is addressed by LR, not by re-chewing stale rollouts. Registered sweep {1, 3}. |
+| Rollout batch | **1024 rows** (8 envs × 128 bptt-horizon) | Sized to the MEASURED ~61 steps/s: one update's data collects in ~17 s; a 4096-row batch (the v1 aspiration at the 425 rows/s probe) would starve the learner for ~67 s per update. |
+| Minibatch | **512** | Two minibatches per epoch; large enough for stable advantage normalization at this batch size. |
+| LR | **1e-4, annealed** | Fine-tuning a 3.32M-param prior, not training 200M from scratch; directly targets gen-2's diagnosis (clipfrac ~0.5%, approx_kl ~0.002 at 3e-5 = updates far inside the trust region, little net movement per budget). |
+| Entropy coef | **0.01 → 0.001, linear over first 50%** | §3.2; the anchor owns drift, entropy owns rollout diversity, annealed so it doesn't fight convergence. |
+| β (KL anchor) | **0.05**, sweepable {0.01, 0.05, 0.2} | Gen-2 measured the anchor actively bounding drift at 0.05 (KL pulled 0.60→0.37) without freezing progress; sweep brackets it an order of magnitude each way. |
+| Rollout temperature | **1.0** | PPO importance ratios assume samples from π_θ; ≠1.0 silently biases the objective. |
+| Optimizer | **Adam** | Recorded decision (never muon for fine-tuning a BC prior). |
+| vf_coef / grad-norm | **0.5 / 1.0** | pufferl defaults; value head is train-time only, no reason measured to deviate. |
+
+### 3.5 The KL-to-prior term, in plain language
+
+The anchor measures, at every state in the minibatch, how far the live
+policy's action distribution has drifted **from** the frozen reference's:
+`KL(π_θ(·|s) ‖ π_ref(·|s))`, both distributions computed by softmaxing
+logits over the SAME legal-action mask for that state, then averaged over
+the minibatch and added to the loss scaled by β. β sets the leash: β → 0
+is unconstrained PPO (free to forget the human prior); β large means the
+policy cannot leave the prior at all. Direction matters — it is measured
+from the live policy TO the reference (states the live policy actually
+visits, penalized where IT puts mass the prior wouldn't). "KL = 1 nat"
+means substantial average drift — roughly, the live policy's choices carry
+a full nat of surprise under the prior. Interpret logged KL against the
+run's own baseline trace, not an absolute bar; a sudden blowup (order-of-
+magnitude jump between updates) is a stop signal, and so is entropy
+collapse in any single SelectContext.
+
+---
+
+## Stage-3 STATUS — generation 1 (2026-08-04 evening)
+
+Run: 963,584 steps / 4h on the all-days base (provisional per the re-base
+rule), full v2 stack. 42 anchor gates; **one promotion** — step 430,080,
+live beat the frozen teacher 73–27; post-promotion gates re-centered at
+~50% vs the stronger reference, confirming a real ratchet click. KL bounded
+(0.14–0.28) throughout; no stop signal fired (one 34% gate dip recovered
+next gate; low per-context entropies tracked, judged schedule-not-collapse).
+
+Candidate tournament (14 agents incl. the §3.2b held-out five,
+`selfplay_g1_tournament.json`): candidate gate leg 1 initially unresolved
+at n=24 (ref430k 66.7% [47,82] vs the all-days base), settled by a focused
+200-game match: **ref430k beats the base 62.5% [55.6, 68.9] — non-
+overlapping. Gate leg 1 MET.** Transfer column (never-trained-on publics):
+ref430k **68.3%** — best in the table including all bases — so the gains
+generalize, they are not pool-fit. In-sample trio 40.3% where the imitation
+lineage lived at 7–19%. The budget-end final policy (45.8% vs base) did NOT
+pass; the promoted teacher is the artifact that did.
+
+Ladder: submitted as **55253900** (2026-08-05 00:5x UTC, CPU rehearsal
+4.99 ms/dec, displaces the mcts experiment from the active set). Gate
+leg 2 = settled score above the all-days base's settle AND above 400;
+judge ~08-08. Gen 2 queued overnight: init = gen-1 final + warmed critic
+(`policy_full.pt`), teacher = ref430k, league = all four prior artifacts,
+6h budget.
+
+---
+
+## Stage-3 STATUS — generation 2 (2026-08-05 morning)
+
+Run: 1,293,312 steps / 6h from gen-1's final with the warmed critic,
+anchored to ref430k. **63 gates, zero promotions** — but the last dozen ran
+57–67% against a far stronger teacher than gen 1 faced; KL bounded (0.24),
+no stop signals. Tournament + focused matches:
+
+- vs ref430k (current best): **52.5% [45.6, 59.3] over 200 games — parity.
+  Formal candidate gate NOT met → non-promotion #1 of 2.**
+- vs the all-days base: **68.0% [61.2, 74.1]** — cleaner separation than
+  ref430k's own 62.5%.
+- Held-out transfer (never-trained-on publics): **78.1% [69, 85] — best
+  number any artifact has posted** (ref430k 65.6, all-days 60.4 same run).
+
+Decisions: no slot for g2_final (statistical twin of the already-submitted
+55253900; wait for its reads before spending on this lineage again);
+gen 3 launched from g2_final (warm critic; teacher stays ref430k per the
+ratchet — never beaten >70%; league unchanged). Ladder morning reads:
+55253900 first read 248.6 (RL line's familiar low open; judge ~08-08),
+all-days 418.9 on read 3, heuristic pair 683/666 carrying the team.
+
+---
+
+## Stage-3 STATUS — loop STALLED by rule (2026-08-05 afternoon), write-up
+
+Gen 3 (1,229,824 steps from g2_final, teacher still ref430k): 60 gates,
+zero promotions, plateau 55–64%. Gate match: **56.0% [49.1, 62.7] vs
+ref430k — non-promotion #2 → the §3.3 stall rule fires. Training loop
+closed.** No gen 4; the registered escape hatch, if Rami wants it, is the
+pre-registered β_KL sweep {0.01, 0.2} — the one knob the doc licenses.
+
+**What three generations bought (16h MPS, ~3.5M steps):**
+
+| | vs all-days base (n=200) | vs ref430k (n=200) | held-out transfer | trio (in-sample) |
+|---|---|---|---|---|
+| gen-1 promoted (ref430k) | **62.5% [55.6, 68.9]** | — | 65.6–68.3% | ~40% |
+| gen-2 final | **68.0% [61.2, 74.1]** | 52.5% [45.6, 59.3] | **78.1% [69, 85]** | ~43% |
+| gen-3 final | — | 56.0% [49.1, 62.7] | 75.0% [65.5, 82.6] | — |
+| (imitation lineage for scale) | — | — | 32–61% | 7–19% |
+
+Reading: anchored self-play produced ONE ratcheted improvement over the
+all-days base, then converged to that policy's level — head-to-head parity
+among the RL candidates while held-out transfer (the honest column) sits
+25–45 points above the imitation lineage. The anchor held in every run
+(KL ≤ 0.28, no stop signals, no post-promotion flapping). The plateau's
+most plausible reads: (a) the β=0.05 leash bounds total drift near
+ref430k's neighborhood; (b) terminal-only reward at ~60 steps/s gives
+~thin gradient signal per wall-clock hour at this scale.
+
+**Everything now rides on the pre-registered ladder verdicts:**
+1. Base-model settle ~08-07: all-days (55248985, reads 600→419→418) vs
+   PRIOR's settled 400 — decides PRIOR-v2 and the Stage-2 gate (task B3).
+2. Gen-1 candidate settle ~08-08: 55253900 (reads 249→267, climbing) —
+   leg 2 of the only gate-passed RL candidate.
+3. If the RL line settles respectably, gen-2 final (best transfer, 68% vs
+   base) is the queued next submission; if not, the write-up stands and
+   remaining slots go to the heuristic incumbent per displacement rules.
+
+---
+
+## Measurement protocol (binding, all stages)
+
+After EVERY phase gate / candidate promotion: bundle → printed MiB →
+forced-CPU rehearsal → submit with detailed message → ledger entry
+(`scripts/submission_ledger.py`; Kaggle's 500-char cap doesn't apply to the
+ledger) → leaderboard-check after scoring AND at settle (~3 days). Local
+Glicko alone never declares improvement. Submissions displace the active
+set (§Ladder context) — plan against the ~3-day settle time and the 08-16
+close; last confident slot ≈ **08-13**. ≥3 seeds wherever arms are
+compared; budget by epochs or wall-clock, never by a pinned step count;
+RD/σ on every number; charts in `reports/figures/`.
+
+## Stop conditions (any → halt and report)
+
+v1's list minus the retired 1-hour rule, plus the v2 additions:
+
+- Opponent-private field reaching the encoder from any rollout path.
+- Measured steps/s too low for a meaningful update budget (report the
+  number and the arithmetic).
+- Stage-2 gate unmet by every arm → Stage 3 initializes from PRIOR, writeup
+  says why.
+- KL-to-prior blowup or per-context entropy collapse during PPO.
+- **Mask mismatch between live and reference distributions** (the trainer
+  assert or the unit test firing).
+- **Anchor promotion flapping:** reference replaced >3 consecutive times at
+  near-threshold win rates → raise the gate's game count before touching
+  the 70% bar.
+- **B0 data recovery impossible** (streaming and Kaggle re-fetch both fail)
+  → report what was tried; do NOT silently train on the 24 surviving
+  train-day episodes.
+- Any design that wants to write episodes to disk beyond replay-review
+  transcripts; bundle MiB over the envelope.
 
 ## Work items in order
 
-0. **[NOW] PufferLib 4.0 stress test.** `uv add pufferlib` (4.x) immediately
-   and try hard to break it on this machine *before* any phase depends on it:
-   import under uv on ARM64 macOS, run its bundled demo envs, run a toy
-   Protein sweep end-to-end, and attempt the cabt emulation wrapper as a
-   smoke test (even though v1's rollout path doesn't need it). If 4.0 breaks,
-   pin the newest working 3.x (the post-12 gains are 3.0-era anyway) and
-   record the pin + failure mode in `notes/`. The point is to discover today,
-   not during Phase-3 integration, which PufferLib we actually have.
-1. **[S2] Corpus-doubling plumbing** — loaders read both train days; re-run
-   `check_weight_plumbing.py` on the union; avg_score histogram figure;
-   fetch the 2026-07-26 manifest rows to fully unblock E3.
-2. **[S2] Weighted trainer** — per-row weight hook (`w · CE`), config-driven
-   arm selection, flat-dict config (the Protein interface).
-3. **[S2] Doubled-corpus runs** — E0/E1/E2 (3 seeds, equal steps vs the
-   12,900-step baselines *and* an extended-steps arm), then E3 with real
-   ratings; Protein on β and the E3 quantile → Rung 1 + Rung 2 → chart →
-   pick arm → **ladder ritual** → Phase-3 init declared.
-4. **[S3] Rollout engine** — multiprocessing vectorization per §3.1 +
-   steps/s report (probe exists; productionize).
-5. **[S3] PPO trainer** — `scripts/train_ppo.py`: masked PPO loss,
-   KL-to-prior, fresh critic, opponent sampler, in-memory buffer; checkpoints
-   + TB logs only. Protein sweep per §Hyperparameters.
-6. **[S3] Promotion loop** — snapshot → Rung 2 → ladder → league; repeat
-   until two consecutive fails or the calendar (2026-08-16 minus
-   rating-settle time) ends it.
-7. **[Parallel, gated on item 3's winner] Size grid** — Medium (~10–12M) with
-   the winning objective, 3 seeds, equal steps; Large 50M int8 probe only if
-   Medium beats Small on Rung 2. S-ARCH (causal-over-history) only after the
-   grid answers whether capacity pays at all.
-
-Stop conditions (any → halt and report; none require anyone's approval):
-opponent-private field reaching the encoder from the rollout path; measured
-steps/s too low for a meaningful update budget (report the number and the
-arithmetic); Phase-2 gate unmet by every arm (then Phase 3 initializes from
-IL and the writeup says why); KL-to-prior blowup or per-context entropy
-collapse during PPO; any design that wants to write episodes to disk beyond
-Rung-3 transcripts; bundle MiB over the envelope.
+1. **[B0]** ShardILDataset meta plumbing (`with_meta`, `winner_only`,
+   manifest join at train time) + `train_il.py` hub-weighted wiring +
+   `check_weight_plumbing.py --data-source hub`; manifest backfill for
+   2026-07-26 via `backfill-manifest --from-hub`.
+2. **[B1]** Full audit register (plumbing figure, remap check, seat pairing,
+   privacy test, leaderboard baseline) — findings written down.
+3. **[B2a]** `train_critic.py` TD(0) mode + critic audit script; train on
+   the restored corpus; run the three-part audit; decide advantage arms vs
+   E-fallback.
+4. **[B2]** Arms E0/E1/E2(β sweep) → offline accuracy check (pipeline
+   only) + local tournament → E3 (+ optional E4 if signal) → pick by
+   selection rule/tiebreak.
+5. **[B3]** Stage-2 gate: local tournament with RD → bundle → CPU rehearsal → submit
+   (detailed) → leaderboard-check → **Stage-3 init declared**.
+6. **[C]** Stage-3 additions to `train_ppo_puffer.py`/`pufferl_kl.py`:
+   entropy schedule knobs, per-context KL/entropy logging, PFSP-lite
+   (persistence + harvest + weight refresh), `tests/test_kl_mask.py`;
+   then launch from the Stage-3 init with the §3.4 table; anchor gate
+   every 20 updates; candidate gate + ladder per §3.1(b).
+7. **[C-loop]** Snapshot → local tournament → (if decisive) ladder → league; repeat
+   until two consecutive candidate failures or the calendar ends it.

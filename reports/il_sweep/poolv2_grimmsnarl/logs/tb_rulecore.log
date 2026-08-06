@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: tb_rulecore, wmh_grimmsnarl
+[1/3] tb_rulecore vs tb_rulecore: tb_rulecore 4-6  (10 games, 3.1s, 0.31s/game)
+[2/3] tb_rulecore vs wmh_grimmsnarl: tb_rulecore 15-5  (20 games, 7.5s, 0.38s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 6-4  (10 games, 4.3s, 0.43s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 tb_rul  wmh_gr  win% [95% CI]
+tb_rulecore           -       15       62.5  [47.0,75.8]
+wmh_grimmsnarl        5       -        37.5  [24.2,53.0]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  tb_rulecore vs wmh_grimmsnarl: 15/20 =  75.0% [53.1,88.8]  (7.5s, 0.38s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  tb_rulecore             62.5%  [47.0,75.8]  (25/40)
+  wmh_grimmsnarl          37.5%  [24.2,53.0]  (15/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  tb_rulecore             1733.9  (RD 110.2, 95% CI +/-220.4)  GXE  70.6%
+  wmh_grimmsnarl          1266.1  (RD 110.2, 95% CI +/-220.4)  GXE  29.4%
+
+total wall clock: 15.0s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/tb_rulecore.json
+glicko: not persisted (isolated run)

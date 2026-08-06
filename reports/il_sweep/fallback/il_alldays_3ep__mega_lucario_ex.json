@@ -1,0 +1,46 @@
+{
+  "agent": "il_alldays_3ep@mega_lucario_ex",
+  "opponents": [
+    "tb_archaludon",
+    "wmh_alakazam"
+  ],
+  "pairs_per_opponent": 3,
+  "games": 12,
+  "record": {
+    "wins": 5,
+    "losses": 7,
+    "draws": 0
+  },
+  "per_opponent": {
+    "tb_archaludon": {
+      "wins": 3,
+      "losses": 3,
+      "draws": 0,
+      "seconds": 5.5
+    },
+    "wmh_alakazam": {
+      "wins": 2,
+      "losses": 4,
+      "draws": 0,
+      "seconds": 4.2
+    }
+  },
+  "fallback": {
+    "decisions": 732,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {
+    "wmh_alakazam": {
+      "decisions": 261,
+      "policy_ok": 261,
+      "policy_fallback": 0,
+      "obs_fallback": 0,
+      "deck_returns": 6,
+      "errors": {},
+      "fallback_rate": 0.0
+    }
+  }
+}

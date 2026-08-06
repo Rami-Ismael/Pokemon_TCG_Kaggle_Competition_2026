@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] wmh_typhlosion: 0/2672 = 0.00%  by_reason={'deck_returns': 40, 'policy_ok': 2672}
+Loading 2 agents: wmh_typhlosion, wmh_grimmsnarl
+[1/3] wmh_typhlosion vs wmh_typhlosion: wmh_typhlosion 6-4  (10 games, 3.6s, 0.36s/game)
+[2/3] wmh_typhlosion vs wmh_grimmsnarl: wmh_typhlosion 13-7  (20 games, 7.0s, 0.35s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 5-5  (10 games, 3.3s, 0.33s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 wmh_ty  wmh_gr  win% [95% CI]
+wmh_typhlosion        -       13       57.5  [42.2,71.5]
+wmh_grimmsnarl        7       -        42.5  [28.5,57.8]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  wmh_grimmsnarl vs wmh_typhlosion: 7/20 =  35.0% [18.1,56.7]  (7.0s, 0.35s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  wmh_typhlosion          57.5%  [42.2,71.5]  (23/40)
+  wmh_grimmsnarl          42.5%  [28.5,57.8]  (17/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  wmh_typhlosion          1640.3  (RD 110.2, 95% CI +/-220.4)  GXE  62.9%
+  wmh_grimmsnarl          1359.7  (RD 110.2, 95% CI +/-220.4)  GXE  37.1%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  wmh_typhlosion         fallback_rate= 0.00%  decisions=2672  raw={'decisions': 2672, 'policy_ok': 2672, 'policy_fallback': 0, 'obs_fallback': 0, 'deck_returns': 40, 'errors': {}, 'fallback_rate': 0.0}
+
+total wall clock: 14.0s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/wmh_typhlosion.json
+glicko: not persisted (isolated run)
