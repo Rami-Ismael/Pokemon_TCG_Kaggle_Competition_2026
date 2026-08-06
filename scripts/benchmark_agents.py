@@ -403,19 +403,26 @@ AGENT_MAIN = {
 # a verified ladder reference point. That is an instrument-calibration role,
 # not a rival. Get them with the explicit `heuristics` / `anchors` groups; they
 # are no longer swept in by `ours`.
-# Verified 2026-08-06 by grepping each entry point: only `il_agent` and
-# `mcts_il_agent` load a checkpoint at all. `proto` (search + hand-written
-# eval) and `grunt` (greedy MaxDamage one-ply) have no ML in them despite
-# living in our tree, so they moved to OUR_HEURISTICS.
+# Verified 2026-08-06 by grepping each entry point: of the standing agents only
+# `il_agent`, `il_agent_v2` and `mcts_il_agent` load a checkpoint at all.
+# `proto` (search + hand-written eval) and `grunt` (greedy MaxDamage one-ply)
+# have no ML in them despite living in our tree, so they moved to
+# OUR_HEURISTICS.
 #
-# `ours` is deliberately just the two STANDING trained agents. The arm
-# families (s2v2_*, il_*, selfplay_*, ppo_*, grid_*) are trained too but have
-# always been named explicitly per experiment, and sweeping ~30 of them into a
-# default group would silently change every benchmark's cost and its Glicko
-# field. Name your arms; `ours` is the reference point you compare them to.
+# `ours` is deliberately just the STANDING trained agents. The arm families
+# (s2v2_*, il_*, selfplay_*, ppo_*, grid_*) are trained too but have always
+# been named explicitly per experiment, and sweeping ~30 of them into a default
+# group would silently change every benchmark's cost and its Glicko field. Name
+# your arms; `ours` is the reference point you compare them to.
+#
+# Two things are deliberately in NEITHER list. `search_prior_alldays` is a
+# hybrid -- hand-written eval, trained BC prior -- so it sits cleanly on
+# neither side; it is an experiment arm and stays explicitly named.
+# `makimakiai_rl` is trained but is somebody else's, so it belongs to `rung2`.
+#
 # Caveat when reading mcts_il_agent: it spends unbudgeted local think time,
 # which flatters it relative to the ladder (see memory `anchored-pool-rho-0.93`).
-OUR_TRAINED = ["il_agent", "mcts_il_agent"]
+OUR_TRAINED = ["il_agent", "il_agent_v2", "mcts_il_agent"]
 OUR_HEURISTICS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
                   "proto", "grunt"]
 
@@ -902,8 +909,11 @@ def main():
     ap.add_argument("--agents",
                     default=",".join(k for k in AGENT_FILES
                                      if k not in BENCHMARK_ONLY_AGENTS),
-                    help="comma-separated agents or group names (ours, rung2, "
-                         "floor, all). Agents: " + ", ".join(AGENT_FILES))
+                    help="comma-separated agents or group names. Groups: ours "
+                         "(our TRAINED agents -- the reportable set), rung2 "
+                         "(public field), anchors (silent ladder calibration, "
+                         "never a result), heuristics (our hand-written "
+                         "policies), floor, all. Agents: " + ", ".join(AGENT_FILES))
     ap.add_argument("--games", type=int, default=8, dest="games_per_pair",
                     help="mirrored game pairs per ordered agent pair")
     ap.add_argument("--list-pool", action="store_true",
