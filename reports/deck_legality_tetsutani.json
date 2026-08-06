@@ -1,0 +1,21 @@
+{
+  "spec": "tetsutani_grimmsnarl",
+  "play_out": true,
+  "probed": 1,
+  "legal": 1,
+  "failed": 0,
+  "seconds": 0.2,
+  "results": [
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 221,
+      "name": "tetsutani_grimmsnarl",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/mcts-rl-meta-deck-693a39/agents/tetsutani_grimmsnarl/deck.csv"
+    }
+  ]
+}

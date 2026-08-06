@@ -1,0 +1,54 @@
+{
+  "spec": "prvsiyan_grimbelief_alakazam,prvsiyan_templates_alakazam,wmh_grimmsnarl,marnies_grimmsnarl_ex",
+  "play_out": true,
+  "probed": 4,
+  "legal": 4,
+  "failed": 0,
+  "seconds": 1.2,
+  "results": [
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 146,
+      "name": "prvsiyan_grimbelief_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/mcts-rl-meta-deck-693a39/agents/prvsiyan_grimbelief_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 188,
+      "name": "prvsiyan_templates_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/mcts-rl-meta-deck-693a39/agents/prvsiyan_templates_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 195,
+      "name": "wmh_grimmsnarl",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/mcts-rl-meta-deck-693a39/agents/wmh_grimmsnarl/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 241,
+      "name": "marnies_grimmsnarl_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/mcts-rl-meta-deck-693a39/configs/deck_lists/marnies_grimmsnarl_ex.csv"
+    }
+  ]
+}

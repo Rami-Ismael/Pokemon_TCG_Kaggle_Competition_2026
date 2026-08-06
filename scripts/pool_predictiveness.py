@@ -57,7 +57,21 @@ LADDER_ANCHORS: dict[str, tuple[float, str]] = {
     # same weights as `il_agent` on the same deck -> same verified anchor
     "il_bc_3ep@mega_lucario_ex": (398.7, "our subs 55190924/55149903 mean (il_agent weights, Lucario)"),
     "il_alldays_3ep@marnies_grimmsnarl_ex": (311.3, "our sub 55270787, settled over 3 reads"),
+    # Self-play arms, added 2026-08-06. These are the anchors that let the pool
+    # be scored on the self-play family specifically -- the slice where it
+    # performs worst (rho +0.000 over these two plus the two IL arms above).
+    "selfplay_g1_ref430k": (254.9, "our sub 55253900, latest of 5 reads"),
+    "selfplay_g3_final": (405.4, "our sub 55284059, read 3; reads 1-2 said 564.9 -- see below"),
 }
+
+# ⚠️ selfplay_g3_final is the cautionary anchor. Submitted 2026-08-06 to settle
+# whether self-play beats imitation training, it read 564.9 TWICE over the first
+# half hour (which would have meant a +147-point win over its own init) and then
+# settled to 405.4 -- level with that init's 418.0. Two agreeing early readings
+# were still 160 points wrong. Any anchor here sourced from a submission less
+# than a few hours old should be treated as provisional, and any rho computed
+# from it inherits that: this one moved -0.500 -> +0.400 -> +0.000 as the single
+# number settled.
 
 # Which anchors WE measured on the real ladder vs which are third-party claims.
 # The tb_* catalog mu values, the wmh_* README/doc numbers and the notebook-title
@@ -67,6 +81,7 @@ VERIFIED_ANCHORS = {
     "improved_prob_main", "agent_core_improved", "il_agent", "s2_e1_s43",
     "ppo_u120832", "il_alldays_3ep@mega_lucario_ex", "mcts_il_agent",
     "il_bc_3ep@mega_lucario_ex", "il_alldays_3ep@marnies_grimmsnarl_ex",
+    "selfplay_g1_ref430k", "selfplay_g3_final",
 }
 
 
