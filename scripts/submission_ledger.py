@@ -9,10 +9,10 @@ ratings that drift for hours after posting (55215267 read 232.1 -> 265.5 ->
 290.8 -> 299.1 -> 319.0 across one day), so a single score column is also not
 enough: each submission needs a *timeline* of readings.
 
-`notes/scores.md` holds the human-curated one-row-per-submission table (Gate 5
-protocol). `reports/leaderboard_history.jsonl` tracks the TEAM (rank, active
-set). This ledger fills the gap between them: machine-readable, per-REF,
-append-only, unlimited detail, many timestamped score readings per ref.
+`reports/leaderboard_history.jsonl` tracks the TEAM (rank, active set).
+This ledger is the per-REF record: machine-readable, append-only, unlimited
+detail, many timestamped score readings per ref. (The old `notes/scores.md`
+table was purged 2026-08-06 — these two jsonl files are the only records.)
 
 STORAGE
 -------
@@ -36,7 +36,7 @@ USAGE
         --config "USE_SEARCH=0, AdvancedPolicy heuristic" \
         --local-result "same-build resubmit, no local eval" \
         --displaces "expected to displace ppo_u120832 (265-319) from active set" \
-        --approach-file notes/submission_55228113.md
+        --approach-file /path/to/writeup.md
         (--approach "inline text" also works; so does piping to --approach -)
 
     uv run python scripts/submission_ledger.py show
