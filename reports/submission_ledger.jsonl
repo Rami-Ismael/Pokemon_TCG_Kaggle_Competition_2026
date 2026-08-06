@@ -96,3 +96,7 @@
 {"event": "score", "ref": "55253900", "at_utc": "2026-08-05T19:50:22+00:00", "score": 254.9, "status": "SubmissionStatus.COMPLETE"}
 {"event": "score", "ref": "55279487", "at_utc": "2026-08-05T20:57:22+00:00", "score": 547.7, "status": "SubmissionStatus.COMPLETE"}
 {"event": "score", "ref": "55270787", "at_utc": "2026-08-05T20:57:22+00:00", "score": 366.5, "status": "SubmissionStatus.COMPLETE"}
+{"event": "submit", "ref": "55284059", "stub": true, "logged_at_utc": "2026-08-06T06:19:04+00:00", "kaggle_date": "2026-08-06 00:29:28.350000", "kaggle_description": "selfplay_g3_final: anchored self-play gen3 (PPO on il_alldays_0804 init, KL leash to frozen teacher; league = our own ckpts only; Mega Lucario ex = same deck as the 418.0 BC sub, clean compare). Local field test 08-05: 9 field opponents, 270 games/arm, 0.00% fallback/28,983 decisions -> 63.0%+/-5.8 vs BC init 45.9%+/-5.9, +17.0pp non-overlapping. CAVEAT: same pool ranked selfplay_g1 1st while Kaggle scored it 254.9 vs BC 418.0 (rho -0.50, n=3). THIS SUB IS THE EXTERNAL TEST. Displaces 55270787 (383.2). PREDICT 250-420."}
+{"event": "score", "ref": "55284059", "at_utc": "2026-08-06T06:19:04+00:00", "score": 395.3, "status": "SubmissionStatus.COMPLETE"}
+{"event": "score", "ref": "55279487", "at_utc": "2026-08-06T06:19:04+00:00", "score": 460.5, "status": "SubmissionStatus.COMPLETE"}
+{"event": "score", "ref": "55270787", "at_utc": "2026-08-06T06:19:04+00:00", "score": 383.2, "status": "SubmissionStatus.COMPLETE"}

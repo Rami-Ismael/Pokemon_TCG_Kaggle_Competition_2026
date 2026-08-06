@@ -16,29 +16,27 @@ This section is first because it is the only section whose conclusion could
 make the rest of the document moot.
 
 Every settled submission, sorted by whether a learned model is in the acting
-path (`reports/submission_ledger.jsonl`, read 2026-08-05):
+path (`reports/submission_ledger.jsonl`, read 2026-08-06):
 
 | Family | Settled scores | n | Range | Median |
 |---|---|---:|---|---:|
-| **Learned** (BC / offline RL / PPO / MCTS-with-BC-prior) | 418.0, 400.0, 397.3, 395.0, 353.9, 320.4, 291.4, 275.1, 254.9, 190.3 | 10 | 190–418 | ~325 |
+| **Learned** (BC / offline RL / PPO / MCTS-with-BC-prior) | 418.0, 400.0, 397.3, 395.0, 383.2, 320.4, 291.4, 275.1, 254.9, 190.3 | 10 | 190–418 | ~352 |
 | **Hand-written heuristic / search**, no ML in the acting path | 804.0, 701.6, 699.0, 692.7, 683.2, 677.1, 666.1, 602.6 | 8 | 602–804 | ~688 |
 
-*(Re-read 2026-08-05 20:57; `55270787` 311.3 → 366.5, `55253900` 267.4 → 254.9.)*
+*(Re-read 2026-08-06 06:19; `55270787` 311.3 → 383.2, `55253900` 267.4 → 254.9.)*
 
-⚠️ **`55279487` is excluded from this table and that exclusion is now load-bearing,
-so state the reason honestly.** It is a learned agent reading **547.7** on 2
-readings and **rising** (493.9 → 547.7). It is excluded because 2 readings do not
-settle a score, not because the number is decaying — an earlier note in this doc
-claimed it was still falling through the μ₀ = 600 prior, and the next reading
-went up instead.
+**`55279487` is excluded because 2–3 readings do not settle a score.** It is a
+learned agent that has read 493.9 → 547.7 → **460.5**. An earlier revision of
+this section warned that at 547.7 it was closing on the heuristic band and that
+§0's premise might be withdrawn; at 460.5 the gap to the lowest heuristic score
+(602.6) is **142 points, outside the ~±100 band**, and that warning is retracted.
+It was an artifact of reading a trajectory out of a mid-band swing — see §9.7,
+where the same mistake was made twice in opposite directions.
 
-The consequence for the claim above: the lowest heuristic score is 602.6, so the
-gap between the families is now **55 points against a ~±100 same-build spread**.
-"The two families do not overlap" is still literally true of settled scores, but
-it is no longer the clean separation the ~377-point median gap describes, and the
-whole §0 argument is built on that separation. If `55279487` settles above 602.6,
-the FAIL branch is reasoning from a premise the ladder has withdrawn. Re-read it
-before acting on the gate on 08-08.
+**Two further learned reads have landed since, both low**, and neither depends on
+the gate ref: `55284059` (`selfplay_g3_final`) at 395.3 and `55270787` at 383.2.
+That makes **three** self-play/BC submissions below the plain-BC 418.0 line. The
+family separation in the table above is holding, not eroding.
 
 **The two families do not overlap.** No learned agent has ever outscored any
 heuristic agent on this ladder, across 18 submissions. The gap between medians
@@ -57,7 +55,8 @@ is worth doing only if the learned line can plausibly close ~300 points. So:
 candidate — KL leash to a frozen teacher, PFSP league, promotion ratchet, all
 of it. It settles ~08-08. Readings so far: 248.6 → 267.4 → 267.4 → **254.9**
 — flat-to-down across five reads, ~295 below the PASS line and ~195 below the
-FAIL line. Unchanged as of the 2026-08-05 20:57 read; no new reading landed.
+FAIL line. Unchanged as of the 2026-08-06 06:19 read; no new reading has landed
+since 08-05 19:50.
 
 - **Gate PASS** (settled ≥ 550): the learned line is closing. Execute this
   document as written.
@@ -137,7 +136,7 @@ situated as the one-step corner of offline RL (AWR / MARWIL / CRR lineage).
 |---|---|---|---|
 | 1 | **IL** | Complete. `il_alldays_0804`, 3.32M params, full Hub corpus, 127,748 steps, top-1 .7583 | Ladder read 418.0 (settled) |
 | 2 | **Offline RL** (weighted BC on the human corpus) | Arms E0/E1/E2 trained; E1 → 395.0, E0-v2 → 320.4 | Rung-2 + a ladder read above the Phase-1 number. **Not met** |
-| 3 | **Self-play fine-tuning** (our on-policy PPO adaptation) | g1/g2/g3 run, ~3.5M steps total; `selfplay_g1_ref430k` → 267.4 provisional | §0 kill-gate, 08-08 |
+| 3 | **Self-play fine-tuning** (our on-policy PPO adaptation) | g1/g2/g3 run, ~3.5M steps total; `selfplay_g1_ref430k` → 254.9, `selfplay_g3_final` → 395.3 (1 read) | §0 kill-gate, 08-08 |
 
 **The accepted deviation, stated once and not re-litigated.** The Metamon paper
 makes Phase 3 *offline*: self-play battles are appended to an ever-growing
@@ -628,11 +627,13 @@ arm.** Do not bake either deck into Phase 3.
 
 ## §9 — Ladder: a standing daily task
 
-### 9.1 State as of 2026-08-05 20:57 UTC
+### 9.1 State as of 2026-08-06 06:19 UTC
 
-Rank **4235 / 6361**, team score **547.7**, top-8 cutoff 1134.8 (gap +587.1).
-Active set: `55279487` (547.7) + `55270787` (366.5). Best-ever **804.0** is
+Rank **5121 / 6397**, team score **460.5**, top-8 cutoff 1130.1 (gap +669.6).
+Active set: `55284059` (395.3) + `55279487` (460.5). Best-ever **804.0** is
 still displaced.
+
+*(08-05 20:57: rank 4235/6361, team 547.7.)*
 
 **Both active slots hold learned experiments.** The §9.4 slot-1 restore was not
 executed; a concurrent session spent the slot on `il_agent_v2` (`55279487`)
@@ -645,8 +646,8 @@ learned agents settle at, with no heuristic build underneath them.
 
 ### 9.2 The scoring mechanics that drive the strategy
 
-- `max_daily_submissions = 5`, UTC day. **Used on 08-05: 3 (`55253900` 00:48,
-  `55270787` 13:08, `55279487` 19:45) → 2 remain.**
+- `max_daily_submissions = 5`, UTC day. **Used on 08-06: 1 (`55284059` 00:29)
+  → 4 remain.** (08-05 used 3: `55253900`, `55270787`, `55279487`.)
 - Every submission starts at the **μ₀ = 600.0 prior**. A fresh 600.0 is not a
   score. It converges over ~3 days.
 - **Active set = the latest 2 by recency**; a new submission displaces the older.
@@ -667,10 +668,10 @@ two experiments back-to-back is exactly how the team fell 804.0 → 395.0 on
 
 | Quantity | Count |
 |---|---:|
-| Remaining today (08-05, after 3 used) | **2** |
-| 08-06 → 08-16, 11 days × 5 | 55 |
-| **Total remaining** | **57** |
-| **Readable** (submitted ≤ 08-13, settles in time to inform another decision) | **42** |
+| Remaining today (08-06, after 1 used) | **4** |
+| 08-07 → 08-16, 10 days × 5 | 50 |
+| **Total remaining** | **54** |
+| **Readable** (submitted ≤ 08-13, settles in time to inform another decision) | **39** |
 | Final-positioning (08-14 → 08-16) | 15 |
 
 **A correction to the v4 request's premise, in our favour.** 08-13 is the last
@@ -724,30 +725,44 @@ is recorded here before the next phase starts.
 | 55248781 | 08-04 | IL-prior MCTS | 291.4 | beats il_agent 67.2% | **inverted** |
 | 55248985 | 08-04 | il_alldays_0804 (Lucario) | 418.0 | not stronger locally | consistent |
 | 55253900 | 08-05 | selfplay_g1_ref430k | **254.9** *(5 reads: 248.6 → 267.4 → 267.4 → 254.9)* | beats teacher 73–27; 62.5% [55.6,68.9] | **§0 kill-gate, 08-08 — tracking FAIL** |
-| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | **366.5** *(5 reads: 361.8 → 314.1 → 353.9 → 366.5)* | deck axis = 544 Glicko pts | **falsified** |
-| 55279487 | 08-05 | il_agent_v2 (BC, 9-day corpus, Grimmsnarl) | **547.7** *(2 reads: 493.9 → 547.7, rising)* | beats current il_agent vs every shared opponent, agg 63% vs 32%, H2H 15–1; predicted 380–460 | **unsettled, and rising away from its own prediction** |
+| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | **383.2** *(6 reads: 361.8 → 314.1 → 353.9 → 366.5 → 383.2)* | deck axis = 544 Glicko pts | **falsified** |
+| 55279487 | 08-05 | il_agent_v2 (BC, 9-day corpus, Grimmsnarl) | **460.5** *(3 reads: 493.9 → 547.7 → 460.5)* | beats current il_agent vs every shared opponent, agg 63% vs 32%, H2H 15–1; predicted 380–460 | **inside its own prediction** |
+| 55284059 | 08-06 | selfplay_g3_final (Mega Lucario) | 395.3 *(1 read)* | 63.0% ±5.8 vs BC init 45.9% ±5.9 over 270 games; predicted 250–420 | **inside its own prediction; 3rd self-play sub below the BC line** |
 
-Read 2026-08-05 20:57 UTC. Team **547.7**, rank **4235 / 6361**.
+Read 2026-08-06 06:19 UTC. Team **460.5**, rank **5121 / 6397**.
 
-**Correction to the 19:50 entry below.** That reading guessed `55279487` at 493.9
-was "still falling through the μ₀ = 600 prior." Its next reading went **up**, to
-547.7. The direction was wrong, and the interpretation that followed from it —
-that the number would decay toward the learned band — is not supported. What is
-true is only that it has 2 readings, which is not enough to settle anything, and
-that it is now *above* its submitter's pre-registered 380–460 band rather than
-inside it.
+**Two directional calls made in this doc about `55279487`, both wrong.** The
+19:50 entry said it was "still falling through the μ₀ = 600 prior"; it then rose.
+The 20:57 entry said it was "rising away from its own prediction"; it then fell.
+Three readings: 493.9 → 547.7 → 460.5, a total swing of 87 points — comfortably
+inside the documented ~±100 same-build band. **The lesson is not about this
+submission.** It is that narrating a trajectory from 1–3 readings inside that
+band produces confident statements with no information in them, twice in a row
+here. Quote the band; do not draw the arrow.
 
-**This puts pressure on §0's central premise, and that should be said before the
-gate is read rather than after.** §0 rests on the two families not overlapping.
-The lowest heuristic score is 602.6; `55279487` is at 547.7 and rising, a gap of
-55 points against a documented same-build spread of ~±100. The separation is no
-longer clean. It is *not* yet a contradiction — 2 readings, unsettled, and one
-learned agent near the bottom of the heuristic band is not the same as the
-families overlapping — but if it settles above 602.6 then the §0 FAIL branch is
-arguing from a premise the ladder has stopped supporting. Re-read before 08-08.
+Where it actually landed: **460.5, inside the submitter's pre-registered 380–460
+band** (at the top edge). The pre-registration was good and the commentary on it
+was not.
+
+**Retraction: §0's premise is not under pressure after all.** At 547.7 the gap
+to the lowest heuristic score (602.6) was 55 points and this doc said the
+learned/heuristic separation was "no longer clean." At 460.5 the gap is back to
+**142 points, outside the noise band**. That warning was an artifact of the same
+mid-band reading. §0's family separation stands.
+
+**A third self-play submission reads low.** `55284059` is `selfplay_g3_final`,
+the gen-3 anchored self-play run, at 395.3 on one reading — below the plain-BC
+line (418.0), like `selfplay_g1_ref430k` (254.9) before it. Its submit message
+is worth copying as practice: it pre-registered 250–420 *and* stated the local
+pool's own failure on this exact family (ρ = −0.50, n=3) before reading back.
+This is evidence toward the §0 FAIL branch that does not depend on the gate ref.
 
 **The kill-gate ref did not move.** `55253900` is unchanged at 254.9 on 5
-readings. The gate is still unresolved and still due 08-08.
+readings, no new reading since 08-05 19:50. Still unresolved, still due 08-08.
+
+**Both active slots are learned experiments again** (`55284059` 395.3 +
+`55279487` 460.5), so the team floor is once more whatever two experiments
+settle at, with no heuristic build underneath. Best-ever 804.0 stays displaced.
 
 Earlier reading, 2026-08-05 19:50 UTC:
 
