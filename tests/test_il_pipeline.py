@@ -6,7 +6,11 @@ Run directly: uv run python tests/test_il_pipeline.py
 """
 from __future__ import annotations
 
+import builtins
+import contextlib
+import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -28,6 +32,46 @@ from pokemon_tcg.il_dataset import (  # noqa: E402
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 
 TRAIN_DIR = REPO / "data" / "episodes" / "splits" / "train-2026-07-26"
+CORE = REPO / "agents" / "il_agent" / "agent_core.py"
+
+
+@contextlib.contextmanager
+def _ml_stack_unimportable():
+    """Simulate `import torch` failing, as it may in the evaluator sandbox."""
+    real_import = builtins.__import__
+
+    def blocked_import(name, *args, **kwargs):
+        if name == "torch" or name.startswith("torch."):
+            raise ImportError("simulated: torch unavailable")
+        return real_import(name, *args, **kwargs)
+
+    builtins.__import__ = blocked_import
+    try:
+        yield
+    finally:
+        builtins.__import__ = real_import
+
+
+def _load_agent_core(tag: str, *, strict: bool):
+    """Fresh agent_core instance with PTCG_STRICT_LOAD pinned explicitly.
+
+    Pinned rather than inferred so neither test depends on agent_core's own
+    _IN_EVALUATOR probe or on an ambient env var. A fresh module (rather than
+    importlib.reload) keeps a deliberately-failed import from leaving
+    half-executed globals in sys.modules for the rest of the suite.
+    """
+    prev = os.environ.get("PTCG_STRICT_LOAD")
+    os.environ["PTCG_STRICT_LOAD"] = "1" if strict else "0"
+    try:
+        spec = importlib.util.spec_from_file_location(f"_iltest_core_{tag}", CORE)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    finally:
+        if prev is None:
+            os.environ.pop("PTCG_STRICT_LOAD", None)
+        else:
+            os.environ["PTCG_STRICT_LOAD"] = prev
 
 
 def _first_episode():
@@ -163,32 +207,54 @@ def test_main_py_survives_kaggle_exec_loading():
     print("  main.py loaded successfully via exec() with no __file__ in namespace")
 
 
+def test_missing_ml_stack_fails_loudly_outside_the_evaluator():
+    """Outside the evaluator, an unimportable ML stack must RAISE at import.
+
+    The degraded path (next test) is right INSIDE the evaluator, where a
+    crash is INVALID and an instant loss. Everywhere else it is a
+    measurement hazard: the agent still "plays", answers every decision
+    with _safe_choice, and reads as a weak model rather than a broken one.
+    That cost a full deck-selection benchmark on 2026-08-04 and nearly
+    invalidated the self-play field test on 2026-08-05 -- see 7ed94d7.
+    """
+    with _ml_stack_unimportable():
+        try:
+            _load_agent_core("strict", strict=True)
+        except ImportError as e:
+            msg = str(e)
+            assert "simulated: torch unavailable" in msg, (
+                "the raise must carry the original import error, or the real "
+                f"cause is unrecoverable from the message; got: {msg}"
+            )
+            assert "PTCG_STRICT_LOAD=0" in msg, (
+                "the raise must name the escape hatch that reaches the "
+                f"degraded path on purpose; got: {msg}"
+            )
+        else:
+            raise AssertionError(
+                "importing agent_core with no ML stack must raise ImportError "
+                "outside the evaluator, not silently degrade to _safe_choice"
+            )
+    print("  no-ML-stack import raised ImportError naming PTCG_STRICT_LOAD=0")
+
+
 def test_agent_degrades_gracefully_when_torch_unavailable():
     """Whether torch/transformers are importable in the Kaggle evaluator
     sandbox is unverified (the working reference agents in this repo depend
     on neither). Simulate that: agent_core.py must still play a full,
     legal game -- never raise ImportError up through agent().
+
+    PTCG_STRICT_LOAD=0 is how that evaluator path is rehearsed outside the
+    evaluator (see .claude/skills/run-fallback-diagnostic/SKILL.md); with it
+    unset the same import fails loudly instead, which is the test above.
     """
-    import builtins
-    import importlib
-    import json
-
-    real_import = builtins.__import__
-
-    def blocked_import(name, *args, **kwargs):
-        if name == "torch" or name.startswith("torch."):
-            raise ImportError("simulated: torch unavailable")
-        return real_import(name, *args, **kwargs)
-
-    builtins.__import__ = blocked_import
-    try:
-        sys.path.insert(0, str(REPO / "agents" / "il_agent"))
-        import agent_core
-
-        importlib.reload(agent_core)
+    with _ml_stack_unimportable():
+        agent_core = _load_agent_core("degraded", strict=False)
         assert agent_core._ML_AVAILABLE is False
-    finally:
-        builtins.__import__ = real_import
+        assert agent_core._load_model() is None, (
+            "no ML stack must mean no model, i.e. every decision below is "
+            "genuinely exercising the _safe_choice path"
+        )
 
     agent_core.my_deck = [
         int(x) for x in (REPO / "agents" / "il_agent" / "deck.csv").read_text().split() if x.strip()
@@ -204,7 +270,6 @@ def test_agent_degrades_gracefully_when_torch_unavailable():
             assert all(0 <= i < len(sel["option"]) for i in r)
         n += 1
     print(f"  {n} decisions handled with torch unavailable, all legal, no crash")
-    importlib.reload(agent_core)  # restore normal (ML-available) state for later tests
 
 
 def test_lr_schedule_does_not_prematurely_decay_to_zero():
@@ -299,6 +364,7 @@ if __name__ == "__main__":
     tests = [
         test_resolve_device,
         test_main_py_survives_kaggle_exec_loading,
+        test_missing_ml_stack_fails_loudly_outside_the_evaluator,
         test_agent_degrades_gracefully_when_torch_unavailable,
         test_lr_schedule_does_not_prematurely_decay_to_zero,
         test_option_type_vocab_includes_decline,
