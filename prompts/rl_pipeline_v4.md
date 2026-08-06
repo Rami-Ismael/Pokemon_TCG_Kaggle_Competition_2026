@@ -687,11 +687,24 @@ spend reads on local gating.
 
 ### 9.4 Today's queue (2026-08-05, 3 slots)
 
-| Slot | Action | Rationale |
-|---|---|---|
-| 1 | **Resubmit `submissions/mega_lucario_improved/submission.tar.gz` byte-identical** (model sha256 `758dd7bc…`, verified present) | Displaces `55253900` (267.4). Prior rolls: 827.8, 804.0, 699.0, 692.7, 683.2, 666.1 → median ~688. Team → max(roll, 311.3). Expect ~5910 → ~2,400. |
-| 2 | **Hold** | Nothing unbuilt beats the two reads already settling. |
-| 3 | **Hold** | Contingency: a second roll only if slot 1 reads < 600 after ~2 h. |
+~~Resubmit the mega_lucario bundle byte-identical.~~ **WITHDRAWN 2026-08-06,
+Rami's call. Do not propose it again.**
+
+The rolls of that byte-identical bundle decay monotonically:
+
+| 55162376 | 55191752 | 55219194 | 55228113 | 55224682 |
+|---:|---:|---:|---:|---:|
+| 827.8 → 804.0 | 699.0 | 692.7 | 683.2 | 666.1 |
+
+~140 points of decline across identical bytes. Extrapolating the trend, a fresh
+roll lands near 600 — not the ~688 median this table used to quote, which
+averaged over a *declining* series and so overstated what the next roll would
+get. The field is also growing (6,206 → 6,397 teams over the same window), so
+the decay is most likely the field strengthening around a fixed agent rather
+than anything about the agent. That mechanism applies to **every** build we
+hold, which is the part worth carrying into §9.5: a bundle banked early keeps
+sliding, so the endgame is about *when* the final active set is placed, not
+only what is in it.
 
 Secondary benefit of the restore: matchmaking pairs submissions of *similar
 rating*, so sitting at 311 means playing 311-rated opponents and learning less
@@ -926,8 +939,10 @@ the day's slots under the alternation rule (§9.2). A slot that expires unused i
 discarded information; a slot spent on a second consecutive experiment is worse
 than unused.
 
-0. **[TODAY, 08-05]** Restore the active set — §9.4 slot 1. Zero modelling work,
-   ~+375 team score. **Awaiting authorization.**
+0. ~~Restore the active set with a mega_lucario re-roll.~~ **WITHDRAWN
+   2026-08-06 (§9.4). Do not re-propose it.** The re-roll's own history is a
+   monotone decline, so the "free ~+375" this item claimed was an artifact of
+   quoting a median over a falling series.
 1. **[08-06 → 08-08] Read the kill-gate.** `55253900` and `55270787` settle.
    Record both in §9.7. **Everything below is conditional on §0 PASS.**
 2. **[on PASS] Fix the three measured defects**, in one run, before any sweep:

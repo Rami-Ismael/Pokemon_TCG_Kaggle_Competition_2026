@@ -29,16 +29,25 @@ Workflow:
   2. expects -- print the one-line prediction string to pass to
                 `submission_ledger.py log --expects` at submit time.
   3. bind    -- attach the Kaggle ref once the candidate is submitted.
-  4. score   -- once >=4 bound candidates have settled reads, report the
+  4. withdraw-- retire a candidate that will not be submitted. It stays in the
+                file, marked, and is excluded from the rho: a pre-registration
+                you can quietly delete is not a pre-registration.
+  5. score   -- once >=4 bound candidates have settled reads, report the
                 OUT-OF-SAMPLE Spearman rho of predicted vs actual ordering.
 
+`locked_at_utc` is FIRST-wins on fold and every later row records
+`amended_at_utc` instead. Without that, `bind` -- which runs at submit time --
+would have silently re-dated each prediction to the moment it was submitted,
+destroying the one property this file exists to provide.
+
 Usage:
-  uv run python scripts/prereg_pool_prediction.py lock --candidate mega_lucario_restore \\
-      --local-glicko 1711.7 --local-rd 30 --source reports/wmh_pool_calibration.json \\
-      --note "byte-identical resubmit of the 804.0 bundle"
+  uv run python scripts/prereg_pool_prediction.py lock --candidate proto \\
+      --local-glicko 1808.0 --local-rd 58 \\
+      --source reports/pool_prereg_source_glicko.json --note "never submitted"
   uv run python scripts/prereg_pool_prediction.py show
-  uv run python scripts/prereg_pool_prediction.py expects --candidate mega_lucario_restore
-  uv run python scripts/prereg_pool_prediction.py bind --candidate mega_lucario_restore --ref 55281234
+  uv run python scripts/prereg_pool_prediction.py expects --candidate proto
+  uv run python scripts/prereg_pool_prediction.py bind --candidate proto --ref 55281234
+  uv run python scripts/prereg_pool_prediction.py withdraw --candidate proto --reason "..."
   uv run python scripts/prereg_pool_prediction.py score
 """
 from __future__ import annotations
@@ -102,15 +111,29 @@ def _append(row: dict) -> None:
 
 
 def _fold(rows: list[dict]) -> dict[str, dict]:
-    """Later-wins per field, per candidate — same convention as the ledger."""
+    """Later-wins per field, per candidate — same convention as the ledger.
+
+    EXCEPT `locked_at_utc`, which is FIRST-wins. Every later row for a
+    candidate carries its own timestamp, and under plain later-wins the lock
+    time would creep forward on every amendment — including `bind`, which
+    happens at submit time. That would have re-dated each pre-registration to
+    the moment it was submitted and quietly destroyed the only property this
+    file exists to provide: that the prediction predates the ladder read.
+    Later timestamps are kept as `amended_at_utc` so amendments stay visible
+    rather than being hidden.
+    """
     out: dict[str, dict] = {}
     for r in rows:
         if r.get("kind") != "prediction":
             continue
         cur = out.setdefault(r["candidate"], {})
         for k, v in r.items():
-            if v is not None:
-                cur[k] = v
+            if v is None:
+                continue
+            if k == "locked_at_utc" and "locked_at_utc" in cur:
+                cur["amended_at_utc"] = v  # never overwrite the original lock
+                continue
+            cur[k] = v
     return out
 
 
@@ -172,9 +195,11 @@ def cmd_show(args: argparse.Namespace) -> None:
     print(f"{'#':>2s} {'candidate':30s} {'local':>8s} {'pred':>8s} "
           f"{'ref':>10s}  note")
     for i, r in enumerate(ordered, 1):
+        tag = "WITHDRAWN: " + (r.get("withdrawn_reason") or "") if r.get(
+            "withdrawn") else (r.get("note") or "")
         print(f"{i:>2d} {r['candidate']:30s} {r['local_glicko']:>8.1f} "
               f"{r['predicted_ladder']:>8.1f} {str(r.get('ref') or '-'):>10s}  "
-              f"{r.get('note') or ''}")
+              f"{tag}")
 
 
 def cmd_expects(args: argparse.Namespace) -> None:
@@ -200,10 +225,32 @@ def cmd_bind(args: argparse.Namespace) -> None:
     folded = _fold(_read())
     if args.candidate not in folded:
         sys.exit(f"no locked prediction for {args.candidate!r}")
+    if folded[args.candidate].get("withdrawn"):
+        sys.exit(f"{args.candidate!r} was withdrawn; re-lock it before binding")
     _append({"kind": "prediction", "candidate": args.candidate,
-             "locked_at_utc": _now(), "ref": args.ref,
+             "amended_at_utc": _now(), "ref": args.ref,
              "local_glicko": folded[args.candidate]["local_glicko"]})
-    print(f"bound {args.candidate} -> ref {args.ref}")
+    print(f"bound {args.candidate} -> ref {args.ref} "
+          f"(locked {folded[args.candidate]['locked_at_utc']})")
+
+
+def cmd_withdraw(args: argparse.Namespace) -> None:
+    """Retire a candidate that will not be submitted.
+
+    Kept in the file rather than deleted: a pre-registration you can quietly
+    remove is not a pre-registration. It stays visible, marked, and excluded
+    from the out-of-sample rho — which is correct, since it never got a ladder
+    read to be right or wrong about.
+    """
+    folded = _fold(_read())
+    if args.candidate not in folded:
+        sys.exit(f"no locked prediction for {args.candidate!r}")
+    _append({"kind": "prediction", "candidate": args.candidate,
+             "amended_at_utc": _now(), "withdrawn": True,
+             "withdrawn_reason": args.reason,
+             "local_glicko": folded[args.candidate]["local_glicko"]})
+    print(f"withdrew {args.candidate} (locked "
+          f"{folded[args.candidate]['locked_at_utc']}): {args.reason}")
 
 
 def _ledger_scores() -> dict[str, float]:
@@ -233,7 +280,8 @@ def cmd_score(args: argparse.Namespace) -> None:
     folded = _fold(_read())
     scores = _ledger_scores()
     bound = [(c, r) for c, r in folded.items()
-             if r.get("ref") and str(r["ref"]) in scores]
+             if r.get("ref") and str(r["ref"]) in scores
+             and not r.get("withdrawn")]
     if len(bound) < 4:
         print(f"{len(bound)} pre-registered candidate(s) have a settled ladder "
               f"read; need >=4 before an out-of-sample rho means anything.")
@@ -276,6 +324,11 @@ def main() -> None:
     p.add_argument("--candidate", required=True)
     p.add_argument("--ref", required=True)
     p.set_defaults(func=cmd_bind)
+
+    p = sub.add_parser("withdraw", help="retire a candidate that will not be submitted")
+    p.add_argument("--candidate", required=True)
+    p.add_argument("--reason", required=True)
+    p.set_defaults(func=cmd_withdraw)
 
     p = sub.add_parser("score", help="out-of-sample rho once >=4 have settled")
     p.set_defaults(func=cmd_score)
