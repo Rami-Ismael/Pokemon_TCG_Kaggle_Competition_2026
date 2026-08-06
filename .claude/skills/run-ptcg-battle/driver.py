@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -110,6 +111,39 @@ def cmd_doctor(_args) -> int:
           f"ln -sfn {main_model.parent} {MODEL_DIR}" if main_model
           else "train one (scripts/train_il.py) or copy models/il_agent "
                "from the main checkout")
+
+    # Every OTHER agent wrapper's checkpoint. Not battle-critical (so this
+    # warns rather than failing the exit code), but it is what rots silently:
+    # on 2026-08-05 ten registry agents pointed at checkpoint dirs that existed
+    # in no checkout at all, doctor still printed all-green because it only
+    # ever looked at models/il_agent, and the load-all-agents test was the
+    # thing that finally noticed. A wrapper whose dir is missing either raises
+    # on import (the loader refuses to fall back to the wrong model) or, where
+    # the load is optional like mcts_il_agent's critic, degrades SILENTLY --
+    # which is the worse of the two.
+    wanted: dict[str, list[str]] = {}
+    for wrapper in sorted((REPO / "agents").rglob("agent_core.py")):
+        for m in re.finditer(r'_REPO\s*/\s*"models"((?:\s*/\s*"[^"]+")+)',
+                             wrapper.read_text()):
+            rel = "models/" + "/".join(re.findall(r'"([^"]+)"', m.group(1)))
+            wanted.setdefault(rel, []).append(
+                str(wrapper.parent.relative_to(REPO)))
+    missing = {rel: users for rel, users in wanted.items()
+               if not (REPO / rel).exists()}
+    if missing:
+        print(f"[warn] {len(missing)} of {len(wanted)} agent checkpoint dir(s) "
+              f"missing -- battles with models/il_agent still work, but "
+              f"benchmark_agents.py and the load-all-agents test will fail:")
+        for rel, users in sorted(missing.items()):
+            src = _find_in_parents(rel)
+            print(f"       {rel}  (used by {', '.join(sorted(set(users)))})")
+            print(f"       fix: " + (
+                f"ln -sfn {src} {REPO / rel}" if src else
+                "not in this checkout or its parents -- check sibling "
+                "worktrees, or remove the wrapper from AGENT_FILES in "
+                "scripts/benchmark_agents.py"))
+    else:
+        print(f"[ok ] all {len(wanted)} agent checkpoint dir(s) present")
 
     # episodes: needed by `forward`, replay_episode.py, and training --
     # NOT by `battle`

@@ -32,7 +32,11 @@ sys.path.insert(0, str(REPO / "src"))
 
 os.environ.setdefault("PTCG_DEVICE", "cpu")
 
-from pokemon_tcg.deck_pool import DeckPool, deck_override_agent  # noqa: E402
+from pokemon_tcg.deck_pool import (  # noqa: E402
+    DECK_LISTS_DIR,
+    DeckPool,
+    deck_override_agent,
+)
 
 # Exploiter-mode env kwargs (frozen module opponent, strict seat alternation).
 # A MODULE opponent is the hardest case for the override: it ships its own
@@ -48,17 +52,25 @@ def _gym(**kw):
 
 
 def test_resolution_and_dedup():
-    n_lists = len(list((REPO / "configs" / "deck_lists").glob("*.csv")))
-    assert len(DeckPool.from_spec("all:decklists")) == n_lists
+    # "all:decklists" IS the csv inventory of configs/deck_lists, so assert
+    # that identity rather than pinning a count. The literal 7 that used to
+    # be here went stale the moment 99541b7 added grimmsnarl_toplayer.csv,
+    # and failed on main. A count rots on every new deck; the set does not.
+    csvs = sorted(p.stem for p in DECK_LISTS_DIR.glob("*.csv"))
+    assert csvs, f"no decklists in {DECK_LISTS_DIR} -- tracked csvs missing"
+    decklists = DeckPool.from_spec("all:decklists")
+    assert sorted(decklists.names) == csvs
+    assert "mega_lucario_ex" in csvs  # the deck our submissions pilot
     # agents/ holds many deck.csv files but far fewer distinct lists;
-    # duplicates must not inflate K.
+    # duplicates must not inflate K. Counts are derived, not pinned, for the
+    # same reason: dedup now keys on the card multiset, so they move.
     agents = DeckPool.from_spec("all:agents")
     n_files = len(list((REPO / "agents").glob("*/deck.csv")))
     assert len(agents) < n_files, "content dedup did nothing"
     assert len(agents.names) == len(set(agents.names))
     # The union is deduped ACROSS sources too, so it cannot exceed the sum.
     union = DeckPool.from_spec("all:decks")
-    assert len(agents) <= len(union) <= n_lists + len(agents)
+    assert len(agents) <= len(union) <= len(csvs) + len(agents)
     assert len(union.names) == len(set(union.names))
     assert len(DeckPool.from_spec("mega_lucario_ex")) == 1  # deck_lists stem
     assert len(DeckPool.from_spec("il_agent")) == 1         # agent name

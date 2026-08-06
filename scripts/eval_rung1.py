@@ -133,6 +133,26 @@ def main() -> None:
     ctx_top3 = Counter()
     ctx_majority_label = defaultdict(Counter)  # first pass: find each context's majority label
 
+    # Forced rows -- where opt_mask leaves <=1 selectable slot -- are free
+    # correct answers for the model AND for the majority baseline: action
+    # masking already guarantees them at inference, so scoring them measures
+    # legality, not preference. Partition on the same mask the model is
+    # scored against so the split cannot drift from what the head sees.
+    split_n = {"forced": Counter(), "contested": Counter()}
+    split_top1 = {"forced": Counter(), "contested": Counter()}
+    split_top3 = {"forced": Counter(), "contested": Counter()}
+    split_majority_label = {
+        "forced": defaultdict(Counter), "contested": defaultdict(Counter)
+    }
+    # Mask-aware floor. The majority-class baseline picks a per-context label
+    # INDEX and never sees opt_mask, while the model's head is -inf-masked
+    # (il_model.py:227) -- so on a row with one scoreable slot the model is
+    # correct by construction and the baseline can still miss. random-legal
+    # expected top-1 = mean(1/n_choices) is the honest floor: same information
+    # the model has, no learning. This is the offline twin of the
+    # `random_legal` benchmark agent.
+    split_randleg = {"forced": 0.0, "contested": 0.0}
+
     n = 0
     with torch.no_grad():
         for obs, label, exclude, _meta in decisions:
@@ -140,6 +160,8 @@ def main() -> None:
             if feats is None:
                 continue
             ctx = int(feats["select_context"].item())
+            n_choices = int(feats["opt_mask"].sum().item())
+            bucket = "forced" if n_choices <= 1 else "contested"
             feats.pop("n_real_options", None)
             batch = {k: v.unsqueeze(0).to(device) for k, v in feats.items()}
             logits = model(**batch)["logits"][0]
@@ -147,10 +169,15 @@ def main() -> None:
 
             ctx_n[ctx] += 1
             ctx_majority_label[ctx][label] += 1
+            split_n[bucket][ctx] += 1
+            split_majority_label[bucket][ctx][label] += 1
+            split_randleg[bucket] += 1.0 / max(n_choices, 1)
             if top3[0] == label:
                 ctx_top1[ctx] += 1
+                split_top1[bucket][ctx] += 1
             if label in top3:
                 ctx_top3[ctx] += 1
+                split_top3[bucket][ctx] += 1
             n += 1
             if n % 5000 == 0:
                 print(f"  ...{n} rows scored")
@@ -171,6 +198,36 @@ def main() -> None:
         print(f"{ctx:>4} {cnt:>8} {100*maj:>9.1f}% {100*top1:>7.1f}% {100*top3:>7.1f}%  {gap:+.1%}{flag}")
 
     print(f"\n{'GLOBAL':>4} {n:>8} {100*total_maj/n:>9.1f}% {100*total_top1/n:>7.1f}% {100*total_top3/n:>7.1f}%")
+
+    # Forced-vs-contested split. The contested row is the honest headline: it
+    # drops the rows the action mask already decides. Majority is recomputed
+    # per-context WITHIN each bucket, so both columns stay apples-to-apples.
+    print(f"\n{'bucket':>10} {'n':>8} {'share':>7} {'rand-legal%':>12} {'majority%':>10} "
+          f"{'top1%':>8} {'top3%':>8}  gap-vs-rand")
+    for bucket in ("forced", "contested"):
+        bn = sum(split_n[bucket].values())
+        if not bn:
+            print(f"{bucket:>10} {0:>8}       -            -          -        -        -     -")
+            continue
+        b_top1 = sum(split_top1[bucket].values())
+        b_top3 = sum(split_top3[bucket].values())
+        b_maj = sum(
+            c.most_common(1)[0][1] for c in split_majority_label[bucket].values()
+        )
+        b_rl = split_randleg[bucket]
+        print(f"{bucket:>10} {bn:>8} {100*bn/n:>6.2f}% {100*b_rl/bn:>11.1f}% "
+              f"{100*b_maj/bn:>9.1f}% {100*b_top1/bn:>7.1f}% {100*b_top3/bn:>7.1f}%  "
+              f"{(b_top1-b_rl)/bn:+.1%}")
+    print("  rand-legal = mean(1/n_choices), the mask-aware floor. On forced rows the\n"
+          "  model scores 100% BY CONSTRUCTION (one scoreable slot, logits -inf-masked),\n"
+          "  so its 'gap' there is an artifact -- read the contested row only.")
+    cn = sum(split_n["contested"].values())
+    if cn:
+        c_top1 = sum(split_top1["contested"].values())
+        print(f"\nheadline top-1 {100*total_top1/n:.1f}% (all rows) vs "
+              f"{100*c_top1/cn:.1f}% (contested only) -- "
+              f"delta {100*(total_top1/n - c_top1/cn):+.1f} pt of inflation from "
+              f"{100*(n-cn)/n:.2f}% forced rows")
 
 
 if __name__ == "__main__":

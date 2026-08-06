@@ -106,9 +106,12 @@ are comparable and the rating fields are (after §B0) fully real.
 - No opponent-private information reaches the encoder — rollouts feed the
   acting agent's `obs_dict` as served by the env; `steps[0][0]["visualize"]`
   is never read (`tests/test_privacy_no_leak.py`).
-- Every comparison: ≥3 seeds, equal **steps** (never equal epochs — the
-  binary/filtered arms discard rows, so equal-steps is load-bearing), RD or
-  σ on every number, a chart in `reports/figures/`, control beside the claim.
+- Every comparison: ≥3 seeds, RD or σ on every number, a chart in
+  `reports/figures/`, control beside the claim. Budget each arm by passes
+  over its OWN data (`--epochs`) or by wall-clock — never pin an arm to
+  another arm's step count. (Rescinded 2026-08-05; the old rule mandated
+  equal steps on the grounds that filtered arms discard rows. Fewer rows
+  meaning fewer steps is the point of filtering, not a confound to erase.)
 - **Preflight before every training launch** (disk / RAM / competing
   processes — built into `train_ppo_puffer.py`; run the same checks by hand
   before Stage-2 arms). Chain runs; never overlap MPS jobs.
@@ -299,7 +302,7 @@ legal option set. The only difference between arms is the weight `w`:
 | ID | Arm | Weight `w` | Notes |
 |---|---|---|---|
 | E0 | control | 1 (plain BC, continued) | separates "more steps + more data" from "better objective" |
-| E1 | **Binary advantage** (paper's "Binary", CRR-style) | `1[Â(s,a) > 0]` | the paper's strong simple performer; discards ~half the rows — equal-steps rule is load-bearing |
+| E1 | **Binary advantage** (paper's "Binary", CRR-style) | `1[Â(s,a) > 0]` | the paper's strong simple performer; discards ~half the rows, and takes proportionally fewer steps for it — do NOT pad it back up to E0's step count |
 | E2 | **Exp advantage** (paper's "Exp", AWR-style) | `exp(β·Â(s,a))`, clipped at 20 | β ∈ {0.5, 1, 2}; clipping guards a miscalibrated critic handing one row the whole gradient |
 | E3 | **skill × advantage** | best-of(E1, E2) weight × `1[avg_score ≥ Q75]` | the manifest fix unblocks the rating field. Rows with unknown rating keep the base weight (gate applies only where a rating exists — the unknown fraction is reported); chart threshold sensitivity Q50–Q90 and per-day splits. Skill-filtering is the most externally-validated technique in the evidence base (Metamon; Orbit Wars 2nd place's 1500/1600 thresholds; 49th place's winner-states scaling) |
 | E-fallback | outcome-weighted (the OLD E2) | `exp(β·(outcome − 0.5))` | **registered contingency, run ONLY if the B2a critic audit fails** — the critic-free fallback, not a primary arm |
@@ -340,7 +343,7 @@ pairs/pairing, isolated ratings, `reports/s2v2_tournament.json`, figure
   (40.3%) and efb (37.0%) with non-overlapping-from-50 CIs. Mechanism
   consistent with the registered scale-mix caveat: the pooled Q75=1189
   threshold keeps mostly 07-01 (oldest, real-rated) episodes, so the gate
-  trades away both volume and recency at equal steps. The most
+  trades away both volume and recency. The most
   externally-validated technique in the evidence base did not survive
   contact with this corpus's rating field.
 - efb β-sweep {0.5, 2} NOT run — registered scope decision: efb tied e0 at
@@ -641,7 +644,8 @@ ledger) → leaderboard-check after scoring AND at settle (~3 days). Local
 Glicko alone never declares improvement. Submissions displace the active
 set (§Ladder context) — plan against the ~3-day settle time and the 08-16
 close; last confident slot ≈ **08-13**. ≥3 seeds wherever arms are
-compared; equal steps; RD/σ on every number; charts in `reports/figures/`.
+compared; budget by epochs or wall-clock, never by a pinned step count;
+RD/σ on every number; charts in `reports/figures/`.
 
 ## Stop conditions (any → halt and report)
 

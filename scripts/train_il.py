@@ -321,6 +321,18 @@ def main() -> None:
     ap.add_argument("--hidden-size", type=int, default=192)
     ap.add_argument("--num-layers", type=int, default=6)
     ap.add_argument("--num-heads", type=int, default=6)
+    ap.add_argument("--encoder-type", choices=["bert", "modernbert"], default="bert",
+                    help="self-attention block behind the option scorer. "
+                         "'modernbert' is the Orbit Wars 2nd-place backbone "
+                         "(Ettin XXS: --hidden-size 256 --num-layers 7 "
+                         "--num-heads 4 --intermediate-size 384). Ignored with "
+                         "--init-from, which takes the checkpoint's config.")
+    ap.add_argument("--intermediate-size", type=int, default=None,
+                    help="FFN width; default 4x hidden. ModernBERT's GeGLU MLP "
+                         "is 3*d*i against BERT's 8*d^2, so a param-matched "
+                         "modernbert arm needs ~8/3*hidden (512 at d=192), not "
+                         "the 4x default -- otherwise the block-type ablation "
+                         "is secretly a capacity ablation.")
     ap.add_argument("--log-every", type=int, default=200)
     ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "il_agent")
     ap.add_argument("--run-dir", type=Path, default=None, help="defaults to runs/<timestamp>")
@@ -482,6 +494,8 @@ def main() -> None:
             hidden_size=args.hidden_size,
             num_hidden_layers=args.num_layers,
             num_attention_heads=args.num_heads,
+            intermediate_size=args.intermediate_size,
+            encoder_type=args.encoder_type,
             global_features=[f for f in feature_names if f in GLOBAL_FEATURE_SPECS],
             opt_features=[f for f in feature_names if f in OPT_FEATURE_SPECS],
         )

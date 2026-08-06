@@ -1,25 +1,25 @@
 {
-  "agent": "il_agent",
+  "agent": "il_agent_v2",
   "opponents": [
-    "random_legal"
+    "rule_baseline"
   ],
   "pairs_per_opponent": 1,
   "games": 2,
   "record": {
-    "wins": 2,
-    "losses": 0,
+    "wins": 1,
+    "losses": 1,
     "draws": 0
   },
   "per_opponent": {
-    "random_legal": {
-      "wins": 2,
-      "losses": 0,
+    "rule_baseline": {
+      "wins": 1,
+      "losses": 1,
       "draws": 0,
-      "seconds": 3.6
+      "seconds": 1.6
     }
   },
   "fallback": {
-    "decisions": 84,
+    "decisions": 135,
     "enabled": true,
     "fallbacks": 0,
     "fallback_rate": 0.0
