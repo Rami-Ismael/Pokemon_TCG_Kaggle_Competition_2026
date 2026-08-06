@@ -69,3 +69,37 @@ episode corpus has Hugging Face; submitted bundles have Kaggle. `e0_s43` is
 recoverable from `55246108` if it comes to that, but the `e3_*` and `efb_*` arms
 were never submitted and appear to have no copy off this machine. Pushing them
 anywhere is an external action and was not taken.
+
+---
+
+## Update — the e3/efb arms now have an offsite copy
+
+`Rami/ptcg-s2v2-arms` on Hugging Face, **private** (the ladder is live until
+08-16 and these are trained competition agents; it must not be made public
+before the competition closes).
+
+Contents: `{efb,e3}_s{42,43,44}`, 76 MB, each with `model.safetensors`,
+`config.json`, `train_metadata.json`. The README carries the recipe, the
+per-seed offline numbers, and the sha256 of every checkpoint.
+
+**Verified by restoring, not by uploading.** `snapshot_download` into a scratch
+dir, then sha256 against the local files: all six bit-identical. A backup that
+has never been restored from is a hypothesis.
+
+What the pair is worth keeping for: `e3` is `efb` plus one flag
+(`--skill-min-score 1189.0`), so it is a clean controlled comparison of the
+skill gate. Offline, on the held-out day, 3 seeds each:
+
+| Arm | top-1 (mean ± sd) | top-3 | ECE |
+|---|---|---|---|
+| `efb` | 0.7475 ± 0.0023 | 0.9545 | 0.018 |
+| `e3` | 0.7263 ± 0.0043 | 0.9461 | 0.054 |
+
+The gate costs ~2.1 points of top-1 and triples calibration error, ~6 pooled SD
+— reproducing the standing `skill-filter-negative-result`. Neither arm has a
+ladder read, so neither is "better" in the sense this project reserves that word
+for.
+
+**Still unbacked:** `e0_s42` and `e0_s44`. `e0_s43` is recoverable from its
+Kaggle submission (`55246108`); the other two were never submitted and carry the
+same single-disk exposure these six had before today.
