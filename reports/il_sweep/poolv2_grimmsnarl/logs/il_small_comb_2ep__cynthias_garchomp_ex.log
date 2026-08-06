@@ -1,0 +1,31 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_small_comb_2ep@cynthias_garchomp_ex: 0/3340 = 0.00%  by_reason={}
+Loading 2 agents: il_small_comb_2ep@cynthias_garchomp_ex, wmh_grimmsnarl
+[1/3] il_small_comb_2ep@cynthias_garchomp_ex vs il_small_comb_2ep@cynthias_garchomp_ex: il_small_comb_2ep@cynthias_garchomp_ex 8-2  (10 games, 14.2s, 1.42s/game)
+[2/3] il_small_comb_2ep@cynthias_garchomp_ex vs wmh_grimmsnarl: il_small_comb_2ep@cynthias_garchomp_ex 19-1  (20 games, 18.1s, 0.90s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 8-2  (10 games, 5.5s, 0.55s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_sma  wmh_gr  win% [95% CI]
+il_small_comb_2ep@cynthias_garchomp_ex-       19       72.5  [57.2,83.9]
+wmh_grimmsnarl        1       -        27.5  [16.1,42.8]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_small_comb_2ep@cynthias_garchomp_ex vs wmh_grimmsnarl: 19/20 =  95.0% [76.4,99.1]  (18.1s, 0.90s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_small_comb_2ep@cynthias_garchomp_ex  72.5%  [57.2,83.9]  (29/40)
+  wmh_grimmsnarl          27.5%  [16.1,42.8]  (11/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_small_comb_2ep@cynthias_garchomp_ex  1921.0  (RD 110.2, 95% CI +/-220.4)  GXE  82.9%
+  wmh_grimmsnarl          1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_small_comb_2ep@cynthias_garchomp_ex fallback_rate= 0.00%  decisions=3340  raw={'decisions': 3340, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+
+total wall clock: 37.8s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/il_small_comb_2ep__cynthias_garchomp_ex.json
+glicko: not persisted (isolated run)

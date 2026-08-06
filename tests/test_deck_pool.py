@@ -27,7 +27,11 @@ sys.path.insert(0, str(REPO / "src"))
 
 os.environ.setdefault("PTCG_DEVICE", "cpu")
 
-from pokemon_tcg.deck_pool import DeckPool, mirror_deck_agent  # noqa: E402
+from pokemon_tcg.deck_pool import (  # noqa: E402
+    DECK_LISTS_DIR,
+    DeckPool,
+    mirror_deck_agent,
+)
 
 # Exploiter-mode env kwargs (frozen module opponent, strict seat alternation).
 EXPLOITER = {"mirror_root": None, "league": [("module", "il_agent")],
@@ -41,7 +45,15 @@ def _gym(**kw):
 
 
 def test_resolution_and_dedup():
-    assert len(DeckPool.from_spec("all:decklists")) == 7
+    # "all:decklists" IS the csv inventory of configs/deck_lists, so assert
+    # that identity rather than pinning a count. The literal 7 that used to
+    # be here went stale the moment 99541b7 added grimmsnarl_toplayer.csv,
+    # and failed on main. A count rots on every new deck; the set does not.
+    csvs = sorted(p.stem for p in DECK_LISTS_DIR.glob("*.csv"))
+    assert csvs, f"no decklists in {DECK_LISTS_DIR} -- tracked csvs missing"
+    decklists = DeckPool.from_spec("all:decklists")
+    assert sorted(decklists.names) == csvs
+    assert "mega_lucario_ex" in csvs  # the deck our submissions pilot
     # 47 agent deck.csv files, 33 distinct lists: duplicates must not inflate K.
     agents = DeckPool.from_spec("all:agents")
     assert len(agents) == 33, f"expected 33 distinct agent decks, got {len(agents)}"

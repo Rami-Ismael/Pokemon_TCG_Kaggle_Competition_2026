@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: tb_archaludon, wmh_grimmsnarl
+[1/3] tb_archaludon vs tb_archaludon: tb_archaludon 4-6  (10 games, 4.2s, 0.42s/game)
+[2/3] tb_archaludon vs wmh_grimmsnarl: tb_archaludon 18-2  (20 games, 15.7s, 0.79s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 8-2  (10 games, 6.0s, 0.60s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 tb_arc  wmh_gr  win% [95% CI]
+tb_archaludon         -       18       70.0  [54.6,81.9]
+wmh_grimmsnarl        2       -        30.0  [18.1,45.4]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  tb_archaludon vs wmh_grimmsnarl: 18/20 =  90.0% [69.9,97.2]  (15.7s, 0.79s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  tb_archaludon           70.0%  [54.6,81.9]  (28/40)
+  wmh_grimmsnarl          30.0%  [18.1,45.4]  (12/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  tb_archaludon           1874.2  (RD 110.2, 95% CI +/-220.4)  GXE  80.3%
+  wmh_grimmsnarl          1125.8  (RD 110.2, 95% CI +/-220.4)  GXE  19.7%
+
+total wall clock: 25.9s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/tb_archaludon.json
+glicko: not persisted (isolated run)

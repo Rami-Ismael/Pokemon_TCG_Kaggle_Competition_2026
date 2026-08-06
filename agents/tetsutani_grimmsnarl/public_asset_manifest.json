@@ -1,0 +1,8 @@
+{
+  "public_name": "Adaptive Grimmsnarl ex Control",
+  "version": "v15",
+  "deck_locked": true,
+  "deck_cards": 60,
+  "identity_inputs_used": false,
+  "runtime_source": "official_competition_input"
+}

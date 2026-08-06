@@ -15,9 +15,9 @@ if nice -n 5 uv run python scripts/train_il.py \
     --data-source hub --num-workers 4 \
     --epochs 3 --lr 3e-4 --batch-size 64 --seed 42 \
     --eval-every-steps 25000 \
-    --out models/il_agent_full_0804 \
+    --out models/il_alldays_0804 \
     --run-dir runs/il_full_0804 >>"$LOG" 2>&1; then
-  log "STEP il_full OK -> models/il_agent_full_0804"
+  log "STEP il_full OK -> models/il_alldays_0804"
 else
   log "CHAIN FAIL: il_full crashed"; exit 1
 fi

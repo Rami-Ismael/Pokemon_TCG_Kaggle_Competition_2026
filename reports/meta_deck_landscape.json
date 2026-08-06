@@ -1,0 +1,209 @@
+[
+ {
+  "ace": "Marnie's Grimmsnarl ex",
+  "inst": 4672,
+  "share": 51.296,
+  "pilots": 3,
+  "rated": 1,
+  "top": 1320.3,
+  "tag": true
+ },
+ {
+  "ace": "Alakazam",
+  "inst": 1693,
+  "share": 18.588,
+  "pilots": 5,
+  "rated": 3,
+  "top": 1787.2,
+  "tag": true
+ },
+ {
+  "ace": "Team Rocket's Spidops",
+  "inst": 813,
+  "share": 8.926,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1286.4,
+  "tag": true
+ },
+ {
+  "ace": "Cynthia's Garchomp ex",
+  "inst": 642,
+  "share": 7.049,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1690.1,
+  "tag": true
+ },
+ {
+  "ace": "Mega Kangaskhan ex",
+  "inst": 604,
+  "share": 6.632,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1118.8,
+  "tag": true
+ },
+ {
+  "ace": "Dragapult ex",
+  "inst": 319,
+  "share": 3.502,
+  "pilots": 3,
+  "rated": 1,
+  "top": 1756.6,
+  "tag": true
+ },
+ {
+  "ace": "Thwackey",
+  "inst": 112,
+  "share": 1.23,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Crustle",
+  "inst": 93,
+  "share": 1.021,
+  "pilots": 2,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Mega Lopunny ex",
+  "inst": 77,
+  "share": 0.845,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Mega Froslass ex",
+  "inst": 38,
+  "share": 0.417,
+  "pilots": 2,
+  "rated": 1,
+  "top": 1662.7,
+  "tag": false
+ },
+ {
+  "ace": "Cornerstone Mask Ogerpon ex",
+  "inst": 16,
+  "share": 0.176,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "N's Zoroark ex",
+  "inst": 12,
+  "share": 0.132,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Archaludon ex",
+  "inst": 10,
+  "share": 0.11,
+  "pilots": 2,
+  "rated": 2,
+  "top": 1864.5,
+  "tag": false
+ },
+ {
+  "ace": "Mega Starmie ex",
+  "inst": 3,
+  "share": 0.033,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1716.6,
+  "tag": false
+ },
+ {
+  "ace": "Brambleghast",
+  "inst": 2,
+  "share": 0.022,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Mega Sharpedo ex",
+  "inst": 1,
+  "share": 0.011,
+  "pilots": 0,
+  "rated": 0,
+  "top": null,
+  "tag": false
+ },
+ {
+  "ace": "Mega Lucario ex",
+  "inst": 1,
+  "share": 0.011,
+  "pilots": 18,
+  "rated": 7,
+  "top": 1752.0,
+  "tag": true
+ },
+ {
+  "ace": "Barbaracle",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1118.8,
+  "tag": false
+ },
+ {
+  "ace": "Ethan's Typhlosion",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1427.4,
+  "tag": false
+ },
+ {
+  "ace": "Chandelure",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1313.0,
+  "tag": false
+ },
+ {
+  "ace": "Hop's Trevenant",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 1,
+  "rated": 1,
+  "top": 1689.0,
+  "tag": false
+ },
+ {
+  "ace": "Iono\u2019s Bellibolt ex",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 3,
+  "rated": 2,
+  "top": 1603.4,
+  "tag": false
+ },
+ {
+  "ace": "Mega Abomasnow ex",
+  "inst": 0,
+  "share": 0.0,
+  "pilots": 2,
+  "rated": 1,
+  "top": 1623.8,
+  "tag": false
+ }
+]

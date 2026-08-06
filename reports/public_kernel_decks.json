@@ -1,0 +1,128 @@
+[
+ {
+  "ref": "kiyotah/reinforcement-learning-and-mcts-sample-code",
+  "aces": [
+   "Mega Abomasnow ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "ichigoe/beginner-guide-from-deck-list-to-first-valid-sub",
+  "aces": [
+   "Mega Lucario ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "kojimar/simple-baseline-matchup-tests",
+  "aces": [
+   "Mega Lucario ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "kiyotah/how-to-output-local-battle-as-json-and-view",
+  "aces": [
+   "Mega Abomasnow ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "aristophanivan/improved-probabilistic-agent",
+  "aces": [
+   "Mega Lucario ex"
+  ],
+  "n_decks": 2
+ },
+ {
+  "ref": "pilkwang/pok-mon-tcg-ai-battle-meta-snapshot-18-july",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "taikimori/ptcg-card-list-viewer-deck-build",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "makthanithin/pok-mon-tcg-ai-battle-meta-snapshot-06-29",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "smallpond/en-replay-archetype-analysis",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "masamikobayashi/a-sample-archaludon-75-wr-vs-my-1300-starmie",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "shiiin9/battle-replay-visualizer-visualizer",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "tetsutani/grimmsnarl-ex-damage-transfer-control",
+  "aces": [
+   "Marnie's Grimmsnarl ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "ichigoe/en-jp-deck-image-renderer-visual-your-deck-diff",
+  "aces": [
+   "Mega Lucario ex"
+  ],
+  "n_decks": 1
+ },
+ {
+  "ref": "dashimaki360/beating-the-day-1-1-crustle-bot",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "itsuki9180/japanese-language-ex",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "koushikrudra/i-have-one-rear-card",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "jek1wantaufik/pok-mon-tcg-ai-strategy-analysis",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "myso1987/ptcg-ai-battle-leaderboard-deck-meta-by-score-band",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "aristophanivan/probablity-v2",
+  "aces": [
+   "Mega Lucario ex"
+  ],
+  "n_decks": 2
+ },
+ {
+  "ref": "makimakiai/ptcg-official-top-episodes-detailed-eda-ja",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "kimimimimi/tcg-replay-viewer",
+  "aces": [],
+  "n_decks": 0
+ },
+ {
+  "ref": "pixiux/ptcg-mega-lucario-ex-v62",
+  "aces": [],
+  "n_decks": 0
+ }
+]

@@ -14,7 +14,7 @@ while :; do
     --init-from models/selfplay_g2/u1293312_final \
     --init-policy-full models/selfplay_g2/policy_full.pt \
     --kl-prior models/selfplay_g1/refs/u430080 \
-    --league models/il_agent,models/s2v2/e0_s43,models/il_agent_full_0804,models/selfplay_g1/refs/u430080 \
+    --league models/il_agent,models/s2v2/e0_s43,models/il_alldays_0804,models/selfplay_g1/refs/u430080 \
     --total-timesteps 2000000 --max-seconds 21600 \
     --run-tag selfplay_g3 --out models/selfplay_g3 >>"$LOG" 2>&1
   rc=$?

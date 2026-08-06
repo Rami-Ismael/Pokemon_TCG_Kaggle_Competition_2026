@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: tb_alakazam, wmh_grimmsnarl
+[1/3] tb_alakazam vs tb_alakazam: tb_alakazam 5-5  (10 games, 3.0s, 0.30s/game)
+[2/3] tb_alakazam vs wmh_grimmsnarl: tb_alakazam 16-4  (20 games, 6.4s, 0.32s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 2-8  (10 games, 3.6s, 0.36s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 tb_ala  wmh_gr  win% [95% CI]
+tb_alakazam           -       16       65.0  [49.5,77.9]
+wmh_grimmsnarl        4       -        35.0  [22.1,50.5]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  tb_alakazam vs wmh_grimmsnarl: 16/20 =  80.0% [58.4,91.9]  (6.4s, 0.32s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  tb_alakazam             65.0%  [49.5,77.9]  (26/40)
+  wmh_grimmsnarl          35.0%  [22.1,50.5]  (14/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  tb_alakazam             1780.7  (RD 110.2, 95% CI +/-220.4)  GXE  74.1%
+  wmh_grimmsnarl          1219.3  (RD 110.2, 95% CI +/-220.4)  GXE  25.9%
+
+total wall clock: 13.0s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/tb_alakazam.json
+glicko: not persisted (isolated run)

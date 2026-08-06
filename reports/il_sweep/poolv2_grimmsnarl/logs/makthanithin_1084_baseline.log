@@ -1,0 +1,26 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 2 agents: makthanithin_1084_baseline, wmh_grimmsnarl
+[1/3] makthanithin_1084_baseline vs makthanithin_1084_baseline: makthanithin_1084_baseline 2-8  (10 games, 7.6s, 0.76s/game)
+[2/3] makthanithin_1084_baseline vs wmh_grimmsnarl: makthanithin_1084_baseline 19-1  (20 games, 14.9s, 0.75s/game)
+[3/3] wmh_grimmsnarl vs wmh_grimmsnarl: wmh_grimmsnarl 3-7  (10 games, 8.9s, 0.89s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 maktha  wmh_gr  win% [95% CI]
+makthanithin_1084_baseline-       19       72.5  [57.2,83.9]
+wmh_grimmsnarl        1       -        27.5  [16.1,42.8]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  makthanithin_1084_baseline vs wmh_grimmsnarl: 19/20 =  95.0% [76.4,99.1]  (14.9s, 0.75s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  makthanithin_1084_baseline  72.5%  [57.2,83.9]  (29/40)
+  wmh_grimmsnarl          27.5%  [16.1,42.8]  (11/40)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  makthanithin_1084_baseline  1921.0  (RD 110.2, 95% CI +/-220.4)  GXE  82.9%
+  wmh_grimmsnarl          1079.0  (RD 110.2, 95% CI +/-220.4)  GXE  17.1%
+
+total wall clock: 31.4s
+saved: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/poolv2_grimmsnarl/makthanithin_1084_baseline.json
+glicko: not persisted (isolated run)

@@ -920,8 +920,13 @@ would have, since §3.2 replaces the gate on measured grounds regardless.
   phase writes an episode corpus; checkpoints, TB logs, figures, and a few
   transcripts only.
 - **Critic is train-time only**; the shipped bundle contains the actor alone.
-- Every comparison: **≥3 seeds, equal steps** (never equal epochs), an RD or σ
-  on every number, a chart in `reports/figures/`, the control beside the claim.
+- Every comparison: **≥3 seeds**, an RD or σ on every number, a chart in
+  `reports/figures/`, the control beside the claim. **Budget arms by passes
+  over their own data (`--epochs`) or by wall-clock — never by pinning one
+  arm to another arm's step count.** A filtered arm has less data; making it
+  re-read that data until it matches the unfiltered arm's steps is a
+  treatment nobody asked for. (Rescinded 2026-08-05; the old rule read
+  "equal steps, never equal epochs".)
 - **Long runs do not stop for approval** — the 1-hour gate is retired. Report the
   projection, chain runs so MPS is never contended, nice everything, cap workers,
   keep the laptop responsive.

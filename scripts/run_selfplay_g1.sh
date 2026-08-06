@@ -1,6 +1,6 @@
 #!/bin/zsh
 # Provisional self-play generation 1 (rl_pipeline_v2 §3, PRIOR-v2 re-base
-# rule): base + KL teacher = all-days imitation (il_agent_full_0804),
+# rule): base + KL teacher = all-days imitation (il_alldays_0804),
 # provisional pending the ~08-07 settled base-model verdict. v2 defaults:
 # lr 1e-4, gamma 0.997, entropy 0.01->0.001@50%, PFSP-lite on, anchor gate
 # every 20 updates. Preflight-retry handles other sessions' CPU bursts.
@@ -12,8 +12,8 @@ t0=$(date +%s)
 while :; do
   start=$(date +%s)
   nice -n 5 $MAIN/.venv-ppo/bin/python scripts/train_ppo_puffer.py \
-    --init-from models/il_agent_full_0804 \
-    --kl-prior models/il_agent_full_0804 \
+    --init-from models/il_alldays_0804 \
+    --kl-prior models/il_alldays_0804 \
     --league models/il_agent,models/s2v2/e0_s43 \
     --total-timesteps 2000000 --max-seconds 14400 \
     --run-tag selfplay_g1_prov --out models/selfplay_g1 >>"$LOG" 2>&1

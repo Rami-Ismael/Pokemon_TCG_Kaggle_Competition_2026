@@ -1,0 +1,38 @@
+{
+  "il_alldays_3ep@marnies_grimmsnarl_ex": {
+    "decisions": 919,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  },
+  "il_alldays_3ep@mega_lucario_ex": {
+    "decisions": 732,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  },
+  "il_bc_3ep@marnies_grimmsnarl_ex": {
+    "decisions": 845,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  },
+  "il_bc_3ep@mega_lucario_ex": {
+    "decisions": 584,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  },
+  "il_small_comb_2ep@marnies_grimmsnarl_ex": {
+    "decisions": 926,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  },
+  "il_small_comb_2ep@mega_lucario_ex": {
+    "decisions": 688,
+    "fallbacks": 0,
+    "rate_pct": 0.0,
+    "first_reason": null
+  }
+}

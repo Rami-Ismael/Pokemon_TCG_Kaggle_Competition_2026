@@ -9,19 +9,34 @@ Runs in the SAME side venv as the trainer (PufferLib 3.0 + pyro):
 Design + pre-registered decision rule: notes/experiments/
 2026-08-04-protein-ppo-sweep.md. One Protein suggestion per run; each run is
 a fresh train_ppo_puffer.py subprocess (cg engine is a per-process singleton,
-and MPS state must die with the run) at FIXED total_timesteps, promotion gate
-off. Score = decisive-game win rate of the run's final snapshot vs the frozen
-anchor (promotion.evaluate_gate, 50 mirrored pairs); cost = training
-wall-clock seconds. Protein 3.0 seeds with the search center, so run #1 is
+and MPS state must die with the run) on a FIXED WALL-CLOCK budget
+(--train-seconds), promotion gate off. Score = decisive-game win rate of the
+run's final snapshot vs the frozen anchor (promotion.evaluate_gate, 50
+mirrored pairs). Protein 3.0 seeds with the search center, so run #1 is
 exactly the incumbent config — the baseline arm.
 
+The budget is time, not steps. The first sweep pinned every run to 60,416
+steps and let wall-clock float from 666s to 1,589s — a 2.4x compute spread
+handed to whichever configs happened to be slow. Now every config gets the
+same wall-clock and reaches whatever step count its own throughput allows;
+a config that trains slowly is charged for it in progress made, and
+`global_step` is recorded per run as the throughput diagnostic. Runs are
+NOT discarded for reaching fewer steps than their neighbours — that
+rejection was the step-matching rule wearing a failure-handler's coat.
+
+--anneal-horizon keeps the LR/entropy schedule SHAPE identical across runs
+(it is the schedule's denominator, a fixed property of the search space,
+not a target any run must reach). A slow config therefore stops earlier on
+that schedule, at a higher LR and entropy than a fast one — that is a real
+consequence of being slow at a fixed compute budget, and is intended.
+
 Failure handling: PufferLib 3.0's Protein.observe() takes is_failure but its
-body appends every call to success_observations, so failed runs (crash, or
-stopped before total_timesteps by --max-seconds) are NOT observed at all —
-only logged. A run whose training log shows a preflight refusal is retried
-after a wait, not counted: preflight failure means the machine was busy, not
-that the config failed. The launcher also refuses to START a training run
-while another repo training/benchmark process is alive (MPS single-tenancy).
+body appends every call to success_observations, so failed runs (crashes)
+are NOT observed at all — only logged. A run whose training log shows a
+preflight refusal is retried after a wait, not counted: preflight failure
+means the machine was busy, not that the config failed. The launcher also
+refuses to START a training run while another repo training/benchmark
+process is alive (MPS single-tenancy).
 
 Every run appends one JSON line to <out>/sweep_log.jsonl; restarting the
 sweep replays that log into Protein (re-observe) and continues where it left
@@ -147,7 +162,7 @@ def train_once(idx: int, params: dict, run_dir: Path, args) -> dict:
         str(REPO / "scripts" / "train_ppo_puffer.py"),
         "--promote-every", "0",
         "--snapshot-every-s", "999999",
-        "--max-seconds", str(args.max_train_seconds),
+        "--max-seconds", str(args.train_seconds),
         "--out", str(run_dir),
         "--run-tag", tag,
         "--lr", f"{params['learning_rate']:.8g}",
@@ -162,7 +177,8 @@ def train_once(idx: int, params: dict, run_dir: Path, args) -> dict:
         # (the doctor's own guidance), so no quiet-wait and no preflight.
         cmd += ["--smoke", "--skip-preflight"]
     else:
-        cmd += ["--total-timesteps", str(args.total_timesteps)]
+        # Schedule horizon only -- --max-seconds above is what ends the run.
+        cmd += ["--total-timesteps", str(args.anneal_horizon)]
 
     log_path = run_dir / "train_log.txt"
     for attempt in range(1, 13):
@@ -175,7 +191,7 @@ def train_once(idx: int, params: dict, run_dir: Path, args) -> dict:
             try:
                 proc = subprocess.run(
                     cmd, stdout=fh, stderr=subprocess.STDOUT, cwd=REPO,
-                    timeout=args.max_train_seconds + 900)
+                    timeout=args.train_seconds + 900)
             except subprocess.TimeoutExpired:
                 return {"ok": False, "seconds": time.time() - t0, "tag": tag,
                         "error": "hard timeout (train ignored --max-seconds)"}
@@ -259,24 +275,21 @@ def run_sweep(args) -> None:
             meta = json.loads((snap / "ppo_metadata.json").read_text())
             row["global_step"] = meta.get("global_step")
             row["snap"] = str(snap)
-            if not args.smoke and meta.get("global_step", 0) < args.total_timesteps:
-                # Stopped early (--max-seconds): unequal steps, never scored.
+            # Every run that produced a snapshot is scored, however far it got
+            # in its wall-clock budget: reaching fewer steps is a RESULT of the
+            # config (slow), not grounds for discarding it.
+            verdict = evaluate_snapshot(snap, anchor, args.pairs,
+                                        args.eval_workers)
+            decisive = verdict["wins"] + verdict["losses"]
+            row["gate"] = {k: verdict[k] for k in
+                           ("wins", "losses", "draws", "games", "win_rate",
+                            "seconds")}
+            min_dec = 1 if args.smoke else MIN_DECISIVE_SCORE
+            if decisive < min_dec:
                 row.update(failure=True,
-                           error=f"only {meta.get('global_step')} of "
-                                 f"{args.total_timesteps} steps (too slow)")
+                           error=f"only {decisive} decisive eval games")
             else:
-                verdict = evaluate_snapshot(snap, anchor, args.pairs,
-                                            args.eval_workers)
-                decisive = verdict["wins"] + verdict["losses"]
-                row["gate"] = {k: verdict[k] for k in
-                               ("wins", "losses", "draws", "games", "win_rate",
-                                "seconds")}
-                min_dec = 1 if args.smoke else MIN_DECISIVE_SCORE
-                if decisive < min_dec:
-                    row.update(failure=True,
-                               error=f"only {decisive} decisive eval games")
-                else:
-                    row["score"] = verdict["win_rate"]
+                row["score"] = verdict["win_rate"]
 
         if not row["failure"]:
             protein.observe(row["params"], row["score"], row["cost_s"])
@@ -341,10 +354,16 @@ def validate(args) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=20)
-    ap.add_argument("--total-timesteps", type=int, default=60_000)
+    ap.add_argument("--train-seconds", type=float, default=1200.0,
+                    help="wall-clock budget every run gets -- THE budget. "
+                         "1200s sits mid-range of the first sweep's 666-1589s "
+                         "spread at 60k steps.")
+    ap.add_argument("--anneal-horizon", type=int, default=60_000,
+                    help="LR/entropy schedule denominator passed through as "
+                         "--total-timesteps; NOT a step target, and runs are "
+                         "never rejected for finishing below it.")
     ap.add_argument("--pairs", type=int, default=50)
     ap.add_argument("--eval-workers", type=int, default=8)
-    ap.add_argument("--max-train-seconds", type=float, default=3600.0)
     ap.add_argument("--anchor", type=Path, default=ANCHOR_DEFAULT)
     ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "ppo_sweep")
     ap.add_argument("--sweep-tag", default=time.strftime("%m%d"))

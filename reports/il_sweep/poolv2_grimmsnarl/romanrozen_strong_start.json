@@ -1,0 +1,70 @@
+{
+  "agents": [
+    "romanrozen_strong_start",
+    "wmh_grimmsnarl"
+  ],
+  "games_per_pair": 10,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "romanrozen_strong_start": {
+      "romanrozen_strong_start": 10,
+      "wmh_grimmsnarl": 18
+    },
+    "wmh_grimmsnarl": {
+      "romanrozen_strong_start": 2,
+      "wmh_grimmsnarl": 10
+    }
+  },
+  "games": {
+    "romanrozen_strong_start": {
+      "romanrozen_strong_start": 20,
+      "wmh_grimmsnarl": 20
+    },
+    "wmh_grimmsnarl": {
+      "romanrozen_strong_start": 20,
+      "wmh_grimmsnarl": 20
+    }
+  },
+  "wall_clock_sec": {
+    "romanrozen_strong_start": {
+      "romanrozen_strong_start": 16.1419415473938,
+      "wmh_grimmsnarl": 12.17023515701294
+    },
+    "wmh_grimmsnarl": {
+      "romanrozen_strong_start": 12.17023515701294,
+      "wmh_grimmsnarl": 14.081521987915039
+    }
+  },
+  "total_wall_clock_sec": 27.299670219421387,
+  "overall_win_pct": {
+    "romanrozen_strong_start": 70.0,
+    "wmh_grimmsnarl": 30.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "romanrozen_strong_start": {
+      "p": 70.0,
+      "lo": 54.56968934567959,
+      "hi": 81.9253290843047
+    },
+    "wmh_grimmsnarl": {
+      "p": 30.0,
+      "lo": 18.074670915695297,
+      "hi": 45.4303106543204
+    }
+  },
+  "glicko": {
+    "romanrozen_strong_start": {
+      "rating": 1874.2360388850886,
+      "rd": 110.20831912594903,
+      "gxe": 80.27295769799416
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1125.7639611149114,
+      "rd": 110.20831912594903,
+      "gxe": 19.727042302005838
+    }
+  },
+  "fallback_diag": {},
+  "fallback_first": {}
+}

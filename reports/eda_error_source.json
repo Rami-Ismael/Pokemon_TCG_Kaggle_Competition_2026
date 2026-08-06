@@ -1,0 +1,584 @@
+{
+  "agent": "il_alldays_3ep@marnies_grimmsnarl_ex",
+  "rows": [
+    {
+      "opponent": "tb_archaludon",
+      "turns": 175,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 141,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 117,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 173,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 154,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 130,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 149,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 187,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 121,
+      "outcome": "loss",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 73,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 219,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 150,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 159,
+      "outcome": "loss",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 117,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 156,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 159,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 64,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 150,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 164,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 192,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 170,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 182,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 168,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_archaludon",
+      "turns": 154,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 141,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 121,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 189,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 159,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 116,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 169,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 169,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 180,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 163,
+      "outcome": "loss",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 135,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 152,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 154,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 166,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 163,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 30,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 192,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 133,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 168,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 155,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 156,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 166,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 126,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 97,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "wmh_alakazam",
+      "turns": 145,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 111,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 128,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 187,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 119,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 128,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 152,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 142,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 179,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 146,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 169,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 132,
+      "outcome": "loss",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 132,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 142,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 109,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 165,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 160,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 55,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 111,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 44,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 118,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 105,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 124,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 128,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "romanrozen_strong_start",
+      "turns": 128,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 168,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 214,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 211,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 188,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 78,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 166,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 175,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 172,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 143,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 179,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 179,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 193,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 165,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 181,
+      "outcome": "loss",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 134,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 173,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 176,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 214,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 192,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 144,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 214,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 118,
+      "outcome": "win",
+      "my_seat": 1
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 223,
+      "outcome": "win",
+      "my_seat": 0
+    },
+    {
+      "opponent": "tb_alakazam",
+      "turns": 210,
+      "outcome": "win",
+      "my_seat": 1
+    }
+  ],
+  "short_win_pct": 86.0,
+  "long_win_pct": 82.6086956521739,
+  "median_turns": 156
+}

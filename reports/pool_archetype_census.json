@@ -1,0 +1,290 @@
+[
+  {
+    "agent": "avikdas567_heuristic",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "biohack44_day2",
+    "ace": "Crustle",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "daniilkrasnovvv_conservative_prob",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "dedquoc_rule_engine",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1087.754582854534
+  },
+  {
+    "agent": "grunt",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1128.7737721461535
+  },
+  {
+    "agent": "il_agent",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1322.2472137318077
+  },
+  {
+    "agent": "jek1wantaufik_lucario",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1605.0640297702578
+  },
+  {
+    "agent": "kiyotah_abomasnow",
+    "ace": "Mega Abomasnow ex",
+    "n_cards": 60,
+    "glicko": 1623.8248900789706
+  },
+  {
+    "agent": "kiyotah_dragapult",
+    "ace": "Dragapult ex",
+    "n_cards": 60,
+    "glicko": 1756.599552249303
+  },
+  {
+    "agent": "kiyotah_iono",
+    "ace": "Iono\u2019s Bellibolt ex",
+    "n_cards": 60,
+    "glicko": 1603.4207846377037
+  },
+  {
+    "agent": "kojimar_lucario",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "makimakiai_rl",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "makthanithin_1084_baseline",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "makthanithin_improved_prob",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1751.9588935254174
+  },
+  {
+    "agent": "mcts_il_agent",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "mechi22_alakazam",
+    "ace": "Alakazam",
+    "n_cards": 60,
+    "glicko": 1787.1515493116117
+  },
+  {
+    "agent": "mega_lucario",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "pixiux_lucario_v63",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "plamen06_steel",
+    "ace": "Archaludon ex",
+    "n_cards": 60,
+    "glicko": 1839.8973595703492
+  },
+  {
+    "agent": "pllinas_alakazam",
+    "ace": "Alakazam",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "prvsiyan_control_v11",
+    "ace": "Crustle",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "prvsiyan_grimbelief_alakazam",
+    "ace": "Marnie's Grimmsnarl ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "prvsiyan_templates_alakazam",
+    "ace": "Marnie's Grimmsnarl ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "random_legal",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 970.1300220182275
+  },
+  {
+    "agent": "romanrozen_strong_start",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": 1676.2134054458506
+  },
+  {
+    "agent": "ryotasueyoshi_alakazam",
+    "ace": "Alakazam",
+    "n_cards": 60,
+    "glicko": 1599.0134764158431
+  },
+  {
+    "agent": "tb_abomasnow",
+    "ace": "Mega Abomasnow ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_alakazam",
+    "ace": "Alakazam",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_archaludon",
+    "ace": "Archaludon ex",
+    "n_cards": 60,
+    "glicko": 1864.542887115045
+  },
+  {
+    "agent": "tb_dragapult",
+    "ace": "Dragapult ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_heuristic",
+    "ace": "Dragapult ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_iono",
+    "ace": "Iono\u2019s Bellibolt ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_lucario",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_rulecore",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_search",
+    "ace": "Mega Lucario ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "tb_starmie",
+    "ace": "Mega Froslass ex",
+    "n_cards": 60,
+    "glicko": null
+  },
+  {
+    "agent": "wmh_alakazam",
+    "ace": "Alakazam",
+    "n_cards": 60,
+    "glicko": 1662.7046898209085
+  },
+  {
+    "agent": "wmh_bellibolt",
+    "ace": "Iono\u2019s Bellibolt ex",
+    "n_cards": 60,
+    "glicko": 1340.3414439335747
+  },
+  {
+    "agent": "wmh_chandelure",
+    "ace": "Chandelure",
+    "n_cards": 60,
+    "glicko": 1313.0372474912062
+  },
+  {
+    "agent": "wmh_froslass",
+    "ace": "Mega Froslass ex",
+    "n_cards": 60,
+    "glicko": 1662.7414343134515
+  },
+  {
+    "agent": "wmh_garchomp",
+    "ace": "Cynthia's Garchomp ex",
+    "n_cards": 60,
+    "glicko": 1690.065533042334
+  },
+  {
+    "agent": "wmh_grimmsnarl",
+    "ace": "Marnie's Grimmsnarl ex",
+    "n_cards": 60,
+    "glicko": 1320.2618530799375
+  },
+  {
+    "agent": "wmh_kangaskhan",
+    "ace": "Mega Kangaskhan ex",
+    "n_cards": 60,
+    "glicko": 1118.7929779985402
+  },
+  {
+    "agent": "wmh_megastarmie",
+    "ace": "Mega Starmie ex",
+    "n_cards": 60,
+    "glicko": 1716.6410362024812
+  },
+  {
+    "agent": "wmh_mewtwo",
+    "ace": "Team Rocket's Spidops",
+    "n_cards": 60,
+    "glicko": 1286.4204658209314
+  },
+  {
+    "agent": "wmh_ogerpon",
+    "ace": "Barbaracle",
+    "n_cards": 60,
+    "glicko": 1118.7815529181842
+  },
+  {
+    "agent": "wmh_trevenant",
+    "ace": "Hop's Trevenant",
+    "n_cards": 60,
+    "glicko": 1688.9774686906305
+  },
+  {
+    "agent": "wmh_typhlosion",
+    "ace": "Ethan's Typhlosion",
+    "n_cards": 60,
+    "glicko": 1427.4257548473756
+  }
+]

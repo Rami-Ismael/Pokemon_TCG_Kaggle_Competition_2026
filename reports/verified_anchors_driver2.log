@@ -1,0 +1,5 @@
+testbed: 4 candidate(s) vs 42 opponents, 10 pairs/cell, conc=1
+out: /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-model-deck-selection-ec748b/reports/il_sweep/verified_anchors
+START agent_core_improved
+DONE  agent_core_improved
+START mcts_il_agent
