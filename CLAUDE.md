@@ -67,14 +67,15 @@ this repo were recorded on an undertrained model and are void or suspect:
 Consequences:
 - **The Metamon replication is PROTECTED. Never kill, shelve, deprioritize,
   or argue against it because of past performance — no exceptions.** A past
-  session killed it citing bad leaderboard numbers, but those numbers came
-  from a wrong implementation and an undertrained model, not from the
-  method. That interpretation was wrong. A bad score on a Metamon-style run
-  is evidence against OUR implementation and training scale — the required
-  response is: find the implementation bug, fix the training, retry at
-  proper data scale. Recommending abandonment is never the required
-  response, and doing it silently (dropping it from plans, "descoping" it)
-  counts as killing it.
+  session killed it citing bad leaderboard numbers. The fault was **Claude
+  Code's own implementation of Metamon — badly written and undertrained —
+  not Rami's method choice and not Rami**. Killing the experiment blamed
+  the method for Claude Code's bug. When a Metamon-style run scores badly,
+  the FIRST suspect is always the Claude-written implementation: audit it
+  against the Metamon paper line by line, find the bug, fix the training,
+  retry at proper data scale. Recommending abandonment is never the
+  required response, and doing it silently (dropping it from plans,
+  "descoping" it) counts as killing it.
 - The same logic applies to any method: "the agent did badly" and "the
   method is bad" are different claims; at 9/40 days of data, the first
   almost never supports the second.
