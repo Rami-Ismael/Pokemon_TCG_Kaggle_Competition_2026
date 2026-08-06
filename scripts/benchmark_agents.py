@@ -133,6 +133,11 @@ AGENT_FILES = {
     "agent_core_improved": REPO / "agents" / "mega_lucario" / "agent_core_improved.py",
     "proto": REPO / "scripts" / "_proto_agent.py",
     "il_agent": REPO / "agents" / "il_agent" / "agent_core.py",
+    # Same policy code + deck as il_agent, bundle-local model/ holding the
+    # hfstream_v2 checkpoint (trained 2026-08-05 on all 9 Hub train days,
+    # 17,622 eps, offline eval 0.7583). il_agent-vs-this is checkpoint-vs-
+    # checkpoint, code and deck held fixed.
+    "il_agent_v2": REPO / "agents" / "il_agent_v2" / "main.py",
     # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.

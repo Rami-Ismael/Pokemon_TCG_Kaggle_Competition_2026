@@ -97,3 +97,4 @@ already certain is that the pre-registered prediction failed.
 55270787 (314.1) + 55253900 (267.4). Best-ever 804.0 still displaced. This was the
 bounded downside flagged before submitting; it is recoverable by resubmitting the
 ~685 agent_core_improved bundle.
+| 2026-08-05 | 55279487 | 541.6 (first read ~1h post-submit, 2026-08-05; settling) | 2dacb2f38b7b...b8d6e9b | 56c7c7b0 | Grimmsnarl ex (il_agent's deck.csv) | Pure BC (`il_agent_v2`), no search; trained on train_combined_v2 — all 9 Hub train days, 17,622 eps, 149,759 steps, streamed via ShardILDataset (ADR-001) | Beats current il_agent vs EVERY shared opponent: agg 62.5% vs 32.1% (n=112 each), H2H 15-1; loses mechi22 31.2% [14,56] and agent_core_improved 37.5% [18,61]; 0 fallbacks/9,071 dec (MPS) + 0/135 (CPU) | First checkpoint from the complete 9-day streamed corpus (backfill 07-28..08-03); cousin il_alldays_0804 (15,032 eps) read 418.0/353.9 — prediction was 380-460, first read EXCEEDS it |

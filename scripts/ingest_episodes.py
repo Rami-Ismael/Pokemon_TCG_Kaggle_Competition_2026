@@ -179,9 +179,24 @@ def cmd_status(args: argparse.Namespace) -> int:
 # --------------------------------------------------------------------------
 
 def _pack(split_dir: Path, out_day_dir: Path, shard_raw_gib: float, level: int) -> None:
-    if out_day_dir.exists() and list(out_day_dir.glob("*.parquet")):
-        print(f"[pack] reusing existing shards in {out_day_dir}")
-        return
+    # Reuse only when the cached shards actually cover the raw folder: a
+    # re-ingested day (e.g. a partial day topped up later) leaves stale
+    # smaller shards here, and blind reuse made verify fail on id-set
+    # mismatch after a 2,592-episode day was compared against a stale
+    # 2-row shard (2026-08-05).
+    shards = sorted(out_day_dir.glob("*.parquet")) if out_day_dir.exists() else []
+    if shards:
+        n_rows = sum(pq.ParquetFile(s).metadata.num_rows for s in shards)
+        n_raw = len(list(split_dir.glob("*.json")))
+        if n_rows == n_raw:
+            print(f"[pack] reusing existing shards in {out_day_dir} ({n_rows} rows)")
+            return
+        print(
+            f"[pack] stale shards in {out_day_dir} ({n_rows} rows vs "
+            f"{n_raw} raw files); repacking"
+        )
+        for s in shards:
+            s.unlink()
     subprocess.run(
         [
             sys.executable, str(PACK_SCRIPT), "pack",
