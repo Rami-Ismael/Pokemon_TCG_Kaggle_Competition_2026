@@ -63,9 +63,43 @@ try:
     from pokemon_tcg.il_model import PTCGImitationPolicy
 
     _ML_AVAILABLE = True
-except Exception:
+    _ML_IMPORT_ERROR = None
+except Exception as _import_exc:
     _ML_AVAILABLE = False
+    _ML_IMPORT_ERROR = _import_exc
     MAX_OPTIONS = 48  # unused when _ML_AVAILABLE is False; kept for readability
+
+# STRICT LOAD -- fail loudly everywhere EXCEPT inside the Kaggle evaluator.
+#
+# The never-crash contract exists because an uncaught exception in the
+# evaluator is INVALID, i.e. an instant loss; degrading to _safe_choice is
+# strictly better there. But OUTSIDE the evaluator that same degradation is a
+# measurement hazard: the agent still "runs", scores badly, and nothing says
+# whether the model is weak or _safe_choice answered every decision. That has
+# cost real work twice -- the deck-selection run (2026-08-04) benchmarked a
+# fallback for a full launch because models/il_agent was missing in a worktree,
+# and the same shape nearly invalidated the self-play field test (2026-08-05).
+#
+# So: dev/benchmark/training -> raise at import. Evaluator -> unchanged.
+# Detection matches main.py's own bundle-path probe. PTCG_STRICT_LOAD forces
+# it either way (set 0 to rehearse the evaluator's degraded path locally).
+# Two independent "this is a shipped artifact" signals, OR-ed so the raise is
+# as unlikely as possible in production while dev stays strict:
+#   1. the evaluator's extracted-bundle path (same probe main.py uses, itself
+#      confirmed against a real failed submission's traceback);
+#   2. a sibling model/ dir, which ONLY a submission bundle has -- the dev
+#      checkout keeps its checkpoint at repo-level models/ instead.
+# Getting this wrong in the unsafe direction (strict ON in the evaluator + a
+# load failure) would turn a bad game into an INVALID one, so it is worth the
+# redundancy.
+_IN_EVALUATOR = (
+    Path("/kaggle_simulations/agent").exists() or (_HERE / "model").exists()
+)
+_STRICT_ENV = os.environ.get("PTCG_STRICT_LOAD")
+_STRICT_LOAD = (
+    (not _IN_EVALUATOR) if _STRICT_ENV is None
+    else _STRICT_ENV.strip().lower() not in ("0", "false", "no", "")
+)
 
 _ENV_MODEL_DIR = os.environ.get("IL_MODEL_DIR")
 MODEL_DIR = _ENV_MODEL_DIR or str(_HERE / "model")
@@ -90,6 +124,21 @@ if not Path(MODEL_DIR).exists():
     # submission bundle (submissions/il_agent/) ships its own sibling
     # `model/` dir, so this branch is dev-only.
     MODEL_DIR = str(_REPO / "models" / "il_agent")
+    # ...and that dev path may not exist either (gitignored; absent in a fresh
+    # worktree). Before this check the reassignment above was unverified, so a
+    # missing models/il_agent sailed through import and only failed later
+    # inside _load_model(), which swallows it -> every decision silently became
+    # _safe_choice. That is exactly the 2026-08-04 deck-selection incident.
+    if _STRICT_LOAD and not Path(MODEL_DIR).exists():
+        raise FileNotFoundError(
+            f"no checkpoint at {MODEL_DIR} (and no bundled model/ beside "
+            f"{_HERE}). Refusing to run as a silent _safe_choice fallback, "
+            f"which would look like a weak model rather than a missing one. "
+            f"In a git worktree: ln -s <main-checkout>/models/il_agent "
+            f"models/il_agent  (see .claude/skills/run-fallback-diagnostic). "
+            f"To rehearse the evaluator's degraded path on purpose, set "
+            f"PTCG_STRICT_LOAD=0."
+        )
 # The evaluator is CPU-only; forcing CPU here (rather than calling
 # resolve_device() bare) means this path is exercised identically whether
 # run on the MPS laptop or the real CPU-only evaluator -- see 2.7.
@@ -192,6 +241,34 @@ def _load_model():
             "model_dir": MODEL_DIR, "traceback": traceback.format_exc(),
         })
     return _model
+
+
+def _require_model_or_raise() -> None:
+    """Outside the evaluator, a checkpoint that won't load is a hard error.
+
+    Called once at import (below) so the failure lands at `load_agent()` time
+    -- loudly, attributable to the agent being loaded -- instead of turning
+    into a silent per-decision _safe_choice that reads as a weak model. Inside
+    the evaluator this is never called and behaviour is byte-for-byte
+    unchanged: degraded beats crashed when a crash is an instant loss.
+    """
+    if not _STRICT_LOAD:
+        return
+    if not _ML_AVAILABLE:
+        raise ImportError(
+            f"the ML stack (torch / pokemon_tcg) failed to import, so this "
+            f"agent would answer EVERY decision with _safe_choice and score "
+            f"like a broken model. Original error: "
+            f"{type(_ML_IMPORT_ERROR).__name__}: {_ML_IMPORT_ERROR}. "
+            f"Set PTCG_STRICT_LOAD=0 to allow the degraded path on purpose."
+        )
+    if _load_model() is None:
+        raise RuntimeError(
+            f"checkpoint at {MODEL_DIR} exists but failed to load, so this "
+            f"agent would answer EVERY decision with _safe_choice. See the "
+            f"model_load_error traceback above / in diag_first(). "
+            f"Set PTCG_STRICT_LOAD=0 to allow the degraded path on purpose."
+        )
 
 
 def _safe_choice(select) -> list[int]:
@@ -330,3 +407,10 @@ def agent(obs_dict: dict) -> list[int]:
                 "traceback": traceback.format_exc(),
             })
             return []
+
+
+# Import-time strict check (no-op inside the Kaggle evaluator). Placed last so
+# every name it touches is defined. Note this makes the model load EAGER in
+# dev/benchmark runs -- deliberate: fail fast, attributably, at load_agent()
+# time rather than silently mid-match.
+_require_model_or_raise()
