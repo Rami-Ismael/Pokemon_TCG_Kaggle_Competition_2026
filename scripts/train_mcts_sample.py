@@ -7,7 +7,7 @@ of Huber-loss training. Hyperparameters are the notebook's exactly
 (MyModel(128,2,256,1,1), AdamW lr 3e-4, BATCH_SIZE 128, 50 eval / 100
 self-play games, SEARCH_COUNT 10).
 
-Parity gate for Phase 1: eval win rate vs random clearly above 50% after a
+Parity check for the API port: eval win rate vs random clearly above 50% after a
 few iterations. This is a TUTORIAL-SCALE agent (10 sims, one fixed deck,
 random opponent) -- its value is API mastery, not ladder strength.
 

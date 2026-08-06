@@ -5,7 +5,7 @@ no search, no heuristic -- the trained transformer scores options directly)
 but with my_deck swapped to agents/ryotasueyoshi_alakazam/deck.csv instead of
 the frozen Mega Lucario ex deck.
 
-Why: notes/phase0_gate0_report.md's A0'' section + reports/bc_standalone_deck_test.json
+Why: the A0'' finding + reports/bc_standalone_deck_test.json
 found the Alakazam deck's defining cards (Abra/Kadabra/Alakazam) appear in
 16.1% of training-corpus perspectives vs 0% for Mega Lucario ex/Riolu, and
 that this checkpoint scores 62.5% [38.6,81.5] on Alakazam vs 0.0% [0.0,19.4]

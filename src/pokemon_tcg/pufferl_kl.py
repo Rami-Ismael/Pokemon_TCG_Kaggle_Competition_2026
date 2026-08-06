@@ -72,7 +72,7 @@ class PuffeRLPriorKL(PuffeRL):
         # `kl_prior_policy` moves forward on every promotion, so after the first
         # retarget `kl_to_prior` answers "how far from the last promoted best"
         # and NOTHING answers "how far from the human prior" -- the question the
-        # whole Phase-3 deviation (on-policy PPO instead of the paper's offline
+        # whole RL-step deviation (on-policy PPO instead of the paper's offline
         # retrain over the union) exists to keep watchable. This reference is the
         # original IL checkpoint and is frozen for the life of the run.
         # DIAGNOSTIC ONLY: it is never multiplied by kl_coef and never enters
