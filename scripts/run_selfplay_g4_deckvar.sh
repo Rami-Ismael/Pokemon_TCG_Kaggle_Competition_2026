@@ -39,7 +39,7 @@ PY=$MAIN/.venv-ppo/bin/python
 : ${SEEDS:="42 43 44"}
 : ${ARMS:="control treatment"}
 : ${TIMESTEPS:=100000000}     # out of reach on purpose; MAX_SECONDS is the budget
-: ${MAX_SECONDS:=5400}          # per arm-seed wall-clock budget (90 min)
+: ${MAX_SECONDS:=9000}          # per arm-seed wall-clock budget (2.5h; 6 runs = 15h)
 : ${POOL:='@configs/deck_pools/legal_decks.txt'}
 : ${RETRY_HOURS:=3}
 : ${INIT:=models/il_agent}

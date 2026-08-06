@@ -121,9 +121,20 @@ UNREADABLE and excluded from the worst-case verdict. The per-deck cut (29 cells)
 is the one that will actually be readable.
 
 Training-rollout rates average over a moving policy and a moving mirror; they
-monitor the run, they do not compare the arms. The arm comparison is a post-hoc
-evaluation of the final checkpoints on a fixed deck grid against fixed
-opponents.
+monitor the run, they do not compare the arms. The arm comparison is
+`scripts/eval_deck_grid.py`: a FROZEN checkpoint, a FIXED opponent, and games
+allocated per grid cell rather than sprayed over it — which is the only way the
+per-matchup cut reaches a readable n.
+
+Sanity check built into it: run the same checkpoint against itself and the
+per-deck spread is pure deck advantage. Measured Lucario 0.250 vs Grimmsnarl
+1.000 (n=4 each, smoke), matching the known 29.7%/78.4% split, with mirror
+cells near 0.5 as they must be.
+
+Do NOT point `--opponent` at an external module agent casually: several are
+hand-written for one deck (kojimar's is a Mega Lucario ex pilot), so forcing one
+onto a grid deck measures that agent falling apart off its own list, not our
+policy's deck robustness. `rule_baseline` is the safe external choice.
 
 ## Also fixed: the promotion gate was single-deck
 
