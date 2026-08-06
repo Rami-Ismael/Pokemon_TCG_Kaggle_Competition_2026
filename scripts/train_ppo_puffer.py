@@ -33,9 +33,11 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import hashlib
 import json
 import math
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -54,6 +56,70 @@ import pufferlib.pufferl as pufferl  # noqa: E402
 import pufferlib.vector as pvector  # noqa: E402
 
 MIN_DISK_GB = 2.0   # snapshots + logs headroom (laptop disk budget is tight)
+
+
+def _deck_fingerprint(env_kwargs: dict) -> dict:
+    """What deck(s) this run actually trained on.
+
+    The single most load-bearing missing field: with no --deck-pool the
+    learner AND its checkpoint opponents play `selfplay.DECK_PATH`, which is
+    hardcoded to agents/il_agent/deck.csv (Mega Lucario ex). Every self-play
+    generation through g3 trained only on that deck, but nothing in the
+    checkpoint said so -- so selfplay_g1 was submitted piloting Grimmsnarl, a
+    deck it had never self-played on, and its 254.9 was read as a generation
+    result rather than an off-distribution one.
+    """
+    pool = env_kwargs.get("deck_pool")
+    if pool is not None:
+        return {"deck_source": "deck_pool", "deck_names": list(pool.names),
+                "deck_k": len(pool), "mirror_deck": bool(env_kwargs.get("mirror_deck"))}
+    from pokemon_tcg import selfplay as _sp
+    path = _sp.DECK_PATH
+    try:
+        raw = path.read_bytes()
+        cards = [int(x) for x in raw.decode().split() if x.strip()][:60]
+        return {"deck_source": "hardcoded", "deck_path": str(path),
+                "deck_sha256": hashlib.sha256(raw).hexdigest(),
+                "deck_n_cards": len(cards)}
+    except OSError:
+        return {"deck_source": "hardcoded", "deck_path": str(path),
+                "deck_sha256": None, "deck_n_cards": None}
+
+
+def _init_chain(start: Path | str | None, _depth: int = 0) -> list[dict]:
+    """Walk init_from back through prior generations.
+
+    A generation's own `global_step` is per-run, so g3's 1,229,824 is NOT its
+    total training -- cumulative across the chain is. Returns newest-first.
+    """
+    out: list[dict] = []
+    cur = Path(start) if start else None
+    seen: set[str] = set()
+    while cur is not None and _depth < 32:
+        key = str(cur)
+        if key in seen:
+            break
+        seen.add(key)
+        try:
+            m = json.loads((cur / "ppo_metadata.json").read_text())
+        except (OSError, json.JSONDecodeError):
+            out.append({"dir": key, "global_step": None, "note": "no ppo_metadata (BC init or missing)"})
+            break
+        out.append({"dir": key, "global_step": m.get("global_step"),
+                    "run_tag": m.get("run_tag")})
+        nxt = m.get("init_from")
+        cur = Path(nxt) if nxt and nxt != "None" else None
+        _depth += 1
+    return out
+
+
+def _git_sha() -> str | None:
+    try:
+        return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                              text=True, cwd=config.PROJECT_ROOT,
+                              timeout=5).stdout.strip() or None
+    except (OSError, subprocess.SubprocessError):
+        return None
 MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 
@@ -422,6 +488,48 @@ def main() -> None:
 
         epoch = 0
 
+        # Everything a later reader needs to attribute a generation's result
+        # WITHOUT re-reading the shell script that launched it. g1->g2 moved
+        # five axes at once (init weights, warm critic, KL anchor, league
+        # size, wall budget) and none of them were recorded in the
+        # checkpoint, so the step was unattributable after the fact.
+        chain = _init_chain(args.init_from)
+        provenance = {
+            "trainer": "pufferl-3.0",
+            "git_sha": _git_sha(),
+            "init_from": str(args.init_from),
+            "init_policy_full": str(args.init_policy_full) if args.init_policy_full else None,
+            "kl_prior": str(args.kl_prior) if args.kl_prior else None,
+            "kl_coef": args.kl_coef,
+            "league": [s for s in args.league.split(",") if s],
+            "opponent_module": args.opponent_module,
+            "mix_mirror_league_pool": args.mix,
+            "pool_weights": args.pool_weights,
+            "opp_hold": args.opp_hold,
+            "pfsp_refresh_every": args.pfsp_refresh_every,
+            "pfsp_ema": args.pfsp_ema,
+            "promote_every": args.promote_every,
+            "promote_pairs": args.promote_pairs,
+            "promote_threshold": args.promote_threshold,
+            "hyperparams": {
+                "lr": args.lr, "gamma": args.gamma, "gae_lambda": args.gae_lambda,
+                "ent_coef_init": args.ent_coef_init, "ent_coef_final": args.ent_coef_final,
+                "ent_anneal_frac": args.ent_anneal_frac,
+                "minibatch_size": args.minibatch_size, "bptt_horizon": args.bptt_horizon,
+                "update_epochs": args.update_epochs, "num_envs": args.num_envs,
+                "num_workers": args.num_workers, "device": str(args.device),
+            },
+            "budget": {"total_timesteps": args.total_timesteps,
+                       "max_seconds": args.max_seconds},
+            "init_chain": chain,
+            "cumulative_steps_prior": sum(
+                c["global_step"] or 0 for c in chain),
+            **_deck_fingerprint(env_kwargs),
+        }
+        # Mutable because save_actor closes over it but t_run/gate counts are
+        # only known once the loop is running.
+        run_state = {"t_run": None, "gates": 0, "promotions": 0}
+
         def save_actor(snap: Path, **extra) -> Path:
             """save_pretrained snapshot + run/step-tagged metadata.
 
@@ -433,8 +541,14 @@ def main() -> None:
             policy.actor.to(args.device)
             (snap / "ppo_metadata.json").write_text(json.dumps(
                 {"global_step": trainer.global_step, "epoch": epoch,
-                 "run_tag": args.run_tag, "init_from": str(args.init_from),
-                 "kl_coef": args.kl_coef, "trainer": "pufferl-3.0", **extra},
+                 "run_tag": args.run_tag,
+                 "cumulative_steps": provenance["cumulative_steps_prior"]
+                                     + int(trainer.global_step),
+                 "wall_seconds": (round(time.time() - run_state["t_run"], 1)
+                                  if run_state["t_run"] else None),
+                 "gates_run": run_state["gates"],
+                 "promotions": run_state["promotions"],
+                 **provenance, **extra},
                 indent=2))
             return snap
 
@@ -485,6 +599,7 @@ def main() -> None:
 
         last_snap = time.time()
         t_run = time.time()
+        run_state["t_run"] = t_run
         while trainer.global_step < train_config["total_timesteps"]:
             if args.max_seconds and time.time() - t_run > args.max_seconds:
                 print(f"wall-clock budget {args.max_seconds:.0f}s reached at "
@@ -544,7 +659,9 @@ def main() -> None:
                     live_snap, ref_dir, pairs=args.promote_pairs,
                     workers=args.promote_workers,
                     threshold=args.promote_threshold)
+                run_state["gates"] += 1
                 if verdict["promote"]:
+                    run_state["promotions"] += 1
                     ref_snap = save_actor(
                         args.out / "refs" / f"u{trainer.global_step}",
                         promoted_from=str(live_snap), gate=verdict)
@@ -577,9 +694,15 @@ def main() -> None:
         policy.actor.to("cpu").save_pretrained(snap)
         (snap / "ppo_metadata.json").write_text(json.dumps(
             {"global_step": trainer.global_step, "epoch": epoch,
-             "run_tag": args.run_tag, "init_from": str(args.init_from),
-             "kl_coef": args.kl_coef, "final_ref": ref_dir,
-             "trainer": "pufferl-3.0"}, indent=2))
+             "run_tag": args.run_tag, "final_ref": ref_dir,
+             "cumulative_steps": provenance["cumulative_steps_prior"]
+                                 + int(trainer.global_step),
+             "wall_seconds": round(elapsed, 1),
+             "gates_run": run_state["gates"],
+             "promotions": run_state["promotions"],
+             "stopped_on": ("max_seconds" if args.max_seconds
+                            and elapsed > args.max_seconds else "total_timesteps"),
+             **provenance}, indent=2))
         # Full policy (actor + warmed critic) for the next generation's
         # --init-policy-full; ~26 MB, well inside the disk budget.
         policy.to("cpu")
