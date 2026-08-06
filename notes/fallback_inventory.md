@@ -15,9 +15,10 @@ decisions. Rates, not counts: read every number against `decisions`.
 
 | Site | Catches / condition | Returns / effect |
 |---|---|---|
-| `agents/il_agent/agent_core.py:66` | `except Exception` on torch/pokemon_tcg import | `_ML_AVAILABLE=False` → EVERY decision `_safe_choice` (`model_unavailable:no_ml_stack`) |
+| `agents/il_agent/agent_core.py:67` | `except Exception` on torch/pokemon_tcg import | **FIXED 2026-08-06: raises `ImportError` at import outside the evaluator** (strict load). Inside the evaluator unchanged: `_ML_AVAILABLE=False` → EVERY decision `_safe_choice` (`model_unavailable:no_ml_stack`). |
 | `agents/il_agent/agent_core.py:71-89` | explicit `IL_MODEL_DIR` doesn't exist | **FIXED 2026-08-03: raises `FileNotFoundError` at import.** Previously resolved silently to `models/il_agent` — the WRONG checkpoint for a sweep; defeated this session's first negative control. Unset-env dev fallback to `models/il_agent` unchanged (by design). Same fix applied to the twin site `agents/mega_lucario/bc_prior.py:51`. |
-| `agents/il_agent/agent_core.py:189` | `except Exception` in `_load_model` | `_model=None` → every decision `_safe_choice` (`model_unavailable:load_failed`; traceback kept as `model_load_error`) |
+| `agents/il_agent/agent_core.py:~215` | `except Exception` in `_load_model` | **FIXED 2026-08-06: `_require_model_or_raise()` raises `RuntimeError` at import outside the evaluator** (strict load). Inside the evaluator unchanged: `_model=None` → every decision `_safe_choice` (`model_unavailable:load_failed`; traceback kept as `model_load_error`). |
+| `agents/il_agent/agent_core.py:115-130` | unset-env dev fallback to `models/il_agent` | **FIXED 2026-08-06: existence now checked → `FileNotFoundError`.** Previously the reassignment was unverified, so a missing dev checkpoint sailed through import and failed later inside `_load_model()`, which swallows it — the 2026-08-04 deck-selection incident. |
 | `agents/il_agent/agent_core.py:298` | `select.option` empty | `[]` (`no_legal_actions`) |
 | `agents/il_agent/agent_core.py:301` | >48 options (`MAX_OPTIONS`) | `_safe_choice` (`too_many_options`) |
 | `agents/il_agent/agent_core.py:246` | 5s decision deadline exceeded | `_safe_choice` (`step_timeout`) |
