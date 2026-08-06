@@ -16,12 +16,27 @@ This section is first because it is the only section whose conclusion could
 make the rest of the document moot.
 
 Every settled submission, sorted by whether a learned model is in the acting
-path (`reports/submission_ledger.jsonl`, read 2026-08-05):
+path (`reports/submission_ledger.jsonl`, read 2026-08-06):
 
 | Family | Settled scores | n | Range | Median |
 |---|---|---:|---|---:|
-| **Learned** (BC / offline RL / PPO / MCTS-with-BC-prior) | 418.0, 400.0, 397.3, 395.0, 320.4, 311.3, 291.4, 275.1, 267.4, 190.3 | 10 | 190–418 | ~311 |
+| **Learned** (BC / offline RL / PPO / MCTS-with-BC-prior) | 418.0, 400.0, 397.3, 395.0, 383.2, 320.4, 291.4, 275.1, 254.9, 190.3 | 10 | 190–418 | ~352 |
 | **Hand-written heuristic / search**, no ML in the acting path | 804.0, 701.6, 699.0, 692.7, 683.2, 677.1, 666.1, 602.6 | 8 | 602–804 | ~688 |
+
+*(Re-read 2026-08-06 06:19; `55270787` 311.3 → 383.2, `55253900` 267.4 → 254.9.)*
+
+**`55279487` is excluded because 2–3 readings do not settle a score.** It is a
+learned agent that has read 493.9 → 547.7 → **460.5**. An earlier revision of
+this section warned that at 547.7 it was closing on the heuristic band and that
+§0's premise might be withdrawn; at 460.5 the gap to the lowest heuristic score
+(602.6) is **142 points, outside the ~±100 band**, and that warning is retracted.
+It was an artifact of reading a trajectory out of a mid-band swing — see §9.7,
+where the same mistake was made twice in opposite directions.
+
+**Two further learned reads have landed since, both low**, and neither depends on
+the gate ref: `55284059` (`selfplay_g3_final`) at 395.3 and `55270787` at 383.2.
+That makes **three** self-play/BC submissions below the plain-BC 418.0 line. The
+family separation in the table above is holding, not eroding.
 
 **The two families do not overlap.** No learned agent has ever outscored any
 heuristic agent on this ladder, across 18 submissions. The gap between medians
@@ -38,7 +53,10 @@ is worth doing only if the learned line can plausibly close ~300 points. So:
 
 `55253900` (`selfplay_g1_ref430k`) is the first properly anchored self-play
 candidate — KL leash to a frozen teacher, PFSP league, promotion ratchet, all
-of it. Its first read is 267.4 and it settles ~08-08.
+of it. It settles ~08-08. Readings so far: 248.6 → 267.4 → 267.4 → **254.9**
+— flat-to-down across five reads, ~295 below the PASS line and ~195 below the
+FAIL line. Unchanged as of the 2026-08-06 06:19 read; no new reading has landed
+since 08-05 19:50.
 
 - **Gate PASS** (settled ≥ 550): the learned line is closing. Execute this
   document as written.
@@ -118,7 +136,7 @@ situated as the one-step corner of offline RL (AWR / MARWIL / CRR lineage).
 |---|---|---|---|
 | 1 | **IL** | Complete. `il_alldays_0804`, 3.32M params, full Hub corpus, 127,748 steps, top-1 .7583 | Ladder read 418.0 (settled) |
 | 2 | **Offline RL** (weighted BC on the human corpus) | Arms E0/E1/E2 trained; E1 → 395.0, E0-v2 → 320.4 | Rung-2 + a ladder read above the Phase-1 number. **Not met** |
-| 3 | **Self-play fine-tuning** (our on-policy PPO adaptation) | g1/g2/g3 run, ~3.5M steps total; `selfplay_g1_ref430k` → 267.4 provisional | §0 kill-gate, 08-08 |
+| 3 | **Self-play fine-tuning** (our on-policy PPO adaptation) | g1/g2/g3 run, ~3.5M steps total; `selfplay_g1_ref430k` → 254.9, `selfplay_g3_final` → 395.3 (1 read) | §0 kill-gate, 08-08 |
 
 **The accepted deviation, stated once and not re-litigated.** The Metamon paper
 makes Phase 3 *offline*: self-play battles are appended to an ever-growing
@@ -237,8 +255,25 @@ of the reference, and 0.15 nats is not enough behavioural change to clear 70%.
 - **Log KL against two references separately**: the current promoted best *and*
   the original IL prior. Today only the former is logged, so "has it forgotten
   the human prior" is literally unanswerable from the logs after the first
-  retarget. This is a one-line addition — a second frozen policy and a second
-  `masked_kl` call.
+  retarget.
+  **BUILT 2026-08-05** — `--il-prior` on `train_ppo_puffer.py`, logged as
+  `kl_to_il_prior` globally and `kl_il` per SelectContext. Diagnostic only:
+  detached, never multiplied by β, never added to `loss`. The second forward
+  pass is skipped while both references hold the same policy (generation 1),
+  and whether they do is decided from the weights via
+  `kl_math.same_policy_weights`, not from the caller's intent — `run_selfplay_g3.sh`
+  anchors to a promoted teacher while the IL reference stays the human prior,
+  and assuming otherwise would log the anchor's KL under both names.
+  Verified on a forced-retarget smoke run: pre-retarget the two series coincide
+  exactly (the control), post-retarget `kl_to_prior` reads 9e-05 while
+  `kl_to_il_prior` reads 0.0225 — 250× larger, and previously invisible.
+  Chart `reports/figures/kl_dual_reference.png`; note
+  `notes/experiments/2026-08-05-v4-preflight-dual-kl-and-prereg.md`.
+  Calibration point from the same runs: two independently-trained BC
+  checkpoints (`il_agent` vs `il_alldays_0804`) sit ~0.88 nats apart, i.e.
+  nearly a full "anchor stopped binding" (§4.2) apart from each other. The
+  `> 0.6` stop rule is about `kl_to_prior`, the term in the loss;
+  `kl_to_il_prior` does not inherit it.
 
 ---
 
@@ -461,6 +496,39 @@ out-of-sample rank correlation. If it holds out-of-sample past ~08-12, gating
 becomes defensible for a future competition. It does not become defensible in
 time to be used in this one.
 
+**BUILT 2026-08-05** — `scripts/prereg_pool_prediction.py`
+(`lock` / `show` / `expects` / `bind` / `score`), file
+`reports/pool_prereg.jsonl`, chart
+`reports/figures/pool_prereg_calibration.png`.
+
+The registered claim is the **ordinal** prediction, not a score. A score map is
+frozen alongside it — `ladder = -554.4 + 0.8076 × local_glicko`, fit on n = 19
+overlapping agents on the compounded scale, in-sample **ρ = +0.718**
+(permutation p = 0.0007) — but its residual SD is **198.7**, about twice the
+~±100 same-build noise band, so the 95% band is ±397 and a point prediction
+claims almost nothing. Spearman is ordinal anyway, and the ordering is the part
+of the claim the mostly-alleged anchors ([[ladder-anchors-mostly-alleged]])
+cannot move. The coefficients are frozen in source and the ratings they were fit
+on are snapshotted to `reports/pool_prereg_source_glicko.json`, because
+`reports/glicko_ratings.json` keeps compounding and would not be reproducible
+from the commit — refitting after an outcome lands is the exact failure the
+arrangement exists to prevent.
+
+Slate locked: `proto` (1808.0 → 905.7, never submitted), `mega_lucario_restore`
+(1748.7 → 857.9), `rule_baseline` (1601.7 → 739.1, never submitted). Two of the
+five slots stay unlocked because the post-gate candidates do not exist yet;
+freezing the *coefficients* today is what makes their predictions non-tunable
+when they do. `score` refuses to report an out-of-sample ρ below 4 settled
+candidates.
+
+`il_agent_v2` is excluded as contaminated — it read back before the slate was
+locked. Recorded as an unregistered observation only: the frozen map puts it at
+**831.0**, its submitter predicted **380–460**, and it is reading **547.7** on 2
+readings and rising (493.9 → 547.7). It currently sits *between* the two, above
+the human prediction and below the pool's. Both cannot be right, and whichever
+way it settles is informative about the map's direction of error — but it is not
+part of the out-of-sample ρ and must not be counted toward it.
+
 ---
 
 ## §7 — Decks
@@ -559,14 +627,27 @@ arm.** Do not bake either deck into Phase 3.
 
 ## §9 — Ladder: a standing daily task
 
-### 9.1 State as of 2026-08-05
+### 9.1 State as of 2026-08-06 06:19 UTC
 
-Rank **5910 / 6336**, team score **311.3**, top-8 cutoff 1131.1. Active set:
-`55270787` (311.3) + `55253900` (267.4). Best-ever **804.0** is displaced.
+Rank **5121 / 6397**, team score **460.5**, top-8 cutoff 1130.1 (gap +669.6).
+Active set: `55284059` (395.3) + `55279487` (460.5). Best-ever **804.0** is
+still displaced.
+
+*(08-05 20:57: rank 4235/6361, team 547.7.)*
+
+**Both active slots hold learned experiments.** The §9.4 slot-1 restore was not
+executed; a concurrent session spent the slot on `il_agent_v2` (`55279487`)
+instead. That is the two-experiments-back-to-back state §9.2 names as the way
+the team fell 804.0 → 395.0 on 08-03 — the floor is currently whatever these two
+learned agents settle at, with no heuristic build underneath them.
+
+*(Earlier reading, for the record: rank 5910/6336, team 311.3, active
+`55270787` + `55253900`.)*
 
 ### 9.2 The scoring mechanics that drive the strategy
 
-- `max_daily_submissions = 5`, UTC day. **Used today: 2 → 3 remain.**
+- `max_daily_submissions = 5`, UTC day. **Used on 08-06: 1 (`55284059` 00:29)
+  → 4 remain.** (08-05 used 3: `55253900`, `55270787`, `55279487`.)
 - Every submission starts at the **μ₀ = 600.0 prior**. A fresh 600.0 is not a
   score. It converges over ~3 days.
 - **Active set = the latest 2 by recency**; a new submission displaces the older.
@@ -587,10 +668,10 @@ two experiments back-to-back is exactly how the team fell 804.0 → 395.0 on
 
 | Quantity | Count |
 |---|---:|
-| Remaining today (08-05) | **3** |
-| 08-06 → 08-16, 11 days × 5 | 55 |
-| **Total remaining** | **58** |
-| **Readable** (submitted ≤ 08-13, settles in time to inform another decision) | **43** |
+| Remaining today (08-06, after 1 used) | **4** |
+| 08-07 → 08-16, 10 days × 5 | 50 |
+| **Total remaining** | **54** |
+| **Readable** (submitted ≤ 08-13, settles in time to inform another decision) | **39** |
 | Final-positioning (08-14 → 08-16) | 15 |
 
 **A correction to the v4 request's premise, in our favour.** 08-13 is the last
@@ -606,11 +687,24 @@ spend reads on local gating.
 
 ### 9.4 Today's queue (2026-08-05, 3 slots)
 
-| Slot | Action | Rationale |
-|---|---|---|
-| 1 | **Resubmit `submissions/mega_lucario_improved/submission.tar.gz` byte-identical** (model sha256 `758dd7bc…`, verified present) | Displaces `55253900` (267.4). Prior rolls: 827.8, 804.0, 699.0, 692.7, 683.2, 666.1 → median ~688. Team → max(roll, 311.3). Expect ~5910 → ~2,400. |
-| 2 | **Hold** | Nothing unbuilt beats the two reads already settling. |
-| 3 | **Hold** | Contingency: a second roll only if slot 1 reads < 600 after ~2 h. |
+~~Resubmit the mega_lucario bundle byte-identical.~~ **WITHDRAWN 2026-08-06,
+Rami's call. Do not propose it again.**
+
+The rolls of that byte-identical bundle decay monotonically:
+
+| 55162376 | 55191752 | 55219194 | 55228113 | 55224682 |
+|---:|---:|---:|---:|---:|
+| 827.8 → 804.0 | 699.0 | 692.7 | 683.2 | 666.1 |
+
+~140 points of decline across identical bytes. Extrapolating the trend, a fresh
+roll lands near 600 — not the ~688 median this table used to quote, which
+averaged over a *declining* series and so overstated what the next roll would
+get. The field is also growing (6,206 → 6,397 teams over the same window), so
+the decay is most likely the field strengthening around a fixed agent rather
+than anything about the agent. That mechanism applies to **every** build we
+hold, which is the part worth carrying into §9.5: a bundle banked early keeps
+sliding, so the endgame is about *when* the final active set is placed, not
+only what is in it.
 
 Secondary benefit of the restore: matchmaking pairs submissions of *similar
 rating*, so sitting at 311 means playing 311-rated opponents and learning less
@@ -643,8 +737,67 @@ is recorded here before the next phase starts.
 | 55215267 | 08-03 | ppo_u120832 (Phase 3 gen 1) | 275.1 | beats E1 87.5%, non-overlapping | **inverted** |
 | 55248781 | 08-04 | IL-prior MCTS | 291.4 | beats il_agent 67.2% | **inverted** |
 | 55248985 | 08-04 | il_alldays_0804 (Lucario) | 418.0 | not stronger locally | consistent |
-| 55253900 | 08-05 | selfplay_g1_ref430k | 267.4 *(provisional)* | beats teacher 73–27; 62.5% [55.6,68.9] | **§0 kill-gate, 08-08** |
-| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | 311.3 *(provisional)* | deck axis = 544 Glicko pts | **falsified** |
+| 55253900 | 08-05 | selfplay_g1_ref430k | **254.9** *(5 reads: 248.6 → 267.4 → 267.4 → 254.9)* | beats teacher 73–27; 62.5% [55.6,68.9] | **§0 kill-gate, 08-08 — tracking FAIL** |
+| 55270787 | 08-05 | il_alldays_0804 (Grimmsnarl) | **383.2** *(6 reads: 361.8 → 314.1 → 353.9 → 366.5 → 383.2)* | deck axis = 544 Glicko pts | **falsified** |
+| 55279487 | 08-05 | il_agent_v2 (BC, 9-day corpus, Grimmsnarl) | **460.5** *(3 reads: 493.9 → 547.7 → 460.5)* | beats current il_agent vs every shared opponent, agg 63% vs 32%, H2H 15–1; predicted 380–460 | **inside its own prediction** |
+| 55284059 | 08-06 | selfplay_g3_final (Mega Lucario) | 395.3 *(1 read)* | 63.0% ±5.8 vs BC init 45.9% ±5.9 over 270 games; predicted 250–420 | **inside its own prediction; 3rd self-play sub below the BC line** |
+
+Read 2026-08-06 06:19 UTC. Team **460.5**, rank **5121 / 6397**.
+
+**Two directional calls made in this doc about `55279487`, both wrong.** The
+19:50 entry said it was "still falling through the μ₀ = 600 prior"; it then rose.
+The 20:57 entry said it was "rising away from its own prediction"; it then fell.
+Three readings: 493.9 → 547.7 → 460.5, a total swing of 87 points — comfortably
+inside the documented ~±100 same-build band. **The lesson is not about this
+submission.** It is that narrating a trajectory from 1–3 readings inside that
+band produces confident statements with no information in them, twice in a row
+here. Quote the band; do not draw the arrow.
+
+Where it actually landed: **460.5, inside the submitter's pre-registered 380–460
+band** (at the top edge). The pre-registration was good and the commentary on it
+was not.
+
+**Retraction: §0's premise is not under pressure after all.** At 547.7 the gap
+to the lowest heuristic score (602.6) was 55 points and this doc said the
+learned/heuristic separation was "no longer clean." At 460.5 the gap is back to
+**142 points, outside the noise band**. That warning was an artifact of the same
+mid-band reading. §0's family separation stands.
+
+**A third self-play submission reads low.** `55284059` is `selfplay_g3_final`,
+the gen-3 anchored self-play run, at 395.3 on one reading — below the plain-BC
+line (418.0), like `selfplay_g1_ref430k` (254.9) before it. Its submit message
+is worth copying as practice: it pre-registered 250–420 *and* stated the local
+pool's own failure on this exact family (ρ = −0.50, n=3) before reading back.
+This is evidence toward the §0 FAIL branch that does not depend on the gate ref.
+
+**The kill-gate ref did not move.** `55253900` is unchanged at 254.9 on 5
+readings, no new reading since 08-05 19:50. Still unresolved, still due 08-08.
+
+**Both active slots are learned experiments again** (`55284059` 395.3 +
+`55279487` 460.5), so the team floor is once more whatever two experiments
+settle at, with no heuristic build underneath. Best-ever 804.0 stays displaced.
+
+Earlier reading, 2026-08-05 19:50 UTC:
+
+- **`55253900`, the kill-gate ref, has moved down, not up** — 267.4 → 254.9 on
+  its 5th reading. Three days from the 08-08 verdict it sits ~295 points below
+  the 550 PASS line and ~195 below the 450 FAIL line. Nothing is settled until
+  08-08, but the trajectory is not ambiguous-band behaviour.
+- **`55270787` rose 311.3 → 353.9**, which does not change §7.4's verdict: the
+  Lucario/Grimmsnarl gap is now 418.0 vs 353.9 = 64 points, further *inside* the
+  ~±100 same-build band than the 107 it was. The confident local deck claim stays
+  falsified; the reverse still is not established.
+- **`55279487` is the highest number any learned agent has posted (493.9), and it
+  should not yet be treated as a number at all.** It has exactly one reading,
+  taken four minutes after submission. Every submission starts at the μ₀ = 600
+  prior and descends: its own cousin `55248985` read 600.0 → 418.0 across nine
+  readings. 493.9 four minutes in is consistent with a submission still falling
+  through the prior, and it is *above* the submitter's own pre-registered
+  380–460 prediction — which is the reading that would need to survive, not the
+  first one. Re-read 08-06/08-07 before anyone cites it.
+- **§0's family separation still holds.** Lowest heuristic score is 602.6;
+  highest learned score with more than one reading is 418.0. No overlap, across
+  now 19 submissions.
 
 ---
 
@@ -791,8 +944,10 @@ the day's slots under the alternation rule (§9.2). A slot that expires unused i
 discarded information; a slot spent on a second consecutive experiment is worse
 than unused.
 
-0. **[TODAY, 08-05]** Restore the active set — §9.4 slot 1. Zero modelling work,
-   ~+375 team score. **Awaiting authorization.**
+0. ~~Restore the active set with a mega_lucario re-roll.~~ **WITHDRAWN
+   2026-08-06 (§9.4). Do not re-propose it.** The re-roll's own history is a
+   monotone decline, so the "free ~+375" this item claimed was an artifact of
+   quoting a median over a falling series.
 1. **[08-06 → 08-08] Read the kill-gate.** `55253900` and `55270787` settle.
    Record both in §9.7. **Everything below is conditional on §0 PASS.**
 2. **[on PASS] Fix the three measured defects**, in one run, before any sweep:
@@ -800,6 +955,12 @@ than unused.
    fixed 200k-step cadence instead of the 70% gate; log KL against **both** the
    promoted best and the original IL prior. Acceptance: clipfrac back into
    0.05–0.20, `exp(H)` > 1.5, and the reference actually moving.
+   **Logging half DONE 2026-08-05** (§3.3) — correct under either gate branch,
+   so it shipped ahead of the gate. The three hyperparameter changes and the
+   fixed-cadence retarget remain conditional on §0 PASS and are **not** applied.
+   When gen ≥ 2 runs, pass `--il-prior models/il_alldays_0804` explicitly: the
+   default follows `--kl-prior`, which from gen 2 on is a promoted teacher, not
+   the human prior.
 3. **[on PASS] Turn the league on.** `--mix 0.4,0.3,0.3` — the g-runs trained at
    pool weight **zero**. PFSP weights recomputed each retarget; chart per-opponent
    win-rate against the top-2 weighted opponents alongside the aggregate.
@@ -810,6 +971,8 @@ than unused.
 7. **[Parallel, free] Pre-register** the local pool's predicted ordering for the
    next five submissions in the ledger's `expects` field (§6.3). Costs nothing,
    and is the only thing that can turn ρ = +0.929 into a defensible gate.
+   **DONE 2026-08-05** — machinery + 3 of 5 candidates locked; the remaining 2
+   are post-gate and lock when they exist. See §6.3.
 
 **Stop conditions** (any → halt and report; none require approval):
 
