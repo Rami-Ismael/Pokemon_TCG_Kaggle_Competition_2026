@@ -75,7 +75,56 @@
   only if the real-deck pool plateaus; (c) ladder-meta frequency weighting
   from episode mining — extension after a positive result.
 
-## Result (fill after)
-- **Observed:**
-- **Decision:**
+## Result (2026-08-07)
+
+Training: both arms 500,736 steps from g1/u430080, KL-to-anchor at finish
+0.083 (A) / 0.085 (B). Arm B's first attempt was jetsam-killed at 271k under
+parallel-session memory pressure and rerun from scratch (not resumed — a
+mid-run resume would have given B a second critic cold-start A never had);
+metrics of the killed attempt archived at
+`reports/deckdiv/armB_attempt1_metrics.jsonl`.
+
+**Holdout battery** (8 held-out decks × 50 mirrored pairs = 800 games each,
+frozen il_agent piloting, learner on its fixed Lucario deck,
+`reports/deckdiv/holdout_{base,armA,armB}.json`):
+
+| checkpoint | win rate | Wilson 95% |
+|---|---|---|
+| base g1/u430080 | 0.576 | [0.542, 0.610] |
+| arm A (control continuation) | 0.605 | [0.571, 0.638] |
+| arm B (opponent-deck pool) | 0.561 | [0.527, 0.595] |
+
+**B − A = −4.4 pts.** Validity: learner fallbacks 0/55,398 (A) and 1/55,227
+(B); opponent fallbacks ≤0.05% — not a fallback artifact. Per-deck, B gains
+nowhere meaningful and loses most on wmh_mewtwo (−12), pixiux_lucario_v63
+(−10), wmh_garchomp (−9). Per-deck spread is huge for every checkpoint
+(0.07–0.98); pllinas_alakazam and wmh_alakazam are near-total losses for all
+three (~7–18%) — matchup, not checkpoint, dominates those cells, consistent
+with the deck-matters-more-than-checkpoint finding.
+
+- **Observed:** opponent-deck diversity during continued self-play did not
+  improve held-out-deck generalization; the point estimate moved the wrong
+  way (−4.4 pts, below even the +3 drop line; CIs of A and B overlap).
+  The control continuation alone gained +2.9 over base (overlapping CIs —
+  weak evidence that more anchored self-play helps holdout play at all).
+- **Decision: DROPPED** per the pre-registered rule (adopt ≥ +5; drop < +3).
+  Single seed, so the magnitude is provisional — but the direction gives no
+  reason to spend a second seed. The anchored-pool guardrail and any ladder
+  read are moot for a dropped arm.
 - **What we learned:**
+  1. The hypothesis's mechanism was already half-refuted by the 08-04
+     competence control (il_agent plays *better* off its own deck):
+     board-state generalization across opponent decks appears to come from
+     the BC corpus's diversity, not from self-play opponent variety. Adding
+     opponent-deck randomness at 500k-step scale under a 0.05 KL leash
+     bought nothing and may have diluted the mirror/league signal.
+  2. Transferable: when a diversity intervention targets a failure mode
+     (overfitting to one opponent distribution), first measure whether the
+     failure mode exists at the intervention point — the base checkpoint
+     already sat at 57.6% on unseen lists, so there was less headroom than
+     the "80% Lucario mirror" framing implied. The cheap pre-experiment
+     (evaluate base on holdout FIRST, before training any arm) would have
+     sized the opportunity honestly.
+  3. The battery instrument is cheap (~90 s for 800 games on a quiet
+     machine) — holdout-deck evaluation should be a standing gate for every
+     future checkpoint, regardless of this arm being dropped.

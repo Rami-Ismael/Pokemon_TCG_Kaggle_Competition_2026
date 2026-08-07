@@ -1,0 +1,44 @@
+DECK POOL: K=8 (opponent-only) :: avikdas567_heuristic, pixiux_lucario_v63, pllinas_alakazam, tb_abomasnow, wmh_alakazam, wmh_garchomp, wmh_mewtwo, wmh_ogerpon
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.venv-ppo/lib/python3.12/site-packages/torch/cuda/__init__.py:64: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12637.19it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11057.92it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 10311.02it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 20069.23it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11409.51it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 14446.38it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12089.90it/s]
+Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13605.56it/s]
+u430080 vs il_agent: 461W/339L/0D of 800 (400 mirrored pairs)  win_rate=0.576 95% CI [0.542, 0.610]
+  seat0 0.585  seat1 0.568  opp fallback 20/46928  learner fallback 0/55704  [90s]
+saved: reports/deckdiv/holdout_base.json

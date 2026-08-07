@@ -70,3 +70,37 @@
 2026-08-06 03:40:45 wait: trainers=1 avail=3GB
 2026-08-06 04:40:45 wait: trainers=1 avail=7GB
 2026-08-06 05:40:45 wait: trainers=1 avail=7GB
+2026-08-06 06:40:45 wait: trainers=1 avail=9GB
+2026-08-06 07:40:45 wait: trainers=1 avail=9GB
+2026-08-06 08:40:45 wait: trainers=1 avail=8GB
+2026-08-06 09:40:45 wait: trainers=3 avail=7GB
+2026-08-06 10:40:45 wait: trainers=3 avail=5GB
+2026-08-06 11:40:46 wait: trainers=3 avail=5GB
+2026-08-06 12:40:46 wait: trainers=3 avail=3GB
+2026-08-06 13:40:46 wait: trainers=3 avail=5GB
+2026-08-06 14:40:46 wait: trainers=3 avail=5GB
+2026-08-06 15:40:46 wait: trainers=3 avail=6GB
+2026-08-06 16:40:46 wait: trainers=3 avail=6GB
+2026-08-06 17:40:46 wait: trainers=3 avail=7GB
+2026-08-06 18:40:46 wait: trainers=3 avail=6GB
+2026-08-06 19:40:47 wait: trainers=3 avail=7GB
+2026-08-06 20:40:47 wait: trainers=2 avail=5GB
+2026-08-06 21:40:47 wait: trainers=2 avail=5GB
+2026-08-06 22:40:47 wait: trainers=2 avail=5GB
+2026-08-06 23:40:47 wait: trainers=1 avail=9GB
+2026-08-07 00:40:47 wait: trainers=1 avail=7GB
+2026-08-07 01:40:47 wait: trainers=1 avail=10GB
+2026-08-07 02:40:48 wait: trainers=1 avail=10GB
+2026-08-07 03:40:48 wait: trainers=2 avail=5GB
+2026-08-07 04:40:48 wait: trainers=0 avail=4GB
+2026-08-07 05:40:48 wait: trainers=2 avail=12GB
+2026-08-07 06:40:48 ARM deckdiv_armB: start attempt 1 (500000 steps, from scratch)
+2026-08-07 08:02:32 ARM deckdiv_armB: exit rc=0 (attempt 1)
+2026-08-07 08:02:32 arm B final: models/deckdiv_armB_opppool/u500736_final
+2026-08-07 08:02:32 BATTERY base: models/selfplay_g1/u430080 (holdout 8 decks x 50 pairs, opponent-only)
+2026-08-07 08:04:02 BATTERY base: exit rc=0
+2026-08-07 08:04:02 BATTERY armA: models/deckdiv_armA_control/u500736_final (holdout 8 decks x 50 pairs, opponent-only)
+2026-08-07 08:05:32 BATTERY armA: exit rc=0
+2026-08-07 08:05:32 BATTERY armB: models/deckdiv_armB_opppool/u500736_final (holdout 8 decks x 50 pairs, opponent-only)
+2026-08-07 08:07:02 BATTERY armB: exit rc=0
+2026-08-07 08:07:02 armB-resume queue done
