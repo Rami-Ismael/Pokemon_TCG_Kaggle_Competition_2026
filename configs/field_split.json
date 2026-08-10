@@ -1,0 +1,528 @@
+{
+  "_doc": "Frozen TRAIN/HELD-OUT partition of agents/ for RL evaluation. Built by scripts/build_field_split.py; see its docstring for the rules. Do not hand-edit -- regenerate.",
+  "clone_prefix": "wmh_",
+  "held_out_group": "tombombadyl",
+  "meta_repairs": [
+    {
+      "archetype": "Crustle",
+      "group": "biohack44",
+      "moved": [
+        "biohack44_day2"
+      ]
+    },
+    {
+      "archetype": "Marnie's Grimmsnarl ex",
+      "group": "tetsutani",
+      "moved": [
+        "tetsutani_grimmsnarl"
+      ]
+    }
+  ],
+  "train_archetypes": [
+    "Alakazam",
+    "Archaludon ex",
+    "Crustle",
+    "Marnie's Grimmsnarl ex",
+    "Mega Lucario ex"
+  ],
+  "heldout_archetypes": [
+    "Chandelure",
+    "Cornerstone Mask Ogerpon ex",
+    "Cynthia's Garchomp ex",
+    "Ethan's Typhlosion",
+    "Hop's Trevenant",
+    "Iono\u2019s Bellibolt ex",
+    "Mega Froslass ex + Mega Starmie ex",
+    "Mega Kangaskhan ex",
+    "Mega Starmie ex",
+    "Team Rocket's Mewtwo ex"
+  ],
+  "train": [
+    {
+      "dir": "mechi22_alakazam",
+      "archetype": "Alakazam",
+      "glicko": 1754.2949625409174,
+      "clone": false,
+      "group": "mechi22",
+      "bench_names": [
+        "mechi22_alakazam"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "pllinas_alakazam",
+      "archetype": "Alakazam",
+      "glicko": 1850.1356414222907,
+      "clone": false,
+      "group": "pllinas",
+      "bench_names": [
+        "pllinas_alakazam"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "wmh_alakazam",
+      "archetype": "Alakazam",
+      "glicko": 1724.160802896217,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_alakazam"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "plamen06_steel",
+      "archetype": "Archaludon ex",
+      "glicko": 1841.2947461328936,
+      "clone": false,
+      "group": "plamen06",
+      "bench_names": [
+        "plamen06_steel"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "prvsiyan_control_v11",
+      "archetype": "Crustle",
+      "glicko": 1734.1311713387038,
+      "clone": false,
+      "group": "prvsiyan",
+      "bench_names": [
+        "prvsiyan_control_v11"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "prvsiyan_grimbelief_alakazam",
+      "archetype": "Marnie's Grimmsnarl ex",
+      "glicko": 1255.0532105154437,
+      "clone": false,
+      "group": "prvsiyan",
+      "bench_names": [
+        "prvsiyan_grimbelief_alakazam"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "prvsiyan_templates_alakazam",
+      "archetype": "Marnie's Grimmsnarl ex",
+      "glicko": 1260.5093268594655,
+      "clone": false,
+      "group": "prvsiyan",
+      "bench_names": [
+        "prvsiyan_templates_alakazam"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "wmh_grimmsnarl",
+      "archetype": "Marnie's Grimmsnarl ex",
+      "glicko": 1333.3793601742216,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_grimmsnarl"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "avikdas567_heuristic",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1184.2436126695357,
+      "clone": false,
+      "group": "avikdas567",
+      "bench_names": [
+        "avikdas567_heuristic"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "daniilkrasnovvv_conservative_prob",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1772.3788596893119,
+      "clone": false,
+      "group": "daniilkrasnovvv",
+      "bench_names": [
+        "daniilkrasnovvv_conservative_prob"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "dedquoc_rule_engine",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1165.0258494704096,
+      "clone": false,
+      "group": "dedquoc",
+      "bench_names": [
+        "dedquoc_rule_engine"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "jek1wantaufik_lucario",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1573.2375227604205,
+      "clone": false,
+      "group": "jek1wantaufik",
+      "bench_names": [
+        "jek1wantaufik_lucario"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "kojimar_lucario",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1723.2589909175347,
+      "clone": false,
+      "group": "kojimar",
+      "bench_names": [
+        "kojimar_lucario"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "makimakiai_rl",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1148.9549622354205,
+      "clone": false,
+      "group": "makimakiai",
+      "bench_names": [
+        "makimakiai_rl"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "makthanithin_1084_baseline",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1740.527064115312,
+      "clone": false,
+      "group": "makthanithin",
+      "bench_names": [
+        "makthanithin_1084_baseline"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "makthanithin_improved_prob",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1772.6541702516931,
+      "clone": false,
+      "group": "makthanithin",
+      "bench_names": [
+        "makthanithin_improved_prob"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "pixiux_lucario_v63",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1766.102124850288,
+      "clone": false,
+      "group": "pixiux",
+      "bench_names": [
+        "pixiux_lucario_v63"
+      ],
+      "tier": "train"
+    },
+    {
+      "dir": "romanrozen_strong_start",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1724.1834799705869,
+      "clone": false,
+      "group": "romanrozen",
+      "bench_names": [
+        "romanrozen_strong_start"
+      ],
+      "tier": "train"
+    }
+  ],
+  "held_out": [
+    {
+      "dir": "wmh_chandelure",
+      "archetype": "Chandelure",
+      "glicko": 1326.7680731214257,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_chandelure"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_ogerpon",
+      "archetype": "Cornerstone Mask Ogerpon ex",
+      "glicko": 1008.5320511731256,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_ogerpon"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_garchomp",
+      "archetype": "Cynthia's Garchomp ex",
+      "glicko": 1673.30457062624,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_garchomp"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_typhlosion",
+      "archetype": "Ethan's Typhlosion",
+      "glicko": 1488.5068254486944,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_typhlosion"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_trevenant",
+      "archetype": "Hop's Trevenant",
+      "glicko": 1681.9818772308772,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_trevenant"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_bellibolt",
+      "archetype": "Iono\u2019s Bellibolt ex",
+      "glicko": 1294.190184870058,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_bellibolt"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_froslass",
+      "archetype": "Mega Froslass ex + Mega Starmie ex",
+      "glicko": 1594.9176350063608,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_froslass"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_kangaskhan",
+      "archetype": "Mega Kangaskhan ex",
+      "glicko": 1159.4126474270727,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_kangaskhan"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_megastarmie",
+      "archetype": "Mega Starmie ex",
+      "glicko": 1673.2088184189474,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_megastarmie"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "wmh_mewtwo",
+      "archetype": "Team Rocket's Mewtwo ex",
+      "glicko": 1430.85296903759,
+      "clone": true,
+      "group": "wmh",
+      "bench_names": [
+        "wmh_mewtwo"
+      ],
+      "tier": "deck_novelty"
+    },
+    {
+      "dir": "ryotasueyoshi_alakazam",
+      "archetype": "Alakazam",
+      "glicko": 1654.4021542684272,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "ryotasueyoshi_alakazam"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_alakazam",
+      "archetype": "Alakazam",
+      "glicko": 1636.474475645537,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_alakazam"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_archaludon",
+      "archetype": "Archaludon ex",
+      "glicko": 1765.7624338842934,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_archaludon"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "biohack44_day2",
+      "archetype": "Crustle",
+      "glicko": 1720.638245747645,
+      "clone": false,
+      "group": "biohack44",
+      "bench_names": [
+        "biohack44_day2"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "kiyotah_dragapult",
+      "archetype": "Dragapult ex",
+      "glicko": 1682.8566704444956,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "kiyotah_dragapult"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_dragapult",
+      "archetype": "Dragapult ex",
+      "glicko": 1706.637067085532,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_dragapult"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_heuristic",
+      "archetype": "Dragapult ex",
+      "glicko": 1179.3010987844566,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_heuristic"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "kiyotah_iono",
+      "archetype": "Iono\u2019s Bellibolt ex",
+      "glicko": 1670.0426078259277,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "kiyotah_iono"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_iono",
+      "archetype": "Iono\u2019s Bellibolt ex",
+      "glicko": 1678.7458465147151,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_iono"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tetsutani_grimmsnarl",
+      "archetype": "Marnie's Grimmsnarl ex",
+      "glicko": null,
+      "clone": false,
+      "group": "tetsutani",
+      "bench_names": [
+        "tetsutani_grimmsnarl"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "kiyotah_abomasnow",
+      "archetype": "Mega Abomasnow ex",
+      "glicko": 1643.4875793432388,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "kiyotah_abomasnow"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_abomasnow",
+      "archetype": "Mega Abomasnow ex",
+      "glicko": 1664.950870200619,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_abomasnow"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_starmie",
+      "archetype": "Mega Froslass ex + Mega Starmie ex",
+      "glicko": 1053.467664935411,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_starmie"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_lucario",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1562.3273904537637,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_lucario"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_rulecore",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1537.5284419470033,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_rulecore"
+      ],
+      "tier": "policy_novelty"
+    },
+    {
+      "dir": "tb_search",
+      "archetype": "Mega Lucario ex",
+      "glicko": 1405.8556731594692,
+      "clone": false,
+      "group": "tombombadyl",
+      "bench_names": [
+        "tb_search"
+      ],
+      "tier": "policy_novelty"
+    }
+  ]
+}

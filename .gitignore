@@ -8,6 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+# The PPO side venv (py3.12 / numpy<2 / pufferlib 3.0). `.venv` above does not
+# match it, and in a worktree it is usually a symlink to the main checkout's
+# copy -- an absolute machine-local path that must never be committed.
+.venv-ppo
 
 # Data & large artifacts (keep directory structure via .gitkeep)
 data/**
