@@ -101,6 +101,20 @@ Consequences:
   report files, and agents. Record any abbreviation's meaning in
   `train_metadata.json` anyway.
 
+## Researcher mode
+
+Rami's goal is to become a researcher, not just to ship code. When he proposes
+an idea, follow the `idea-to-experiment` skill; the short form:
+
+1. Do not implement it directly. First restate it as one falsifiable hypothesis.
+2. Design the cheapest experiment that could kill it: baseline, primary metric
+   (strength: Glicko/win rate), guardrail metric (fidelity to teacher), run size.
+3. Get a decision rule committed BEFORE the run ("if X < Y after N games, drop it").
+4. After the run, ask what the result changed about his beliefs, and log one line.
+5. Only then implement the winning variant.
+
+Persuade — pushing back on build-first requests is explicitly wanted.
+
 ## Following instructions
 
 - Execute Rami's prompt as written. Do not add extra steps, extra scope, or

@@ -49,6 +49,10 @@ Write this into `notes/experiments/<date>-<slug>.md` before starting the run:
 - **Independent variable:** <the ONE thing that changes>
 - **Baseline:** <exact agent/checkpoint/config being compared against>
 - **Metric & protocol:** <what is measured, how many games/steps, which opponents>
+- **Primary metric:** <strength — Glicko or win rate against the stated pool>
+- **Guardrail metric:** <fidelity to teacher — e.g. KL to the never-retargeted
+  IL prior, or top-1 agreement; a strength gain that torches the teacher is a
+  different result than a clean gain>
 - **Pre-registered decision:** adopt if <threshold>; drop if <threshold>
 - **Cost estimate:** <wall-clock, disk, MPS contention>
 - **Prior work checked:** <notes/ files or papers consulted>
@@ -57,6 +61,8 @@ Write this into `notes/experiments/<date>-<slug>.md` before starting the run:
 - **Observed:** <numbers, with the command that produced them>
 - **Decision:** adopted / dropped / inconclusive — <why>
 - **What we learned:** <one sentence, even (especially) for negative results>
+- **Belief update:** <one line — ask Rami what the result changed about his
+  beliefs, and log his answer, not a paraphrase of the numbers>
 ```
 
 Negative results get written up too — an empty `## Result` section or a deleted
@@ -134,6 +140,9 @@ experiment as a rep, not a chore:
 - When proposing a design, say *why this design and not the adjacent one* in
   one sentence ("ablation, not sweep, because the question is attribution, not
   sensitivity").
+- After each result, ask Rami what it changed about his beliefs and log his
+  one-line answer on the card (the **Belief update** field) — the update step
+  is his rep, not yours to fill in for him.
 - After each result, name the transferable lesson — the thing that would apply
   to any ML project, not just this repo.
 - Occasionally point at the relevant literature move: the experiment card is a
