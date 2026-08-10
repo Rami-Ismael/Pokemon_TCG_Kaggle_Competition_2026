@@ -1,6 +1,29 @@
 {
-  "models/g4_treatment_s43": {
-    "run_tag": "g4_treatment_s43",
+  "models/selfplay_singledeck_seed43": {
+    "run_tag": "selfplay_singledeck_seed43",
+    "global_step": 604160,
+    "opp_wr": {
+      "league_il_alldays_0804": [
+        0.3252,
+        1021
+      ],
+      "mirror": [
+        0.5165,
+        3176
+      ],
+      "league_e0_s43": [
+        0.6336,
+        999
+      ]
+    },
+    "single_deck": true,
+    "worst_deck": null,
+    "worst_matchup": null,
+    "per_deck": {},
+    "per_matchup": {}
+  },
+  "models/selfplay_deckpool29_seed43": {
+    "run_tag": "selfplay_deckpool29_seed43",
     "global_step": 651264,
     "deck_pool": "@configs/deck_pools/legal_decks.txt",
     "deck_pool_k": 29,

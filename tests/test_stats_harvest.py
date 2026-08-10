@@ -4,7 +4,7 @@ pufferl.train() does `self.stats = defaultdict(list)` every update, so each
 evaluate() returns brand-new list objects. A harvest that tracks only a
 consumed LENGTH across that boundary loses any key whose fresh list is no
 longer than its stale count -- which is every SPARSE key, i.e. exactly the
-per-matchup cells. Measured on g4_treatment_s42 before the fix: 3 opponent keys
+per-matchup cells. Measured on selfplay_deckpool29_seed42 before the fix: 3 opponent keys
 captured ~100% of episodes, 29 deck keys 59%, 841 matchup keys 20%.
 
 The rates stayed roughly unbiased (drops are by arrival order, not outcome) but

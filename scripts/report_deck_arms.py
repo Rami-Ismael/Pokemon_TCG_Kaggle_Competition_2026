@@ -17,8 +17,8 @@ was changing throughout the run and over a mirror opponent that was changing
 with it. They are a monitor, not an arm comparison — for that, evaluate the
 final checkpoints on a fixed deck grid against a fixed opponent.
 
-    uv run python scripts/report_deck_arms.py models/g4_treatment_s42
-    uv run python scripts/report_deck_arms.py models/g4_*_s42 --min-n 30
+    uv run python scripts/report_deck_arms.py models/selfplay_deckpool29_seed42
+    uv run python scripts/report_deck_arms.py models/selfplay_*_seed42 --min-n 30
 """
 from __future__ import annotations
 

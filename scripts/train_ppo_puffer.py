@@ -718,7 +718,7 @@ def main() -> None:
         # consumed LENGTH across that boundary silently drops samples: a sparse
         # key reappears in the fresh dict with len(v)==1 while the stale count
         # is also 1, so `v[1:]` is empty and that episode is lost. The loss
-        # scales with key sparsity -- measured on g4_treatment_s42, 3 opponent
+        # scales with key sparsity -- measured on selfplay_deckpool29_seed42, 3 opponent
         # keys captured ~100%, 29 deck keys 59%, 841 matchup keys 20%.
         #
         # Holding a REFERENCE to the previous list makes `is` a sound identity

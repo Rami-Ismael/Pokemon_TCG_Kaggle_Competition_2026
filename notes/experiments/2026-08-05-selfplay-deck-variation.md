@@ -95,16 +95,23 @@ as the throughput diagnostic.
 
 | arm | flags | both seats' decks |
 |---|---|---|
-| control | *(no deck flags)* | the single hardcoded deck, forever |
-| treatment | `--deck-pool '@configs/deck_pools/legal_decks.txt'` | two independent uniform draws per episode |
+| `singledeck` (control) | *(no deck flags)* | the single hardcoded deck, forever |
+| `deckpool29` | `--deck-pool '@configs/deck_pools/legal_decks.txt'` | two independent uniform draws per episode |
 
-Deck randomization makes the task strictly harder, so a lower treatment win rate
-is **unreadable without the control**. `--mirror-deck` remains available as the
+Deck randomization makes the task strictly harder, so a lower `deckpool29` win
+rate is **unreadable without the `singledeck` control**. `--mirror-deck` remains available as the
 same-deck-both-seats control for measurements that must exclude deck matchup
 (the exploitability sweep).
 
-Driver: `scripts/run_selfplay_g4_deckvar.sh` (arms run sequentially — never two
-MPS jobs at once).
+Driver: `scripts/run_selfplay_deck_variation.sh` (arms run sequentially — never
+two MPS jobs at once).
+
+Run dirs are `selfplay_<deck condition>_seed<N>`: `selfplay_singledeck_seed43`,
+`selfplay_deckpool29_seed43`. No generation counters and no arm letters — the
+first pass named these `g4_control_s42` / `g4_treatment_s44b`, which is the
+decoder-ring naming CLAUDE.md bans. The contended seed-44 control that was
+re-run is kept as `selfplay_singledeck_seed44_REJECTED_contended` rather than
+deleted: removing it would hide why a replacement exists.
 
 ## Reporting
 

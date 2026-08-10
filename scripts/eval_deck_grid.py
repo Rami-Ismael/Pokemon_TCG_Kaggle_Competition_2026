@@ -22,7 +22,7 @@ that agent falling apart off its own list, not our policy's deck robustness.
 `rule_baseline` is the safe external choice -- it is deck-agnostic by
 construction.
 
-    uv run python scripts/eval_deck_grid.py --agent models/g4_treatment_s42/u..._final \\
+    uv run python scripts/eval_deck_grid.py --agent models/selfplay_deckpool29_seed42/<snapshot> \\
         --decks all:decklists --opponent models/il_agent --games-per-cell 12
 """
 from __future__ import annotations

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Self-play generation 4: DECK VARIATION ON BOTH SIDES.
+# Self-play with DECK VARIATION ON BOTH SIDES.
 #
 # The experiment. Every RL result this project has is a policy piloting ONE deck
 # against opponents piloting the SAME deck (verified: run_selfplay_g1/g2/g3.sh
@@ -7,13 +7,19 @@
 # Hypothesis: that is why local wins keep failing to transfer to the ladder --
 # the policy learned one matchup, not the game.
 #
-# Two arms, EQUAL COMPUTE and EQUAL SEEDS. Deck randomization makes the task
-# strictly harder, so a lower win rate in the treatment arm is unreadable
-# without the control:
+# Two arms, EQUAL WALL-CLOCK and EQUAL SEEDS. Deck randomization makes the
+# task strictly harder, so a lower win rate for deckpool29 is unreadable
+# without the singledeck control:
 #
-#   control    no deck pool -- single-deck mirror self-play, today's behaviour
-#   treatment  --deck-pool: learner deck and opponent deck drawn INDEPENDENTLY
-#              and uniformly per episode from 29 legality-verified lists
+#   singledeck   no deck pool -- one hardcoded deck on both seats, today's
+#                behaviour. This is the CONTROL.
+#   deckpool29   learner deck and opponent deck drawn INDEPENDENTLY and
+#                uniformly per episode from 29 legality-verified lists.
+#
+# Run dirs are named for what they are: selfplay_<deck condition>_seed<N>,
+# e.g. selfplay_deckpool29_seed43. No generation counters, no arm letters --
+# CLAUDE.md requires a name readable without a decoder ring, and "g4_treatment
+# _s44b" needed one.
 #
 # BUDGET IS WALL-CLOCK, not a pinned step count (PR #55 rescinded the
 # equal-steps rule, 2026-08-06). TIMESTEPS is set out of reach so MAX_SECONDS
@@ -29,15 +35,15 @@
 #
 # Runs arms SEQUENTIALLY: never two MPS jobs at once.
 #
-#   scripts/run_selfplay_g4_deckvar.sh                 # both arms, all seeds
-#   ARMS=treatment SEEDS=42 scripts/run_selfplay_g4_deckvar.sh
+#   scripts/run_selfplay_deck_variation.sh                    # both arms, all seeds
+#   ARMS=deckpool29 SEEDS=42 scripts/run_selfplay_deck_variation.sh
 set -u
 cd "$(dirname "$0")/.."
 MAIN=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026
 PY=$MAIN/.venv-ppo/bin/python
 
 : ${SEEDS:="42 43 44"}
-: ${ARMS:="control treatment"}
+: ${ARMS:="singledeck deckpool29"}
 : ${TIMESTEPS:=100000000}     # out of reach on purpose; MAX_SECONDS is the budget
 : ${MAX_SECONDS:=9000}          # per arm-seed wall-clock budget (2.5h; 6 runs = 15h)
 : ${POOL:='@configs/deck_pools/legal_decks.txt'}
@@ -48,13 +54,13 @@ PY=$MAIN/.venv-ppo/bin/python
 mkdir -p runs
 for seed in ${=SEEDS}; do
   for arm in ${=ARMS}; do
-    tag="g4_${arm}_s${seed}"
+    tag="selfplay_${arm}_seed${seed}"
     out="models/${tag}"
     log="runs/${tag}.log"
     [ -f "$out/policy_full.pt" ] && { echo "$tag already finished -- skipping"; continue; }
 
     deck_args=()
-    [ "$arm" = "treatment" ] && deck_args=(--deck-pool "$POOL")
+    [ "$arm" = "deckpool29" ] && deck_args=(--deck-pool "$POOL")
 
     echo "=== $tag  (wall-clock budget ${MAX_SECONDS}s; steps uncapped)"
     # Preflight refuses to launch into a contended machine, and it is RIGHT to
@@ -93,6 +99,6 @@ done
 echo
 echo "All arms done. Next, in order:"
 echo "  1. uv run python scripts/fallback_diagnostic.py --agent <ckpt>  (per checkpoint)"
-echo "  2. uv run python scripts/report_deck_arms.py models/g4_*  (per-deck / worst matchup)"
+echo "  2. uv run python scripts/report_deck_arms.py models/selfplay_*seed*  (per-deck / worst matchup)"
 echo "  3. local Glicko vs the anchored pool  -- go/no-go for a submission slot"
 echo "  4. refresh the ledger, submit, read the ladder"
