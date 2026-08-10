@@ -156,7 +156,7 @@ AGENT_FILES = {
     # 8-8 vs _final, n=16/pair) -- see reports/benchmark_v3_arms.json.
     "il_agent_v3_final": REPO / "agents" / "il_agent_v3_final" / "main.py",
     "il_agent_v3_best": REPO / "agents" / "il_agent_v3_best" / "main.py",
-    # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
+    # IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
     "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
@@ -181,8 +181,8 @@ AGENT_FILES = {
     # frozen deck. If a trained policy doesn't beat this decisively, its
     # offline accuracy isn't credible evidence it learned anything.
     "random_legal": REPO / "agents" / "random_legal" / "agent_core.py",
-    # Public opponent-pool vetted batch (Q25 / notes/phase0_discovery_report.md
-    # gap: benchmarking only against our own agents was never evidence about
+    # Public opponent-pool vetted batch (closes the discovery-pass gap:
+    # benchmarking only against our own agents was never evidence about
     # the ladder). Pulled from Kaggle's competition Code tab, individually
     # reviewed for safety before wiring in -- see notebooks/reference/INDEX.md.
     "kiyotah_dragapult": REPO / "agents" / "kiyotah_dragapult" / "agent_core.py",
@@ -202,7 +202,7 @@ AGENT_FILES = {
     # encrypted) to deter forking -- decoded to plain source for this repo's
     # review; see notebooks/reference/mechi22-alakazam/main_decoded.py.
     "mechi22_alakazam": REPO / "agents" / "mechi22_alakazam" / "agent_core.py",
-    # Phase 1 archetype-coverage recruitment (notes/phase1_gate1_report.md):
+    # Archetype-coverage recruitment for the opponent pool:
     # the pool was 9/14 agents on the exact frozen Mega Lucario ex deck before
     # this. Archaludon ex / Cinderace metal-tempo -- a genuinely different
     # archetype (Metal-type, not Fighting/Psychic/Dragon/Electric/Grass-Ice
