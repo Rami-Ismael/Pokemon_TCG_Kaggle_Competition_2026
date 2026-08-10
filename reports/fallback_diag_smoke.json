@@ -15,11 +15,11 @@
       "wins": 2,
       "losses": 0,
       "draws": 0,
-      "seconds": 3.6
+      "seconds": 0.8
     }
   },
   "fallback": {
-    "decisions": 84,
+    "decisions": 103,
     "enabled": true,
     "fallbacks": 0,
     "fallback_rate": 0.0

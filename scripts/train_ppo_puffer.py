@@ -37,6 +37,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 import time
@@ -120,6 +121,62 @@ def _git_sha() -> str | None:
                               timeout=5).stdout.strip() or None
     except (OSError, subprocess.SubprocessError):
         return None
+
+
+def _slug(text: str) -> str:
+    """Filesystem-safe name component: anything odd collapses to '-'."""
+    return re.sub(r"[^A-Za-z0-9.-]+", "-", str(text)).strip("-")
+
+
+def _checkpoint_slug(path: Path) -> str:
+    """Cite a checkpoint by its path under models/ with slashes folded, so
+    models/selfplay_g1/refs/u430080 reads selfplay_g1-refs-u430080 instead of
+    the bare u430080."""
+    p = Path(path)
+    try:
+        parts = p.resolve().relative_to(config.MODELS_DIR.resolve()).parts
+    except ValueError:
+        parts = (p.name,)
+    return _slug("-".join(parts))
+
+
+def build_run_tag(label: str | None, mix: tuple[float, ...],
+                  opponent_module: str | None, deck_pool,
+                  mirror_deck: bool, init_from: Path, seed: int) -> str:
+    """The run's name, with every axis that has burned us spelled out.
+
+    ppo_puffer/u120832 trained with 20% external opponents and selfplay_g1
+    with 0%; the names said neither, so the 275.1-vs-254.9 ladder gap was
+    unattributable without exhuming shell scripts and git history. Same story
+    for the deck (see _deck_fingerprint). So the tag always carries the
+    opponent mix, the deck, the init checkpoint, and the seed. A --run-tag
+    label is kept as a prefix, never as a replacement.
+    """
+    def pct(x: float) -> str:
+        return format(round(x * 100, 1), "g")
+
+    if opponent_module:
+        opponents = f"exploit100-{_slug(opponent_module)}"
+    else:
+        # `mix` is (mirror, league) after validation -- the externals share is
+        # pinned to 0 and its bucket is deleted from the env. Still spelled out
+        # in the tag: the point of this name is that no run can hide its
+        # opponent mix, and "external0" states it rather than leaving a reader
+        # to infer it from an absence.
+        external = mix[2] if len(mix) > 2 else 0.0
+        opponents = (f"mirror{pct(mix[0])}-league{pct(mix[1])}"
+                     f"-external{pct(external)}")
+    if deck_pool is not None:
+        deck = f"deckpool{len(deck_pool)}" + ("-mirror" if mirror_deck else "")
+    else:
+        from pokemon_tcg import selfplay as _sp
+        deck = f"deck-{_slug(_sp.DECK_PATH.parent.name)}"
+    # args.seed, NOT config.RANDOM_SEED: --seed is what actually moves the
+    # vecenv (and so every opponent/deck draw). Stamping the module constant
+    # would name three differently-seeded arms of one comparison identically.
+    return "_".join([_slug(label) if label else "ppo", opponents, deck,
+                     f"from-{_checkpoint_slug(init_from)}",
+                     f"seed{seed}"])
 MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 
@@ -241,9 +298,14 @@ def main() -> None:
     ap.add_argument("--promote-workers", type=int, default=8,
                     help="spawned eval-game processes per gate (cg engine is "
                          "a per-process singleton, so parallelism = processes)")
-    ap.add_argument("--run-tag", default=time.strftime("ppo_%Y%m%d_%H%M%S"),
-                    help="tag stamped into snapshots, promoted-ref metadata, "
-                         "and every metrics/promotion log row")
+    ap.add_argument("--run-tag", default=None,
+                    help="optional human label, kept as a PREFIX: the final "
+                         "tag always appends the derived descriptor (opponent "
+                         "mix, deck, init checkpoint, seed — see "
+                         "build_run_tag) so no run can hide its opponent mix "
+                         "behind a nickname again. The full tag is stamped "
+                         "into snapshot dir names, promoted-ref metadata, and "
+                         "every metrics/promotion log row")
     ap.add_argument("--max-seconds", type=float, default=None,
                     help="internal wall-clock budget: stop cleanly (with a final "
                          "snapshot) once exceeded -- replaces external kill timers")
@@ -334,7 +396,9 @@ def main() -> None:
                          "controlled comparison must be run at the SAME seeds, "
                          "since seed-to-seed spread here is large enough to "
                          "swamp the effect being measured")
-    ap.add_argument("--out", type=Path, default=config.MODELS_DIR / "ppo_puffer")
+    ap.add_argument("--out", type=Path, default=None,
+                    help="snapshot dir; default models/<full run tag>, so "
+                         "runs stop piling into one anonymous models/ppo_puffer")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="launch even if disk/RAM/contention checks fail")
     ap.add_argument("--smoke", action="store_true",
@@ -347,6 +411,8 @@ def main() -> None:
         args.bptt_horizon, args.minibatch_size = 32, 64
         args.total_timesteps = 3 * args.num_envs * args.bptt_horizon
         args.device = "cpu"
+        if args.run_tag is None:
+            args.run_tag = "smoke"  # a smoke run must never look like a real one
     args.device = resolve_device(args.device)
     if args.kl_prior is None:
         args.kl_prior = args.init_from
@@ -365,40 +431,10 @@ def main() -> None:
         f"cg engine is a per-process singleton: need num_envs == num_workers, "
         f"got {args.num_envs} != {args.num_workers}")
 
-    if not args.skip_preflight:
-        preflight(args.num_workers)
-
-    # load_config() runs its own argparse over sys.argv (and errors on our
-    # flags) -- hand it an empty argv while it parses.
-    argv, sys.argv = sys.argv, [sys.argv[0]]
-    try:
-        cfg = pufferl.load_config("default")
-    finally:
-        sys.argv = argv
-    cfg["train"].update({
-        "device": args.device,
-        "optimizer": "adam",  # NOT muon: fine-tuning a BC prior, see plan §8.1
-        "learning_rate": args.lr,
-        "anneal_lr": True,
-        "gamma": args.gamma,
-        "gae_lambda": args.gae_lambda,
-        "update_epochs": args.update_epochs,
-        "ent_coef": args.ent_coef_init,
-        "vf_coef": 0.5,
-        "max_grad_norm": 1.0,
-        "total_timesteps": args.total_timesteps,
-        "batch_size": "auto",
-        "bptt_horizon": args.bptt_horizon,
-        "minibatch_size": args.minibatch_size,
-        "compile": False,
-        "checkpoint_interval": 10_000_000,  # we snapshot ourselves (see below)
-        "data_dir": str(config.PROJECT_ROOT / "runs" / "ppo_puffer"),
-        "seed": args.seed,
-    })
-
-    mirror_root = str(args.out)  # env workers hot-reload newest snapshot from here
-    args.out.mkdir(parents=True, exist_ok=True)
-
+    # Run identity BEFORE anything is created on disk: parse the opponent/deck
+    # config, derive the full run tag from it, and only then resolve --out
+    # (default models/<tag>), so every directory this run writes is named
+    # after what the run actually is.
     if args.field_pool.strip():
         ap.error(
             f"--field-pool {args.field_pool!r}: must be empty. Self-play trains "
@@ -445,6 +481,53 @@ def main() -> None:
     if mix[1] > 0 and not league:
         ap.error("--mix gives the league bucket a nonzero share but --league "
                  "is empty")
+    deck_pool = None
+    if args.deck_pool:
+        deck_pool = DeckPool.from_spec(
+            args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
+            pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
+    args.run_tag = build_run_tag(args.run_tag, mix, args.opponent_module,
+                                 deck_pool, args.mirror_deck, args.init_from,
+                                 args.seed)
+    if args.out is None:
+        args.out = config.MODELS_DIR / args.run_tag
+    print(f"run tag: {args.run_tag}")
+    print(f"out dir: {args.out}")
+
+    if not args.skip_preflight:
+        preflight(args.num_workers)
+
+    # load_config() runs its own argparse over sys.argv (and errors on our
+    # flags) -- hand it an empty argv while it parses.
+    argv, sys.argv = sys.argv, [sys.argv[0]]
+    try:
+        cfg = pufferl.load_config("default")
+    finally:
+        sys.argv = argv
+    cfg["train"].update({
+        "device": args.device,
+        "optimizer": "adam",  # NOT muon: fine-tuning a BC prior, see plan §8.1
+        "learning_rate": args.lr,
+        "anneal_lr": True,
+        "gamma": args.gamma,
+        "gae_lambda": args.gae_lambda,
+        "update_epochs": args.update_epochs,
+        "ent_coef": args.ent_coef_init,
+        "vf_coef": 0.5,
+        "max_grad_norm": 1.0,
+        "total_timesteps": args.total_timesteps,
+        "batch_size": "auto",
+        "bptt_horizon": args.bptt_horizon,
+        "minibatch_size": args.minibatch_size,
+        "compile": False,
+        "checkpoint_interval": 10_000_000,  # we snapshot ourselves (see below)
+        "data_dir": str(config.PROJECT_ROOT / "runs" / "ppo_puffer"),
+        "seed": args.seed,
+    })
+
+    mirror_root = str(args.out)  # env workers hot-reload newest snapshot from here
+    args.out.mkdir(parents=True, exist_ok=True)
+
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
                   "league": league, "mix": mix, "opp_hold": args.opp_hold}
     if args.opponent_module:
@@ -460,11 +543,7 @@ def main() -> None:
         print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
               f"(100% of episodes, seats strictly alternating)")
 
-    deck_pool = None
-    if args.deck_pool:
-        deck_pool = DeckPool.from_spec(
-            args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
-            pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
+    if deck_pool is not None:
         env_kwargs["deck_pool"] = deck_pool
         env_kwargs["mirror_deck"] = args.mirror_deck
         mode = ("MIRROR (one draw, both seats)" if args.mirror_deck
@@ -581,6 +660,13 @@ def main() -> None:
         # only known once the loop is running.
         run_state = {"t_run": None, "gates": 0, "promotions": 0}
 
+        def snap_name(step: int, final: bool = False) -> str:
+            """Snapshot dir names carry the full run tag: a bare u<step> dir
+            copied into agents/ becomes an agent named u120832 that says
+            nothing about how it trained. Steps are zero-padded so lexical
+            sort equals step order."""
+            return f"{args.run_tag}_step{step:08d}" + ("_final" if final else "")
+
         def save_actor(snap: Path, **extra) -> Path:
             """save_pretrained snapshot + run/step-tagged metadata.
 
@@ -617,7 +703,7 @@ def main() -> None:
         gate_on = args.kl_coef > 0 and args.promote_every > 0
 
         # Seed snapshot so mirror opponents have something to load from step 0.
-        save_actor(args.out / "u0")
+        save_actor(args.out / snap_name(0))
 
         # Outcome harvest from the env's terminal infos. THREE separate cuts
         # (opponent type / learner deck / full matchup), because a pooled win
@@ -726,7 +812,7 @@ def main() -> None:
             if gate_on and epoch % args.promote_every == 0:
                 # Promotion gate (the ratchet): mirrored pairs of live vs the
                 # frozen reference; training is paused for its duration.
-                live_snap = save_actor(args.out / f"u{trainer.global_step}")
+                live_snap = save_actor(args.out / snap_name(trainer.global_step))
                 print(f"promotion gate at update {epoch} (step "
                       f"{trainer.global_step}): live vs {ref_dir}, "
                       f"{args.promote_pairs} mirrored pairs...")
@@ -740,7 +826,7 @@ def main() -> None:
                 if verdict["promote"]:
                     run_state["promotions"] += 1
                     ref_snap = save_actor(
-                        args.out / "refs" / f"u{trainer.global_step}",
+                        args.out / "refs" / snap_name(trainer.global_step),
                         promoted_from=str(live_snap), gate=verdict)
                     trainer.retarget_prior(policy)
                     ref_dir = str(ref_snap)
@@ -758,7 +844,7 @@ def main() -> None:
                 # The gate's live snapshot doubles as the periodic one.
                 last_snap = time.time()
             elif time.time() - last_snap >= args.snapshot_every_s:
-                snap = save_actor(args.out / f"u{trainer.global_step}")
+                snap = save_actor(args.out / snap_name(trainer.global_step))
                 last_snap = time.time()
                 print(f"  snapshot -> {snap}")
 
@@ -795,7 +881,7 @@ def main() -> None:
               f"{trainer.global_step / max(elapsed, 1e-9):.1f} steps/s "
               f"(kl_coef={args.kl_coef}, includes gate pauses)")
 
-        snap = args.out / f"u{trainer.global_step}_final"
+        snap = args.out / snap_name(trainer.global_step, final=True)
         policy.actor.to("cpu").save_pretrained(snap)
         (snap / "ppo_metadata.json").write_text(json.dumps(
             {"global_step": trainer.global_step, "epoch": epoch,

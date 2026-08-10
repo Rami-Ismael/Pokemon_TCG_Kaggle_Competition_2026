@@ -1,30 +1,7 @@
 {
-  "models/g4_control_s42": {
-    "run_tag": "g4_control_s42",
-    "global_step": 613376,
-    "opp_wr": {
-      "league_il_alldays_0804": [
-        0.3766,
-        993
-      ],
-      "mirror": [
-        0.5137,
-        3150
-      ],
-      "league_e0_s43": [
-        0.656,
-        997
-      ]
-    },
-    "single_deck": true,
-    "worst_deck": null,
-    "worst_matchup": null,
-    "per_deck": {},
-    "per_matchup": {}
-  },
-  "models/g4_treatment_s42": {
-    "run_tag": "g4_treatment_s42",
-    "global_step": 657408,
+  "models/g4_treatment_s43": {
+    "run_tag": "g4_treatment_s43",
+    "global_step": 651264,
     "deck_pool": "@configs/deck_pools/legal_decks.txt",
     "deck_pool_k": 29,
     "mirror_deck": false,
@@ -32,3498 +9,3498 @@
       0.625,
       0.375
     ],
-    "pooled_win_rate": 0.4721,
-    "episodes": 2934,
+    "pooled_win_rate": 0.4785,
+    "episodes": 9223,
     "worst_deck": [
-      "kiyotah_iono",
+      "wmh_ogerpon",
       [
-        0.2,
-        95
+        0.2339,
+        295
       ]
     ],
     "worst_matchup": null,
     "per_deck": {
+      "wmh_ogerpon": [
+        0.2339,
+        295
+      ],
       "kiyotah_iono": [
-        0.2,
-        95
+        0.2359,
+        284
       ],
       "mega_kangaskhan_ex": [
-        0.2632,
-        95
+        0.25,
+        308
       ],
       "pixiux_lucario_v63": [
-        0.2655,
-        113
-      ],
-      "wmh_typhlosion": [
-        0.2907,
-        86
-      ],
-      "wmh_ogerpon": [
-        0.2927,
-        82
-      ],
-      "avikdas567_heuristic": [
-        0.328,
-        93
-      ],
-      "mega_lucario_ex": [
-        0.3309,
-        136
-      ],
-      "kiyotah_abomasnow": [
-        0.3462,
-        104
-      ],
-      "prvsiyan_control_v11": [
-        0.3511,
-        94
-      ],
-      "tb_archaludon": [
-        0.3661,
-        112
+        0.2628,
+        331
       ],
       "wmh_kangaskhan": [
-        0.3735,
-        83
+        0.2637,
+        311
+      ],
+      "mega_lucario_ex": [
+        0.2764,
+        351
+      ],
+      "avikdas567_heuristic": [
+        0.2814,
+        318
+      ],
+      "kiyotah_abomasnow": [
+        0.3927,
+        331
+      ],
+      "prvsiyan_control_v11": [
+        0.3935,
+        310
+      ],
+      "tb_archaludon": [
+        0.4011,
+        354
       ],
       "dragapult_ex": [
-        0.3929,
-        112
+        0.434,
+        318
       ],
-      "wmh_trevenant": [
-        0.3981,
-        103
+      "wmh_typhlosion": [
+        0.4475,
+        295
       ],
       "plamen06_steel": [
-        0.4636,
-        110
-      ],
-      "tb_abomasnow": [
-        0.4762,
-        105
+        0.4534,
+        311
       ],
       "tb_heuristic": [
-        0.4842,
-        95
+        0.4554,
+        325
+      ],
+      "tb_abomasnow": [
+        0.4729,
+        332
+      ],
+      "wmh_trevenant": [
+        0.4796,
+        319
       ],
       "alakazam": [
-        0.4861,
-        72
+        0.5186,
+        295
       ],
       "wmh_chandelure": [
-        0.505,
-        101
+        0.5288,
+        312
       ],
       "tb_starmie": [
-        0.5444,
-        90
+        0.5556,
+        306
       ],
       "wmh_mewtwo": [
-        0.5537,
-        121
-      ],
-      "cynthias_garchomp_ex": [
-        0.5765,
-        85
-      ],
-      "team_rockets_spidops": [
-        0.5929,
-        113
-      ],
-      "wmh_alakazam": [
-        0.6126,
-        111
-      ],
-      "wmh_megastarmie": [
-        0.6186,
-        97
+        0.566,
+        318
       ],
       "biohack44_day2": [
-        0.65,
-        120
+        0.5676,
+        340
+      ],
+      "team_rockets_spidops": [
+        0.5866,
+        329
+      ],
+      "wmh_megastarmie": [
+        0.5954,
+        304
+      ],
+      "cynthias_garchomp_ex": [
+        0.6538,
+        312
+      ],
+      "wmh_alakazam": [
+        0.697,
+        330
       ],
       "grimmsnarl_toplayer": [
-        0.6727,
-        110
+        0.6994,
+        326
       ],
       "mechi22_alakazam": [
-        0.7087,
-        103
+        0.705,
+        322
       ],
       "pllinas_alakazam": [
-        0.7204,
-        93
+        0.717,
+        318
       ],
       "marnies_grimmsnarl_ex": [
-        0.755,
-        100
+        0.7217,
+        318
       ]
     },
     "per_matchup": {
-      "pixiux_lucario_v63~pllinas_alakazam": [
-        0.0,
-        1
-      ],
       "kiyotah_abomasnow~alakazam": [
         0.0,
-        1
-      ],
-      "wmh_alakazam~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~marnies_grimmsnarl_ex": [
-        0.0,
-        1
+        10
       ],
       "biohack44_day2~wmh_mewtwo": [
         0.0,
-        1
-      ],
-      "pllinas_alakazam~tb_starmie": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "alakazam~team_rockets_spidops": [
-        0.0,
-        3
-      ],
-      "mechi22_alakazam~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_alakazam~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~alakazam": [
-        0.0,
-        1
+        15
       ],
       "mega_lucario_ex~wmh_trevenant": [
         0.0,
-        1
+        11
       ],
       "wmh_trevenant~grimmsnarl_toplayer": [
         0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~alakazam": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~tb_starmie": [
-        0.0,
-        1
+        9
       ],
       "mechi22_alakazam~marnies_grimmsnarl_ex": [
         0.0,
-        1
-      ],
-      "tb_archaludon~mechi22_alakazam": [
-        0.0,
-        3
-      ],
-      "marnies_grimmsnarl_ex~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~kiyotah_abomasnow": [
-        0.0,
-        1
+        13
       ],
       "kiyotah_iono~marnies_grimmsnarl_ex": [
         0.0,
-        1
+        11
       ],
-      "team_rockets_spidops~cynthias_garchomp_ex": [
+      "plamen06_steel~wmh_kangaskhan": [
         0.0,
-        1
-      ],
-      "kiyotah_iono~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~tb_starmie": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~mechi22_alakazam": [
-        0.0,
-        3
-      ],
-      "marnies_grimmsnarl_ex~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "tb_starmie~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~tb_starmie": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~tb_starmie": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~mechi22_alakazam": [
-        0.0,
-        3
-      ],
-      "mechi22_alakazam~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~mega_lucario_ex": [
-        0.0,
-        3
-      ],
-      "kiyotah_iono~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~biohack44_day2": [
-        0.0,
-        1
+        4
       ],
       "tb_starmie~plamen06_steel": [
         0.0,
-        1
+        9
       ],
-      "wmh_mewtwo~tb_abomasnow": [
+      "tb_abomasnow~mechi22_alakazam": [
         0.0,
-        1
+        12
       ],
-      "wmh_alakazam~tb_heuristic": [
+      "wmh_mewtwo~tb_starmie": [
         0.0,
-        1
+        11
       ],
-      "wmh_megastarmie~kiyotah_iono": [
+      "alakazam~wmh_mewtwo": [
         0.0,
-        1
-      ],
-      "dragapult_ex~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_kangaskhan": [
-        0.0,
-        3
-      ],
-      "mechi22_alakazam~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~tb_starmie": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~alakazam": [
-        0.0,
-        1
-      ],
-      "tb_starmie~tb_starmie": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~tb_starmie": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~alakazam": [
-        0.0,
-        1
-      ],
-      "tb_starmie~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~alakazam": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "tb_starmie~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~tb_starmie": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_trevenant": [
-        0.0,
-        3
-      ],
-      "cynthias_garchomp_ex~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~tb_heuristic": [
-        0.0,
-        3
-      ],
-      "avikdas567_heuristic~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~kiyotah_abomasnow": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~tb_starmie": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~alakazam": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "tb_starmie~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~tb_archaludon": [
-        0.0,
-        1
+        7
       ],
       "wmh_ogerpon~marnies_grimmsnarl_ex": [
         0.0,
-        1
+        11
       ],
-      "wmh_ogerpon~mega_lucario_ex": [
+      "biohack44_day2~pllinas_alakazam": [
         0.0,
-        1
+        9
       ],
-      "kiyotah_iono~biohack44_day2": [
+      "wmh_kangaskhan~wmh_alakazam": [
         0.0,
-        1
+        13
       ],
-      "wmh_alakazam~team_rockets_spidops": [
+      "wmh_ogerpon~alakazam": [
         0.0,
-        1
+        10
       ],
-      "wmh_typhlosion~team_rockets_spidops": [
+      "mega_lucario_ex~grimmsnarl_toplayer": [
         0.0,
-        1
+        15
       ],
-      "wmh_chandelure~cynthias_garchomp_ex": [
+      "avikdas567_heuristic~wmh_megastarmie": [
         0.0,
-        1
+        11
       ],
-      "cynthias_garchomp_ex~dragapult_ex": [
+      "dragapult_ex~biohack44_day2": [
         0.0,
-        1
-      ],
-      "plamen06_steel~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~tb_starmie": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_alakazam~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "wmh_alakazam~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~biohack44_day2": [
-        0.0,
-        1
+        15
       ],
       "biohack44_day2~wmh_alakazam": [
         0.0,
-        1
+        11
       ],
-      "kiyotah_abomasnow~tb_abomasnow": [
+      "wmh_typhlosion~grimmsnarl_toplayer": [
         0.0,
-        1
+        12
       ],
-      "prvsiyan_control_v11~wmh_ogerpon": [
+      "kiyotah_abomasnow~pllinas_alakazam": [
         0.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~kiyotah_abomasnow": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~tb_starmie": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "alakazam~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "tb_starmie~alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "alakazam~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "alakazam~alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_trevenant": [
-        0.0,
-        3
-      ],
-      "wmh_mewtwo~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "alakazam~wmh_chandelure": [
-        0.0,
-        3
-      ],
-      "tb_heuristic~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~grimmsnarl_toplayer": [
-        0.0,
-        3
-      ],
-      "pixiux_lucario_v63~cynthias_garchomp_ex": [
-        0.0,
-        3
-      ],
-      "plamen06_steel~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_trevenant": [
-        0.0,
-        3
-      ],
-      "wmh_typhlosion~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~tb_starmie": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_kangaskhan": [
-        0.0,
-        1
+        12
       ],
       "avikdas567_heuristic~biohack44_day2": [
         0.0,
-        1
+        7
       ],
-      "kiyotah_abomasnow~wmh_chandelure": [
+      "wmh_ogerpon~grimmsnarl_toplayer": [
         0.0,
-        1
-      ],
-      "tb_abomasnow~wmh_chandelure": [
-        0.0,
-        3
-      ],
-      "wmh_ogerpon~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~tb_starmie": [
-        0.0,
-        3
-      ],
-      "mega_kangaskhan_ex~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~plamen06_steel": [
-        0.0,
-        3
-      ],
-      "avikdas567_heuristic~wmh_alakazam": [
-        0.0,
-        3
-      ],
-      "kiyotah_abomasnow~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "tb_starmie~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "tb_abomasnow~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~alakazam": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "alakazam~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "tb_heuristic~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "alakazam~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~kiyotah_abomasnow": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "wmh_mewtwo~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~alakazam": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_mewtwo": [
-        0.0,
-        1
-      ],
-      "cynthias_garchomp_ex~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~marnies_grimmsnarl_ex": [
-        0.0,
-        3
-      ],
-      "kiyotah_abomasnow~wmh_ogerpon": [
-        0.0,
-        2
-      ],
-      "wmh_megastarmie~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~tb_starmie": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "grimmsnarl_toplayer~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~tb_archaludon": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~cynthias_garchomp_ex": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~tb_starmie": [
-        0.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "biohack44_day2~kiyotah_iono": [
-        0.0,
-        1
-      ],
-      "alakazam~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~grimmsnarl_toplayer": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~tb_starmie": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~plamen06_steel": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "alakazam~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "kiyotah_abomasnow~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "wmh_kangaskhan~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "plamen06_steel~mega_lucario_ex": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_megastarmie": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~wmh_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "mega_kangaskhan_ex~alakazam": [
-        0.0,
-        1
-      ],
-      "pllinas_alakazam~prvsiyan_control_v11": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_mewtwo": [
-        0.0,
-        3
-      ],
-      "tb_abomasnow~team_rockets_spidops": [
-        0.0,
-        1
-      ],
-      "tb_starmie~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "prvsiyan_control_v11~wmh_typhlosion": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "tb_archaludon~wmh_ogerpon": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "wmh_chandelure~mega_kangaskhan_ex": [
-        0.0,
-        1
-      ],
-      "tb_starmie~biohack44_day2": [
-        0.0,
-        1
-      ],
-      "tb_starmie~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "alakazam~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "team_rockets_spidops~tb_abomasnow": [
-        0.0,
-        1
-      ],
-      "wmh_alakazam~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "pixiux_lucario_v63~alakazam": [
-        0.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~biohack44_day2": [
-        0.0,
-        3
-      ],
-      "wmh_mewtwo~tb_heuristic": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "mega_lucario_ex~pixiux_lucario_v63": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~avikdas567_heuristic": [
-        0.0,
-        1
-      ],
-      "wmh_typhlosion~marnies_grimmsnarl_ex": [
-        0.0,
-        1
-      ],
-      "alakazam~mechi22_alakazam": [
-        0.0,
-        1
-      ],
-      "avikdas567_heuristic~wmh_trevenant": [
-        0.0,
-        1
-      ],
-      "kiyotah_iono~pllinas_alakazam": [
-        0.0,
-        1
-      ],
-      "dragapult_ex~dragapult_ex": [
-        0.0,
-        1
-      ],
-      "wmh_trevenant~wmh_kangaskhan": [
-        0.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_chandelure": [
-        0.0,
-        1
-      ],
-      "tb_starmie~tb_archaludon": [
-        0.0,
-        1
+        13
       ],
       "wmh_kangaskhan~mechi22_alakazam": [
         0.0,
-        1
+        7
+      ],
+      "tb_archaludon~pllinas_alakazam": [
+        0.0,
+        11
+      ],
+      "prvsiyan_control_v11~biohack44_day2": [
+        0.0,
+        10
+      ],
+      "mega_kangaskhan_ex~mechi22_alakazam": [
+        0.0,
+        15
+      ],
+      "kiyotah_iono~grimmsnarl_toplayer": [
+        0.0,
+        11
+      ],
+      "wmh_kangaskhan~pllinas_alakazam": [
+        0.0,
+        7
+      ],
+      "tb_archaludon~grimmsnarl_toplayer": [
+        0.0,
+        8
+      ],
+      "mega_kangaskhan_ex~biohack44_day2": [
+        0.0,
+        12
+      ],
+      "wmh_megastarmie~wmh_alakazam": [
+        0.0,
+        5
+      ],
+      "tb_abomasnow~biohack44_day2": [
+        0.0,
+        13
+      ],
+      "wmh_kangaskhan~biohack44_day2": [
+        0.0,
+        10
+      ],
+      "prvsiyan_control_v11~wmh_megastarmie": [
+        0.0,
+        11
+      ],
+      "kiyotah_iono~cynthias_garchomp_ex": [
+        0.0,
+        13
+      ],
+      "prvsiyan_control_v11~marnies_grimmsnarl_ex": [
+        0.0,
+        8
+      ],
+      "wmh_trevenant~marnies_grimmsnarl_ex": [
+        0.0,
+        8
+      ],
+      "kiyotah_abomasnow~wmh_alakazam": [
+        0.0,
+        13
+      ],
+      "mega_lucario_ex~marnies_grimmsnarl_ex": [
+        0.0,
+        17
+      ],
+      "mega_kangaskhan_ex~grimmsnarl_toplayer": [
+        0.0,
+        8
+      ],
+      "wmh_ogerpon~cynthias_garchomp_ex": [
+        0.0,
+        12
+      ],
+      "wmh_kangaskhan~prvsiyan_control_v11": [
+        0.0,
+        10
+      ],
+      "tb_abomasnow~prvsiyan_control_v11": [
+        0.0,
+        11
+      ],
+      "avikdas567_heuristic~wmh_alakazam": [
+        0.0,
+        14
+      ],
+      "mega_kangaskhan_ex~wmh_alakazam": [
+        0.0,
+        9
+      ],
+      "avikdas567_heuristic~grimmsnarl_toplayer": [
+        0.0,
+        14
+      ],
+      "kiyotah_iono~wmh_alakazam": [
+        0.0,
+        9
+      ],
+      "tb_archaludon~marnies_grimmsnarl_ex": [
+        0.0,
+        15
+      ],
+      "wmh_ogerpon~wmh_chandelure": [
+        0.0,
+        8
+      ],
+      "prvsiyan_control_v11~wmh_mewtwo": [
+        0.0,
+        6
+      ],
+      "pixiux_lucario_v63~mechi22_alakazam": [
+        0.0,
+        8
+      ],
+      "avikdas567_heuristic~marnies_grimmsnarl_ex": [
+        0.0,
+        16
+      ],
+      "wmh_trevenant~wmh_mewtwo": [
+        0.0,
+        8
+      ],
+      "mega_lucario_ex~biohack44_day2": [
+        0.0,
+        12
+      ],
+      "kiyotah_iono~team_rockets_spidops": [
+        0.0,
+        13
+      ],
+      "kiyotah_iono~plamen06_steel": [
+        0.0,
+        10
+      ],
+      "mega_lucario_ex~wmh_mewtwo": [
+        0.0,
+        9
+      ],
+      "tb_abomasnow~wmh_ogerpon": [
+        0.0,
+        4
+      ],
+      "wmh_ogerpon~pllinas_alakazam": [
+        0.0,
+        7
+      ],
+      "alakazam~pllinas_alakazam": [
+        0.0,
+        11
+      ],
+      "plamen06_steel~marnies_grimmsnarl_ex": [
+        0.0,
+        9
+      ],
+      "tb_starmie~mechi22_alakazam": [
+        0.0,
+        6
+      ],
+      "tb_starmie~wmh_alakazam": [
+        0.0,
+        4
+      ],
+      "tb_starmie~marnies_grimmsnarl_ex": [
+        0.0,
+        2
+      ],
+      "alakazam~team_rockets_spidops": [
+        0.0417,
+        24
+      ],
+      "wmh_mewtwo~marnies_grimmsnarl_ex": [
+        0.0526,
+        19
+      ],
+      "prvsiyan_control_v11~grimmsnarl_toplayer": [
+        0.0556,
+        18
+      ],
+      "wmh_ogerpon~tb_starmie": [
+        0.0588,
+        17
+      ],
+      "kiyotah_iono~pixiux_lucario_v63": [
+        0.0625,
+        16
+      ],
+      "plamen06_steel~wmh_alakazam": [
+        0.0667,
+        15
+      ],
+      "biohack44_day2~alakazam": [
+        0.0667,
+        15
+      ],
+      "mega_kangaskhan_ex~cynthias_garchomp_ex": [
+        0.0714,
+        14
+      ],
+      "tb_heuristic~grimmsnarl_toplayer": [
+        0.0714,
+        14
+      ],
+      "biohack44_day2~mechi22_alakazam": [
+        0.0714,
+        14
+      ],
+      "tb_abomasnow~pllinas_alakazam": [
+        0.0769,
+        13
+      ],
+      "wmh_chandelure~marnies_grimmsnarl_ex": [
+        0.0769,
+        13
+      ],
+      "wmh_kangaskhan~cynthias_garchomp_ex": [
+        0.0769,
+        13
+      ],
+      "prvsiyan_control_v11~kiyotah_iono": [
+        0.0769,
+        13
+      ],
+      "kiyotah_iono~dragapult_ex": [
+        0.0833,
+        12
+      ],
+      "tb_abomasnow~wmh_alakazam": [
+        0.0833,
+        12
+      ],
+      "wmh_kangaskhan~alakazam": [
+        0.0833,
+        12
+      ],
+      "mega_kangaskhan_ex~pllinas_alakazam": [
+        0.0833,
+        12
+      ],
+      "plamen06_steel~pllinas_alakazam": [
+        0.0833,
+        12
+      ],
+      "alakazam~wmh_alakazam": [
+        0.0833,
+        12
+      ],
+      "biohack44_day2~wmh_trevenant": [
+        0.0909,
+        11
+      ],
+      "pixiux_lucario_v63~wmh_megastarmie": [
+        0.0909,
+        11
+      ],
+      "mega_kangaskhan_ex~dragapult_ex": [
+        0.0909,
+        11
+      ],
+      "wmh_megastarmie~pllinas_alakazam": [
+        0.0909,
+        11
+      ],
+      "wmh_ogerpon~wmh_alakazam": [
+        0.0909,
+        11
+      ],
+      "mega_lucario_ex~pllinas_alakazam": [
+        0.0909,
+        11
+      ],
+      "mega_kangaskhan_ex~wmh_mewtwo": [
+        0.0909,
+        11
+      ],
+      "prvsiyan_control_v11~wmh_typhlosion": [
+        0.0909,
+        11
+      ],
+      "wmh_chandelure~tb_starmie": [
+        0.1,
+        10
+      ],
+      "wmh_kangaskhan~grimmsnarl_toplayer": [
+        0.1,
+        10
+      ],
+      "kiyotah_abomasnow~biohack44_day2": [
+        0.1,
+        10
+      ],
+      "avikdas567_heuristic~mechi22_alakazam": [
+        0.1,
+        10
+      ],
+      "plamen06_steel~mechi22_alakazam": [
+        0.1,
+        10
+      ],
+      "wmh_typhlosion~pllinas_alakazam": [
+        0.1,
+        10
       ],
       "wmh_ogerpon~tb_heuristic": [
-        0.0,
-        1
+        0.1,
+        10
       ],
-      "wmh_kangaskhan~marnies_grimmsnarl_ex": [
+      "avikdas567_heuristic~wmh_chandelure": [
+        0.1,
+        10
+      ],
+      "pixiux_lucario_v63~marnies_grimmsnarl_ex": [
+        0.1,
+        10
+      ],
+      "mega_lucario_ex~mechi22_alakazam": [
+        0.1111,
+        9
+      ],
+      "pixiux_lucario_v63~wmh_alakazam": [
+        0.1111,
+        9
+      ],
+      "prvsiyan_control_v11~tb_starmie": [
+        0.1111,
+        9
+      ],
+      "wmh_typhlosion~team_rockets_spidops": [
+        0.1111,
+        9
+      ],
+      "pixiux_lucario_v63~wmh_mewtwo": [
+        0.1111,
+        18
+      ],
+      "mega_kangaskhan_ex~wmh_typhlosion": [
+        0.1111,
+        9
+      ],
+      "wmh_ogerpon~wmh_trevenant": [
+        0.1111,
+        9
+      ],
+      "avikdas567_heuristic~wmh_mewtwo": [
+        0.1111,
+        9
+      ],
+      "avikdas567_heuristic~plamen06_steel": [
+        0.1111,
+        9
+      ],
+      "tb_starmie~tb_archaludon": [
+        0.1111,
+        9
+      ],
+      "tb_archaludon~mechi22_alakazam": [
+        0.1176,
+        17
+      ],
+      "biohack44_day2~team_rockets_spidops": [
+        0.1176,
+        17
+      ],
+      "plamen06_steel~biohack44_day2": [
+        0.1176,
+        17
+      ],
+      "mega_lucario_ex~wmh_alakazam": [
+        0.125,
+        16
+      ],
+      "tb_abomasnow~alakazam": [
+        0.125,
+        16
+      ],
+      "pllinas_alakazam~mechi22_alakazam": [
+        0.125,
+        8
+      ],
+      "pixiux_lucario_v63~grimmsnarl_toplayer": [
+        0.125,
+        16
+      ],
+      "tb_heuristic~tb_abomasnow": [
+        0.125,
+        8
+      ],
+      "pixiux_lucario_v63~wmh_trevenant": [
+        0.125,
+        16
+      ],
+      "avikdas567_heuristic~team_rockets_spidops": [
+        0.125,
+        8
+      ],
+      "cynthias_garchomp_ex~biohack44_day2": [
+        0.125,
+        16
+      ],
+      "kiyotah_abomasnow~prvsiyan_control_v11": [
+        0.125,
+        8
+      ],
+      "wmh_typhlosion~tb_starmie": [
+        0.125,
+        8
+      ],
+      "pixiux_lucario_v63~biohack44_day2": [
+        0.125,
+        8
+      ],
+      "wmh_megastarmie~tb_starmie": [
+        0.125,
+        8
+      ],
+      "prvsiyan_control_v11~team_rockets_spidops": [
+        0.125,
+        8
+      ],
+      "pixiux_lucario_v63~alakazam": [
+        0.125,
+        8
+      ],
+      "mega_kangaskhan_ex~marnies_grimmsnarl_ex": [
+        0.1333,
+        15
+      ],
+      "wmh_mewtwo~grimmsnarl_toplayer": [
+        0.1333,
+        15
+      ],
+      "wmh_kangaskhan~tb_abomasnow": [
+        0.1429,
+        14
+      ],
+      "wmh_ogerpon~team_rockets_spidops": [
+        0.1429,
+        7
+      ],
+      "wmh_typhlosion~wmh_megastarmie": [
+        0.1429,
+        7
+      ],
+      "prvsiyan_control_v11~wmh_trevenant": [
+        0.1429,
+        14
+      ],
+      "wmh_kangaskhan~avikdas567_heuristic": [
+        0.1429,
+        14
+      ],
+      "avikdas567_heuristic~alakazam": [
+        0.1429,
+        14
+      ],
+      "tb_heuristic~wmh_alakazam": [
+        0.1429,
+        7
+      ],
+      "mega_lucario_ex~team_rockets_spidops": [
+        0.1429,
+        14
+      ],
+      "wmh_kangaskhan~tb_archaludon": [
+        0.1429,
+        14
+      ],
+      "wmh_typhlosion~marnies_grimmsnarl_ex": [
+        0.1429,
+        7
+      ],
+      "mega_kangaskhan_ex~alakazam": [
+        0.1429,
+        7
+      ],
+      "pixiux_lucario_v63~team_rockets_spidops": [
+        0.15,
+        20
+      ],
+      "tb_abomasnow~wmh_trevenant": [
+        0.1538,
+        13
+      ],
+      "tb_starmie~pllinas_alakazam": [
+        0.1538,
+        13
+      ],
+      "tb_heuristic~marnies_grimmsnarl_ex": [
+        0.1538,
+        13
+      ],
+      "kiyotah_iono~mega_lucario_ex": [
+        0.1538,
+        13
+      ],
+      "kiyotah_abomasnow~mechi22_alakazam": [
+        0.1538,
+        13
+      ],
+      "plamen06_steel~cynthias_garchomp_ex": [
+        0.1538,
+        13
+      ],
+      "wmh_ogerpon~mega_kangaskhan_ex": [
+        0.1538,
+        13
+      ],
+      "kiyotah_iono~tb_starmie": [
+        0.1538,
+        13
+      ],
+      "pixiux_lucario_v63~prvsiyan_control_v11": [
+        0.1538,
+        13
+      ],
+      "pixiux_lucario_v63~pllinas_alakazam": [
+        0.1667,
+        12
+      ],
+      "wmh_kangaskhan~wmh_chandelure": [
+        0.1667,
+        12
+      ],
+      "pixiux_lucario_v63~tb_starmie": [
+        0.1667,
+        18
+      ],
+      "mega_lucario_ex~tb_abomasnow": [
+        0.1667,
+        12
+      ],
+      "wmh_typhlosion~cynthias_garchomp_ex": [
+        0.1667,
+        12
+      ],
+      "wmh_kangaskhan~tb_starmie": [
+        0.1667,
+        12
+      ],
+      "tb_abomasnow~wmh_chandelure": [
+        0.1667,
+        12
+      ],
+      "pixiux_lucario_v63~plamen06_steel": [
+        0.1667,
+        6
+      ],
+      "dragapult_ex~marnies_grimmsnarl_ex": [
+        0.1667,
+        12
+      ],
+      "kiyotah_iono~pllinas_alakazam": [
+        0.1667,
+        6
+      ],
+      "team_rockets_spidops~wmh_ogerpon": [
+        0.1667,
+        6
+      ],
+      "kiyotah_abomasnow~team_rockets_spidops": [
+        0.1667,
+        6
+      ],
+      "wmh_trevenant~cynthias_garchomp_ex": [
+        0.1667,
+        6
+      ],
+      "pixiux_lucario_v63~tb_heuristic": [
+        0.1667,
+        6
+      ],
+      "tb_archaludon~biohack44_day2": [
+        0.1667,
+        6
+      ],
+      "team_rockets_spidops~tb_starmie": [
+        0.1667,
+        6
+      ],
+      "mega_lucario_ex~cynthias_garchomp_ex": [
+        0.1765,
+        17
+      ],
+      "mega_kangaskhan_ex~wmh_megastarmie": [
+        0.1818,
+        11
+      ],
+      "mega_kangaskhan_ex~tb_abomasnow": [
+        0.1818,
+        11
+      ],
+      "tb_archaludon~cynthias_garchomp_ex": [
+        0.1818,
+        11
+      ],
+      "wmh_trevenant~wmh_megastarmie": [
+        0.1818,
+        11
+      ],
+      "pixiux_lucario_v63~cynthias_garchomp_ex": [
+        0.1818,
+        11
+      ],
+      "mega_lucario_ex~tb_starmie": [
+        0.1818,
+        11
+      ],
+      "wmh_trevenant~dragapult_ex": [
+        0.2,
+        10
+      ],
+      "dragapult_ex~plamen06_steel": [
+        0.2,
+        10
+      ],
+      "wmh_trevenant~team_rockets_spidops": [
+        0.2,
+        10
+      ],
+      "biohack44_day2~marnies_grimmsnarl_ex": [
         0.2,
         5
       ],
-      "tb_starmie~wmh_alakazam": [
+      "wmh_megastarmie~grimmsnarl_toplayer": [
+        0.2,
+        10
+      ],
+      "alakazam~marnies_grimmsnarl_ex": [
+        0.2,
+        10
+      ],
+      "prvsiyan_control_v11~wmh_chandelure": [
+        0.2,
+        5
+      ],
+      "wmh_typhlosion~alakazam": [
+        0.2,
+        10
+      ],
+      "mega_lucario_ex~wmh_chandelure": [
+        0.2,
+        10
+      ],
+      "mega_lucario_ex~wmh_typhlosion": [
+        0.2,
+        10
+      ],
+      "kiyotah_iono~tb_abomasnow": [
+        0.2,
+        10
+      ],
+      "cynthias_garchomp_ex~pllinas_alakazam": [
+        0.2,
+        10
+      ],
+      "wmh_chandelure~mechi22_alakazam": [
+        0.2,
+        10
+      ],
+      "wmh_ogerpon~avikdas567_heuristic": [
+        0.2,
+        5
+      ],
+      "alakazam~wmh_trevenant": [
+        0.2,
+        5
+      ],
+      "avikdas567_heuristic~pixiux_lucario_v63": [
+        0.2083,
+        12
+      ],
+      "wmh_trevenant~plamen06_steel": [
+        0.2143,
+        14
+      ],
+      "wmh_kangaskhan~wmh_megastarmie": [
+        0.2143,
+        14
+      ],
+      "kiyotah_abomasnow~wmh_mewtwo": [
+        0.2143,
+        14
+      ],
+      "wmh_alakazam~wmh_chandelure": [
+        0.2222,
+        9
+      ],
+      "tb_archaludon~alakazam": [
+        0.2222,
+        18
+      ],
+      "wmh_ogerpon~wmh_typhlosion": [
+        0.2222,
+        9
+      ],
+      "kiyotah_iono~wmh_typhlosion": [
+        0.2222,
+        9
+      ],
+      "tb_archaludon~dragapult_ex": [
+        0.2222,
+        9
+      ],
+      "wmh_chandelure~dragapult_ex": [
+        0.2222,
+        9
+      ],
+      "tb_heuristic~biohack44_day2": [
+        0.2222,
+        9
+      ],
+      "kiyotah_iono~mechi22_alakazam": [
+        0.2222,
+        9
+      ],
+      "kiyotah_iono~alakazam": [
+        0.2222,
+        9
+      ],
+      "prvsiyan_control_v11~pllinas_alakazam": [
+        0.2222,
+        9
+      ],
+      "wmh_ogerpon~pixiux_lucario_v63": [
+        0.2222,
+        9
+      ],
+      "wmh_ogerpon~mechi22_alakazam": [
+        0.2222,
+        9
+      ],
+      "mega_lucario_ex~alakazam": [
+        0.2222,
+        9
+      ],
+      "mega_kangaskhan_ex~prvsiyan_control_v11": [
+        0.2308,
+        13
+      ],
+      "mega_kangaskhan_ex~tb_heuristic": [
+        0.2308,
+        13
+      ],
+      "wmh_trevenant~tb_heuristic": [
+        0.2308,
+        13
+      ],
+      "tb_archaludon~tb_archaludon": [
+        0.2308,
+        13
+      ],
+      "wmh_alakazam~marnies_grimmsnarl_ex": [
+        0.2353,
+        17
+      ],
+      "team_rockets_spidops~cynthias_garchomp_ex": [
+        0.25,
+        8
+      ],
+      "wmh_typhlosion~dragapult_ex": [
+        0.25,
+        8
+      ],
+      "prvsiyan_control_v11~wmh_alakazam": [
+        0.25,
+        8
+      ],
+      "pllinas_alakazam~wmh_mewtwo": [
+        0.25,
+        12
+      ],
+      "mega_kangaskhan_ex~tb_archaludon": [
+        0.25,
+        12
+      ],
+      "mega_kangaskhan_ex~tb_starmie": [
+        0.25,
+        8
+      ],
+      "mechi22_alakazam~wmh_mewtwo": [
+        0.25,
+        16
+      ],
+      "pixiux_lucario_v63~mega_lucario_ex": [
+        0.25,
+        16
+      ],
+      "pixiux_lucario_v63~dragapult_ex": [
+        0.25,
+        12
+      ],
+      "team_rockets_spidops~tb_archaludon": [
+        0.25,
+        8
+      ],
+      "dragapult_ex~grimmsnarl_toplayer": [
+        0.25,
+        12
+      ],
+      "alakazam~cynthias_garchomp_ex": [
+        0.25,
+        8
+      ],
+      "wmh_mewtwo~plamen06_steel": [
+        0.25,
+        8
+      ],
+      "plamen06_steel~grimmsnarl_toplayer": [
+        0.25,
+        8
+      ],
+      "mechi22_alakazam~mechi22_alakazam": [
         0.25,
         4
       ],
-      "marnies_grimmsnarl_ex~tb_abomasnow": [
-        0.3333,
-        3
+      "mega_kangaskhan_ex~team_rockets_spidops": [
+        0.25,
+        4
       ],
-      "tb_starmie~tb_abomasnow": [
-        0.3333,
-        3
+      "wmh_typhlosion~wmh_alakazam": [
+        0.25,
+        8
       ],
-      "team_rockets_spidops~wmh_mewtwo": [
-        0.3333,
-        3
+      "wmh_ogerpon~wmh_mewtwo": [
+        0.25,
+        8
       ],
-      "dragapult_ex~wmh_megastarmie": [
-        0.3333,
-        3
+      "alakazam~mechi22_alakazam": [
+        0.25,
+        12
       ],
-      "dragapult_ex~avikdas567_heuristic": [
-        0.3333,
-        3
+      "wmh_megastarmie~alakazam": [
+        0.25,
+        8
+      ],
+      "dragapult_ex~wmh_alakazam": [
+        0.25,
+        12
+      ],
+      "tb_abomasnow~team_rockets_spidops": [
+        0.25,
+        8
+      ],
+      "tb_archaludon~wmh_kangaskhan": [
+        0.25,
+        8
+      ],
+      "biohack44_day2~wmh_typhlosion": [
+        0.25,
+        12
+      ],
+      "dragapult_ex~dragapult_ex": [
+        0.25,
+        8
+      ],
+      "kiyotah_abomasnow~tb_heuristic": [
+        0.25,
+        4
+      ],
+      "plamen06_steel~alakazam": [
+        0.2667,
+        15
       ],
       "dragapult_ex~wmh_chandelure": [
-        0.3333,
-        3
+        0.2667,
+        15
       ],
-      "alakazam~tb_starmie": [
-        0.3333,
-        3
+      "wmh_trevenant~tb_archaludon": [
+        0.2667,
+        15
       ],
-      "tb_heuristic~wmh_kangaskhan": [
-        0.3333,
-        3
+      "tb_archaludon~wmh_chandelure": [
+        0.2667,
+        15
       ],
-      "plamen06_steel~avikdas567_heuristic": [
-        0.3333,
-        3
+      "avikdas567_heuristic~prvsiyan_control_v11": [
+        0.2727,
+        11
       ],
-      "plamen06_steel~dragapult_ex": [
-        0.3333,
-        3
+      "wmh_megastarmie~kiyotah_abomasnow": [
+        0.2727,
+        11
       ],
-      "wmh_ogerpon~wmh_trevenant": [
-        0.3333,
-        3
+      "mega_kangaskhan_ex~wmh_kangaskhan": [
+        0.2727,
+        11
       ],
-      "mechi22_alakazam~grimmsnarl_toplayer": [
+      "pllinas_alakazam~wmh_trevenant": [
+        0.2727,
+        11
+      ],
+      "kiyotah_iono~wmh_mewtwo": [
+        0.2727,
+        11
+      ],
+      "pixiux_lucario_v63~tb_archaludon": [
+        0.2727,
+        11
+      ],
+      "wmh_ogerpon~wmh_megastarmie": [
+        0.2727,
+        11
+      ],
+      "wmh_ogerpon~dragapult_ex": [
+        0.2857,
+        7
+      ],
+      "wmh_mewtwo~mechi22_alakazam": [
+        0.2857,
+        7
+      ],
+      "wmh_kangaskhan~wmh_mewtwo": [
+        0.2857,
+        14
+      ],
+      "wmh_ogerpon~mega_lucario_ex": [
+        0.2857,
+        14
+      ],
+      "wmh_megastarmie~tb_abomasnow": [
+        0.2857,
+        7
+      ],
+      "mega_kangaskhan_ex~wmh_trevenant": [
+        0.2857,
+        7
+      ],
+      "biohack44_day2~wmh_megastarmie": [
+        0.2857,
+        14
+      ],
+      "mega_kangaskhan_ex~pixiux_lucario_v63": [
+        0.2857,
+        7
+      ],
+      "kiyotah_iono~tb_heuristic": [
+        0.2857,
+        7
+      ],
+      "wmh_kangaskhan~team_rockets_spidops": [
+        0.2857,
+        7
+      ],
+      "wmh_trevenant~wmh_chandelure": [
+        0.2857,
+        14
+      ],
+      "plamen06_steel~plamen06_steel": [
+        0.2857,
+        7
+      ],
+      "dragapult_ex~tb_starmie": [
+        0.2857,
+        7
+      ],
+      "wmh_typhlosion~mechi22_alakazam": [
+        0.2941,
+        17
+      ],
+      "kiyotah_abomasnow~tb_abomasnow": [
+        0.2941,
+        17
+      ],
+      "wmh_chandelure~wmh_megastarmie": [
+        0.3,
+        10
+      ],
+      "dragapult_ex~tb_abomasnow": [
+        0.3,
+        10
+      ],
+      "tb_abomasnow~tb_archaludon": [
+        0.3,
+        10
+      ],
+      "wmh_trevenant~tb_starmie": [
+        0.3,
+        10
+      ],
+      "kiyotah_iono~tb_archaludon": [
+        0.3,
+        10
+      ],
+      "kiyotah_abomasnow~cynthias_garchomp_ex": [
+        0.3,
+        10
+      ],
+      "tb_archaludon~prvsiyan_control_v11": [
+        0.3,
+        10
+      ],
+      "wmh_typhlosion~plamen06_steel": [
+        0.3,
+        10
+      ],
+      "alakazam~grimmsnarl_toplayer": [
+        0.3,
+        10
+      ],
+      "tb_starmie~grimmsnarl_toplayer": [
+        0.3,
+        10
+      ],
+      "tb_starmie~alakazam": [
+        0.3,
+        10
+      ],
+      "mega_lucario_ex~tb_archaludon": [
+        0.3,
+        10
+      ],
+      "kiyotah_iono~wmh_trevenant": [
+        0.3,
+        10
+      ],
+      "tb_heuristic~alakazam": [
+        0.3077,
+        13
+      ],
+      "team_rockets_spidops~marnies_grimmsnarl_ex": [
+        0.3077,
+        13
+      ],
+      "wmh_mewtwo~wmh_mewtwo": [
+        0.3077,
+        13
+      ],
+      "team_rockets_spidops~grimmsnarl_toplayer": [
+        0.3077,
+        13
+      ],
+      "wmh_ogerpon~tb_abomasnow": [
+        0.3077,
+        13
+      ],
+      "dragapult_ex~wmh_mewtwo": [
+        0.3077,
+        13
+      ],
+      "plamen06_steel~prvsiyan_control_v11": [
+        0.3077,
+        13
+      ],
+      "mega_lucario_ex~wmh_megastarmie": [
+        0.3125,
+        16
+      ],
+      "kiyotah_abomasnow~wmh_trevenant": [
+        0.3125,
+        16
+      ],
+      "tb_archaludon~tb_starmie": [
+        0.3125,
+        16
+      ],
+      "team_rockets_spidops~wmh_alakazam": [
         0.3333,
-        3
+        18
+      ],
+      "wmh_trevenant~wmh_typhlosion": [
+        0.3333,
+        12
+      ],
+      "wmh_kangaskhan~marnies_grimmsnarl_ex": [
+        0.3333,
+        15
+      ],
+      "mega_kangaskhan_ex~kiyotah_abomasnow": [
+        0.3333,
+        9
+      ],
+      "marnies_grimmsnarl_ex~cynthias_garchomp_ex": [
+        0.3333,
+        9
+      ],
+      "avikdas567_heuristic~tb_starmie": [
+        0.3333,
+        12
+      ],
+      "tb_archaludon~wmh_alakazam": [
+        0.3333,
+        15
+      ],
+      "dragapult_ex~cynthias_garchomp_ex": [
+        0.3333,
+        12
+      ],
+      "wmh_chandelure~grimmsnarl_toplayer": [
+        0.3333,
+        9
+      ],
+      "tb_abomasnow~marnies_grimmsnarl_ex": [
+        0.3333,
+        12
+      ],
+      "wmh_chandelure~wmh_trevenant": [
+        0.3333,
+        6
+      ],
+      "mega_kangaskhan_ex~avikdas567_heuristic": [
+        0.3333,
+        9
+      ],
+      "tb_heuristic~tb_starmie": [
+        0.3333,
+        12
+      ],
+      "wmh_kangaskhan~kiyotah_abomasnow": [
+        0.3333,
+        9
+      ],
+      "team_rockets_spidops~team_rockets_spidops": [
+        0.3333,
+        9
+      ],
+      "alakazam~wmh_chandelure": [
+        0.3333,
+        12
+      ],
+      "biohack44_day2~wmh_ogerpon": [
+        0.3333,
+        12
+      ],
+      "avikdas567_heuristic~tb_abomasnow": [
+        0.3333,
+        15
+      ],
+      "wmh_ogerpon~wmh_ogerpon": [
+        0.3333,
+        12
+      ],
+      "cynthias_garchomp_ex~wmh_chandelure": [
+        0.3333,
+        12
+      ],
+      "avikdas567_heuristic~cynthias_garchomp_ex": [
+        0.3333,
+        12
+      ],
+      "tb_heuristic~plamen06_steel": [
+        0.3333,
+        9
       ],
       "avikdas567_heuristic~dragapult_ex": [
         0.3333,
+        9
+      ],
+      "tb_heuristic~team_rockets_spidops": [
+        0.3333,
+        6
+      ],
+      "wmh_ogerpon~tb_archaludon": [
+        0.3333,
+        6
+      ],
+      "kiyotah_abomasnow~plamen06_steel": [
+        0.3333,
+        15
+      ],
+      "mechi22_alakazam~wmh_alakazam": [
+        0.3333,
+        9
+      ],
+      "grimmsnarl_toplayer~grimmsnarl_toplayer": [
+        0.3333,
+        9
+      ],
+      "grimmsnarl_toplayer~team_rockets_spidops": [
+        0.3333,
+        6
+      ],
+      "marnies_grimmsnarl_ex~biohack44_day2": [
+        0.3333,
+        12
+      ],
+      "tb_starmie~mega_lucario_ex": [
+        0.3333,
+        12
+      ],
+      "mega_lucario_ex~avikdas567_heuristic": [
+        0.3333,
+        9
+      ],
+      "wmh_alakazam~grimmsnarl_toplayer": [
+        0.3333,
+        9
+      ],
+      "cynthias_garchomp_ex~team_rockets_spidops": [
+        0.3333,
+        6
+      ],
+      "tb_heuristic~wmh_mewtwo": [
+        0.3333,
+        12
+      ],
+      "pllinas_alakazam~team_rockets_spidops": [
+        0.3333,
+        12
+      ],
+      "wmh_trevenant~pllinas_alakazam": [
+        0.3333,
         3
+      ],
+      "team_rockets_spidops~tb_abomasnow": [
+        0.3333,
+        12
+      ],
+      "pixiux_lucario_v63~wmh_chandelure": [
+        0.3333,
+        9
+      ],
+      "avikdas567_heuristic~wmh_trevenant": [
+        0.3333,
+        6
+      ],
+      "prvsiyan_control_v11~prvsiyan_control_v11": [
+        0.3571,
+        14
+      ],
+      "tb_archaludon~plamen06_steel": [
+        0.3571,
+        14
+      ],
+      "prvsiyan_control_v11~dragapult_ex": [
+        0.3636,
+        11
+      ],
+      "mega_lucario_ex~plamen06_steel": [
+        0.3636,
+        11
+      ],
+      "wmh_kangaskhan~wmh_typhlosion": [
+        0.3636,
+        11
+      ],
+      "tb_starmie~biohack44_day2": [
+        0.3636,
+        11
+      ],
+      "alakazam~prvsiyan_control_v11": [
+        0.3636,
+        11
+      ],
+      "wmh_alakazam~mechi22_alakazam": [
+        0.3636,
+        11
+      ],
+      "mega_lucario_ex~dragapult_ex": [
+        0.375,
+        8
+      ],
+      "wmh_megastarmie~wmh_megastarmie": [
+        0.375,
+        8
+      ],
+      "dragapult_ex~mechi22_alakazam": [
+        0.375,
+        8
+      ],
+      "wmh_typhlosion~wmh_mewtwo": [
+        0.375,
+        8
+      ],
+      "avikdas567_heuristic~pllinas_alakazam": [
+        0.375,
+        8
+      ],
+      "plamen06_steel~wmh_mewtwo": [
+        0.375,
+        8
+      ],
+      "tb_heuristic~cynthias_garchomp_ex": [
+        0.375,
+        8
+      ],
+      "cynthias_garchomp_ex~prvsiyan_control_v11": [
+        0.375,
+        8
+      ],
+      "team_rockets_spidops~tb_heuristic": [
+        0.375,
+        8
       ],
       "kiyotah_iono~avikdas567_heuristic": [
-        0.3333,
-        3
-      ],
-      "mega_lucario_ex~kiyotah_abomasnow": [
-        0.3333,
-        3
-      ],
-      "wmh_megastarmie~dragapult_ex": [
-        0.3333,
-        3
-      ],
-      "marnies_grimmsnarl_ex~prvsiyan_control_v11": [
-        0.3333,
-        3
-      ],
-      "cynthias_garchomp_ex~biohack44_day2": [
-        0.3333,
-        3
-      ],
-      "tb_abomasnow~tb_abomasnow": [
-        0.3333,
-        3
-      ],
-      "pllinas_alakazam~wmh_megastarmie": [
-        0.3333,
-        3
-      ],
-      "pllinas_alakazam~grimmsnarl_toplayer": [
-        0.3333,
-        3
+        0.375,
+        8
       ],
       "tb_abomasnow~wmh_mewtwo": [
-        0.3333,
-        3
+        0.375,
+        16
       ],
-      "cynthias_garchomp_ex~cynthias_garchomp_ex": [
-        0.3333,
-        3
+      "wmh_mewtwo~pllinas_alakazam": [
+        0.375,
+        8
       ],
-      "wmh_alakazam~avikdas567_heuristic": [
-        0.3333,
-        3
+      "marnies_grimmsnarl_ex~marnies_grimmsnarl_ex": [
+        0.375,
+        8
       ],
-      "pixiux_lucario_v63~tb_abomasnow": [
-        0.3333,
-        3
+      "avikdas567_heuristic~tb_heuristic": [
+        0.3846,
+        13
       ],
-      "avikdas567_heuristic~wmh_chandelure": [
+      "tb_heuristic~pllinas_alakazam": [
+        0.3846,
+        13
+      ],
+      "mega_lucario_ex~kiyotah_iono": [
+        0.3846,
+        13
+      ],
+      "pllinas_alakazam~grimmsnarl_toplayer": [
+        0.3846,
+        13
+      ],
+      "marnies_grimmsnarl_ex~tb_abomasnow": [
+        0.4,
+        10
+      ],
+      "grimmsnarl_toplayer~alakazam": [
+        0.4,
+        15
+      ],
+      "tb_heuristic~prvsiyan_control_v11": [
+        0.4,
+        10
+      ],
+      "wmh_typhlosion~wmh_chandelure": [
+        0.4,
+        10
+      ],
+      "team_rockets_spidops~wmh_mewtwo": [
+        0.4,
+        15
+      ],
+      "tb_starmie~wmh_mewtwo": [
+        0.4,
+        10
+      ],
+      "cynthias_garchomp_ex~marnies_grimmsnarl_ex": [
+        0.4,
+        10
+      ],
+      "mega_kangaskhan_ex~wmh_chandelure": [
+        0.4,
+        10
+      ],
+      "wmh_typhlosion~tb_heuristic": [
+        0.4,
+        10
+      ],
+      "wmh_chandelure~team_rockets_spidops": [
+        0.4,
+        10
+      ],
+      "mega_lucario_ex~tb_heuristic": [
+        0.4,
+        10
+      ],
+      "plamen06_steel~tb_starmie": [
+        0.4,
+        10
+      ],
+      "avikdas567_heuristic~wmh_ogerpon": [
+        0.4,
+        5
+      ],
+      "dragapult_ex~team_rockets_spidops": [
+        0.4,
+        10
+      ],
+      "kiyotah_abomasnow~tb_archaludon": [
+        0.4,
+        10
+      ],
+      "plamen06_steel~wmh_chandelure": [
+        0.4,
+        5
+      ],
+      "kiyotah_abomasnow~marnies_grimmsnarl_ex": [
+        0.4,
+        10
+      ],
+      "marnies_grimmsnarl_ex~mechi22_alakazam": [
+        0.4,
+        10
+      ],
+      "team_rockets_spidops~pllinas_alakazam": [
+        0.4118,
+        17
+      ],
+      "tb_archaludon~tb_heuristic": [
+        0.4118,
+        17
+      ],
+      "avikdas567_heuristic~kiyotah_abomasnow": [
+        0.4167,
+        12
+      ],
+      "dragapult_ex~wmh_megastarmie": [
+        0.4167,
+        12
+      ],
+      "dragapult_ex~kiyotah_abomasnow": [
+        0.4167,
+        12
+      ],
+      "tb_heuristic~tb_archaludon": [
+        0.4167,
+        12
+      ],
+      "wmh_megastarmie~marnies_grimmsnarl_ex": [
+        0.4167,
+        12
+      ],
+      "tb_heuristic~mega_lucario_ex": [
+        0.4167,
+        12
+      ],
+      "wmh_chandelure~biohack44_day2": [
+        0.4167,
+        12
+      ],
+      "grimmsnarl_toplayer~biohack44_day2": [
+        0.4211,
+        19
+      ],
+      "kiyotah_iono~wmh_ogerpon": [
+        0.4286,
+        7
+      ],
+      "prvsiyan_control_v11~avikdas567_heuristic": [
+        0.4286,
+        7
+      ],
+      "wmh_alakazam~team_rockets_spidops": [
+        0.4286,
+        7
+      ],
+      "grimmsnarl_toplayer~cynthias_garchomp_ex": [
+        0.4286,
+        7
+      ],
+      "wmh_trevenant~mega_kangaskhan_ex": [
+        0.4286,
+        14
+      ],
+      "wmh_typhlosion~tb_abomasnow": [
+        0.4286,
+        7
+      ],
+      "wmh_kangaskhan~mega_kangaskhan_ex": [
+        0.4286,
+        14
+      ],
+      "wmh_alakazam~pllinas_alakazam": [
+        0.4286,
+        7
+      ],
+      "grimmsnarl_toplayer~wmh_mewtwo": [
+        0.4375,
+        16
+      ],
+      "mechi22_alakazam~team_rockets_spidops": [
+        0.4444,
+        9
+      ],
+      "wmh_megastarmie~tb_heuristic": [
+        0.4444,
+        9
+      ],
+      "cynthias_garchomp_ex~grimmsnarl_toplayer": [
+        0.4444,
+        9
+      ],
+      "alakazam~mega_kangaskhan_ex": [
+        0.4444,
+        9
+      ],
+      "wmh_kangaskhan~plamen06_steel": [
+        0.4444,
+        9
+      ],
+      "grimmsnarl_toplayer~marnies_grimmsnarl_ex": [
+        0.4444,
+        9
+      ],
+      "kiyotah_iono~prvsiyan_control_v11": [
+        0.4444,
+        9
+      ],
+      "wmh_ogerpon~plamen06_steel": [
+        0.4444,
+        9
+      ],
+      "team_rockets_spidops~plamen06_steel": [
+        0.4444,
+        9
+      ],
+      "pllinas_alakazam~pllinas_alakazam": [
+        0.4444,
+        9
+      ],
+      "wmh_typhlosion~tb_archaludon": [
+        0.4545,
+        11
+      ],
+      "avikdas567_heuristic~wmh_kangaskhan": [
+        0.4545,
+        11
+      ],
+      "mechi22_alakazam~pllinas_alakazam": [
+        0.4545,
+        11
+      ],
+      "avikdas567_heuristic~tb_archaludon": [
+        0.4545,
+        11
+      ],
+      "mega_lucario_ex~prvsiyan_control_v11": [
+        0.4545,
+        11
+      ],
+      "dragapult_ex~tb_heuristic": [
+        0.4615,
+        13
+      ],
+      "tb_archaludon~team_rockets_spidops": [
+        0.4615,
+        13
+      ],
+      "wmh_chandelure~cynthias_garchomp_ex": [
+        0.4615,
+        13
+      ],
+      "pllinas_alakazam~tb_heuristic": [
+        0.4615,
+        13
+      ],
+      "wmh_alakazam~dragapult_ex": [
+        0.4615,
+        13
+      ],
+      "marnies_grimmsnarl_ex~kiyotah_abomasnow": [
+        0.4615,
+        13
+      ],
+      "pixiux_lucario_v63~wmh_ogerpon": [
+        0.4615,
+        13
+      ],
+      "wmh_megastarmie~plamen06_steel": [
+        0.4615,
+        13
+      ],
+      "tb_starmie~tb_abomasnow": [
+        0.4667,
+        15
+      ],
+      "kiyotah_abomasnow~grimmsnarl_toplayer": [
+        0.4667,
+        15
+      ],
+      "dragapult_ex~tb_archaludon": [
+        0.4667,
+        15
+      ],
+      "kiyotah_abomasnow~tb_starmie": [
+        0.4667,
+        15
+      ],
+      "team_rockets_spidops~wmh_megastarmie": [
+        0.4706,
+        17
+      ],
+      "wmh_ogerpon~biohack44_day2": [
         0.5,
-        2
+        16
       ],
-      "marnies_grimmsnarl_ex~wmh_ogerpon": [
+      "tb_heuristic~kiyotah_abomasnow": [
         0.5,
-        1
+        14
+      ],
+      "kiyotah_abomasnow~avikdas567_heuristic": [
+        0.5,
+        20
+      ],
+      "tb_archaludon~wmh_megastarmie": [
+        0.5,
+        6
+      ],
+      "kiyotah_iono~kiyotah_abomasnow": [
+        0.5,
+        10
+      ],
+      "wmh_chandelure~pixiux_lucario_v63": [
+        0.5,
+        8
+      ],
+      "tb_heuristic~wmh_megastarmie": [
+        0.5,
+        12
+      ],
+      "mega_kangaskhan_ex~mega_lucario_ex": [
+        0.5,
+        20
+      ],
+      "pixiux_lucario_v63~kiyotah_iono": [
+        0.5,
+        16
+      ],
+      "wmh_mewtwo~wmh_megastarmie": [
+        0.5,
+        12
+      ],
+      "tb_heuristic~pixiux_lucario_v63": [
+        0.5,
+        10
+      ],
+      "mega_lucario_ex~mega_lucario_ex": [
+        0.5,
+        12
+      ],
+      "pixiux_lucario_v63~avikdas567_heuristic": [
+        0.5,
+        10
+      ],
+      "pixiux_lucario_v63~kiyotah_abomasnow": [
+        0.5,
+        8
+      ],
+      "pllinas_alakazam~marnies_grimmsnarl_ex": [
+        0.5,
+        6
+      ],
+      "plamen06_steel~team_rockets_spidops": [
+        0.5,
+        10
+      ],
+      "wmh_kangaskhan~tb_heuristic": [
+        0.5,
+        8
+      ],
+      "wmh_kangaskhan~wmh_ogerpon": [
+        0.5,
+        10
+      ],
+      "alakazam~alakazam": [
+        0.5,
+        10
+      ],
+      "wmh_typhlosion~wmh_typhlosion": [
+        0.5,
+        6
+      ],
+      "pixiux_lucario_v63~mega_kangaskhan_ex": [
+        0.5,
+        6
+      ],
+      "tb_heuristic~dragapult_ex": [
+        0.5,
+        14
+      ],
+      "wmh_kangaskhan~kiyotah_iono": [
+        0.5,
+        14
+      ],
+      "mega_lucario_ex~kiyotah_abomasnow": [
+        0.5,
+        18
+      ],
+      "cynthias_garchomp_ex~wmh_mewtwo": [
+        0.5,
+        10
+      ],
+      "wmh_mewtwo~team_rockets_spidops": [
+        0.5,
+        8
+      ],
+      "kiyotah_iono~wmh_kangaskhan": [
+        0.5,
+        6
+      ],
+      "pllinas_alakazam~prvsiyan_control_v11": [
+        0.5,
+        10
+      ],
+      "wmh_typhlosion~avikdas567_heuristic": [
+        0.5,
+        14
+      ],
+      "mechi22_alakazam~grimmsnarl_toplayer": [
+        0.5,
+        10
+      ],
+      "kiyotah_iono~kiyotah_iono": [
+        0.5,
+        8
+      ],
+      "tb_abomasnow~tb_abomasnow": [
+        0.5,
+        14
+      ],
+      "kiyotah_abomasnow~wmh_ogerpon": [
+        0.5,
+        6
+      ],
+      "dragapult_ex~mega_lucario_ex": [
+        0.5,
+        4
+      ],
+      "wmh_kangaskhan~dragapult_ex": [
+        0.5,
+        10
+      ],
+      "tb_heuristic~mechi22_alakazam": [
+        0.5,
+        12
+      ],
+      "cynthias_garchomp_ex~tb_archaludon": [
+        0.5,
+        10
+      ],
+      "wmh_chandelure~alakazam": [
+        0.5,
+        8
+      ],
+      "wmh_kangaskhan~pixiux_lucario_v63": [
+        0.5,
+        4
+      ],
+      "wmh_ogerpon~prvsiyan_control_v11": [
+        0.5,
+        8
+      ],
+      "wmh_mewtwo~tb_heuristic": [
+        0.5,
+        12
+      ],
+      "tb_starmie~wmh_megastarmie": [
+        0.5294,
+        17
+      ],
+      "dragapult_ex~pixiux_lucario_v63": [
+        0.5333,
+        15
+      ],
+      "wmh_megastarmie~mechi22_alakazam": [
+        0.5333,
+        15
+      ],
+      "wmh_mewtwo~tb_abomasnow": [
+        0.5333,
+        15
+      ],
+      "wmh_trevenant~wmh_alakazam": [
+        0.5333,
+        15
+      ],
+      "avikdas567_heuristic~kiyotah_iono": [
+        0.5333,
+        15
+      ],
+      "prvsiyan_control_v11~alakazam": [
+        0.5333,
+        15
+      ],
+      "pixiux_lucario_v63~wmh_kangaskhan": [
+        0.5385,
+        13
+      ],
+      "dragapult_ex~wmh_trevenant": [
+        0.5385,
+        13
+      ],
+      "tb_starmie~tb_starmie": [
+        0.5385,
+        13
+      ],
+      "dragapult_ex~prvsiyan_control_v11": [
+        0.5385,
+        13
+      ],
+      "kiyotah_abomasnow~dragapult_ex": [
+        0.5385,
+        13
+      ],
+      "biohack44_day2~tb_starmie": [
+        0.5385,
+        13
+      ],
+      "wmh_chandelure~mega_lucario_ex": [
+        0.5385,
+        13
+      ],
+      "wmh_ogerpon~wmh_kangaskhan": [
+        0.5385,
+        13
+      ],
+      "grimmsnarl_toplayer~tb_abomasnow": [
+        0.5385,
+        13
+      ],
+      "mega_lucario_ex~mega_kangaskhan_ex": [
+        0.5385,
+        13
+      ],
+      "tb_heuristic~avikdas567_heuristic": [
+        0.5455,
+        11
+      ],
+      "wmh_chandelure~wmh_mewtwo": [
+        0.5455,
+        11
+      ],
+      "wmh_mewtwo~wmh_chandelure": [
+        0.5455,
+        11
+      ],
+      "kiyotah_iono~wmh_chandelure": [
+        0.5455,
+        11
+      ],
+      "wmh_megastarmie~tb_archaludon": [
+        0.5455,
+        11
+      ],
+      "wmh_alakazam~wmh_trevenant": [
+        0.5455,
+        11
+      ],
+      "wmh_mewtwo~cynthias_garchomp_ex": [
+        0.5455,
+        11
+      ],
+      "pixiux_lucario_v63~pixiux_lucario_v63": [
+        0.5455,
+        11
+      ],
+      "wmh_megastarmie~pixiux_lucario_v63": [
+        0.5455,
+        11
+      ],
+      "kiyotah_abomasnow~pixiux_lucario_v63": [
+        0.5455,
+        11
+      ],
+      "wmh_chandelure~tb_heuristic": [
+        0.5556,
+        18
+      ],
+      "kiyotah_iono~wmh_megastarmie": [
+        0.5556,
+        9
+      ],
+      "alakazam~wmh_megastarmie": [
+        0.5556,
+        9
+      ],
+      "marnies_grimmsnarl_ex~alakazam": [
+        0.5556,
+        9
+      ],
+      "wmh_typhlosion~wmh_trevenant": [
+        0.5556,
+        9
+      ],
+      "tb_abomasnow~avikdas567_heuristic": [
+        0.5556,
+        9
+      ],
+      "mega_kangaskhan_ex~kiyotah_iono": [
+        0.5556,
+        9
+      ],
+      "tb_abomasnow~plamen06_steel": [
+        0.5556,
+        9
+      ],
+      "kiyotah_abomasnow~wmh_chandelure": [
+        0.5556,
+        9
+      ],
+      "prvsiyan_control_v11~tb_heuristic": [
+        0.5556,
+        9
+      ],
+      "wmh_alakazam~prvsiyan_control_v11": [
+        0.5556,
+        18
+      ],
+      "wmh_kangaskhan~mega_lucario_ex": [
+        0.5556,
+        9
+      ],
+      "wmh_trevenant~wmh_trevenant": [
+        0.5625,
+        16
+      ],
+      "wmh_chandelure~tb_archaludon": [
+        0.5625,
+        16
+      ],
+      "plamen06_steel~dragapult_ex": [
+        0.5625,
+        16
+      ],
+      "avikdas567_heuristic~avikdas567_heuristic": [
+        0.5625,
+        16
+      ],
+      "mega_lucario_ex~wmh_kangaskhan": [
+        0.5625,
+        16
+      ],
+      "plamen06_steel~tb_heuristic": [
+        0.5714,
+        7
+      ],
+      "wmh_trevenant~kiyotah_abomasnow": [
+        0.5714,
+        7
+      ],
+      "wmh_megastarmie~cynthias_garchomp_ex": [
+        0.5714,
+        7
+      ],
+      "wmh_mewtwo~dragapult_ex": [
+        0.5714,
+        7
+      ],
+      "kiyotah_iono~biohack44_day2": [
+        0.5714,
+        7
+      ],
+      "kiyotah_abomasnow~kiyotah_iono": [
+        0.5714,
+        14
+      ],
+      "kiyotah_abomasnow~kiyotah_abomasnow": [
+        0.5714,
+        7
+      ],
+      "dragapult_ex~wmh_kangaskhan": [
+        0.5714,
+        14
+      ],
+      "prvsiyan_control_v11~wmh_ogerpon": [
+        0.5714,
+        14
+      ],
+      "biohack44_day2~avikdas567_heuristic": [
+        0.5714,
+        7
+      ],
+      "avikdas567_heuristic~wmh_typhlosion": [
+        0.5714,
+        14
+      ],
+      "kiyotah_iono~mega_kangaskhan_ex": [
+        0.5714,
+        7
+      ],
+      "tb_archaludon~kiyotah_abomasnow": [
+        0.5714,
+        7
+      ],
+      "wmh_chandelure~mega_kangaskhan_ex": [
+        0.5714,
+        7
+      ],
+      "wmh_chandelure~kiyotah_abomasnow": [
+        0.5833,
+        12
+      ],
+      "wmh_chandelure~wmh_chandelure": [
+        0.5833,
+        12
+      ],
+      "wmh_megastarmie~kiyotah_iono": [
+        0.5833,
+        12
+      ],
+      "cynthias_garchomp_ex~dragapult_ex": [
+        0.5833,
+        12
+      ],
+      "prvsiyan_control_v11~mega_lucario_ex": [
+        0.5833,
+        12
+      ],
+      "plamen06_steel~wmh_ogerpon": [
+        0.5833,
+        12
+      ],
+      "plamen06_steel~mega_lucario_ex": [
+        0.5833,
+        12
+      ],
+      "marnies_grimmsnarl_ex~pllinas_alakazam": [
+        0.5882,
+        17
+      ],
+      "tb_starmie~dragapult_ex": [
+        0.5882,
+        17
+      ],
+      "prvsiyan_control_v11~plamen06_steel": [
+        0.5882,
+        17
+      ],
+      "mechi22_alakazam~wmh_chandelure": [
+        0.6,
+        10
+      ],
+      "tb_archaludon~mega_kangaskhan_ex": [
+        0.6,
+        20
+      ],
+      "wmh_chandelure~wmh_typhlosion": [
+        0.6,
+        5
+      ],
+      "pixiux_lucario_v63~wmh_typhlosion": [
+        0.6,
+        10
+      ],
+      "tb_archaludon~wmh_mewtwo": [
+        0.6,
+        15
+      ],
+      "wmh_ogerpon~kiyotah_abomasnow": [
+        0.6,
+        5
+      ],
+      "tb_starmie~cynthias_garchomp_ex": [
+        0.6,
+        10
+      ],
+      "wmh_alakazam~wmh_mewtwo": [
+        0.6,
+        10
+      ],
+      "tb_heuristic~mega_kangaskhan_ex": [
+        0.6,
+        10
+      ],
+      "wmh_megastarmie~wmh_chandelure": [
+        0.6,
+        10
+      ],
+      "mechi22_alakazam~prvsiyan_control_v11": [
+        0.6,
+        10
+      ],
+      "grimmsnarl_toplayer~kiyotah_abomasnow": [
+        0.6,
+        10
+      ],
+      "cynthias_garchomp_ex~tb_abomasnow": [
+        0.6,
+        15
+      ],
+      "mega_lucario_ex~pixiux_lucario_v63": [
+        0.6,
+        10
+      ],
+      "wmh_mewtwo~wmh_typhlosion": [
+        0.6,
+        10
+      ],
+      "tb_archaludon~tb_abomasnow": [
+        0.6154,
+        13
+      ],
+      "marnies_grimmsnarl_ex~grimmsnarl_toplayer": [
+        0.6154,
+        13
+      ],
+      "wmh_trevenant~mechi22_alakazam": [
+        0.6154,
+        13
+      ],
+      "tb_heuristic~wmh_trevenant": [
+        0.6154,
+        13
+      ],
+      "cynthias_garchomp_ex~mechi22_alakazam": [
+        0.6154,
+        13
+      ],
+      "tb_heuristic~wmh_typhlosion": [
+        0.6154,
+        13
+      ],
+      "cynthias_garchomp_ex~wmh_megastarmie": [
+        0.6154,
+        13
+      ],
+      "cynthias_garchomp_ex~kiyotah_abomasnow": [
+        0.6154,
+        13
+      ],
+      "mega_kangaskhan_ex~wmh_ogerpon": [
+        0.6154,
+        13
+      ],
+      "cynthias_garchomp_ex~tb_heuristic": [
+        0.6154,
+        13
+      ],
+      "wmh_ogerpon~kiyotah_iono": [
+        0.6154,
+        13
+      ],
+      "avikdas567_heuristic~mega_kangaskhan_ex": [
+        0.625,
+        8
+      ],
+      "wmh_kangaskhan~wmh_trevenant": [
+        0.625,
+        8
+      ],
+      "pllinas_alakazam~dragapult_ex": [
+        0.625,
+        8
+      ],
+      "prvsiyan_control_v11~mechi22_alakazam": [
+        0.625,
+        8
+      ],
+      "team_rockets_spidops~wmh_trevenant": [
+        0.625,
+        8
+      ],
+      "dragapult_ex~pllinas_alakazam": [
+        0.625,
+        8
+      ],
+      "tb_starmie~wmh_trevenant": [
+        0.625,
+        16
+      ],
+      "prvsiyan_control_v11~wmh_kangaskhan": [
+        0.625,
+        8
+      ],
+      "wmh_trevenant~prvsiyan_control_v11": [
+        0.625,
+        8
+      ],
+      "mechi22_alakazam~tb_starmie": [
+        0.625,
+        8
+      ],
+      "marnies_grimmsnarl_ex~team_rockets_spidops": [
+        0.6364,
+        11
+      ],
+      "wmh_mewtwo~avikdas567_heuristic": [
+        0.6364,
+        11
+      ],
+      "wmh_mewtwo~mega_kangaskhan_ex": [
+        0.6364,
+        11
+      ],
+      "kiyotah_abomasnow~wmh_kangaskhan": [
+        0.6364,
+        11
+      ],
+      "plamen06_steel~tb_abomasnow": [
+        0.6364,
+        11
+      ],
+      "plamen06_steel~wmh_trevenant": [
+        0.6364,
+        11
+      ],
+      "wmh_typhlosion~mega_kangaskhan_ex": [
+        0.6364,
+        11
+      ],
+      "wmh_alakazam~cynthias_garchomp_ex": [
+        0.6429,
+        14
+      ],
+      "mechi22_alakazam~wmh_trevenant": [
+        0.6429,
+        14
+      ],
+      "alakazam~tb_starmie": [
+        0.6429,
+        14
+      ],
+      "grimmsnarl_toplayer~wmh_alakazam": [
+        0.6429,
+        14
+      ],
+      "tb_abomasnow~grimmsnarl_toplayer": [
+        0.6429,
+        14
+      ],
+      "mechi22_alakazam~cynthias_garchomp_ex": [
+        0.6667,
+        9
+      ],
+      "wmh_chandelure~pllinas_alakazam": [
+        0.6667,
+        12
       ],
       "tb_archaludon~kiyotah_iono": [
         0.6667,
-        3
+        12
       ],
-      "marnies_grimmsnarl_ex~cynthias_garchomp_ex": [
+      "kiyotah_abomasnow~wmh_megastarmie": [
         0.6667,
-        3
+        6
       ],
-      "tb_starmie~pixiux_lucario_v63": [
+      "tb_archaludon~avikdas567_heuristic": [
         0.6667,
-        3
+        12
+      ],
+      "plamen06_steel~tb_archaludon": [
+        0.6667,
+        6
+      ],
+      "dragapult_ex~avikdas567_heuristic": [
+        0.6667,
+        12
+      ],
+      "dragapult_ex~alakazam": [
+        0.6667,
+        6
+      ],
+      "tb_archaludon~wmh_typhlosion": [
+        0.6667,
+        12
+      ],
+      "wmh_mewtwo~kiyotah_abomasnow": [
+        0.6667,
+        9
+      ],
+      "marnies_grimmsnarl_ex~tb_starmie": [
+        0.6667,
+        15
+      ],
+      "prvsiyan_control_v11~cynthias_garchomp_ex": [
+        0.6667,
+        9
+      ],
+      "marnies_grimmsnarl_ex~wmh_mewtwo": [
+        0.6667,
+        9
+      ],
+      "wmh_trevenant~tb_abomasnow": [
+        0.6667,
+        9
+      ],
+      "tb_abomasnow~cynthias_garchomp_ex": [
+        0.6667,
+        15
+      ],
+      "wmh_typhlosion~wmh_ogerpon": [
+        0.6667,
+        12
+      ],
+      "mechi22_alakazam~dragapult_ex": [
+        0.6667,
+        9
+      ],
+      "plamen06_steel~pixiux_lucario_v63": [
+        0.6667,
+        9
+      ],
+      "tb_archaludon~wmh_trevenant": [
+        0.6667,
+        12
+      ],
+      "avikdas567_heuristic~mega_lucario_ex": [
+        0.6667,
+        6
+      ],
+      "plamen06_steel~wmh_megastarmie": [
+        0.6667,
+        15
+      ],
+      "biohack44_day2~grimmsnarl_toplayer": [
+        0.6667,
+        18
+      ],
+      "wmh_mewtwo~tb_archaludon": [
+        0.6667,
+        12
+      ],
+      "dragapult_ex~wmh_ogerpon": [
+        0.6667,
+        6
+      ],
+      "wmh_typhlosion~kiyotah_abomasnow": [
+        0.6667,
+        9
+      ],
+      "wmh_trevenant~mega_lucario_ex": [
+        0.6667,
+        15
+      ],
+      "wmh_mewtwo~mega_lucario_ex": [
+        0.6667,
+        9
+      ],
+      "pixiux_lucario_v63~tb_abomasnow": [
+        0.6667,
+        6
       ],
       "wmh_chandelure~wmh_alakazam": [
-        0.6667,
-        3
+        0.6923,
+        13
       ],
-      "tb_archaludon~tb_starmie": [
-        0.6667,
-        3
+      "wmh_alakazam~tb_heuristic": [
+        0.6923,
+        13
       ],
-      "kiyotah_abomasnow~kiyotah_abomasnow": [
-        0.6667,
-        3
+      "prvsiyan_control_v11~tb_archaludon": [
+        0.6923,
+        13
       ],
-      "avikdas567_heuristic~kiyotah_iono": [
-        0.6667,
-        3
+      "wmh_alakazam~plamen06_steel": [
+        0.6923,
+        13
       ],
-      "plamen06_steel~tb_starmie": [
-        0.6667,
-        3
+      "tb_abomasnow~wmh_megastarmie": [
+        0.6923,
+        13
       ],
-      "mechi22_alakazam~prvsiyan_control_v11": [
-        0.6667,
-        3
+      "kiyotah_abomasnow~wmh_typhlosion": [
+        0.6923,
+        13
       ],
-      "prvsiyan_control_v11~mega_lucario_ex": [
-        0.6667,
-        3
+      "wmh_megastarmie~wmh_kangaskhan": [
+        0.6923,
+        13
       ],
-      "tb_abomasnow~dragapult_ex": [
-        0.6667,
-        3
+      "plamen06_steel~wmh_typhlosion": [
+        0.7,
+        10
       ],
-      "wmh_alakazam~biohack44_day2": [
-        0.6667,
-        3
+      "tb_abomasnow~wmh_typhlosion": [
+        0.7,
+        10
+      ],
+      "tb_heuristic~wmh_ogerpon": [
+        0.7,
+        10
+      ],
+      "pllinas_alakazam~wmh_alakazam": [
+        0.7,
+        10
+      ],
+      "grimmsnarl_toplayer~mechi22_alakazam": [
+        0.7,
+        10
+      ],
+      "cynthias_garchomp_ex~wmh_alakazam": [
+        0.7,
+        10
+      ],
+      "wmh_typhlosion~mega_lucario_ex": [
+        0.7,
+        10
+      ],
+      "tb_heuristic~wmh_chandelure": [
+        0.7,
+        10
+      ],
+      "cynthias_garchomp_ex~pixiux_lucario_v63": [
+        0.7,
+        10
+      ],
+      "cynthias_garchomp_ex~cynthias_garchomp_ex": [
+        0.7,
+        10
+      ],
+      "prvsiyan_control_v11~pixiux_lucario_v63": [
+        0.7,
+        10
+      ],
+      "mechi22_alakazam~wmh_megastarmie": [
+        0.7059,
+        17
+      ],
+      "team_rockets_spidops~avikdas567_heuristic": [
+        0.7059,
+        17
+      ],
+      "prvsiyan_control_v11~kiyotah_abomasnow": [
+        0.7143,
+        7
+      ],
+      "pllinas_alakazam~wmh_chandelure": [
+        0.7143,
+        14
+      ],
+      "team_rockets_spidops~pixiux_lucario_v63": [
+        0.7143,
+        7
+      ],
+      "mega_kangaskhan_ex~mega_kangaskhan_ex": [
+        0.7143,
+        14
+      ],
+      "grimmsnarl_toplayer~wmh_megastarmie": [
+        0.7143,
+        14
+      ],
+      "tb_starmie~avikdas567_heuristic": [
+        0.7143,
+        7
+      ],
+      "wmh_kangaskhan~wmh_kangaskhan": [
+        0.7143,
+        7
+      ],
+      "marnies_grimmsnarl_ex~mega_lucario_ex": [
+        0.7143,
+        7
+      ],
+      "team_rockets_spidops~mechi22_alakazam": [
+        0.7143,
+        7
+      ],
+      "tb_archaludon~wmh_ogerpon": [
+        0.7143,
+        7
+      ],
+      "tb_starmie~team_rockets_spidops": [
+        0.7222,
+        18
+      ],
+      "wmh_chandelure~wmh_kangaskhan": [
+        0.7222,
+        18
+      ],
+      "alakazam~tb_archaludon": [
+        0.7222,
+        18
       ],
       "team_rockets_spidops~mega_kangaskhan_ex": [
-        0.6667,
-        3
+        0.7222,
+        18
       ],
-      "marnies_grimmsnarl_ex~wmh_megastarmie": [
-        0.6667,
-        3
+      "tb_starmie~prvsiyan_control_v11": [
+        0.7273,
+        11
       ],
-      "pixiux_lucario_v63~prvsiyan_control_v11": [
-        0.6667,
-        3
+      "tb_heuristic~tb_heuristic": [
+        0.7273,
+        11
       ],
-      "wmh_ogerpon~wmh_mewtwo": [
-        0.6667,
-        3
+      "wmh_trevenant~wmh_ogerpon": [
+        0.7273,
+        11
+      ],
+      "alakazam~mega_lucario_ex": [
+        0.7273,
+        11
+      ],
+      "wmh_megastarmie~avikdas567_heuristic": [
+        0.7273,
+        11
+      ],
+      "cynthias_garchomp_ex~wmh_typhlosion": [
+        0.7273,
+        11
+      ],
+      "wmh_megastarmie~wmh_ogerpon": [
+        0.7273,
+        11
+      ],
+      "mechi22_alakazam~plamen06_steel": [
+        0.7273,
+        11
+      ],
+      "grimmsnarl_toplayer~avikdas567_heuristic": [
+        0.7273,
+        11
+      ],
+      "wmh_alakazam~tb_starmie": [
+        0.7333,
+        15
       ],
       "biohack44_day2~wmh_chandelure": [
-        1.0,
-        1
+        0.75,
+        12
+      ],
+      "wmh_mewtwo~wmh_kangaskhan": [
+        0.75,
+        12
+      ],
+      "wmh_alakazam~mega_kangaskhan_ex": [
+        0.75,
+        12
+      ],
+      "tb_abomasnow~tb_starmie": [
+        0.75,
+        12
+      ],
+      "marnies_grimmsnarl_ex~wmh_kangaskhan": [
+        0.75,
+        16
+      ],
+      "wmh_chandelure~wmh_ogerpon": [
+        0.75,
+        8
+      ],
+      "mega_kangaskhan_ex~plamen06_steel": [
+        0.75,
+        4
+      ],
+      "grimmsnarl_toplayer~prvsiyan_control_v11": [
+        0.75,
+        16
+      ],
+      "wmh_alakazam~wmh_megastarmie": [
+        0.75,
+        8
+      ],
+      "wmh_alakazam~wmh_alakazam": [
+        0.75,
+        8
+      ],
+      "tb_starmie~wmh_chandelure": [
+        0.75,
+        8
+      ],
+      "kiyotah_abomasnow~mega_kangaskhan_ex": [
+        0.75,
+        12
+      ],
+      "wmh_chandelure~kiyotah_iono": [
+        0.75,
+        12
+      ],
+      "wmh_megastarmie~mega_lucario_ex": [
+        0.75,
+        4
+      ],
+      "prvsiyan_control_v11~mega_kangaskhan_ex": [
+        0.75,
+        12
+      ],
+      "grimmsnarl_toplayer~pllinas_alakazam": [
+        0.75,
+        8
+      ],
+      "marnies_grimmsnarl_ex~wmh_alakazam": [
+        0.75,
+        14
+      ],
+      "wmh_typhlosion~kiyotah_iono": [
+        0.75,
+        12
+      ],
+      "grimmsnarl_toplayer~plamen06_steel": [
+        0.75,
+        12
+      ],
+      "alakazam~pixiux_lucario_v63": [
+        0.75,
+        8
+      ],
+      "dragapult_ex~kiyotah_iono": [
+        0.75,
+        8
+      ],
+      "wmh_alakazam~wmh_kangaskhan": [
+        0.75,
+        12
+      ],
+      "mechi22_alakazam~tb_heuristic": [
+        0.7647,
+        17
+      ],
+      "grimmsnarl_toplayer~tb_starmie": [
+        0.7692,
+        13
+      ],
+      "pllinas_alakazam~tb_archaludon": [
+        0.7692,
+        13
+      ],
+      "marnies_grimmsnarl_ex~tb_archaludon": [
+        0.7692,
+        13
+      ],
+      "pllinas_alakazam~pixiux_lucario_v63": [
+        0.7692,
+        13
+      ],
+      "tb_heuristic~wmh_kangaskhan": [
+        0.7692,
+        13
+      ],
+      "team_rockets_spidops~alakazam": [
+        0.7692,
+        13
+      ],
+      "team_rockets_spidops~wmh_kangaskhan": [
+        0.7692,
+        13
+      ],
+      "alakazam~dragapult_ex": [
+        0.7778,
+        9
+      ],
+      "wmh_typhlosion~prvsiyan_control_v11": [
+        0.7778,
+        18
+      ],
+      "team_rockets_spidops~wmh_typhlosion": [
+        0.7778,
+        9
+      ],
+      "alakazam~tb_heuristic": [
+        0.7778,
+        9
+      ],
+      "wmh_mewtwo~wmh_alakazam": [
+        0.7778,
+        9
+      ],
+      "wmh_chandelure~tb_abomasnow": [
+        0.7778,
+        9
+      ],
+      "wmh_trevenant~kiyotah_iono": [
+        0.7778,
+        9
+      ],
+      "wmh_alakazam~pixiux_lucario_v63": [
+        0.7857,
+        14
+      ],
+      "tb_starmie~pixiux_lucario_v63": [
+        0.7857,
+        14
+      ],
+      "tb_heuristic~kiyotah_iono": [
+        0.7857,
+        14
+      ],
+      "grimmsnarl_toplayer~pixiux_lucario_v63": [
+        0.8,
+        10
+      ],
+      "tb_abomasnow~mega_kangaskhan_ex": [
+        0.8,
+        10
+      ],
+      "pllinas_alakazam~biohack44_day2": [
+        0.8,
+        10
+      ],
+      "wmh_chandelure~prvsiyan_control_v11": [
+        0.8,
+        10
+      ],
+      "biohack44_day2~biohack44_day2": [
+        0.8,
+        15
+      ],
+      "plamen06_steel~kiyotah_abomasnow": [
+        0.8,
+        15
+      ],
+      "grimmsnarl_toplayer~tb_archaludon": [
+        0.8,
+        15
+      ],
+      "pllinas_alakazam~wmh_ogerpon": [
+        0.8,
+        10
+      ],
+      "wmh_typhlosion~wmh_kangaskhan": [
+        0.8,
+        10
+      ],
+      "alakazam~plamen06_steel": [
+        0.8,
+        10
+      ],
+      "wmh_mewtwo~alakazam": [
+        0.8,
+        10
+      ],
+      "marnies_grimmsnarl_ex~dragapult_ex": [
+        0.8,
+        5
+      ],
+      "tb_starmie~wmh_typhlosion": [
+        0.8,
+        5
+      ],
+      "team_rockets_spidops~kiyotah_iono": [
+        0.8,
+        10
+      ],
+      "grimmsnarl_toplayer~tb_heuristic": [
+        0.8,
+        10
+      ],
+      "tb_archaludon~mega_lucario_ex": [
+        0.8,
+        5
+      ],
+      "mechi22_alakazam~tb_archaludon": [
+        0.8125,
+        16
+      ],
+      "tb_abomasnow~tb_heuristic": [
+        0.8125,
+        16
+      ],
+      "alakazam~wmh_typhlosion": [
+        0.8182,
+        11
+      ],
+      "mega_lucario_ex~wmh_ogerpon": [
+        0.8182,
+        11
+      ],
+      "kiyotah_abomasnow~mega_lucario_ex": [
+        0.8182,
+        11
+      ],
+      "tb_starmie~wmh_kangaskhan": [
+        0.8182,
+        11
+      ],
+      "biohack44_day2~plamen06_steel": [
+        0.8182,
+        11
+      ],
+      "wmh_mewtwo~pixiux_lucario_v63": [
+        0.8235,
+        17
+      ],
+      "tb_archaludon~pixiux_lucario_v63": [
+        0.8235,
+        17
+      ],
+      "team_rockets_spidops~mega_lucario_ex": [
+        0.8333,
+        12
+      ],
+      "tb_abomasnow~pixiux_lucario_v63": [
+        0.8333,
+        6
+      ],
+      "wmh_trevenant~alakazam": [
+        0.8333,
+        12
+      ],
+      "wmh_chandelure~avikdas567_heuristic": [
+        0.8333,
+        12
+      ],
+      "tb_starmie~tb_heuristic": [
+        0.8333,
+        12
+      ],
+      "team_rockets_spidops~dragapult_ex": [
+        0.8333,
+        6
+      ],
+      "wmh_chandelure~plamen06_steel": [
+        0.8333,
+        6
+      ],
+      "cynthias_garchomp_ex~alakazam": [
+        0.8333,
+        12
+      ],
+      "plamen06_steel~mega_kangaskhan_ex": [
+        0.8333,
+        12
+      ],
+      "dragapult_ex~mega_kangaskhan_ex": [
+        0.8333,
+        12
+      ],
+      "wmh_megastarmie~team_rockets_spidops": [
+        0.8333,
+        12
+      ],
+      "alakazam~biohack44_day2": [
+        0.8333,
+        12
+      ],
+      "wmh_mewtwo~wmh_ogerpon": [
+        0.8462,
+        13
+      ],
+      "marnies_grimmsnarl_ex~mega_kangaskhan_ex": [
+        0.8462,
+        13
+      ],
+      "wmh_megastarmie~mega_kangaskhan_ex": [
+        0.8462,
+        13
+      ],
+      "marnies_grimmsnarl_ex~wmh_megastarmie": [
+        0.8462,
+        13
+      ],
+      "wmh_typhlosion~pixiux_lucario_v63": [
+        0.8571,
+        7
+      ],
+      "wmh_megastarmie~dragapult_ex": [
+        0.8571,
+        14
+      ],
+      "cynthias_garchomp_ex~mega_lucario_ex": [
+        0.8571,
+        7
+      ],
+      "marnies_grimmsnarl_ex~wmh_typhlosion": [
+        0.8571,
+        7
+      ],
+      "marnies_grimmsnarl_ex~pixiux_lucario_v63": [
+        0.8571,
+        7
+      ],
+      "pllinas_alakazam~tb_starmie": [
+        0.8667,
+        15
+      ],
+      "mechi22_alakazam~wmh_kangaskhan": [
+        0.8667,
+        15
+      ],
+      "pllinas_alakazam~wmh_megastarmie": [
+        0.8667,
+        15
+      ],
+      "grimmsnarl_toplayer~wmh_kangaskhan": [
+        0.875,
+        8
+      ],
+      "alakazam~tb_abomasnow": [
+        0.875,
+        8
+      ],
+      "grimmsnarl_toplayer~wmh_ogerpon": [
+        0.875,
+        8
+      ],
+      "biohack44_day2~kiyotah_iono": [
+        0.875,
+        8
+      ],
+      "pllinas_alakazam~kiyotah_abomasnow": [
+        0.875,
+        8
+      ],
+      "wmh_alakazam~mega_lucario_ex": [
+        0.875,
+        8
+      ],
+      "wmh_trevenant~wmh_kangaskhan": [
+        0.875,
+        8
+      ],
+      "pllinas_alakazam~tb_abomasnow": [
+        0.8824,
+        17
+      ],
+      "mechi22_alakazam~mega_kangaskhan_ex": [
+        0.8889,
+        9
+      ],
+      "grimmsnarl_toplayer~wmh_chandelure": [
+        0.8889,
+        9
+      ],
+      "grimmsnarl_toplayer~mega_lucario_ex": [
+        0.8889,
+        9
+      ],
+      "alakazam~wmh_kangaskhan": [
+        0.8889,
+        9
+      ],
+      "biohack44_day2~kiyotah_abomasnow": [
+        0.8889,
+        9
+      ],
+      "wmh_alakazam~wmh_typhlosion": [
+        0.8889,
+        9
+      ],
+      "mechi22_alakazam~alakazam": [
+        0.9,
+        10
+      ],
+      "biohack44_day2~mega_lucario_ex": [
+        0.9,
+        10
+      ],
+      "wmh_mewtwo~kiyotah_iono": [
+        0.9,
+        10
+      ],
+      "wmh_alakazam~alakazam": [
+        0.9,
+        10
+      ],
+      "wmh_megastarmie~wmh_mewtwo": [
+        0.9,
+        10
+      ],
+      "tb_abomasnow~mega_lucario_ex": [
+        0.9,
+        10
+      ],
+      "tb_abomasnow~wmh_kangaskhan": [
+        0.9,
+        10
+      ],
+      "pllinas_alakazam~mega_kangaskhan_ex": [
+        0.9,
+        10
+      ],
+      "tb_abomasnow~kiyotah_iono": [
+        0.9,
+        10
+      ],
+      "tb_abomasnow~dragapult_ex": [
+        0.9,
+        10
+      ],
+      "pllinas_alakazam~wmh_kangaskhan": [
+        0.9,
+        10
+      ],
+      "mechi22_alakazam~kiyotah_iono": [
+        0.9,
+        10
+      ],
+      "biohack44_day2~tb_heuristic": [
+        0.9,
+        10
+      ],
+      "team_rockets_spidops~wmh_chandelure": [
+        0.9,
+        10
+      ],
+      "wmh_megastarmie~wmh_typhlosion": [
+        0.9,
+        10
+      ],
+      "wmh_alakazam~tb_archaludon": [
+        0.9,
+        10
+      ],
+      "cynthias_garchomp_ex~tb_starmie": [
+        0.9091,
+        11
+      ],
+      "tb_starmie~mega_kangaskhan_ex": [
+        0.9091,
+        11
+      ],
+      "plamen06_steel~avikdas567_heuristic": [
+        0.9091,
+        11
+      ],
+      "biohack44_day2~cynthias_garchomp_ex": [
+        0.9091,
+        11
+      ],
+      "mechi22_alakazam~kiyotah_abomasnow": [
+        0.9091,
+        11
+      ],
+      "marnies_grimmsnarl_ex~tb_heuristic": [
+        0.9091,
+        11
+      ],
+      "dragapult_ex~wmh_typhlosion": [
+        0.9091,
+        11
+      ],
+      "grimmsnarl_toplayer~wmh_typhlosion": [
+        0.9091,
+        11
+      ],
+      "mechi22_alakazam~mega_lucario_ex": [
+        0.9091,
+        11
+      ],
+      "wmh_trevenant~avikdas567_heuristic": [
+        0.9167,
+        12
+      ],
+      "marnies_grimmsnarl_ex~plamen06_steel": [
+        0.9167,
+        12
+      ],
+      "wmh_alakazam~tb_abomasnow": [
+        0.9167,
+        12
+      ],
+      "grimmsnarl_toplayer~mega_kangaskhan_ex": [
+        0.9167,
+        12
+      ],
+      "tb_abomasnow~kiyotah_abomasnow": [
+        0.9167,
+        12
+      ],
+      "wmh_megastarmie~wmh_trevenant": [
+        0.9167,
+        12
+      ],
+      "team_rockets_spidops~kiyotah_abomasnow": [
+        0.9231,
+        13
+      ],
+      "wmh_trevenant~biohack44_day2": [
+        0.9231,
+        13
+      ],
+      "pllinas_alakazam~avikdas567_heuristic": [
+        0.9231,
+        13
+      ],
+      "cynthias_garchomp_ex~wmh_kangaskhan": [
+        0.9231,
+        13
+      ],
+      "marnies_grimmsnarl_ex~prvsiyan_control_v11": [
+        0.9231,
+        13
+      ],
+      "mechi22_alakazam~wmh_typhlosion": [
+        0.9231,
+        13
+      ],
+      "wmh_typhlosion~biohack44_day2": [
+        0.9231,
+        13
+      ],
+      "tb_starmie~wmh_ogerpon": [
+        0.9286,
+        14
+      ],
+      "wmh_trevenant~pixiux_lucario_v63": [
+        0.9286,
+        14
+      ],
+      "wmh_megastarmie~biohack44_day2": [
+        0.9333,
+        15
+      ],
+      "biohack44_day2~prvsiyan_control_v11": [
+        0.9412,
+        17
       ],
       "prvsiyan_control_v11~tb_abomasnow": [
         1.0,
-        1
-      ],
-      "alakazam~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~pixiux_lucario_v63": [
-        1.0,
-        1
+        14
       ],
       "pllinas_alakazam~alakazam": [
         1.0,
-        1
-      ],
-      "tb_starmie~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "avikdas567_heuristic~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~mega_lucario_ex": [
-        1.0,
-        1
+        13
       ],
       "marnies_grimmsnarl_ex~avikdas567_heuristic": [
         1.0,
-        1
+        12
       ],
-      "wmh_mewtwo~pixiux_lucario_v63": [
+      "pllinas_alakazam~mega_lucario_ex": [
         1.0,
-        1
-      ],
-      "alakazam~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "tb_starmie~wmh_ogerpon": [
-        1.0,
-        3
-      ],
-      "tb_archaludon~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~pllinas_alakazam": [
-        1.0,
-        3
-      ],
-      "team_rockets_spidops~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~alakazam": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "alakazam~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "avikdas567_heuristic~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "alakazam~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_ogerpon": [
-        1.0,
-        3
-      ],
-      "wmh_chandelure~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~tb_starmie": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~cynthias_garchomp_ex": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~marnies_grimmsnarl_ex": [
-        1.0,
-        2
-      ],
-      "wmh_megastarmie~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "alakazam~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~tb_starmie": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "alakazam~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~tb_starmie": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "tb_starmie~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~tb_starmie": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~alakazam": [
-        1.0,
-        1
-      ],
-      "tb_starmie~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "kiyotah_iono~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "kiyotah_iono~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~alakazam": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "alakazam~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "alakazam~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~tb_starmie": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~tb_starmie": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~avikdas567_heuristic": [
-        1.0,
-        1
+        11
       ],
       "marnies_grimmsnarl_ex~kiyotah_iono": [
         1.0,
-        1
+        10
       ],
-      "tb_abomasnow~wmh_megastarmie": [
+      "marnies_grimmsnarl_ex~wmh_chandelure": [
         1.0,
-        1
+        10
       ],
-      "wmh_alakazam~alakazam": [
+      "team_rockets_spidops~prvsiyan_control_v11": [
         1.0,
-        1
+        11
       ],
-      "mega_lucario_ex~wmh_ogerpon": [
+      "cynthias_garchomp_ex~kiyotah_iono": [
         1.0,
-        1
+        12
       ],
-      "wmh_alakazam~marnies_grimmsnarl_ex": [
+      "pllinas_alakazam~kiyotah_iono": [
         1.0,
-        1
+        10
       ],
-      "wmh_alakazam~tb_abomasnow": [
+      "alakazam~kiyotah_iono": [
         1.0,
-        1
+        4
       ],
-      "biohack44_day2~cynthias_garchomp_ex": [
+      "wmh_alakazam~wmh_ogerpon": [
         1.0,
-        1
+        10
       ],
-      "alakazam~grimmsnarl_toplayer": [
+      "biohack44_day2~tb_archaludon": [
         1.0,
-        1
+        15
       ],
-      "tb_heuristic~wmh_typhlosion": [
+      "mechi22_alakazam~wmh_ogerpon": [
         1.0,
-        1
+        18
       ],
-      "plamen06_steel~wmh_mewtwo": [
+      "mechi22_alakazam~biohack44_day2": [
         1.0,
-        1
+        14
       ],
-      "wmh_kangaskhan~avikdas567_heuristic": [
+      "grimmsnarl_toplayer~wmh_trevenant": [
         1.0,
-        1
-      ],
-      "mega_lucario_ex~cynthias_garchomp_ex": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~wmh_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~marnies_grimmsnarl_ex": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "avikdas567_heuristic~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~tb_starmie": [
-        1.0,
-        3
-      ],
-      "tb_abomasnow~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_chandelure": [
-        1.0,
-        2
-      ],
-      "grimmsnarl_toplayer~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~cynthias_garchomp_ex": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "tb_starmie~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "avikdas567_heuristic~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~alakazam": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "tb_starmie~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_alakazam": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "alakazam~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "mega_kangaskhan_ex~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "tb_starmie~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~wmh_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "alakazam~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "tb_starmie~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~alakazam": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~wmh_mewtwo": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~alakazam": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~grimmsnarl_toplayer": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "kiyotah_iono~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "tb_starmie~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "tb_starmie~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "alakazam~tb_archaludon": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_mewtwo": [
-        1.0,
-        1
+        7
       ],
       "wmh_megastarmie~prvsiyan_control_v11": [
         1.0,
-        1
+        11
       ],
-      "pllinas_alakazam~wmh_alakazam": [
+      "wmh_alakazam~avikdas567_heuristic": [
         1.0,
-        1
+        13
       ],
-      "dragapult_ex~tb_starmie": [
+      "grimmsnarl_toplayer~kiyotah_iono": [
         1.0,
-        1
+        14
       ],
-      "alakazam~mega_lucario_ex": [
+      "biohack44_day2~tb_abomasnow": [
         1.0,
-        1
+        2
       ],
-      "wmh_megastarmie~marnies_grimmsnarl_ex": [
+      "alakazam~avikdas567_heuristic": [
         1.0,
-        1
+        9
       ],
-      "cynthias_garchomp_ex~wmh_mewtwo": [
+      "wmh_mewtwo~biohack44_day2": [
         1.0,
-        1
+        6
       ],
-      "wmh_megastarmie~wmh_trevenant": [
+      "mechi22_alakazam~tb_abomasnow": [
         1.0,
-        1
+        6
       ],
-      "grimmsnarl_toplayer~wmh_mewtwo": [
+      "pllinas_alakazam~plamen06_steel": [
         1.0,
-        1
+        12
       ],
-      "wmh_chandelure~tb_abomasnow": [
+      "team_rockets_spidops~biohack44_day2": [
         1.0,
-        1
+        16
       ],
-      "wmh_alakazam~prvsiyan_control_v11": [
+      "cynthias_garchomp_ex~wmh_trevenant": [
         1.0,
-        1
+        10
       ],
-      "wmh_trevenant~prvsiyan_control_v11": [
+      "biohack44_day2~wmh_kangaskhan": [
         1.0,
-        1
+        14
       ],
-      "wmh_alakazam~kiyotah_iono": [
+      "wmh_alakazam~kiyotah_abomasnow": [
         1.0,
-        1
+        12
       ],
-      "pllinas_alakazam~tb_archaludon": [
+      "pllinas_alakazam~wmh_typhlosion": [
         1.0,
-        1
+        7
       ],
-      "grimmsnarl_toplayer~mechi22_alakazam": [
+      "biohack44_day2~mega_kangaskhan_ex": [
         1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~prvsiyan_control_v11": [
-        1.0,
-        3
-      ],
-      "team_rockets_spidops~wmh_megastarmie": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "tb_archaludon~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "kiyotah_iono~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "pixiux_lucario_v63~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~wmh_alakazam": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~marnies_grimmsnarl_ex": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "alakazam~tb_abomasnow": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~team_rockets_spidops": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~tb_starmie": [
-        1.0,
-        1
-      ],
-      "alakazam~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_alakazam~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "alakazam~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "plamen06_steel~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~wmh_chandelure": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~cynthias_garchomp_ex": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "tb_starmie~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~pllinas_alakazam": [
-        1.0,
-        1
-      ],
-      "mega_lucario_ex~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "wmh_mewtwo~alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~mega_kangaskhan_ex": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~marnies_grimmsnarl_ex": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~wmh_trevenant": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~alakazam": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "tb_starmie~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "dragapult_ex~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "mechi22_alakazam~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "grimmsnarl_toplayer~avikdas567_heuristic": [
-        1.0,
-        1
-      ],
-      "pllinas_alakazam~dragapult_ex": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~alakazam": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "tb_heuristic~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~marnies_grimmsnarl_ex": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~alakazam": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "tb_abomasnow~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "wmh_megastarmie~wmh_kangaskhan": [
-        1.0,
-        1
-      ],
-      "wmh_kangaskhan~mega_lucario_ex": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~plamen06_steel": [
-        1.0,
-        1
-      ],
-      "wmh_chandelure~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~tb_heuristic": [
-        1.0,
-        1
-      ],
-      "biohack44_day2~wmh_typhlosion": [
-        1.0,
-        1
-      ],
-      "kiyotah_abomasnow~pixiux_lucario_v63": [
-        1.0,
-        1
-      ],
-      "tb_starmie~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "wmh_typhlosion~biohack44_day2": [
-        1.0,
-        1
-      ],
-      "team_rockets_spidops~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "wmh_trevenant~kiyotah_iono": [
-        1.0,
-        1
-      ],
-      "wmh_ogerpon~prvsiyan_control_v11": [
-        1.0,
-        1
-      ],
-      "cynthias_garchomp_ex~wmh_ogerpon": [
-        1.0,
-        1
-      ],
-      "marnies_grimmsnarl_ex~mechi22_alakazam": [
-        1.0,
-        1
-      ],
-      "alakazam~kiyotah_abomasnow": [
-        1.0,
-        1
-      ],
-      "prvsiyan_control_v11~pixiux_lucario_v63": [
-        1.0,
-        1
+        7
       ],
       "tb_starmie~kiyotah_abomasnow": [
         1.0,
-        1
+        4
+      ],
+      "mechi22_alakazam~avikdas567_heuristic": [
+        1.0,
+        8
+      ],
+      "tb_starmie~kiyotah_iono": [
+        1.0,
+        7
+      ],
+      "wmh_mewtwo~wmh_trevenant": [
+        1.0,
+        7
+      ],
+      "wmh_alakazam~kiyotah_iono": [
+        1.0,
+        12
+      ],
+      "wmh_mewtwo~prvsiyan_control_v11": [
+        1.0,
+        15
+      ],
+      "cynthias_garchomp_ex~mega_kangaskhan_ex": [
+        1.0,
+        14
+      ],
+      "biohack44_day2~pixiux_lucario_v63": [
+        1.0,
+        11
+      ],
+      "alakazam~wmh_ogerpon": [
+        1.0,
+        7
+      ],
+      "biohack44_day2~dragapult_ex": [
+        1.0,
+        15
+      ],
+      "wmh_alakazam~biohack44_day2": [
+        1.0,
+        13
+      ],
+      "plamen06_steel~kiyotah_iono": [
+        1.0,
+        8
+      ],
+      "pllinas_alakazam~cynthias_garchomp_ex": [
+        1.0,
+        5
+      ],
+      "cynthias_garchomp_ex~avikdas567_heuristic": [
+        1.0,
+        5
+      ],
+      "mechi22_alakazam~pixiux_lucario_v63": [
+        1.0,
+        4
+      ],
+      "cynthias_garchomp_ex~wmh_ogerpon": [
+        1.0,
+        11
+      ],
+      "marnies_grimmsnarl_ex~wmh_trevenant": [
+        1.0,
+        11
+      ],
+      "grimmsnarl_toplayer~dragapult_ex": [
+        1.0,
+        11
+      ],
+      "cynthias_garchomp_ex~plamen06_steel": [
+        1.0,
+        6
+      ],
+      "alakazam~kiyotah_abomasnow": [
+        1.0,
+        6
+      ],
+      "marnies_grimmsnarl_ex~wmh_ogerpon": [
+        1.0,
+        8
       ]
     }
   }
