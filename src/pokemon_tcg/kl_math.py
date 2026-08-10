@@ -45,6 +45,35 @@ def masked_kl(cur_logits: torch.Tensor, prior_logits: torch.Tensor) -> torch.Ten
     return masked_kl_per_row(cur_logits, prior_logits).mean()
 
 
+def same_policy_weights(a, b) -> bool:
+    """True iff two policies produce identical logits by construction.
+
+    Used once at trainer construction to decide whether the never-retargeted
+    IL reference and the (retargetable) anchor reference start out as the
+    same policy — generation 1 passes one checkpoint as both, generation 2+
+    anchors to a promoted teacher while the IL reference stays the human
+    prior. Getting this wrong logs one reference's KL under both names
+    (rl_pipeline_v4 §3.3), so it is decided from the weights rather than from
+    the caller's intent.
+
+    Compares the ``actor`` submodule when there is one. The KL anchor is a
+    divergence between action distributions, so only logit-producing weights
+    are relevant — and `PTCGPufferPolicy` randomly initializes its value head
+    on construction, so two wrappers built from the SAME checkpoint path
+    differ in the critic while being identical policies. Comparing whole
+    state_dicts reports those as distinct (harmless for the logged numbers,
+    which stay equal, but it mislabels `kl_refs_distinct` and pays for a
+    forward pass that reproduces a value already in hand).
+    """
+    a, b = getattr(a, "actor", a), getattr(b, "actor", b)
+    sa, sb = a.state_dict(), b.state_dict()
+    if sa.keys() != sb.keys():
+        return False
+    return all(
+        sa[k].shape == sb[k].shape and torch.equal(sa[k], sb[k]) for k in sa
+    )
+
+
 def masks_agree(cur_logits: torch.Tensor, prior_logits: torch.Tensor) -> bool:
     """True iff both logit tensors mark the SAME slots illegal.
 

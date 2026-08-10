@@ -1,6 +1,6 @@
 """Optional BC-policy prior for SEARCH_ALGO's UCB1 exploration term.
 
-This is the integration Q28 in notes/phase0_discovery_report.md argued
+This is the integration the corpus discovery pass (Q28) argued
 for: standalone, the trained imitation-learning policy loses to this
 repo's own search agents (Rung 2: 3.3% win rate vs agent_core_improved).
 But it already outputs a full softmax over the legal option set, not just

@@ -17,7 +17,7 @@ CPU-only. Writing `torch.device("cuda")` or `.cuda()` is always wrong here. To r
 what the evaluator will do, force `PTCG_DEVICE=cpu` on the laptop.
 
 **The evaluator envelope: ~1.6 vCPU, ~197.7 MiB, effectively single-threaded.**
-⚠️ This came from Phase 0 discovery notes and is **not enforced anywhere in the repo** —
+⚠️ This came from the corpus discovery notes and is **not enforced anywhere in the repo** —
 no test asserts it. Treat it as a design constraint you must respect and cannot verify
 by running the test suite. Two consequences that have bitten before:
 - `torch.set_num_threads(1)` must run **before** any heavy torch work; set late it
@@ -69,7 +69,16 @@ sentinel in `ILDataset(with_meta=True)`.
 
 `scripts/benchmark_agents.py` is the round-robin. 13 agents in `AGENT_FILES`:
 
-- **Ours:** `rule_baseline`, `improved_prob_main`, `agent_core_improved`, `proto`, `il_agent`
+- **Ours, trained** (`--agents ours`): `il_agent`, `mcts_il_agent`. Arm families
+  (`s2v2_*`, `il_*`, `selfplay_*`, `ppo_*`, `grid_*`) are trained too but are named
+  explicitly per experiment, never grouped. **These are the only agents a result
+  should be reported about.**
+- **Ours, hand-written** (`--agents heuristics`): `rule_baseline`, `improved_prob_main`,
+  `agent_core_improved`, `proto`, `grunt` — no ML in any of them. Rami, 2026-08-06:
+  **do not report our trained models against these.** `agent_core_improved` stays
+  available as `--agents anchors` for one reason only: we verified its real ladder
+  score (685.3), so it keeps local Glicko tied to the ladder. It is an instrument,
+  not a rival, and prints marked `(anchor)`.
 - **Floor, not a competitor:** `random_legal` — uniform random over legal moves. If a
   trained policy does not beat this decisively, its offline accuracy is not evidence.
 - **Public opponent pool** (from Kaggle's Code tab, individually safety-reviewed):

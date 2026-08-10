@@ -211,7 +211,9 @@ def train_once(idx: int, params: dict, run_dir: Path, args) -> dict:
 
 
 def final_snapshot(run_dir: Path) -> Path | None:
-    snaps = sorted(run_dir.glob("u*_final"))
+    # Legacy u<step>_final names and the readable <run_tag>_step<step>_final ones.
+    snaps = sorted(d for d in run_dir.glob("*_final")
+                   if (d / "config.json").exists())
     return snaps[-1] if snaps else None
 
 

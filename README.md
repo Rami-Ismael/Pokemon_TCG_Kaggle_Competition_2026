@@ -76,10 +76,9 @@ print(config.RAW_DATA_DIR)
 
 ## Behavior-cloning agent (`il_agent`)
 
-Full design rationale lives in `notes/`: `phase0_discovery_report.md` (data/
-obs-schema discovery, measured on the real corpus), `phase1_decisions.md`
-(architecture/param/masking/deck decisions), `phase6_projection.md`
-(time/cost projection). Summary:
+The design decisions below (obs schema, encoder, model size, runtime) were
+measured on the real episode corpus in July 2026; the original notes were
+deleted from `notes/` and survive only in git history. Summary:
 
 **Obs schema** (`agent(obs_dict)`'s argument): `select` / `current` / `logs`
 / `remainingOverageTime` / `search_begin_input` / `step`. `current` hides
@@ -110,7 +109,7 @@ evaluator does.
 Reproduce a run:
 
 ```bash
-uv run python scripts/train_il.py --epochs 1          # ~20 min, full train day, see phase6_projection.md
+uv run python scripts/train_il.py --epochs 1          # ~20 min, full train day (measured: ~10.9 steps/sec)
 uv run python scripts/eval_rung1.py --max-episodes 500  # Rung 1: offline accuracy vs. majority baseline
 uv run python scripts/benchmark_agents.py --agents il_agent,rule_baseline --games 15  # Rung 2
 uv run python scripts/eval_rung3_sanity.py --games 5     # Rung 3: play + inspect transcripts

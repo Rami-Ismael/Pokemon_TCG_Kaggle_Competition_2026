@@ -55,3 +55,4 @@ __marimo__/
 # scripts/model_registry.py --write-aliases. The registries are the source of
 # truth; these are just symlinks, so regenerate rather than commit them.
 agents/by-role/
+agents/il_agent_v2/model/

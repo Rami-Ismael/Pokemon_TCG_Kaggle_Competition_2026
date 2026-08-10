@@ -39,7 +39,12 @@ from pufferlib.pufferl import PuffeRL, compute_puff_advantage
 # Anchor math lives in the pufferlib-free kl_math module so the main venv's
 # test suite (tests/test_kl_mask.py) exercises the exact functions this
 # trainer ships with — see that module's docstring.
-from .kl_math import masked_kl, masked_kl_per_row, masks_agree  # noqa: F401
+from .kl_math import (  # noqa: F401
+    masked_kl,
+    masked_kl_per_row,
+    masks_agree,
+    same_policy_weights as _same_policy_weights,
+)
 from .puffer_env import OBS_LAYOUT, _OFFSETS
 
 # select_context's offset in the packed flat obs — used to attribute per-row
@@ -53,7 +58,8 @@ _N_CTX = 96  # SELECT_CONTEXT_VOCAB_SIZE headroom
 
 class PuffeRLPriorKL(PuffeRL):
     def __init__(self, config, vecenv, policy, logger=None, *,
-                 kl_prior_policy=None, kl_coef: float = 0.05) -> None:
+                 kl_prior_policy=None, kl_coef: float = 0.05,
+                 il_prior_policy=None) -> None:
         super().__init__(config, vecenv, policy, logger)
         assert kl_prior_policy is not None, "pass the frozen prior policy"
         self.kl_prior_policy = kl_prior_policy.eval()
@@ -61,6 +67,40 @@ class PuffeRLPriorKL(PuffeRL):
             p.requires_grad_(False)
         self.kl_coef = kl_coef
         self._mask_checked = False
+
+        # >>> KL ANCHOR: second, NEVER-retargeted reference (rl_pipeline_v4 §3.3)
+        # `kl_prior_policy` moves forward on every promotion, so after the first
+        # retarget `kl_to_prior` answers "how far from the last promoted best"
+        # and NOTHING answers "how far from the human prior" -- the question the
+        # whole RL-step deviation (on-policy PPO instead of the paper's offline
+        # retrain over the union) exists to keep watchable. This reference is the
+        # original IL checkpoint and is frozen for the life of the run.
+        # DIAGNOSTIC ONLY: it is never multiplied by kl_coef and never enters
+        # `loss`. Adding a second pull would change the objective; this changes
+        # only what is written to train_metrics.jsonl.
+        assert il_prior_policy is not kl_prior_policy, (
+            "il_prior_policy must be a SEPARATE module instance -- retarget_prior "
+            "mutates kl_prior_policy in place, which would silently drag the "
+            "'original IL prior' reference along with the promoted best")
+        self.il_prior_policy = None
+        self._il_same_as_anchor = False
+        if il_prior_policy is not None:
+            self.il_prior_policy = il_prior_policy.eval()
+            for p in self.il_prior_policy.parameters():
+                p.requires_grad_(False)
+            # Generation 1 passes the SAME checkpoint as both references, so
+            # until the first promotion kl_to_il_prior == kl_to_prior exactly
+            # and the second forward pass is pure waste -- in the measured
+            # regime (1 promotion in 170 gates, §3.2) that is the whole run.
+            # Generation 2+ anchors to a promoted teacher while the IL
+            # reference stays the human prior, and then the two differ from
+            # update 1 and the shortcut would silently log the anchor's KL
+            # twice. Decide from the weights, not from the caller's intent.
+            self._il_same_as_anchor = _same_policy_weights(
+                self.kl_prior_policy, self.il_prior_policy)
+        self._il_mask_checked = False
+        self._prior_retargeted = False
+        # <<< KL ANCHOR <<<
 
     @torch.no_grad()
     def retarget_prior(self, live_policy) -> None:
@@ -70,9 +110,14 @@ class PuffeRLPriorKL(PuffeRL):
         Parameters -- requires_grad stays False, eval mode stays, and the
         optimizer never held these tensors. The KL pull continues unchanged,
         now anchored to the new reference.
+
+        ``il_prior_policy`` is deliberately NOT touched here: it is the fixed
+        human-prior yardstick, and retargeting it would erase the only signal
+        for forgetting (§3.3).
         """
         self.kl_prior_policy.load_state_dict(live_policy.state_dict())
         self._mask_checked = False  # re-verify mask agreement on the next minibatch
+        self._prior_retargeted = True
 
     def train(self):
         profile = self.profile
@@ -94,6 +139,7 @@ class PuffeRLPriorKL(PuffeRL):
         ctx_kl_sum = torch.zeros(_N_CTX, device=device_t)
         ctx_ent_sum = torch.zeros(_N_CTX, device=device_t)
         ctx_n = torch.zeros(_N_CTX, device=device_t)
+        ctx_kl_il_sum = torch.zeros(_N_CTX, device=device_t)
         # <<< KL ANCHOR <<<
 
         for mb in range(self.total_minibatches):
@@ -188,6 +234,27 @@ class PuffeRLPriorKL(PuffeRL):
             kl_prior = kl_vec.mean()
             loss = loss + self.kl_coef * kl_prior
             losses['kl_to_prior'] += kl_prior.item() / self.total_minibatches
+
+            # Second reference: KL to the ORIGINAL IL prior (§3.3). Diagnostic
+            # only -- detached, never added to `loss`. Before the first
+            # retarget the references are byte-identical, so reuse kl_vec
+            # rather than pay a forward pass to recompute the same number.
+            kl_vec_il = None
+            if self.il_prior_policy is not None:
+                if self._il_same_as_anchor and not self._prior_retargeted:
+                    kl_vec_il = kl_vec.detach()
+                else:
+                    with torch.no_grad():
+                        il_logits, _ = self.il_prior_policy(mb_obs, state)
+                        if not self._il_mask_checked:
+                            assert masks_agree(logits.detach(), il_logits), (
+                                "IL-prior mask mismatch: current and original-IL "
+                                "policies disagree on which options are illegal")
+                            self._il_mask_checked = True
+                        kl_vec_il = masked_kl_per_row(logits.detach(), il_logits)
+                losses['kl_to_il_prior'] += (
+                    kl_vec_il.mean().item() / self.total_minibatches)
+
             # Per-SelectContext attribution (detached; §3.2 stop-signal
             # instrument). mb_obs is already flat [N, OBS_SIZE] here when
             # use_rnn is False (reshaped above before the forward).
@@ -199,6 +266,9 @@ class PuffeRLPriorKL(PuffeRL):
                 ctx_ent_sum += torch.bincount(
                     ctx, weights=entropy.detach().reshape(-1), minlength=_N_CTX)
                 ctx_n += torch.bincount(ctx, minlength=_N_CTX).float()
+                if kl_vec_il is not None:
+                    ctx_kl_il_sum += torch.bincount(
+                        ctx, weights=kl_vec_il.reshape(-1), minlength=_N_CTX)
             # <<< KL ANCHOR <<<
 
             self.amp_context.__enter__() # TODO: AMP needs some debugging
@@ -248,9 +318,19 @@ class PuffeRLPriorKL(PuffeRL):
                 "kl": round(float(ctx_kl_sum[c] / ctx_n[c]), 5),
                 "entropy": round(float(ctx_ent_sum[c] / ctx_n[c]), 5),
                 "n": int(ctx_n[c]),
+                **({"kl_il": round(float(ctx_kl_il_sum[c] / ctx_n[c]), 5)}
+                   if self.il_prior_policy is not None else {}),
             }
             for c in nz.tolist()
         }
+        # Which reference each series is against, so a log can be read without
+        # cross-referencing promotion_log.jsonl: before the first retarget the
+        # two are the same policy and kl_to_il_prior is a copy, not a second
+        # measurement (§3.3 -- KL against different references is a different
+        # quantity and the series must not be plotted on one axis).
+        self.kl_refs_distinct = bool(
+            self.il_prior_policy is not None
+            and (self._prior_retargeted or not self._il_same_as_anchor))
         # <<< KL ANCHOR <<<
 
         profile.end()

@@ -71,8 +71,7 @@ uv run python scripts/submission_ledger.py log --ref <ref> \
   --local-result "local evidence at submit time" \
   --displaces "what this pushes out of the 2-slot active set" \
   --expects "falsifiable score prediction" \
-  --link notes/scores.md \
-  --approach-file notes/submission_<ref>.md   # or --approach "text" / '-' for stdin
+  --approach "full approach description"      # or --approach-file <path> / '-' for stdin
 ```
 
 A later `log` for the same ref amends per field (append-only file; later-wins
@@ -87,8 +86,9 @@ uv run python scripts/submission_ledger.py show --ref <ref>  # full metadata + s
 
 Division of labor: this ledger is per-REF and machine-readable;
 `reports/leaderboard_history.jsonl` (written by check_leaderboard.py) tracks
-the TEAM (rank, active set); `notes/scores.md` stays the human-curated Gate-5
-table — the ledger feeds it, doesn't replace it.
+the TEAM (rank, active set). These two jsonl files are the ONLY submission
+records — the old `notes/scores.md` table was purged 2026-08-06; do not
+recreate it.
 
 Ledger gotchas (all hit for real on 2026-08-04):
 
@@ -126,10 +126,9 @@ Ledger gotchas (all hit for real on 2026-08-04):
    the team score currently rests on and what this submission displaces.** An
    experiment that "can't hurt" can cost 4,500 ranks.
 
-4. **Every read-back updates `notes/scores.md`** (append-only per its Gate 5
-   protocol: fill a PENDING score once, never edit it after; append a new row
-   for rebuilds; note the read-back date since ratings drift). Record the
-   local-vs-ladder residual alongside — that residual is the running answer to
+4. **Every read-back goes through `submission_ledger.py refresh`** (never
+   hand-edit the jsonl). Record the local-vs-ladder residual via a `log`
+   amendment on the ref — that residual is the running answer to
    "is our benchmark pool predictive?", and right now the answer is no.
 
 ## Done means

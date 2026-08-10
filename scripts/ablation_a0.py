@@ -4,8 +4,8 @@ Redesigned version of the A0 ablation. The original plan (USE_BC_PRIOR=0 vs 1
 on the AS-SUBMITTED 827.8 code) was abandoned after tracing the code: at real
 MAIN decisions maxCount==1 always, so SEARCH_ALGO's len(candidates)==1 branch
 returns before bc_prior.candidate_probs() is ever reached in that exact
-source. USE_BC_PRIOR was architecturally inert in submission 55162376 — see
-notes/phase0_gate0_report.md for the static + dynamic proof.
+source. USE_BC_PRIOR was architecturally inert in submission 55162376 (proven
+both statically and dynamically in the reproducibility audit).
 
 This script instead measures HEAD's agent_core_improved.py (which has the
 rank_all() fix, so SEARCH_ALGO gets real multi-candidate lists) in three

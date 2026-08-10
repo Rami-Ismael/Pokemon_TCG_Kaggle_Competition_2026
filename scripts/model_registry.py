@@ -141,10 +141,65 @@ REGISTRY: dict[str, tuple[str, str, str]] = {
     # describes the family; pick the specific subdir when you benchmark.
     "s2v2": (
         "archive", "archive-stage2-v2-arms",
-        "Stage-2 v2 arms, e0/e3 x seeds 42/43/44. e0_s43 is the checkpoint "
-        "Kaggle submission 55246108 was built from -- its provenance code is "
-        "cited in that submission's description, so the code stays.",
+        "Stage-2 v2 arms: e0 (unweighted control), efb (outcome-weighted) and "
+        "e3 (outcome-weighted + skill gate), x seeds 42/43/44 -- NINE dirs, "
+        "not six; an earlier version of this entry omitted efb. e0_s43 is the "
+        "checkpoint Kaggle submission 55246108 was built from -- its "
+        "provenance code is cited in that submission's description, so the "
+        "code stays. Per-arm entries below; backed up to the private HF repo "
+        "Rami/ptcg-s2v2-arms.",
     ),
+    # Per-arm entries inside the s2v2 family. The DIRECTORY names stay as they
+    # are -- "efb"/"e3"/"e0" are cited by the submission ledger, runs/ logs,
+    # notes/ and the HF backup, and the naming rule at the top of this file is
+    # that an ID is immutable and role is what gets a readable name. So these
+    # give each arm a name you can read without decoding it, while every old
+    # reference still resolves.
+    #
+    # All nine: warm-start models/il_agent, 13,000 steps (~3 epochs), lr 1e-4,
+    # hub days 2026-07-01 + 2026-07-26. Recipe: scripts/run_stage2_restart.sh
+    # (e0) and scripts/run_fallback_arms.sh (efb, e3). They differ by exactly
+    # one thing each, which is what makes the trio a clean comparison:
+    #   e0   nothing                                     -> the control
+    #   efb  --weight-arm outcome --beta 1.0             -> + outcome weighting
+    #   e3   ... --skill-min-score 1189.0                -> + a skill gate
+    #
+    # Offline top-1 on the held-out day, mean +/- sd over the 3 seeds:
+    #   e0  0.7489 +/- 0.0028     efb 0.7475 +/- 0.0023     e3 0.7263 +/- 0.0043
+    #   (majority-class baseline 0.381)
+    # Outcome weighting is indistinguishable from the control; the skill gate
+    # costs ~2.1 points and triples ECE. NEITHER weighted arm has a ladder
+    # read, so neither is better or worse in the sense this project reserves
+    # those words for -- only offline.
+    **{
+        f"s2v2/e0_s{seed}": (
+            "control", f"control-combined-plainbc-s{seed}",
+            "Stage-2 CONTROL: plain BC, no weighting, no filtering. The arm "
+            "every weighted arm has to beat and none does."
+            + (" Submitted as 55246108, settled 320.4 -- the only s2v2 arm "
+               "with a ladder read." if seed == 43 else ""),
+        )
+        for seed in (42, 43, 44)
+    },
+    **{
+        f"s2v2/efb_s{seed}": (
+            "ablation", f"ablation-combined-outcomeweighted-s{seed}",
+            "Outcome-weighted BC (--weight-arm outcome --beta 1.0). Tests "
+            "whether weighting decisions by episode outcome helps. Offline it "
+            "does not: 0.7475 +/- 0.0023 vs the control's 0.7489 +/- 0.0028.",
+        )
+        for seed in (42, 43, 44)
+    },
+    **{
+        f"s2v2/e3_s{seed}": (
+            "ablation", f"ablation-combined-skillgated-s{seed}",
+            "Outcome-weighted BC PLUS a skill gate at the measured Q75 = "
+            "1189.0. Differs from efb by that one flag, so it isolates the "
+            "gate: it costs ~2.1 points of top-1 and triples ECE. Reproduces "
+            "the standing skill-filter negative result.",
+        )
+        for seed in (42, 43, 44)
+    },
     "selfplay_g1": (
         "archive", "archive-selfplay-gen1",
         "Self-play generation 1 (u430080 ref, u963584 final). The league it "
@@ -186,15 +241,35 @@ def sha256(p: Path) -> str | None:
     return h.hexdigest()
 
 
-def scan() -> list[dict]:
-    rows = []
-    seen_dirs = set()
+def _walk() -> list[tuple[str, Path]]:
+    """(registry key, dir) for every model dir, one level into families.
+
+    Registry keys with a slash ("s2v2/efb_s42") name an arm INSIDE a family
+    directory. Without this the nine s2v2 arms were invisible to the table --
+    the family had a role but the arms it contains had no readable name, which
+    is the whole reason someone has to remember what "efb" means.
+    Only registered families are descended into, so an unregistered family
+    still shows up as one UNREGISTERED row rather than exploding into dozens.
+    """
+    out: list[tuple[str, Path]] = []
     for d in sorted(MODELS.iterdir()):
         if not d.is_dir() or d.name == "by-role":
             continue
-        seen_dirs.add(d.name)
+        out.append((d.name, d))
+        children = sorted(
+            c for c in d.iterdir()
+            if c.is_dir() and f"{d.name}/{c.name}" in REGISTRY)
+        out.extend((f"{d.name}/{c.name}", c) for c in children)
+    return out
+
+
+def scan() -> list[dict]:
+    rows = []
+    seen_dirs = set()
+    for key, d in _walk():
+        seen_dirs.add(key)
         role, clear, why = REGISTRY.get(
-            d.name, ("UNREGISTERED", f"UNREGISTERED-{d.name}",
+            key, ("UNREGISTERED", f"UNREGISTERED-{key}",
                      "Not in the registry -- add it to scripts/model_registry.py "
                      "so its purpose is recorded."))
         sha = sha256(d)
@@ -216,7 +291,7 @@ def scan() -> list[dict]:
             role = "BROKEN"
             why = "No loadable model.safetensors. " + why
         link = str(Path(d).readlink()) if d.is_symlink() else None
-        rows.append({"dir": d.name, "role": role, "name": clear, "purpose": why,
+        rows.append({"dir": key, "role": role, "name": clear, "purpose": why,
                      "sha256": sha, "steps": steps, "params": params,
                      "symlink_to": link})
 
