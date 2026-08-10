@@ -363,7 +363,11 @@ AGENT_FILES = {
     # deck. The 4th cell is il_agent itself (Small @ 07-26, the PRIOR).
     "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
     "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
-    "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
+    # grid_medium_comb DEREGISTERED 2026-08-10: models/il_agent_medium_combined
+    # has been an empty dir since 2026-08-03 (see the il_arms comment below), so
+    # the arm never ran its model -- every game was _safe_choice. The strict
+    # loader (PR #53) now refuses that instead of degrading, which crashed the
+    # whole pool at load time. No weights exist locally or on the HF backup.
     # IL checkpoint sweep (reports/il_model_deck_selection.md): every DISTINCT
     # BC checkpoint in models/, one identical wrapper each so the only thing
     # varying across the model axis is the weights. Deduped by sha256 --
@@ -383,8 +387,13 @@ AGENT_FILES = {
     # Equal-steps control for il_alldays_3ep (standing rule 4: compare at equal
     # STEPS, not equal epochs). 38,562 steps vs 127,748; offline acc .7414 vs
     # .7583 but ECE .0124 -- the best calibration of any checkpoint here.
-    # Trained by a concurrent session; lives in that worktree, symlinked in.
-    "il_alldays_equalsteps": REPO / "agents" / "il_arms" / "il_alldays_equalsteps" / "agent_core.py",
+    # Trained by a concurrent session; lived only in that worktree.
+    # il_alldays_equalsteps DEREGISTERED 2026-08-10: its checkpoint
+    # (models/il_alldays_equalsteps_0804) lived in worktree
+    # rewrite-kaggle-pokemon-tcg-prompt-c69997, which was deleted. Every
+    # surviving reference is a dangling symlink and the HF backup repo
+    # (Rami/ptcg-s2v2-arms) has no copy -- the weights are LOST. Its offline
+    # numbers (acc .7414, ECE .0124) remain in the registry history above.
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
