@@ -107,10 +107,21 @@ with the deck-matters-more-than-checkpoint finding.
   way (−4.4 pts, below even the +3 drop line; CIs of A and B overlap).
   The control continuation alone gained +2.9 over base (overlapping CIs —
   weak evidence that more anchored self-play helps holdout play at all).
-- **Decision: DROPPED** per the pre-registered rule (adopt ≥ +5; drop < +3).
-  Single seed, so the magnitude is provisional — but the direction gives no
-  reason to spend a second seed. The anchored-pool guardrail and any ladder
-  read are moot for a dropped arm.
+- **Decision: VOIDED by Rami (2026-08-07), superseding the mechanical DROP.**
+  The pre-registered rule fired at drop (< +3), but the run has a validity
+  hole: arm A trained under heavy CPU contention (~44 sps, parallel-session
+  load, jetsam pressure on the box) while arm B's rerun trained on a quiet
+  machine (~102 sps). Equal steps, unequal machine conditions — contention
+  can starve env workers into timeout losses that poison rollouts (the
+  preflight's own warning), so the A-vs-B comparison is confounded and the
+  −4.4 is not a trustworthy effect size. The jetsam-killed arm B attempt
+  itself contributed no data (discarded, rerun from scratch). What survives:
+  the base-generalization reading (57.6% on unseen lists) — all three
+  batteries ran on the same quiet machine — and the instrument itself.
+  **Reopen condition:** rerun both arms from the new all-episodes BC model
+  (il_agent_hfstream_v2_3ep lineage) once it is gated, BOTH arms on a quiet
+  machine (preflight enforced, no --skip-preflight), same 19/8 split, same
+  battery.
 - **What we learned:**
   1. The hypothesis's mechanism was already half-refuted by the 08-04
      competence control (il_agent plays *better* off its own deck):
