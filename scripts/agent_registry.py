@@ -51,6 +51,7 @@ AGENTS = REPO / "agents"
 ROLES: dict[str, str] = {
     # --- ours ---------------------------------------------------------------
     "il_agent": "primary",
+    "il_agent_v2": "arm",
     "il_alldays_0804": "primary",
     "mcts_il_agent": "primary",
     "exploiter_regression": "diagnostic",
@@ -68,6 +69,7 @@ ROLES: dict[str, str] = {
     "s2v2_arms": "family",
     "ppo_arms": "family",
     "grid_cells": "family",
+    "search_arms": "family",
     "tb_shared": "shared",
     # --- wired pool opponents ----------------------------------------------
     # Ours, cloning a ladder deck:
@@ -96,6 +98,12 @@ ROLES: dict[str, str] = {
     "prvsiyan_templates_alakazam": "opponent",
     "romanrozen_strong_start": "opponent",
     "ryotasueyoshi_alakazam": "opponent",
+    # Wired in benchmark_agents.AGENT_FILES since it was harvested, but left
+    # out of this table until 2026-08-06. The omission was not cosmetic: it is
+    # the ONLY external Marnie's Grimmsnarl ex pilot, so anything selecting
+    # agents by role -- scripts/build_field_split.py included -- silently
+    # dropped the archetype that is 37.2% of the corpus meta.
+    "tetsutani_grimmsnarl": "opponent",
 }
 # Arm children inherit "arm" from their family rather than being listed here.
 FAMILY_CHILD_ROLE = "arm"

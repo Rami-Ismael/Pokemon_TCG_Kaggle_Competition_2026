@@ -56,6 +56,11 @@ import pufferlib.vector as pvector  # noqa: E402
 MIN_DISK_GB = 2.0   # snapshots + logs headroom (laptop disk budget is tight)
 MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
+# External agents reachable by the env's public-pool bucket. Must stay in sync
+# with PTCGGym.pool_names (pokemon_tcg/puffer_env.py), which is what actually
+# draws them -- this copy exists so the driver can name them in run_config.json.
+POOL_NAMES = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
+
 
 def preflight(num_workers: int) -> None:
     """Refuse to launch into a machine that can't host the run.
@@ -108,6 +113,94 @@ def preflight(num_workers: int) -> None:
         "active; wait for it or pass --skip-preflight to launch anyway")
     print(f"preflight OK: disk {free_gb:.1f} GB, RAM {avail_gb:.1f} GB, "
           f"competing CPU {total:.0f}%, workers requested {num_workers}")
+
+
+def git_state() -> dict:
+    """Commit + dirtiness of the tree this run launched from.
+
+    Recorded because argparse DEFAULTS MOVE. `--mix` did not exist before
+    e8298fc (2026-08-04 20:06); runs before it drew the public pool 20% of the
+    time from PTCGGym's own default, and runs after it drew it 0%. Reading
+    today's `--mix` help text onto an 08-03 run gets the opponent distribution
+    exactly backwards, which is a wrong answer about what the run even was.
+    A commit makes the run's real configuration recoverable.
+    """
+    import subprocess as _sp
+
+    def _git(*a: str) -> str | None:
+        try:
+            return _sp.run(("git", *a), cwd=config.PROJECT_ROOT, capture_output=True,
+                           text=True, timeout=10).stdout.strip() or None
+        except (OSError, _sp.SubprocessError):
+            return None
+
+    return {"commit": _git("rev-parse", "HEAD"),
+            "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+            "dirty": bool(_git("status", "--porcelain"))}
+
+
+def opponent_composition(args, env_kwargs: dict) -> dict:
+    """The resolved answer to 'what did this run actually play against?'
+
+    Derived here, at launch, rather than inferred later from flags: the league
+    bucket holds a MIX of our own checkpoints ("ckpt") and external benchmark
+    agents ("module"), so the share of external opponents is not any single
+    flag -- it is mix[2] plus mix[1] weighted by how much of the league is
+    external. That composite is the number every past post-mortem got wrong.
+    """
+    mix = tuple(env_kwargs.get("mix", (0.5, 0.3, 0.2)))
+    league = env_kwargs.get("league") or []
+    n_ext = sum(1 for kind, _ in league if kind == "module")
+    league_ext_frac = (n_ext / len(league)) if league else 0.0
+    pool = list(POOL_NAMES) if mix[2] > 0 else []
+    return {
+        "mix_mirror_league_pool": list(mix),
+        "league": [list(x) for x in league],
+        "league_external_fraction": round(league_ext_frac, 4),
+        "public_pool_names": pool,
+        # P(opponent is not one of our own policies) for a single draw.
+        "external_opponent_share": round(mix[1] * league_ext_frac + mix[2], 4),
+        "opp_hold_episodes": env_kwargs.get("opp_hold"),
+        "alternate_seats": bool(env_kwargs.get("alternate_seats", False)),
+    }
+
+
+def write_run_config(args, env_kwargs: dict) -> Path:
+    """Freeze the fully resolved run configuration to <out>/run_config.json.
+
+    ppo_metadata.json records where a snapshot came from; this records what the
+    run WAS -- resolved args, git state, and the opponent/deck distribution --
+    so no future reader has to reconstruct it from argparse defaults that have
+    since moved. Written before the first env spawns, so it exists even if the
+    run dies early.
+    """
+    pool = env_kwargs.get("deck_pool")
+    resolved = {str(k): (str(v) if isinstance(v, Path) else v)
+                for k, v in sorted(vars(args).items())}
+    cfg = {
+        "run_tag": args.run_tag,
+        "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "started_unix": round(time.time(), 3),
+        "git": git_state(),
+        "opponents": opponent_composition(args, env_kwargs),
+        "decks": {
+            "deck_pool_spec": args.deck_pool,
+            "k": len(pool) if pool is not None else 1,
+            "names": list(pool.names) if pool is not None else ["load_deck (single)"],
+            "mirror_deck": bool(env_kwargs.get("mirror_deck", False)),
+        },
+        "args": resolved,
+    }
+    out = args.out / "run_config.json"
+    out.write_text(json.dumps(cfg, indent=2) + "\n")
+    o = cfg["opponents"]
+    print(f"run config -> {out}")
+    print(f"  git {cfg['git']['commit'][:9] if cfg['git']['commit'] else '?'}"
+          f"{' DIRTY' if cfg['git']['dirty'] else ''} on {cfg['git']['branch']}")
+    print(f"  opponents: mix={o['mix_mirror_league_pool']} "
+          f"external share={o['external_opponent_share']:.0%}  "
+          f"decks: K={cfg['decks']['k']} mirror={cfg['decks']['mirror_deck']}")
+    return out
 
 
 def main() -> None:
@@ -318,7 +411,6 @@ def main() -> None:
     league = [("ckpt", p) for p in args.league.split(",") if p]
     pool_weights = ([float(x) for x in args.pool_weights.split(",")]
                     if args.pool_weights else None)
-    POOL_NAMES = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
     weights_path = None
     if args.pfsp_refresh_every > 0:
         # Seed the weights file BEFORE envs spawn so no worker reads a stale
@@ -365,6 +457,9 @@ def main() -> None:
             print("WARNING: K>1 without --mirror-deck. The opponent will keep "
                   "playing its own bundled deck while the learner varies, so "
                   "this measures deck MATCHUP, not policy exploitability.")
+
+    write_run_config(args, env_kwargs)
+
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs=env_kwargs,
