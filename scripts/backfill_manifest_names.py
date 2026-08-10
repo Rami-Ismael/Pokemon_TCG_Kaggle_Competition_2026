@@ -10,7 +10,7 @@ dead ends, verified 2026-08-04:
   for 07-26 across the current top teams, 0 of 4,554 overlapping the corpus).
 * The replay JSON itself carries no rating fields (only `info.TeamNames`).
 
-The proxy (registered in notes/phase0_discovery_report.md §0.6 as option (b)):
+The proxy (registered during corpus discovery as option (b)):
 150+ of the ~172 train-day team names also appear on days whose manifest DOES
 carry real historical ratings (2026-07-01 train, 2026-07-27 eval). A team's
 skill proxy is the MEDIAN of `avg_score` over its rated-day episodes — under

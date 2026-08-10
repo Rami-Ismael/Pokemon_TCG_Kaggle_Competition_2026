@@ -1,8 +1,9 @@
-"""Phase 2.5 Step 1: encode the train day to parquet and measure bytes/day.
+"""Corpus-storage measurement: encode the train day to parquet, measure bytes/day.
 
 "We never train on JSON, we train on encoded rows" -- this measures the
-real number the Phase 2.5 decision hinges on: encoded bytes/day vs the
-20 GiB/day raw JSON figure, extrapolated to the full 41+ day corpus.
+real number the where-does-the-corpus-live decision hinges on: encoded
+bytes/day vs the 20 GiB/day raw JSON figure, extrapolated to the full
+41+ day corpus.
 
 Writes a scratch parquet file (deleted by default -- pass --keep to retain
 it) built from the exact same encode_observation() output the training loop

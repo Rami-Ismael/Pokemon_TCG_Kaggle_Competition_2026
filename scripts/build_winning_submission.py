@@ -6,8 +6,8 @@ diff against that file, not archaeology.
 
 Rebuilds FROM models/il_agent_winning_827.8/ (the preserved, literal 827.8
 artifact) -- NOT from agents/mega_lucario/agent_core_improved.py or
-models/il_agent/, both of which have since diverged (see
-notes/phase0_gate0_report.md for the diff and what it means).
+models/il_agent/, both of which have since diverged (candidate-truncation
+fix, deck-out penalty regrade, global-state leak fix).
 
 Layout (top-level main.py required by the Kaggle harness):
     submission.tar.gz

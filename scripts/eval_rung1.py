@@ -3,7 +3,7 @@ day, reported per SelectContext, always printed next to the majority-class
 baseline computed on the SAME rows (same label scheme -- including the
 decline slot and multi-select unroll added in this pass, so the baseline is
 apples-to-apples with what the model is actually scored against, not the
-raw Phase 0 numbers which predate those label changes).
+raw corpus-discovery numbers which predate those label changes).
 
 Data source: like train_il.py, 'auto' uses the local split folder ONLY if
 it holds (approximately) the full registered episode count -- after ADR-001

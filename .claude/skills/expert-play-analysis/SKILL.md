@@ -42,8 +42,8 @@ under `reports/expert_play_analysis-{split}-{day}.json`.
   calendar. The script refuses days with no manifest scores
   (train/2026-07-26 has none; 2026-08-03 is still ingesting).
 - **Forced decisions excluded.** ~5.5% of decisions offer exactly one
-  legal option; including them inflates every rate (phase0 §"exactly one
-  legal option").
+  legal option; including them inflates every rate (measured in the
+  corpus discovery pass, §"exactly one legal option").
 - **Every rate gets a Wilson 95% CI**; strong-vs-weak differences are
   flagged `≠` only when intervals are disjoint (repo standing rule: no
   uncertainty, no claim).
@@ -88,7 +88,8 @@ One day, one meta snapshot; re-run before relying on these.
 ## Gotchas
 
 - **Score coverage is per-day and partial**: 07-27 (4430 eps) and 07-01
-  (5266) are scored; 07-26 has NO manifest rows (phase0-era gap);
+  (5266) are scored; 07-26 has NO manifest rows (a known gap since the
+  corpus discovery pass);
   08-03 grows while the ingest loop runs — don't analyze it mid-ingest.
 - **`ATTACH` conflates energy and tool attachment** (OptionType has no
   energy-only member); the energy-first probe uses `energyAttached=False`
