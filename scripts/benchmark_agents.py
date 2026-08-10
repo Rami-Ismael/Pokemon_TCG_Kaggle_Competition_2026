@@ -150,6 +150,12 @@ AGENT_FILES = {
     # 17,622 eps, offline eval 0.7583). il_agent-vs-this is checkpoint-vs-
     # checkpoint, code and deck held fixed.
     "il_agent_v2": REPO / "agents" / "il_agent_v2" / "main.py",
+    # v3 corpus-scaling arms (46 Hub days, 210,512 eps, 1 epoch/596k steps):
+    # _final = annealed end (offline .7342), _best = step-520k peak (.7528).
+    # Local verdict vs il_agent_v2: indistinguishable (v2 10-6 over _best,
+    # 8-8 vs _final, n=16/pair) -- see reports/benchmark_v3_arms.json.
+    "il_agent_v3_final": REPO / "agents" / "il_agent_v3_final" / "main.py",
+    "il_agent_v3_best": REPO / "agents" / "il_agent_v3_best" / "main.py",
     # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
@@ -422,7 +428,7 @@ AGENT_MAIN = {
 #
 # Caveat when reading mcts_il_agent: it spends unbudgeted local think time,
 # which flatters it relative to the ladder (see memory `anchored-pool-rho-0.93`).
-OUR_TRAINED = ["il_agent", "il_agent_v2", "mcts_il_agent"]
+OUR_TRAINED = ["il_agent", "il_agent_v2", "il_agent_v3_final", "il_agent_v3_best", "mcts_il_agent"]
 OUR_HEURISTICS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
                   "proto", "grunt"]
 

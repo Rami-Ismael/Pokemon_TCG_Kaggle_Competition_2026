@@ -1,0 +1,389 @@
+{
+  "agents": [
+    "il_agent_v3_best",
+    "il_agent_v3_final",
+    "il_agent_v2",
+    "il_agent",
+    "agent_core_improved",
+    "mechi22_alakazam",
+    "kiyotah_dragapult",
+    "random_legal"
+  ],
+  "games_per_pair": 8,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_agent_v3_best": {
+      "il_agent_v3_best": 8,
+      "il_agent_v3_final": 8,
+      "il_agent_v2": 6,
+      "il_agent": 14,
+      "agent_core_improved": 7,
+      "mechi22_alakazam": 5,
+      "kiyotah_dragapult": 9,
+      "random_legal": 16
+    },
+    "il_agent_v3_final": {
+      "il_agent_v3_best": 8,
+      "il_agent_v3_final": 8,
+      "il_agent_v2": 8,
+      "il_agent": 14,
+      "agent_core_improved": 8,
+      "mechi22_alakazam": 7,
+      "kiyotah_dragapult": 7,
+      "random_legal": 16
+    },
+    "il_agent_v2": {
+      "il_agent_v3_best": 10,
+      "il_agent_v3_final": 8,
+      "il_agent_v2": 8,
+      "il_agent": 13,
+      "agent_core_improved": 8,
+      "mechi22_alakazam": 7,
+      "kiyotah_dragapult": 11,
+      "random_legal": 15
+    },
+    "il_agent": {
+      "il_agent_v3_best": 2,
+      "il_agent_v3_final": 2,
+      "il_agent_v2": 3,
+      "il_agent": 8,
+      "agent_core_improved": 0,
+      "mechi22_alakazam": 0,
+      "kiyotah_dragapult": 2,
+      "random_legal": 14
+    },
+    "agent_core_improved": {
+      "il_agent_v3_best": 9,
+      "il_agent_v3_final": 8,
+      "il_agent_v2": 8,
+      "il_agent": 16,
+      "agent_core_improved": 8,
+      "mechi22_alakazam": 6,
+      "kiyotah_dragapult": 7,
+      "random_legal": 16
+    },
+    "mechi22_alakazam": {
+      "il_agent_v3_best": 11,
+      "il_agent_v3_final": 9,
+      "il_agent_v2": 9,
+      "il_agent": 16,
+      "agent_core_improved": 10,
+      "mechi22_alakazam": 8,
+      "kiyotah_dragapult": 6,
+      "random_legal": 15
+    },
+    "kiyotah_dragapult": {
+      "il_agent_v3_best": 7,
+      "il_agent_v3_final": 9,
+      "il_agent_v2": 5,
+      "il_agent": 14,
+      "agent_core_improved": 9,
+      "mechi22_alakazam": 10,
+      "kiyotah_dragapult": 8,
+      "random_legal": 16
+    },
+    "random_legal": {
+      "il_agent_v3_best": 0,
+      "il_agent_v3_final": 0,
+      "il_agent_v2": 1,
+      "il_agent": 2,
+      "agent_core_improved": 0,
+      "mechi22_alakazam": 1,
+      "kiyotah_dragapult": 0,
+      "random_legal": 8
+    }
+  },
+  "games": {
+    "il_agent_v3_best": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "il_agent_v3_final": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "il_agent_v2": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "il_agent": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "agent_core_improved": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "mechi22_alakazam": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "kiyotah_dragapult": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    },
+    "random_legal": {
+      "il_agent_v3_best": 16,
+      "il_agent_v3_final": 16,
+      "il_agent_v2": 16,
+      "il_agent": 16,
+      "agent_core_improved": 16,
+      "mechi22_alakazam": 16,
+      "kiyotah_dragapult": 16,
+      "random_legal": 16
+    }
+  },
+  "wall_clock_sec": {
+    "il_agent_v3_best": {
+      "il_agent_v3_best": 10.144157886505127,
+      "il_agent_v3_final": 10.563216209411621,
+      "il_agent_v2": 11.115109205245972,
+      "il_agent": 9.002849102020264,
+      "agent_core_improved": 7.764524936676025,
+      "mechi22_alakazam": 7.341784238815308,
+      "kiyotah_dragapult": 8.941608905792236,
+      "random_legal": 4.022883892059326
+    },
+    "il_agent_v3_final": {
+      "il_agent_v3_best": 10.563216209411621,
+      "il_agent_v3_final": 10.94243574142456,
+      "il_agent_v2": 12.11501693725586,
+      "il_agent": 10.314479112625122,
+      "agent_core_improved": 8.726939916610718,
+      "mechi22_alakazam": 6.798303842544556,
+      "kiyotah_dragapult": 7.800260782241821,
+      "random_legal": 4.5646209716796875
+    },
+    "il_agent_v2": {
+      "il_agent_v3_best": 11.115109205245972,
+      "il_agent_v3_final": 12.11501693725586,
+      "il_agent_v2": 10.163954257965088,
+      "il_agent": 11.149834871292114,
+      "agent_core_improved": 8.146990776062012,
+      "mechi22_alakazam": 8.56605315208435,
+      "kiyotah_dragapult": 8.465322971343994,
+      "random_legal": 4.178727865219116
+    },
+    "il_agent": {
+      "il_agent_v3_best": 9.002849102020264,
+      "il_agent_v3_final": 10.314479112625122,
+      "il_agent_v2": 11.149834871292114,
+      "il_agent": 10.77161979675293,
+      "agent_core_improved": 5.3479859828948975,
+      "mechi22_alakazam": 6.713552951812744,
+      "kiyotah_dragapult": 7.100398063659668,
+      "random_legal": 5.579732894897461
+    },
+    "agent_core_improved": {
+      "il_agent_v3_best": 7.764524936676025,
+      "il_agent_v3_final": 8.726939916610718,
+      "il_agent_v2": 8.146990776062012,
+      "il_agent": 5.3479859828948975,
+      "agent_core_improved": 4.543502330780029,
+      "mechi22_alakazam": 3.8025829792022705,
+      "kiyotah_dragapult": 5.0957019329071045,
+      "random_legal": 1.5984067916870117
+    },
+    "mechi22_alakazam": {
+      "il_agent_v3_best": 7.341784238815308,
+      "il_agent_v3_final": 6.798303842544556,
+      "il_agent_v2": 8.56605315208435,
+      "il_agent": 6.713552951812744,
+      "agent_core_improved": 3.8025829792022705,
+      "mechi22_alakazam": 5.898585319519043,
+      "kiyotah_dragapult": 5.375391960144043,
+      "random_legal": 2.4047858715057373
+    },
+    "kiyotah_dragapult": {
+      "il_agent_v3_best": 8.941608905792236,
+      "il_agent_v3_final": 7.800260782241821,
+      "il_agent_v2": 8.465322971343994,
+      "il_agent": 7.100398063659668,
+      "agent_core_improved": 5.0957019329071045,
+      "mechi22_alakazam": 5.375391960144043,
+      "kiyotah_dragapult": 4.821288108825684,
+      "random_legal": 2.770266056060791
+    },
+    "random_legal": {
+      "il_agent_v3_best": 4.022883892059326,
+      "il_agent_v3_final": 4.5646209716796875,
+      "il_agent_v2": 4.178727865219116,
+      "il_agent": 5.579732894897461,
+      "agent_core_improved": 1.5984067916870117,
+      "mechi22_alakazam": 2.4047858715057373,
+      "kiyotah_dragapult": 2.770266056060791,
+      "random_legal": 3.4772520065307617
+    }
+  },
+  "total_wall_clock_sec": 225.84754729270935,
+  "overall_win_pct": {
+    "il_agent_v3_best": 57.03125,
+    "il_agent_v3_final": 59.375,
+    "il_agent_v2": 62.5,
+    "il_agent": 24.21875,
+    "agent_core_improved": 60.9375,
+    "mechi22_alakazam": 65.625,
+    "kiyotah_dragapult": 60.9375,
+    "random_legal": 9.375
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_agent_v3_best": {
+      "p": 57.03125,
+      "lo": 48.37377469365458,
+      "hi": 65.27897223902828
+    },
+    "il_agent_v3_final": {
+      "p": 59.375,
+      "lo": 50.71382471838718,
+      "hi": 67.4898378585233
+    },
+    "il_agent_v2": {
+      "p": 62.5,
+      "lo": 53.863844339555534,
+      "hi": 70.40770576299175
+    },
+    "il_agent": {
+      "p": 24.21875,
+      "lo": 17.618632286113765,
+      "hi": 32.321295627382426
+    },
+    "agent_core_improved": {
+      "p": 60.9375,
+      "lo": 52.28448791093639,
+      "hi": 68.9531184287925
+    },
+    "mechi22_alakazam": {
+      "p": 65.625,
+      "lo": 57.04946622111811,
+      "hi": 73.28997140706602
+    },
+    "kiyotah_dragapult": {
+      "p": 60.9375,
+      "lo": 52.28448791093639,
+      "hi": 68.9531184287925
+    },
+    "random_legal": {
+      "p": 9.375,
+      "lo": 5.444326547008603,
+      "hi": 15.673135619712674
+    }
+  },
+  "glicko": {
+    "il_agent_v3_best": {
+      "rating": 1658.0306004248985,
+      "rd": 45.32765978951914,
+      "gxe": 64.69937212253637
+    },
+    "il_agent_v3_final": {
+      "rating": 1685.472243629978,
+      "rd": 45.32765978951914,
+      "gxe": 67.063430231091
+    },
+    "il_agent_v2": {
+      "rating": 1724.241171130698,
+      "rd": 45.32765978951914,
+      "gxe": 70.25950282350897
+    },
+    "il_agent": {
+      "rating": 1290.3864012484064,
+      "rd": 30.0,
+      "gxe": 30.881011301961745
+    },
+    "agent_core_improved": {
+      "rating": 1687.4155803679228,
+      "rd": 37.078445181936544,
+      "gxe": 67.25187350379286
+    },
+    "mechi22_alakazam": {
+      "rating": 1734.476244523774,
+      "rd": 37.7470957306962,
+      "gxe": 71.09889375500315
+    },
+    "kiyotah_dragapult": {
+      "rating": 1701.8739798021186,
+      "rd": 37.22823639842818,
+      "gxe": 68.46218245711192
+    },
+    "random_legal": {
+      "rating": 958.8401425760451,
+      "rd": 30.0,
+      "gxe": 11.10513850556926
+    }
+  },
+  "fallback_diag": {
+    "il_agent_v3_best": {
+      "decisions": 7929,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_agent_v3_final": {
+      "decisions": 7995,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_agent_v2": {
+      "decisions": 8275,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_agent": {
+      "decisions": 6645,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "mechi22_alakazam": {
+      "deck_returns": 128,
+      "decisions": 8185,
+      "policy_ok": 8185,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

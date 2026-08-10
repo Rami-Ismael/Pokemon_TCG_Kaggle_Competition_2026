@@ -1153,7 +1153,18 @@ class ShardILDataset(IterableDataset):
             return str(self.local_root / rel)
         from huggingface_hub import hf_hub_download  # lazy: only the Hub path needs it
 
-        return hf_hub_download(self.repo_id, rel, repo_type="dataset")
+        try:
+            return hf_hub_download(self.repo_id, rel, repo_type="dataset")
+        except Exception:
+            # Network resolution failed -- a 404 (concurrent sessions REPLACE
+            # Hub days in-place, deleting shards during the swap; this
+            # crashed a run at step 50k on 2026-08-07), a rate limit, or
+            # being offline. Serve the locally cached copy of the shard if
+            # one exists (i.e. train on the launch-time snapshot); raise
+            # loudly only when there is no cached copy either.
+            return hf_hub_download(
+                self.repo_id, rel, repo_type="dataset", local_files_only=True
+            )
 
     def n_episodes(self) -> int:
         """Episodes this dataset will actually stream.
