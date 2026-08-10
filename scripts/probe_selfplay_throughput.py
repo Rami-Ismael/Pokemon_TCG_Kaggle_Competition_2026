@@ -16,7 +16,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from pokemon_tcg import config  # noqa: E402
-from pokemon_tcg.selfplay import play_one_game, sample_league, worker_init  # noqa: E402
+from pokemon_tcg.selfplay import (  # noqa: E402
+    play_one_game, sample_lineage_opponent, worker_init)
 
 
 def main() -> None:
@@ -27,17 +28,18 @@ def main() -> None:
     ap.add_argument("--games", type=int, default=32)
     ap.add_argument("--temperature", type=float, default=1.0)
     ap.add_argument("--league-mix", action="store_true",
-                    help="draw opponents per the league mix (mirror/past/pool) "
-                         "instead of pure mirror; uses il_agent PRIOR as the "
-                         "one past checkpoint and the strong public trio")
+                    help="draw opponents per the lineage mix (live mirror / "
+                         "our frozen checkpoints) instead of pure mirror; uses "
+                         "il_agent as the one past checkpoint. Externals are "
+                         "never opponents -- see selfplay.sample_lineage_opponent")
     args = ap.parse_args()
 
     rng = random.Random(config.RANDOM_SEED)
     league = [str(config.MODELS_DIR / "il_agent")] if args.league_mix else []
-    pool = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"] if args.league_mix else []
     tasks = []
     for i in range(args.games):
-        spec = sample_league(rng, league, pool) if args.league_mix else ("ckpt", "__mirror__")
+        spec = (sample_lineage_opponent(rng, league) if args.league_mix
+                else ("ckpt", "__mirror__"))
         tasks.append((i, spec, i % 2))
 
     ctx = mp.get_context("spawn")

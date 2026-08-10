@@ -39,7 +39,7 @@ BAD_STATUSES = {"INVALID", "ERROR"}
 
 
 def probe_deck(kaggle_make, deck: list[int], play_out: bool,
-               max_steps: int = 400) -> dict:
+               max_steps: int = 1500) -> dict:
     """Return {'legal': bool, 'stage': str, 'statuses': [...], 'steps': int}."""
     env = kaggle_make("cabt")
     env.reset(2)
@@ -78,20 +78,27 @@ def probe_deck(kaggle_make, deck: list[int], play_out: bool,
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--deck-pool", default="all:agents",
-                    help="pool spec to probe (default all:agents, "
-                         "content-deduped); also accepts all:decklists, a "
+    ap.add_argument("--deck-pool", default="all:decks",
+                    help="pool spec to probe (default all:decks = the union of "
+                         "configs/deck_lists and agents/*/deck.csv, content-"
+                         "deduped); also accepts all:agents, all:decklists, a "
                          "comma-separated ref list, or @manifest.txt")
     ap.add_argument("--play-out", dest="play_out", action="store_true",
                     default=True, help="also finish one safe-choice game (default)")
     ap.add_argument("--no-play-out", dest="play_out", action="store_false",
                     help="deck-submission check only (faster, misses mid-game faults)")
-    ap.add_argument("--max-steps", type=int, default=400,
-                    help="play-out step cap; hitting it fails the deck as unusable")
+    ap.add_argument("--max-steps", type=int, default=1500,
+                    help="play-out step cap; hitting it fails the deck as "
+                         "unusable. Generous on purpose: game length under "
+                         "safe-choice agents is high-variance (kiyotah_iono "
+                         "took 165 steps alone and >400 in a batch run on "
+                         "2026-08-05), so a tight cap reports a LONG GAME as an "
+                         "illegal deck. Re-probe any timeout on its own before "
+                         "believing it")
     ap.add_argument("--out", type=Path,
                     default=config.REPORTS_DIR / "deck_legality.json")
     ap.add_argument("--manifest", type=Path,
-                    default=config.PROJECT_ROOT / "configs" / "deck_pools" / "legal_agents.txt",
+                    default=config.PROJECT_ROOT / "configs" / "deck_pools" / "legal_decks.txt",
                     help="pass-list written here, usable as '@<path>' pool spec")
     args = ap.parse_args()
 

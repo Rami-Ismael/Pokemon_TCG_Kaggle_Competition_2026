@@ -1,10 +1,10 @@
 {
-  "spec": "all:agents",
+  "spec": "all:decks",
   "play_out": true,
-  "probed": 33,
-  "legal": 33,
+  "probed": 29,
+  "legal": 29,
   "failed": 0,
-  "seconds": 6.3,
+  "seconds": 5.2,
   "results": [
     {
       "legal": true,
@@ -13,9 +13,97 @@
         "DONE",
         "DONE"
       ],
-      "steps": 155,
+      "steps": 143,
+      "name": "alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/alakazam.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 212,
+      "name": "cynthias_garchomp_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/cynthias_garchomp_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 214,
+      "name": "dragapult_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/dragapult_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 210,
+      "name": "grimmsnarl_toplayer",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/grimmsnarl_toplayer.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 141,
+      "name": "marnies_grimmsnarl_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/marnies_grimmsnarl_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 133,
+      "name": "mega_kangaskhan_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_kangaskhan_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 150,
+      "name": "mega_lucario_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_lucario_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 200,
+      "name": "team_rockets_spidops",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/team_rockets_spidops.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 133,
       "name": "avikdas567_heuristic",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/avikdas567_heuristic/deck.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/avikdas567_heuristic/deck.csv"
     },
     {
       "legal": true,
@@ -24,328 +112,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 37,
+      "steps": 61,
       "name": "biohack44_day2",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/biohack44_day2/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 115,
-      "name": "daniilkrasnovvv_conservative_prob",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/daniilkrasnovvv_conservative_prob/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 81,
-      "name": "kiyotah_abomasnow",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/kiyotah_abomasnow/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 228,
-      "name": "kiyotah_dragapult",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/kiyotah_dragapult/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 361,
-      "name": "kiyotah_iono",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/kiyotah_iono/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 161,
-      "name": "makimakiai_rl",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/makimakiai_rl/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 24,
-      "name": "mechi22_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/mechi22_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 170,
-      "name": "pixiux_lucario_v63",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/pixiux_lucario_v63/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 146,
-      "name": "plamen06_steel",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/plamen06_steel/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 198,
-      "name": "pllinas_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/pllinas_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 158,
-      "name": "prvsiyan_control_v11",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/prvsiyan_control_v11/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 161,
-      "name": "prvsiyan_grimbelief_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/prvsiyan_grimbelief_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 219,
-      "name": "ryotasueyoshi_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/ryotasueyoshi_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 38,
-      "name": "tb_abomasnow",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_abomasnow/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 84,
-      "name": "tb_archaludon",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_archaludon/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 208,
-      "name": "tb_dragapult",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_dragapult/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 192,
-      "name": "tb_heuristic",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_heuristic/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 205,
-      "name": "tb_iono",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_iono/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 184,
-      "name": "tb_lucario",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_lucario/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 142,
-      "name": "tb_starmie",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/tb_starmie/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 191,
-      "name": "wmh_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 176,
-      "name": "wmh_bellibolt",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_bellibolt/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 160,
-      "name": "wmh_chandelure",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_chandelure/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 123,
-      "name": "wmh_froslass",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_froslass/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 209,
-      "name": "wmh_garchomp",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_garchomp/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 152,
-      "name": "wmh_grimmsnarl",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_grimmsnarl/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 161,
-      "name": "wmh_kangaskhan",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_kangaskhan/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 66,
-      "name": "wmh_megastarmie",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_megastarmie/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 144,
-      "name": "wmh_mewtwo",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_mewtwo/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 175,
-      "name": "wmh_ogerpon",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_ogerpon/deck.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/biohack44_day2/deck.csv"
     },
     {
       "legal": true,
@@ -355,8 +124,8 @@
         "DONE"
       ],
       "steps": 169,
-      "name": "wmh_trevenant",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_trevenant/deck.csv"
+      "name": "kiyotah_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_abomasnow/deck.csv"
     },
     {
       "legal": true,
@@ -365,9 +134,196 @@
         "DONE",
         "DONE"
       ],
-      "steps": 81,
+      "steps": 197,
+      "name": "kiyotah_iono",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_iono/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 213,
+      "name": "mechi22_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/mechi22_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 107,
+      "name": "pixiux_lucario_v63",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pixiux_lucario_v63/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 160,
+      "name": "plamen06_steel",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/plamen06_steel/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 100,
+      "name": "pllinas_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pllinas_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 161,
+      "name": "prvsiyan_control_v11",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/prvsiyan_control_v11/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 35,
+      "name": "tb_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_abomasnow/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 92,
+      "name": "tb_archaludon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_archaludon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 195,
+      "name": "tb_heuristic",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_heuristic/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 144,
+      "name": "tb_starmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_starmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181,
+      "name": "wmh_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 132,
+      "name": "wmh_chandelure",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_chandelure/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 208,
+      "name": "wmh_kangaskhan",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_kangaskhan/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 21,
+      "name": "wmh_megastarmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_megastarmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 149,
+      "name": "wmh_mewtwo",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_mewtwo/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 180,
+      "name": "wmh_ogerpon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_ogerpon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181,
+      "name": "wmh_trevenant",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_trevenant/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 161,
       "name": "wmh_typhlosion",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/agents/wmh_typhlosion/deck.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_typhlosion/deck.csv"
     }
   ]
 }
