@@ -64,7 +64,7 @@ SOURCE_REF_TO_LOCAL_AGENT = {
     "ryotasueyoshi/rule-based-not-psychic-alakazam-best-5th": "ryotasueyoshi_alakazam",
     "makthanithin/improved-probabilistic-agent": "makthanithin_improved_prob",
     "mechi22/ptcg-1070-9-alakazam-rule-based-skeleton": "mechi22_alakazam",
-    # Phase-1 archetype-coverage recruitment (Gate 1) -- wired for a *new deck*
+    # Archetype-coverage recruitment -- wired for a *new deck*
     # or a distinct policy, not raw count; same-deck clones stay reference-only.
     "plamen06/pokemon-steel": "plamen06_steel",                       # Metal (Archaludon)
     "prvsiyan/ptcg-ai-battle-control-v11-meta-portfolio": "prvsiyan_control_v11",  # Fighting/Great Tusk/Crustle

@@ -57,7 +57,7 @@ import pufferlib.pufferl as pufferl  # noqa: E402
 import pufferlib.vector as pvector  # noqa: E402
 
 MIN_DISK_GB = 2.0   # snapshots + logs headroom (laptop disk budget is tight)
-
+MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 def _deck_fingerprint(env_kwargs: dict) -> dict:
     """What deck(s) this run actually trained on.
@@ -115,12 +115,10 @@ def _init_chain(start: Path | str | None, _depth: int = 0) -> list[dict]:
 
 
 def _git_sha() -> str | None:
-    try:
-        return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
-                              text=True, cwd=config.PROJECT_ROOT,
-                              timeout=5).stdout.strip() or None
-    except (OSError, subprocess.SubprocessError):
-        return None
+    """Commit only. git_state() is the single implementation -- a run launched
+    from a dirty tree is not the commit it names, and only that function says
+    so, but the snapshot provenance block wants the bare sha."""
+    return git_state()["commit"]
 
 
 def _slug(text: str) -> str:
@@ -177,7 +175,6 @@ def build_run_tag(label: str | None, mix: tuple[float, ...],
     return "_".join([_slug(label) if label else "ppo", opponents, deck,
                      f"from-{_checkpoint_slug(init_from)}",
                      f"seed{seed}"])
-MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 
 def preflight(num_workers: int) -> None:
@@ -231,6 +228,98 @@ def preflight(num_workers: int) -> None:
         "active; wait for it or pass --skip-preflight to launch anyway")
     print(f"preflight OK: disk {free_gb:.1f} GB, RAM {avail_gb:.1f} GB, "
           f"competing CPU {total:.0f}%, workers requested {num_workers}")
+
+
+def git_state() -> dict:
+    """Commit + dirtiness of the tree this run launched from.
+
+    Recorded because argparse DEFAULTS MOVE. `--mix` did not exist before
+    e8298fc (2026-08-04 20:06); runs before it drew the public pool 20% of the
+    time from PTCGGym's own default, and runs after it drew it 0%. Reading
+    today's `--mix` help text onto an 08-03 run gets the opponent distribution
+    exactly backwards, which is a wrong answer about what the run even was.
+    A commit makes the run's real configuration recoverable.
+    """
+    def _git(*a: str) -> str | None:
+        try:
+            return subprocess.run(("git", *a), cwd=config.PROJECT_ROOT,
+                                  capture_output=True, text=True,
+                                  timeout=10).stdout.strip() or None
+        except (OSError, subprocess.SubprocessError):
+            return None
+
+    return {"commit": _git("rev-parse", "HEAD"),
+            "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+            "dirty": bool(_git("status", "--porcelain"))}
+
+
+def opponent_composition(args, env_kwargs: dict) -> dict:
+    """The resolved answer to 'what did this run actually play against?'
+
+    Derived here, at launch, rather than inferred later from flags: the league
+    bucket holds a MIX of our own checkpoints ("ckpt") and external benchmark
+    agents ("module"), so the share of external opponents is not any single
+    flag -- it is mix[1] weighted by how much of the league is external. That
+    composite is the number every past post-mortem got wrong.
+
+    In normal self-play this is now provably 0.0: --mix pins the externals
+    share to zero and --league entries are validated to be our own saved
+    checkpoints. It is still computed rather than hardcoded, so if either
+    guard is ever weakened the number moves and says so.
+    """
+    mix = tuple(env_kwargs.get("mix", (0.625, 0.375)))
+    league = env_kwargs.get("league") or []
+    n_ext = sum(1 for kind, _ in league if kind == "module")
+    league_ext_frac = (n_ext / len(league)) if league else 0.0
+    # The public-pool bucket is DELETED from the env, not zeroed, and --mix
+    # pins its share to 0, so there is no third term to add and no roster to
+    # name. The league can still be all-external in exploiter mode
+    # (--opponent-module), which is the one path this must keep reporting.
+    pool_share = mix[2] if len(mix) > 2 else 0.0
+    return {
+        "mix_mirror_league": list(mix),
+        "league": [list(x) for x in league],
+        "league_external_fraction": round(league_ext_frac, 4),
+        # P(opponent is not one of our own policies) for a single draw.
+        "external_opponent_share": round(mix[1] * league_ext_frac + pool_share, 4),
+        "opp_hold_episodes": env_kwargs.get("opp_hold"),
+        "alternate_seats": bool(env_kwargs.get("alternate_seats", False)),
+    }
+
+
+def write_run_config(args, env_kwargs: dict) -> Path:
+    """Freeze the fully resolved run configuration to <out>/run_config.json.
+
+    ppo_metadata.json records where a snapshot came from; this records what the
+    run WAS -- resolved args, git state, and the opponent/deck distribution --
+    so no future reader has to reconstruct it from argparse defaults that have
+    since moved. Written before the first env spawns, so it exists even if the
+    run dies early.
+    """
+    resolved = {str(k): (str(v) if isinstance(v, Path) else v)
+                for k, v in sorted(vars(args).items())}
+    cfg = {
+        "run_tag": args.run_tag,
+        "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "started_unix": round(time.time(), 3),
+        "git": git_state(),
+        "opponents": opponent_composition(args, env_kwargs),
+        # _deck_fingerprint is the shared implementation (it also hashes the
+        # deck file, which catches an edited deck.csv that keeps its name).
+        "decks": {"deck_pool_spec": args.deck_pool, **_deck_fingerprint(env_kwargs)},
+        "args": resolved,
+    }
+    out = args.out / "run_config.json"
+    out.write_text(json.dumps(cfg, indent=2) + "\n")
+    o, d = cfg["opponents"], cfg["decks"]
+    print(f"run config -> {out}")
+    print(f"  git {cfg['git']['commit'][:9] if cfg['git']['commit'] else '?'}"
+          f"{' DIRTY' if cfg['git']['dirty'] else ''} on {cfg['git']['branch']}")
+    print(f"  opponents: mix={o['mix_mirror_league_pool']} "
+          f"external share={o['external_opponent_share']:.0%}  "
+          f"decks: {d.get('deck_source')} "
+          f"K={d.get('deck_k', 1)} mirror={d.get('mirror_deck', False)}")
+    return out
 
 
 def main() -> None:
@@ -558,6 +647,9 @@ def main() -> None:
         print("DECK POOL: none -- both seats play the single hardcoded deck "
               "(selfplay.load_deck / agents/il_agent/deck.csv). This is the "
               "single-deck CONTROL arm.")
+
+    write_run_config(args, env_kwargs)
+
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs=env_kwargs,
@@ -630,12 +722,16 @@ def main() -> None:
             "kl_coef": args.kl_coef,
             "league": [s for s in args.league.split(",") if s],
             "opponent_module": args.opponent_module,
-            # Externals share is pinned to 0 and the bucket is gone from the
-            # env, so the old public-pool weighting fields (pool_weights,
-            # pfsp_refresh_every, pfsp_ema) no longer exist to record.
             "mix_mirror_league": args.mix,
             "opponents": "lineage-only (live mirror + our frozen checkpoints)",
             "field_pool": args.field_pool or None,
+            # DERIVED, not read off a flag -- reading it off a flag is what made
+            # the 275.1-vs-254.9 gap look like a generation effect. On this
+            # branch the guards make it provably 0.0 (externals share pinned to
+            # zero, league entries validated as our own checkpoints), and it is
+            # recorded anyway so a future change that breaks that shows up here.
+            "external_opponent_share":
+                opponent_composition(args, env_kwargs)["external_opponent_share"],
             "opp_hold": args.opp_hold,
             "seed": args.seed,
             "promote_every": args.promote_every,

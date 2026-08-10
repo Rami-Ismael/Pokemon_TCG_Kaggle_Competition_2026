@@ -158,7 +158,7 @@ def test_iter_decisions_yields_declines_and_multiselect_rows():
 def test_every_label_points_at_an_unmasked_slot():
     """Regression test: a terminal multi-select DECLINE label must land on a
     slot that encode_observation actually marks scoreable, or cross-entropy
-    against it is -log(softmax of -inf) == inf. (Caught during the Phase 6
+    against it is -log(softmax of -inf) == inf. (Caught during the runtime
     speed probe: `add_decline` used to check `minCount == 0` globally
     instead of accounting for picks already made in this unroll step.)
     """

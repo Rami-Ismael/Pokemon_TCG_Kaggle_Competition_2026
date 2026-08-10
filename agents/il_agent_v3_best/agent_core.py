@@ -96,7 +96,7 @@ if not Path(MODEL_DIR).exists():
 _DEVICE = resolve_device(override="cpu") if _ML_AVAILABLE else "cpu"
 # Hard time cap per decision, well inside the 600s/2000s match budgets --
 # a belt-and-suspenders guard, not the primary latency control (measured
-# inference is ~ms-scale, measured in the corpus discovery pass).
+# inference is ~ms-scale, see notes/phase0_discovery_report.md).
 _MAX_DECISION_SECONDS = 5.0
 
 # `my_deck` is intentionally NOT pre-declared here (matches agents/mega_lucario/agent_core.py):

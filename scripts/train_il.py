@@ -15,9 +15,9 @@ Usage:
         # 50 train / 20 eval episodes, a tiny 2-layer/32-dim model, 1 epoch.
         # Verifies the pipeline end-to-end in ~1-2 minutes on CPU.
 
-Full-split runtime: see notes/phase6_projection.md for a measured
-steps/sec -> wall-clock projection; per the project's own stop condition,
-do not launch anything projected over 1 hour without checking that note.
+Full-split runtime: measured at ~10.86 steps/sec (hidden=192/layers=6/
+heads=6, batch=64, MPS) -- project wall-clock from that before launching;
+do not launch anything projected over 1 hour without checking the math.
 
 STEP-DRIVEN, NOT EPOCH-DRIVEN. `--epochs` (a float now, not int) only sets
 the SCHEDULE LENGTH (est_total_steps = n_episodes * ROWS_PER_EPISODE /
@@ -71,7 +71,7 @@ from pokemon_tcg.il_dataset import (  # noqa: E402
 from pokemon_tcg.il_model import PTCGILConfig, PTCGImitationPolicy  # noqa: E402
 from pokemon_tcg.logging_utils import TensorBoardLogger  # noqa: E402
 
-# Measured on the full train day (notes/phase0_discovery_report.md, §0.5):
+# Measured on the full train day (July 2026 corpus discovery pass):
 # global majority-class baseline over every single-choice decision. Logged
 # as a flat reference line so every accuracy curve is interpretable next to
 # it, not just in isolation.
@@ -509,8 +509,8 @@ def main() -> None:
 
     # total_steps for the cosine schedule: both dataset types are streaming
     # IterableDatasets (no __len__), so estimate it rather than block on a
-    # full pre-count pass. ROWS_PER_EPISODE is the measured rate from
-    # notes/phase6_projection.md (181.3 rows/episode, incl. declines and
+    # full pre-count pass. ROWS_PER_EPISODE is the measured rate
+    # (181.3 rows/episode on the full train day, incl. declines and
     # the multi-select unroll); n_episodes came from a glob (local) or the
     # shard footers (hub) above.
     ROWS_PER_EPISODE = 181.3

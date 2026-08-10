@@ -1,4 +1,4 @@
-"""Phase-2 measurements for the search/battle API port (search_api.py).
+"""Timing measurements for the search/battle API port (search_api.py).
 
 a) search_step cost (ms) and per-decision MCTS cost vs SEARCH_COUNT, on the
    current device config. Run once normally and once as the evaluator

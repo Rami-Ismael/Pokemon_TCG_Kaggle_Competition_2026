@@ -4,7 +4,7 @@
   "probed": 29,
   "legal": 29,
   "failed": 0,
-  "seconds": 41.0,
+  "seconds": 5.2,
   "results": [
     {
       "legal": true,
@@ -13,7 +13,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 217,
+      "steps": 143,
       "name": "alakazam",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/alakazam.csv"
     },
@@ -24,7 +24,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 190,
+      "steps": 212,
       "name": "cynthias_garchomp_ex",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/cynthias_garchomp_ex.csv"
     },
@@ -46,7 +46,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 202,
+      "steps": 210,
       "name": "grimmsnarl_toplayer",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/grimmsnarl_toplayer.csv"
     },
@@ -57,7 +57,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 171,
+      "steps": 141,
       "name": "marnies_grimmsnarl_ex",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/marnies_grimmsnarl_ex.csv"
     },
@@ -68,7 +68,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 102,
+      "steps": 133,
       "name": "mega_kangaskhan_ex",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_kangaskhan_ex.csv"
     },
@@ -79,7 +79,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 119,
+      "steps": 150,
       "name": "mega_lucario_ex",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_lucario_ex.csv"
     },
@@ -90,7 +90,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 187,
+      "steps": 200,
       "name": "team_rockets_spidops",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/team_rockets_spidops.csv"
     },
@@ -101,7 +101,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 99,
+      "steps": 133,
       "name": "avikdas567_heuristic",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/avikdas567_heuristic/deck.csv"
     },
@@ -112,7 +112,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 78,
+      "steps": 61,
       "name": "biohack44_day2",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/biohack44_day2/deck.csv"
     },
@@ -123,7 +123,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 56,
+      "steps": 169,
       "name": "kiyotah_abomasnow",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_abomasnow/deck.csv"
     },
@@ -134,7 +134,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 171,
+      "steps": 197,
       "name": "kiyotah_iono",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_iono/deck.csv"
     },
@@ -145,7 +145,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 187,
+      "steps": 213,
       "name": "mechi22_alakazam",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/mechi22_alakazam/deck.csv"
     },
@@ -156,7 +156,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 156,
+      "steps": 107,
       "name": "pixiux_lucario_v63",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pixiux_lucario_v63/deck.csv"
     },
@@ -167,7 +167,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 110,
+      "steps": 160,
       "name": "plamen06_steel",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/plamen06_steel/deck.csv"
     },
@@ -178,7 +178,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 220,
+      "steps": 100,
       "name": "pllinas_alakazam",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pllinas_alakazam/deck.csv"
     },
@@ -189,7 +189,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 160,
+      "steps": 161,
       "name": "prvsiyan_control_v11",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/prvsiyan_control_v11/deck.csv"
     },
@@ -200,7 +200,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 50,
+      "steps": 35,
       "name": "tb_abomasnow",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_abomasnow/deck.csv"
     },
@@ -211,7 +211,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 128,
+      "steps": 92,
       "name": "tb_archaludon",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_archaludon/deck.csv"
     },
@@ -222,7 +222,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 197,
+      "steps": 195,
       "name": "tb_heuristic",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_heuristic/deck.csv"
     },
@@ -233,7 +233,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 45,
+      "steps": 144,
       "name": "tb_starmie",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_starmie/deck.csv"
     },
@@ -244,7 +244,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 173,
+      "steps": 181,
       "name": "wmh_alakazam",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_alakazam/deck.csv"
     },
@@ -255,7 +255,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 127,
+      "steps": 132,
       "name": "wmh_chandelure",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_chandelure/deck.csv"
     },
@@ -266,7 +266,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 116,
+      "steps": 208,
       "name": "wmh_kangaskhan",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_kangaskhan/deck.csv"
     },
@@ -277,7 +277,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 75,
+      "steps": 21,
       "name": "wmh_megastarmie",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_megastarmie/deck.csv"
     },
@@ -288,7 +288,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 185,
+      "steps": 149,
       "name": "wmh_mewtwo",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_mewtwo/deck.csv"
     },
@@ -299,7 +299,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 25,
+      "steps": 180,
       "name": "wmh_ogerpon",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_ogerpon/deck.csv"
     },
@@ -310,7 +310,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 169,
+      "steps": 181,
       "name": "wmh_trevenant",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_trevenant/deck.csv"
     },
@@ -321,7 +321,7 @@
         "DONE",
         "DONE"
       ],
-      "steps": 37,
+      "steps": 161,
       "name": "wmh_typhlosion",
       "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_typhlosion/deck.csv"
     }
