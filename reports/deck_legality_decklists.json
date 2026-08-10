@@ -1,10 +1,10 @@
 {
   "spec": "all:decklists",
   "play_out": true,
-  "probed": 7,
-  "legal": 7,
+  "probed": 8,
+  "legal": 8,
   "failed": 0,
-  "seconds": 1.7,
+  "seconds": 1.8,
   "results": [
     {
       "legal": true,
@@ -13,9 +13,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 191,
+      "steps": 228,
       "name": "alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/alakazam.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/alakazam.csv"
     },
     {
       "legal": true,
@@ -24,9 +24,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 65,
+      "steps": 220,
       "name": "cynthias_garchomp_ex",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/cynthias_garchomp_ex.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/cynthias_garchomp_ex.csv"
     },
     {
       "legal": true,
@@ -35,9 +35,31 @@
         "DONE",
         "DONE"
       ],
-      "steps": 172,
+      "steps": 192,
       "name": "dragapult_ex",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/dragapult_ex.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/dragapult_ex.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 210,
+      "name": "grimmsnarl_toplayer",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/grimmsnarl_toplayer.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 120,
+      "name": "marnies_grimmsnarl_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/marnies_grimmsnarl_ex.csv"
     },
     {
       "legal": true,
@@ -47,19 +69,8 @@
         "DONE"
       ],
       "steps": 182,
-      "name": "marnies_grimmsnarl_ex",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/marnies_grimmsnarl_ex.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 271,
       "name": "mega_kangaskhan_ex",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/mega_kangaskhan_ex.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/mega_kangaskhan_ex.csv"
     },
     {
       "legal": true,
@@ -68,9 +79,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 139,
+      "steps": 154,
       "name": "mega_lucario_ex",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/mega_lucario_ex.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/mega_lucario_ex.csv"
     },
     {
       "legal": true,
@@ -79,9 +90,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 249,
+      "steps": 161,
       "name": "team_rockets_spidops",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/configs/deck_lists/team_rockets_spidops.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/team-rocket-deck-selfplay-08aa31/configs/deck_lists/team_rockets_spidops.csv"
     }
   ]
 }
