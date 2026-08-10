@@ -1,0 +1,81 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading agents: ['il_agent', 'mcts_il_agent', 'biohack44_day2', 'makthanithin_1084_baseline', 'pixiux_lucario_v63', 'plamen06_steel', 'ryotasueyoshi_alakazam', 'romanrozen_strong_start', 'dedquoc_rule_engine', 'makthanithin_improved_prob', 'daniilkrasnovvv_conservative_prob', 'prvsiyan_control_v11', 'prvsiyan_templates_alakazam', 'pllinas_alakazam', 'prvsiyan_grimbelief_alakazam', 'mechi22_alakazam', 'kiyotah_dragapult', 'kiyotah_iono', 'kiyotah_abomasnow', 'wmh_alakazam', 'wmh_megastarmie', 'wmh_bellibolt', 'wmh_garchomp', 'wmh_typhlosion', 'wmh_trevenant', 'wmh_mewtwo', 'wmh_grimmsnarl', 'wmh_kangaskhan', 'wmh_ogerpon', 'wmh_chandelure', 'wmh_froslass']
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 8085.34it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 21957.82it/s]
+
+[1/3] head-to-head: il_agent vs mcts_il_agent (15 mirrored pairs = 30 games)
+      il_agent:  50.0% ±  9.1 (15/30)   draws 0   16.3 s/game
+
+[2/3] il_agent vs field (5 mirrored pairs per opponent)
+      vs biohack44_day2                 0.0% ±  0.0 (0/10)   draws 0   0.4 s/game
+      vs makthanithin_1084_baseline     0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs pixiux_lucario_v63             0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs plamen06_steel                 0.0% ±  0.0 (0/10)   draws 0   0.6 s/game
+      vs ryotasueyoshi_alakazam        20.0% ± 12.6 (2/10)   draws 0   0.5 s/game
+      vs romanrozen_strong_start       10.0% ±  9.5 (1/10)   draws 0   0.5 s/game
+      vs dedquoc_rule_engine           70.0% ± 14.5 (7/10)   draws 0   0.3 s/game
+      vs makthanithin_improved_prob     0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs daniilkrasnovvv_conservative_prob   0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs prvsiyan_control_v11          20.0% ± 12.6 (2/10)   draws 0   0.6 s/game
+      vs prvsiyan_templates_alakazam   80.0% ± 12.6 (8/10)   draws 0   0.5 s/game
+      vs pllinas_alakazam               0.0% ±  0.0 (0/10)   draws 0   1.4 s/game
+      vs prvsiyan_grimbelief_alakazam  70.0% ± 14.5 (7/10)   draws 0   0.5 s/game
+      vs mechi22_alakazam              10.0% ±  9.5 (1/10)   draws 0   0.5 s/game
+      vs kiyotah_dragapult              0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs kiyotah_iono                  10.0% ±  9.5 (1/10)   draws 0   0.8 s/game
+      vs kiyotah_abomasnow             30.0% ± 14.5 (3/10)   draws 0   0.4 s/game
+      vs wmh_alakazam                   0.0% ±  0.0 (0/10)   draws 0   0.4 s/game
+      vs wmh_megastarmie               10.0% ±  9.5 (1/10)   draws 0   0.4 s/game
+      vs wmh_bellibolt                 50.0% ± 15.8 (5/10)   draws 0   0.8 s/game
+      vs wmh_garchomp                   0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs wmh_typhlosion                20.0% ± 12.6 (2/10)   draws 0   0.7 s/game
+      vs wmh_trevenant                  0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+      vs wmh_mewtwo                    40.0% ± 15.5 (4/10)   draws 0   0.7 s/game
+      vs wmh_grimmsnarl                60.0% ± 15.5 (6/10)   draws 0   0.7 s/game
+      vs wmh_kangaskhan                90.0% ±  9.5 (9/10)   draws 0   0.6 s/game
+      vs wmh_ogerpon                   90.0% ±  9.5 (9/10)   draws 0   0.6 s/game
+      vs wmh_chandelure                60.0% ± 15.5 (6/10)   draws 0   0.6 s/game
+      vs wmh_froslass                   0.0% ±  0.0 (0/10)   draws 0   0.5 s/game
+
+[3/3] mcts_il_agent vs field (5 mirrored pairs per opponent)
+      vs biohack44_day2                20.0% ± 12.6 (2/10)   draws 0   15.3 s/game
+      vs makthanithin_1084_baseline    10.0% ±  9.5 (1/10)   draws 0   12.7 s/game
+      vs pixiux_lucario_v63            10.0% ±  9.5 (1/10)   draws 0   13.6 s/game
+      vs plamen06_steel                20.0% ± 12.6 (2/10)   draws 0   13.7 s/game
+      vs ryotasueyoshi_alakazam        10.0% ±  9.5 (1/10)   draws 0   11.2 s/game
+      vs romanrozen_strong_start       10.0% ±  9.5 (1/10)   draws 0   14.1 s/game
+      vs dedquoc_rule_engine           90.0% ±  9.5 (9/10)   draws 0   9.6 s/game
+      vs makthanithin_improved_prob     0.0% ±  0.0 (0/10)   draws 0   13.5 s/game
+      vs daniilkrasnovvv_conservative_prob   0.0% ±  0.0 (0/10)   draws 0   10.9 s/game
+      vs prvsiyan_control_v11          30.0% ± 14.5 (3/10)   draws 0   14.0 s/game
+      vs prvsiyan_templates_alakazam   70.0% ± 14.5 (7/10)   draws 0   12.8 s/game
+      vs pllinas_alakazam              10.0% ±  9.5 (1/10)   draws 0   13.9 s/game
+      vs prvsiyan_grimbelief_alakazam  90.0% ±  9.5 (9/10)   draws 0   11.4 s/game
+      vs mechi22_alakazam              10.0% ±  9.5 (1/10)   draws 0   15.5 s/game
+      vs kiyotah_dragapult             50.0% ± 15.8 (5/10)   draws 0   13.8 s/game
+      vs kiyotah_iono                  10.0% ±  9.5 (1/10)   draws 0   17.5 s/game
+      vs kiyotah_abomasnow             10.0% ±  9.5 (1/10)   draws 0   14.5 s/game
+      vs wmh_alakazam                   0.0% ±  0.0 (0/10)   draws 0   11.7 s/game
+      vs wmh_megastarmie               50.0% ± 15.8 (5/10)   draws 0   15.1 s/game
+      vs wmh_bellibolt                 70.0% ± 14.5 (7/10)   draws 0   19.9 s/game
+      vs wmh_garchomp                   0.0% ±  0.0 (0/10)   draws 0   18.3 s/game
+      vs wmh_typhlosion                20.0% ± 12.6 (2/10)   draws 0   18.3 s/game
+      vs wmh_trevenant                 20.0% ± 12.6 (2/10)   draws 0   15.3 s/game
+      vs wmh_mewtwo                    20.0% ± 12.6 (2/10)   draws 0   16.5 s/game
+      vs wmh_grimmsnarl                40.0% ± 15.5 (4/10)   draws 0   19.9 s/game
+      vs wmh_kangaskhan                60.0% ± 15.5 (6/10)   draws 0   13.3 s/game
+      vs wmh_ogerpon                   90.0% ±  9.5 (9/10)   draws 0   12.2 s/game
+      vs wmh_chandelure                70.0% ± 14.5 (7/10)   draws 0   14.2 s/game
+      vs wmh_froslass                  10.0% ±  9.5 (1/10)   draws 0   15.9 s/game
+
+=== field strength (pooled over the common opponent set) ===
+  il_agent        25.5% ±  2.6 (74/290)   0.6 s/game
+  mcts_il_agent   31.0% ±  2.7 (90/290)   14.4 s/game
+  delta (mcts - il): +5.5 pp ± 3.7
+
+=== fallback diagnostics ===
+  il_agent: 0/18007 decisions fell back (0.0%)  
+  mcts_il_agent: 0/19889 decisions fell back (0.0%)  
+
+wrote /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/il-mcts-hybrid-2f7c64/reports/il_vs_mcts_strength.json  (total 4842 s)
