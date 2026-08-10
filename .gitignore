@@ -56,3 +56,5 @@ __marimo__/
 # truth; these are just symlinks, so regenerate rather than commit them.
 agents/by-role/
 agents/il_agent_v2/model/
+agents/il_agent_v3_final/model/
+agents/il_agent_v3_best/model/
