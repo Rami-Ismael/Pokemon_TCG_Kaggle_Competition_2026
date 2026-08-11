@@ -790,12 +790,17 @@ def simulate_action(obs, action) -> float:
 # =========================================================================
 # LAYER: flat_monte_carlo_search — UCB1 bandit over the top-K root actions
 # =========================================================================
-def flat_monte_carlo_search(obs):
-    """Re-rank the heuristic's top-K MAIN moves by Monte-Carlo simulation.
+def flat_monte_carlo_search(obs, base_order=None):
+    """Re-rank the top-K MAIN moves of a base ranking by Monte-Carlo simulation.
 
     This is MCTS with the expansion step removed: SELECT the next candidate to
     try with UCB1, SIMULATE it with a determinized one-turn rollout, and
     BACKPROP the value into a running mean. No tree is built beyond the root.
+
+    `base_order` is the candidate-ranking seam: a full best-first list of
+    option indices. Defaults to this file's own heuristic; external arms
+    (e.g. an IL policy) may pass their own ranking and reuse the bandit,
+    rollout, and evaluator unchanged.
 
     Returns a full permutation of option indices (best first), or None if
     search is unavailable / not applicable so the caller can fall back."""
@@ -806,7 +811,8 @@ def flat_monte_carlo_search(obs):
         return None
     t0 = time.time()
 
-    base_order = HeuristicPolicy(obs).choose()
+    if base_order is None:
+        base_order = HeuristicPolicy(obs).choose()
     candidates = base_order[:SEARCH_MAX_CANDIDATES]
     if not candidates:
         return None

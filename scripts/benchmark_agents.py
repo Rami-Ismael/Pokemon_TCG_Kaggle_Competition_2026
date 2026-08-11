@@ -172,6 +172,13 @@ AGENT_FILES = {
     # Glicko history compounds by name and this is a different policy from the
     # search-off `agent_core_improved` control.
     "search_prior_alldays": REPO / "agents" / "search_arms" / "prior_alldays_lucario" / "agent_core.py",
+    # UCB1 depth-1 re-rank arm: the bc_alldays52 IL policy as the candidate
+    # RANKER (not a PUCT bonus) feeding the repaired improved_probabilistic
+    # bandit through its base_order seam; leaf is still evaluate_state (known
+    # suspect). Control = bc_alldays52_jun16_aug07_seed42 (same checkpoint, no
+    # search). Card: notes/experiments/2026-08-11-il-ucb1-depth1-rerank.md.
+    "bc_alldays52_ucb1_rerank":
+        REPO / "agents" / "search_arms" / "bc_alldays52_ucb1_rerank" / "agent_core.py",
     # Standing regression opponent (BENCHMARK_ONLY_AGENTS). The PPO exploiter
     # trained against frozen il_agent. NEVER SUBMIT IT -- it loses to
     # rule_baseline (0.440) and improved_prob_main (0.230); it beats only its
