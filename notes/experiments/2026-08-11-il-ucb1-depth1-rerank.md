@@ -74,8 +74,34 @@
   Prediction going into Stage 2, from the sibling lineage's evidence (bandit
   overriding a strong policy via this same leaf lost 35.0%): negative.
 
-## Result (fill after)
-- **Observed:**
-- **Decision:**
-- **What we learned:**
-- **Belief update:** <Rami's one-liner, not a paraphrase>
+- **On-policy addendum:** in a live arm-vs-control game the override rate was
+  7/21 = 33% (vs 94% on control-trajectory decisions). Once search steers the
+  trajectory, IL and the leaf agree more often — the 94% is an off-policy
+  number; both readings clear the 10% gate. Single game, indicative only.
+
+## Result (2026-08-11)
+- **Observed:** arm **0/10** vs control (Wilson 95% CI [0, 27.8%]), 5 mirrored
+  pairs, 15.3 s/game. Fallback diagnostics 0.00% on both sides (76 and 501
+  decisions) — the losses are the search layer's play, not a silent fallback.
+  Command: `uv run python scripts/benchmark_agents.py --focus
+  bc_alldays52_ucb1_rerank --agents
+  bc_alldays52_ucb1_rerank,bc_alldays52_jun16_aug07_seed42 --games 5
+  --no-glicko-persist --out reports/ucb1_rerank_stage2_chunk1.json`.
+- **Early stop:** pre-registration said 50 games; stopped at 10 because the
+  95% CI excludes the 50% drop boundary (p≈0.002 two-sided vs 50%) — the
+  remaining 40 games could only sharpen the effect size of a settled drop.
+- **Decision:** **dropped** per the pre-registered rule (≤50% → drop).
+- **What we learned:** second independent measurement that the
+  `evaluate_state` leaf destroys a strong policy when allowed to overrule it
+  (sibling lineage: 35% for the hand heuristic; here: 0/10 for the best BC
+  checkpoint). The candidate RANKER is not the lever — this arm changed the
+  ranker from heuristic to IL and the outcome got worse, not better. The
+  leaf value function is the lever, exactly as `search-prior-arm-pool-
+  negative` predicted. Scale confound: mostly survives (inference-time layer
+  on a full-52-day checkpoint), with the caveat that evaluate_state was
+  hand-tuned against an earlier, weaker opponent population.
+- **Standing next step (one variable):** swap the leaf — centered
+  `critic_trainday` through the same `flat_monte_carlo_search` seam
+  (`search-leaf-value-must-be-centered` applies), IL ranker held fixed.
+  Until a leaf swap is measured, UCB1-over-IL stays dead.
+- **Belief update:** <Rami's one-liner — pending>
