@@ -1,0 +1,314 @@
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 15 agents: il_bc_alldays52_final@mega_lucario_ex, il_bc_alldays52_final@marnies_grimmsnarl_ex, il_bc_alldays52_final@team_rockets_spidops, il_bc_alldays52_final@cynthias_garchomp_ex, il_bc_alldays52_final@alakazam, il_bc_alldays52_final@dragapult_ex, il_bc_alldays52_final@mega_kangaskhan_ex, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, mechi22_alakazam, random_legal
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 4835.71it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 16689.66it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 17298.44it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 17726.91it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23066.40it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 21102.98it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18133.35it/s]
+[1/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@mega_lucario_ex: il_bc_alldays52_final@mega_lucario_ex 12-8  (20 games, 18.6s, 0.93s/game)
+[2/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@marnies_grimmsnarl_ex: il_bc_alldays52_final@mega_lucario_ex 10-30  (40 games, 44.0s, 1.10s/game)
+[3/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@team_rockets_spidops: il_bc_alldays52_final@mega_lucario_ex 14-26  (40 games, 39.8s, 1.00s/game)
+[4/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@cynthias_garchomp_ex: il_bc_alldays52_final@mega_lucario_ex 13-27  (40 games, 41.7s, 1.04s/game)
+[5/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@alakazam: il_bc_alldays52_final@mega_lucario_ex 16-24  (40 games, 47.0s, 1.18s/game)
+[6/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@mega_lucario_ex 33-7  (40 games, 46.6s, 1.16s/game)
+[7/120] il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@mega_lucario_ex 32-8  (40 games, 37.8s, 0.95s/game)
+[8/120] il_bc_alldays52_final@mega_lucario_ex vs kiyotah_dragapult: il_bc_alldays52_final@mega_lucario_ex 23-17  (40 games, 32.1s, 0.80s/game)
+[9/120] il_bc_alldays52_final@mega_lucario_ex vs kiyotah_iono: il_bc_alldays52_final@mega_lucario_ex 32-8  (40 games, 34.0s, 0.85s/game)
+[10/120] il_bc_alldays52_final@mega_lucario_ex vs kiyotah_abomasnow: il_bc_alldays52_final@mega_lucario_ex 21-19  (40 games, 19.0s, 0.47s/game)
+[11/120] il_bc_alldays52_final@mega_lucario_ex vs dedquoc_rule_engine: il_bc_alldays52_final@mega_lucario_ex 38-2  (40 games, 23.2s, 0.58s/game)
+[12/120] il_bc_alldays52_final@mega_lucario_ex vs ryotasueyoshi_alakazam: il_bc_alldays52_final@mega_lucario_ex 16-24  (40 games, 29.1s, 0.73s/game)
+[13/120] il_bc_alldays52_final@mega_lucario_ex vs makthanithin_improved_prob: il_bc_alldays52_final@mega_lucario_ex 16-24  (40 games, 38.6s, 0.96s/game)
+[14/120] il_bc_alldays52_final@mega_lucario_ex vs mechi22_alakazam: il_bc_alldays52_final@mega_lucario_ex 18-22  (40 games, 26.0s, 0.65s/game)
+[15/120] il_bc_alldays52_final@mega_lucario_ex vs random_legal: il_bc_alldays52_final@mega_lucario_ex 40-0  (40 games, 21.1s, 0.53s/game)
+[16/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@marnies_grimmsnarl_ex: il_bc_alldays52_final@marnies_grimmsnarl_ex 10-10  (20 games, 29.0s, 1.45s/game)
+[17/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@team_rockets_spidops: il_bc_alldays52_final@marnies_grimmsnarl_ex 26-14  (40 games, 44.8s, 1.12s/game)
+[18/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@cynthias_garchomp_ex: il_bc_alldays52_final@marnies_grimmsnarl_ex 20-20  (40 games, 56.8s, 1.42s/game)
+[19/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@alakazam: il_bc_alldays52_final@marnies_grimmsnarl_ex 20-20  (40 games, 53.2s, 1.33s/game)
+[20/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@marnies_grimmsnarl_ex 40-0  (40 games, 65.1s, 1.63s/game)
+[21/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@marnies_grimmsnarl_ex 31-9  (40 games, 58.6s, 1.46s/game)
+[22/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_dragapult: il_bc_alldays52_final@marnies_grimmsnarl_ex 33-7  (40 games, 64.3s, 1.61s/game)
+[23/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_iono: il_bc_alldays52_final@marnies_grimmsnarl_ex 30-10  (40 games, 50.4s, 1.26s/game)
+[24/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_abomasnow: il_bc_alldays52_final@marnies_grimmsnarl_ex 21-19  (40 games, 31.3s, 0.78s/game)
+[25/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs dedquoc_rule_engine: il_bc_alldays52_final@marnies_grimmsnarl_ex 40-0  (40 games, 32.7s, 0.82s/game)
+[26/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs ryotasueyoshi_alakazam: il_bc_alldays52_final@marnies_grimmsnarl_ex 36-4  (40 games, 41.3s, 1.03s/game)
+[27/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs makthanithin_improved_prob: il_bc_alldays52_final@marnies_grimmsnarl_ex 36-4  (40 games, 53.4s, 1.34s/game)
+[28/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs mechi22_alakazam: il_bc_alldays52_final@marnies_grimmsnarl_ex 35-5  (40 games, 49.7s, 1.24s/game)
+[29/120] il_bc_alldays52_final@marnies_grimmsnarl_ex vs random_legal: il_bc_alldays52_final@marnies_grimmsnarl_ex 40-0  (40 games, 23.7s, 0.59s/game)
+[30/120] il_bc_alldays52_final@team_rockets_spidops vs il_bc_alldays52_final@team_rockets_spidops: il_bc_alldays52_final@team_rockets_spidops 9-11  (20 games, 38.0s, 1.90s/game)
+[31/120] il_bc_alldays52_final@team_rockets_spidops vs il_bc_alldays52_final@cynthias_garchomp_ex: il_bc_alldays52_final@team_rockets_spidops 15-25  (40 games, 82.4s, 2.06s/game)
+[32/120] il_bc_alldays52_final@team_rockets_spidops vs il_bc_alldays52_final@alakazam: il_bc_alldays52_final@team_rockets_spidops 39-1  (40 games, 79.3s, 1.98s/game)
+[33/120] il_bc_alldays52_final@team_rockets_spidops vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@team_rockets_spidops 26-14  (40 games, 108.8s, 2.72s/game)
+[34/120] il_bc_alldays52_final@team_rockets_spidops vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@team_rockets_spidops 32-8  (40 games, 92.8s, 2.32s/game)
+[35/120] il_bc_alldays52_final@team_rockets_spidops vs kiyotah_dragapult: il_bc_alldays52_final@team_rockets_spidops 24-16  (40 games, 57.1s, 1.43s/game)
+[36/120] il_bc_alldays52_final@team_rockets_spidops vs kiyotah_iono: il_bc_alldays52_final@team_rockets_spidops 19-21  (40 games, 62.6s, 1.57s/game)
+[37/120] il_bc_alldays52_final@team_rockets_spidops vs kiyotah_abomasnow: il_bc_alldays52_final@team_rockets_spidops 22-18  (40 games, 31.4s, 0.78s/game)
+[38/120] il_bc_alldays52_final@team_rockets_spidops vs dedquoc_rule_engine: il_bc_alldays52_final@team_rockets_spidops 40-0  (40 games, 25.4s, 0.64s/game)
+[39/120] il_bc_alldays52_final@team_rockets_spidops vs ryotasueyoshi_alakazam: il_bc_alldays52_final@team_rockets_spidops 40-0  (40 games, 42.6s, 1.07s/game)
+[40/120] il_bc_alldays52_final@team_rockets_spidops vs makthanithin_improved_prob: il_bc_alldays52_final@team_rockets_spidops 24-16  (40 games, 39.2s, 0.98s/game)
+[41/120] il_bc_alldays52_final@team_rockets_spidops vs mechi22_alakazam: il_bc_alldays52_final@team_rockets_spidops 40-0  (40 games, 42.3s, 1.06s/game)
+[42/120] il_bc_alldays52_final@team_rockets_spidops vs random_legal: il_bc_alldays52_final@team_rockets_spidops 40-0  (40 games, 21.3s, 0.53s/game)
+[43/120] il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@cynthias_garchomp_ex: il_bc_alldays52_final@cynthias_garchomp_ex 9-11  (20 games, 35.9s, 1.79s/game)
+[44/120] il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@alakazam: il_bc_alldays52_final@cynthias_garchomp_ex 32-8  (40 games, 67.8s, 1.69s/game)
+[45/120] il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@cynthias_garchomp_ex 35-5  (40 games, 66.6s, 1.67s/game)
+[46/120] il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@cynthias_garchomp_ex 35-5  (40 games, 55.0s, 1.38s/game)
+[47/120] il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_dragapult: il_bc_alldays52_final@cynthias_garchomp_ex 29-11  (40 games, 37.0s, 0.93s/game)
+[48/120] il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_iono: il_bc_alldays52_final@cynthias_garchomp_ex 31-9  (40 games, 52.0s, 1.30s/game)
+[49/120] il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_abomasnow: il_bc_alldays52_final@cynthias_garchomp_ex 29-11  (40 games, 32.5s, 0.81s/game)
+[50/120] il_bc_alldays52_final@cynthias_garchomp_ex vs dedquoc_rule_engine: il_bc_alldays52_final@cynthias_garchomp_ex 40-0  (40 games, 25.1s, 0.63s/game)
+[51/120] il_bc_alldays52_final@cynthias_garchomp_ex vs ryotasueyoshi_alakazam: il_bc_alldays52_final@cynthias_garchomp_ex 33-7  (40 games, 42.6s, 1.06s/game)
+[52/120] il_bc_alldays52_final@cynthias_garchomp_ex vs makthanithin_improved_prob: il_bc_alldays52_final@cynthias_garchomp_ex 23-17  (40 games, 35.8s, 0.90s/game)
+[53/120] il_bc_alldays52_final@cynthias_garchomp_ex vs mechi22_alakazam: il_bc_alldays52_final@cynthias_garchomp_ex 26-14  (40 games, 48.9s, 1.22s/game)
+[54/120] il_bc_alldays52_final@cynthias_garchomp_ex vs random_legal: il_bc_alldays52_final@cynthias_garchomp_ex 40-0  (40 games, 28.3s, 0.71s/game)
+[55/120] il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@alakazam: il_bc_alldays52_final@alakazam 12-8  (20 games, 25.5s, 1.28s/game)
+[56/120] il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@alakazam 26-14  (40 games, 67.1s, 1.68s/game)
+[57/120] il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@alakazam 18-22  (40 games, 62.8s, 1.57s/game)
+[58/120] il_bc_alldays52_final@alakazam vs kiyotah_dragapult: il_bc_alldays52_final@alakazam 17-23  (40 games, 42.5s, 1.06s/game)
+[59/120] il_bc_alldays52_final@alakazam vs kiyotah_iono: il_bc_alldays52_final@alakazam 14-26  (40 games, 51.0s, 1.27s/game)
+[60/120] il_bc_alldays52_final@alakazam vs kiyotah_abomasnow: il_bc_alldays52_final@alakazam 27-13  (40 games, 24.5s, 0.61s/game)
+[61/120] il_bc_alldays52_final@alakazam vs dedquoc_rule_engine: il_bc_alldays52_final@alakazam 37-3  (40 games, 25.9s, 0.65s/game)
+[62/120] il_bc_alldays52_final@alakazam vs ryotasueyoshi_alakazam: il_bc_alldays52_final@alakazam 17-23  (40 games, 34.1s, 0.85s/game)
+[63/120] il_bc_alldays52_final@alakazam vs makthanithin_improved_prob: il_bc_alldays52_final@alakazam 19-21  (40 games, 38.0s, 0.95s/game)
+[64/120] il_bc_alldays52_final@alakazam vs mechi22_alakazam: il_bc_alldays52_final@alakazam 6-34  (40 games, 44.9s, 1.12s/game)
+[65/120] il_bc_alldays52_final@alakazam vs random_legal: il_bc_alldays52_final@alakazam 39-1  (40 games, 25.1s, 0.63s/game)
+[66/120] il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@dragapult_ex: il_bc_alldays52_final@dragapult_ex 11-9  (20 games, 32.3s, 1.61s/game)
+[67/120] il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@dragapult_ex 20-20  (40 games, 71.8s, 1.80s/game)
+[68/120] il_bc_alldays52_final@dragapult_ex vs kiyotah_dragapult: il_bc_alldays52_final@dragapult_ex 13-27  (40 games, 44.4s, 1.11s/game)
+[69/120] il_bc_alldays52_final@dragapult_ex vs kiyotah_iono: il_bc_alldays52_final@dragapult_ex 19-21  (40 games, 57.0s, 1.42s/game)
+[70/120] il_bc_alldays52_final@dragapult_ex vs kiyotah_abomasnow: il_bc_alldays52_final@dragapult_ex 12-28  (40 games, 38.6s, 0.96s/game)
+[71/120] il_bc_alldays52_final@dragapult_ex vs dedquoc_rule_engine: il_bc_alldays52_final@dragapult_ex 36-4  (40 games, 39.9s, 1.00s/game)
+[72/120] il_bc_alldays52_final@dragapult_ex vs ryotasueyoshi_alakazam: il_bc_alldays52_final@dragapult_ex 17-23  (40 games, 46.3s, 1.16s/game)
+[73/120] il_bc_alldays52_final@dragapult_ex vs makthanithin_improved_prob: il_bc_alldays52_final@dragapult_ex 5-35  (40 games, 42.3s, 1.06s/game)
+[74/120] il_bc_alldays52_final@dragapult_ex vs mechi22_alakazam: il_bc_alldays52_final@dragapult_ex 25-15  (40 games, 42.0s, 1.05s/game)
+[75/120] il_bc_alldays52_final@dragapult_ex vs random_legal: il_bc_alldays52_final@dragapult_ex 39-1  (40 games, 59.5s, 1.49s/game)
+[76/120] il_bc_alldays52_final@mega_kangaskhan_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: il_bc_alldays52_final@mega_kangaskhan_ex 11-9  (20 games, 70.4s, 3.52s/game)
+[77/120] il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_dragapult: il_bc_alldays52_final@mega_kangaskhan_ex 7-33  (40 games, 41.8s, 1.04s/game)
+[78/120] il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_iono: il_bc_alldays52_final@mega_kangaskhan_ex 7-33  (40 games, 60.1s, 1.50s/game)
+[79/120] il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_abomasnow: il_bc_alldays52_final@mega_kangaskhan_ex 14-26  (40 games, 28.6s, 0.71s/game)
+[80/120] il_bc_alldays52_final@mega_kangaskhan_ex vs dedquoc_rule_engine: il_bc_alldays52_final@mega_kangaskhan_ex 38-2  (40 games, 32.1s, 0.80s/game)
+[81/120] il_bc_alldays52_final@mega_kangaskhan_ex vs ryotasueyoshi_alakazam: il_bc_alldays52_final@mega_kangaskhan_ex 28-12  (40 games, 58.1s, 1.45s/game)
+[82/120] il_bc_alldays52_final@mega_kangaskhan_ex vs makthanithin_improved_prob: il_bc_alldays52_final@mega_kangaskhan_ex 1-39  (40 games, 32.2s, 0.81s/game)
+[83/120] il_bc_alldays52_final@mega_kangaskhan_ex vs mechi22_alakazam: il_bc_alldays52_final@mega_kangaskhan_ex 22-18  (40 games, 56.0s, 1.40s/game)
+[84/120] il_bc_alldays52_final@mega_kangaskhan_ex vs random_legal: il_bc_alldays52_final@mega_kangaskhan_ex 38-2  (40 games, 26.6s, 0.67s/game)
+[85/120] kiyotah_dragapult vs kiyotah_dragapult: kiyotah_dragapult 11-9  (20 games, 8.9s, 0.45s/game)
+[86/120] kiyotah_dragapult vs kiyotah_iono: kiyotah_dragapult 26-14  (40 games, 30.6s, 0.77s/game)
+[87/120] kiyotah_dragapult vs kiyotah_abomasnow: kiyotah_dragapult 23-17  (40 games, 17.8s, 0.45s/game)
+[88/120] kiyotah_dragapult vs dedquoc_rule_engine: kiyotah_dragapult 37-3  (40 games, 11.2s, 0.28s/game)
+[89/120] kiyotah_dragapult vs ryotasueyoshi_alakazam: kiyotah_dragapult 25-15  (40 games, 30.2s, 0.76s/game)
+[90/120] kiyotah_dragapult vs makthanithin_improved_prob: kiyotah_dragapult 19-21  (40 games, 18.7s, 0.47s/game)
+[91/120] kiyotah_dragapult vs mechi22_alakazam: kiyotah_dragapult 28-12  (40 games, 19.5s, 0.49s/game)
+[92/120] kiyotah_dragapult vs random_legal: kiyotah_dragapult 39-1  (40 games, 19.7s, 0.49s/game)
+[93/120] kiyotah_iono vs kiyotah_iono: kiyotah_iono 11-9  (20 games, 22.4s, 1.12s/game)
+[94/120] kiyotah_iono vs kiyotah_abomasnow: kiyotah_iono 29-11  (40 games, 17.2s, 0.43s/game)
+[95/120] kiyotah_iono vs dedquoc_rule_engine: kiyotah_iono 35-5  (40 games, 16.5s, 0.41s/game)
+[96/120] kiyotah_iono vs ryotasueyoshi_alakazam: kiyotah_iono 29-11  (40 games, 25.1s, 0.63s/game)
+[97/120] kiyotah_iono vs makthanithin_improved_prob: kiyotah_iono 7-33  (40 games, 21.6s, 0.54s/game)
+[98/120] kiyotah_iono vs mechi22_alakazam: kiyotah_iono 15-25  (40 games, 36.3s, 0.91s/game)
+[99/120] kiyotah_iono vs random_legal: kiyotah_iono 40-0  (40 games, 12.5s, 0.31s/game)
+[100/120] kiyotah_abomasnow vs kiyotah_abomasnow: kiyotah_abomasnow 10-10  (20 games, 3.2s, 0.16s/game)
+[101/120] kiyotah_abomasnow vs dedquoc_rule_engine: kiyotah_abomasnow 39-1  (40 games, 5.2s, 0.13s/game)
+[102/120] kiyotah_abomasnow vs ryotasueyoshi_alakazam: kiyotah_abomasnow 9-31  (40 games, 13.0s, 0.32s/game)
+[103/120] kiyotah_abomasnow vs makthanithin_improved_prob: kiyotah_abomasnow 20-20  (40 games, 12.1s, 0.30s/game)
+[104/120] kiyotah_abomasnow vs mechi22_alakazam: kiyotah_abomasnow 7-33  (40 games, 11.1s, 0.28s/game)
+[105/120] kiyotah_abomasnow vs random_legal: kiyotah_abomasnow 40-0  (40 games, 5.7s, 0.14s/game)
+[106/120] dedquoc_rule_engine vs dedquoc_rule_engine: dedquoc_rule_engine 8-12  (20 games, 7.7s, 0.39s/game)
+[107/120] dedquoc_rule_engine vs ryotasueyoshi_alakazam: dedquoc_rule_engine 5-35  (40 games, 10.8s, 0.27s/game)
+[108/120] dedquoc_rule_engine vs makthanithin_improved_prob: dedquoc_rule_engine 1-39  (40 games, 8.7s, 0.22s/game)
+[109/120] dedquoc_rule_engine vs mechi22_alakazam: dedquoc_rule_engine 4-36  (40 games, 9.1s, 0.23s/game)
+[110/120] dedquoc_rule_engine vs random_legal: dedquoc_rule_engine 26-14  (40 games, 9.6s, 0.24s/game)
+[111/120] ryotasueyoshi_alakazam vs ryotasueyoshi_alakazam: ryotasueyoshi_alakazam 12-8  (20 games, 8.9s, 0.45s/game)
+[112/120] ryotasueyoshi_alakazam vs makthanithin_improved_prob: ryotasueyoshi_alakazam 18-22  (40 games, 20.8s, 0.52s/game)
+[113/120] ryotasueyoshi_alakazam vs mechi22_alakazam: ryotasueyoshi_alakazam 3-37  (40 games, 20.7s, 0.52s/game)
+[114/120] ryotasueyoshi_alakazam vs random_legal: ryotasueyoshi_alakazam 36-4  (40 games, 10.4s, 0.26s/game)
+[115/120] makthanithin_improved_prob vs makthanithin_improved_prob: makthanithin_improved_prob 11-9  (20 games, 8.3s, 0.41s/game)
+[116/120] makthanithin_improved_prob vs mechi22_alakazam: makthanithin_improved_prob 13-27  (40 games, 16.8s, 0.42s/game)
+[117/120] makthanithin_improved_prob vs random_legal: makthanithin_improved_prob 40-0  (40 games, 8.5s, 0.21s/game)
+[118/120] mechi22_alakazam vs mechi22_alakazam: mechi22_alakazam 8-12  (20 games, 13.3s, 0.67s/game)
+[119/120] mechi22_alakazam vs random_legal: mechi22_alakazam 40-0  (40 games, 10.0s, 0.25s/game)
+[120/120] random_legal vs random_legal: random_legal 13-7  (20 games, 8.6s, 0.43s/game)
+
+=== Head-to-head win matrix (rows beat cols; cell = row's wins [95% CI]) ===
+agent                 il_bc_  il_bc_  il_bc_  il_bc_  il_bc_  il_bc_  il_bc_  kiyota  kiyota  kiyota  dedquo  ryotas  maktha  mechi2  random  win% [95% CI]
+il_bc_alldays52_final@mega_lucario_ex-       10      14      13      16      33      32      23      32      21      38      16      16      18      40       57.0  [53.0,60.9]
+il_bc_alldays52_final@marnies_grimmsnarl_ex30      -       26      20      20      40      31      33      30      21      40      36      36      35      40       76.3  [72.8,79.6]
+il_bc_alldays52_final@team_rockets_spidops26      14      -       15      39      26      32      24      19      22      40      40      24      40      40       70.2  [66.4,73.7]
+il_bc_alldays52_final@cynthias_garchomp_ex27      20      25      -       32      35      35      29      31      29      40      33      23      26      40       74.2  [70.5,77.5]
+il_bc_alldays52_final@alakazam24      20      1       8       -       26      18      17      14      27      37      17      19      6       39       48.8  [44.9,52.8]
+il_bc_alldays52_final@dragapult_ex7       0       14      5       14      -       20      13      19      12      36      17      5       25      39       41.0  [37.1,45.0]
+il_bc_alldays52_final@mega_kangaskhan_ex8       9       8       5       22      20      -       7       7       14      38      28      1       22      38       41.2  [37.3,45.1]
+kiyotah_dragapult     17      7       16      11      23      27      33      -       26      23      37      25      19      28      39       58.5  [54.5,62.4]
+kiyotah_iono          8       10      21      9       26      21      33      14      -       29      35      29      7       15      40       52.8  [48.8,56.8]
+kiyotah_abomasnow     19      19      18      11      13      28      26      17      11      -       39      9       20      7       40       49.5  [45.5,53.5]
+dedquoc_rule_engine   2       0       0       0       3       4       2       3       5       1       -       5       1       4       26       12.7  [10.2,15.6]
+ryotasueyoshi_alakazam24      4       0       7       23      23      12      15      11      31      35      -       18      3       36       43.7  [39.8,47.7]
+makthanithin_improved_prob24      4       16      17      21      35      39      21      33      20      39      22      -       13      40       60.7  [56.7,64.5]
+mechi22_alakazam      22      5       0       14      34      15      18      12      25      33      36      37      27      -       40       56.3  [52.3,60.2]
+random_legal          0       0       0       0       1       1       2       1       0       0       14      4       0       0       -         7.2  [ 5.4, 9.5]
+
+=== Per-pairing win rate with Wilson 95% CI (row vs col) ===
+  il_bc_alldays52_final@mega_lucario_ex vs il_bc_alldays52_final@team_rockets_spidops: 14/40 =  35.0% [22.1,50.5]  (39.8s, 1.00s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs kiyotah_dragapult: 23/40 =  57.5% [42.2,71.5]  (32.1s, 0.80s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs kiyotah_iono: 32/40 =  80.0% [65.2,89.5]  (34.0s, 0.85s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs kiyotah_abomasnow: 21/40 =  52.5% [37.5,67.1]  (19.0s, 0.47s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs ryotasueyoshi_alakazam: 16/40 =  40.0% [26.3,55.4]  (29.1s, 0.73s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs makthanithin_improved_prob: 16/40 =  40.0% [26.3,55.4]  (38.6s, 0.96s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs mechi22_alakazam: 18/40 =  45.0% [30.7,60.2]  (26.0s, 0.65s/game)
+  il_bc_alldays52_final@mega_lucario_ex vs random_legal: 40/40 = 100.0% [91.2,100.0]  (21.1s, 0.53s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@mega_lucario_ex: 30/40 =  75.0% [59.8,85.8]  (44.0s, 1.10s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@team_rockets_spidops: 26/40 =  65.0% [49.5,77.9]  (44.8s, 1.12s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: 31/40 =  77.5% [62.5,87.7]  (58.6s, 1.46s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_dragapult: 33/40 =  82.5% [68.0,91.3]  (64.3s, 1.61s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_iono: 30/40 =  75.0% [59.8,85.8]  (50.4s, 1.26s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs kiyotah_abomasnow: 21/40 =  52.5% [37.5,67.1]  (31.3s, 0.78s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs ryotasueyoshi_alakazam: 36/40 =  90.0% [76.9,96.0]  (41.3s, 1.03s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs makthanithin_improved_prob: 36/40 =  90.0% [76.9,96.0]  (53.4s, 1.34s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs mechi22_alakazam: 35/40 =  87.5% [73.9,94.5]  (49.7s, 1.24s/game)
+  il_bc_alldays52_final@marnies_grimmsnarl_ex vs random_legal: 40/40 = 100.0% [91.2,100.0]  (23.7s, 0.59s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs kiyotah_dragapult: 24/40 =  60.0% [44.6,73.7]  (57.1s, 1.43s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs kiyotah_iono: 19/40 =  47.5% [32.9,62.5]  (62.6s, 1.57s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs kiyotah_abomasnow: 22/40 =  55.0% [39.8,69.3]  (31.4s, 0.78s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs ryotasueyoshi_alakazam: 40/40 = 100.0% [91.2,100.0]  (42.6s, 1.07s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs makthanithin_improved_prob: 24/40 =  60.0% [44.6,73.7]  (39.2s, 0.98s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs mechi22_alakazam: 40/40 = 100.0% [91.2,100.0]  (42.3s, 1.06s/game)
+  il_bc_alldays52_final@team_rockets_spidops vs random_legal: 40/40 = 100.0% [91.2,100.0]  (21.3s, 0.53s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@mega_lucario_ex: 27/40 =  67.5% [52.0,79.9]  (41.7s, 1.04s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@marnies_grimmsnarl_ex: 20/40 =  50.0% [35.2,64.8]  (56.8s, 1.42s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@team_rockets_spidops: 25/40 =  62.5% [47.0,75.8]  (82.4s, 2.06s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@dragapult_ex: 35/40 =  87.5% [73.9,94.5]  (66.6s, 1.67s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: 35/40 =  87.5% [73.9,94.5]  (55.0s, 1.38s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_dragapult: 29/40 =  72.5% [57.2,83.9]  (37.0s, 0.93s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_iono: 31/40 =  77.5% [62.5,87.7]  (52.0s, 1.30s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs kiyotah_abomasnow: 29/40 =  72.5% [57.2,83.9]  (32.5s, 0.81s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs ryotasueyoshi_alakazam: 33/40 =  82.5% [68.0,91.3]  (42.6s, 1.06s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs makthanithin_improved_prob: 23/40 =  57.5% [42.2,71.5]  (35.8s, 0.90s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs mechi22_alakazam: 26/40 =  65.0% [49.5,77.9]  (48.9s, 1.22s/game)
+  il_bc_alldays52_final@cynthias_garchomp_ex vs random_legal: 40/40 = 100.0% [91.2,100.0]  (28.3s, 0.71s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@mega_lucario_ex: 24/40 =  60.0% [44.6,73.7]  (47.0s, 1.18s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@marnies_grimmsnarl_ex: 20/40 =  50.0% [35.2,64.8]  (53.2s, 1.33s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@team_rockets_spidops: 1/40 =   2.5% [ 0.4,12.9]  (79.3s, 1.98s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@cynthias_garchomp_ex: 8/40 =  20.0% [10.5,34.8]  (67.8s, 1.69s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@dragapult_ex: 26/40 =  65.0% [49.5,77.9]  (67.1s, 1.68s/game)
+  il_bc_alldays52_final@alakazam vs il_bc_alldays52_final@mega_kangaskhan_ex: 18/40 =  45.0% [30.7,60.2]  (62.8s, 1.57s/game)
+  il_bc_alldays52_final@alakazam vs kiyotah_dragapult: 17/40 =  42.5% [28.5,57.8]  (42.5s, 1.06s/game)
+  il_bc_alldays52_final@alakazam vs kiyotah_iono: 14/40 =  35.0% [22.1,50.5]  (51.0s, 1.27s/game)
+  il_bc_alldays52_final@alakazam vs kiyotah_abomasnow: 27/40 =  67.5% [52.0,79.9]  (24.5s, 0.61s/game)
+  il_bc_alldays52_final@alakazam vs ryotasueyoshi_alakazam: 17/40 =  42.5% [28.5,57.8]  (34.1s, 0.85s/game)
+  il_bc_alldays52_final@alakazam vs makthanithin_improved_prob: 19/40 =  47.5% [32.9,62.5]  (38.0s, 0.95s/game)
+  il_bc_alldays52_final@alakazam vs mechi22_alakazam: 6/40 =  15.0% [ 7.1,29.1]  (44.9s, 1.12s/game)
+  il_bc_alldays52_final@alakazam vs random_legal: 39/40 =  97.5% [87.1,99.6]  (25.1s, 0.63s/game)
+  il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@mega_lucario_ex: 7/40 =  17.5% [ 8.7,32.0]  (46.6s, 1.16s/game)
+  il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@marnies_grimmsnarl_ex: 0/40 =   0.0% [ 0.0, 8.8]  (65.1s, 1.63s/game)
+  il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@team_rockets_spidops: 14/40 =  35.0% [22.1,50.5]  (108.8s, 2.72s/game)
+  il_bc_alldays52_final@dragapult_ex vs il_bc_alldays52_final@mega_kangaskhan_ex: 20/40 =  50.0% [35.2,64.8]  (71.8s, 1.80s/game)
+  il_bc_alldays52_final@dragapult_ex vs kiyotah_dragapult: 13/40 =  32.5% [20.1,48.0]  (44.4s, 1.11s/game)
+  il_bc_alldays52_final@dragapult_ex vs kiyotah_iono: 19/40 =  47.5% [32.9,62.5]  (57.0s, 1.42s/game)
+  il_bc_alldays52_final@dragapult_ex vs kiyotah_abomasnow: 12/40 =  30.0% [18.1,45.4]  (38.6s, 0.96s/game)
+  il_bc_alldays52_final@dragapult_ex vs ryotasueyoshi_alakazam: 17/40 =  42.5% [28.5,57.8]  (46.3s, 1.16s/game)
+  il_bc_alldays52_final@dragapult_ex vs makthanithin_improved_prob: 5/40 =  12.5% [ 5.5,26.1]  (42.3s, 1.06s/game)
+  il_bc_alldays52_final@dragapult_ex vs mechi22_alakazam: 25/40 =  62.5% [47.0,75.8]  (42.0s, 1.05s/game)
+  il_bc_alldays52_final@dragapult_ex vs random_legal: 39/40 =  97.5% [87.1,99.6]  (59.5s, 1.49s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs il_bc_alldays52_final@mega_lucario_ex: 8/40 =  20.0% [10.5,34.8]  (37.8s, 0.95s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs il_bc_alldays52_final@team_rockets_spidops: 8/40 =  20.0% [10.5,34.8]  (92.8s, 2.32s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_dragapult: 7/40 =  17.5% [ 8.7,32.0]  (41.8s, 1.04s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_iono: 7/40 =  17.5% [ 8.7,32.0]  (60.1s, 1.50s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs kiyotah_abomasnow: 14/40 =  35.0% [22.1,50.5]  (28.6s, 0.71s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs ryotasueyoshi_alakazam: 28/40 =  70.0% [54.6,81.9]  (58.1s, 1.45s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs makthanithin_improved_prob: 1/40 =   2.5% [ 0.4,12.9]  (32.2s, 0.81s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs mechi22_alakazam: 22/40 =  55.0% [39.8,69.3]  (56.0s, 1.40s/game)
+  il_bc_alldays52_final@mega_kangaskhan_ex vs random_legal: 38/40 =  95.0% [83.5,98.6]  (26.6s, 0.67s/game)
+  kiyotah_dragapult vs kiyotah_iono: 26/40 =  65.0% [49.5,77.9]  (30.6s, 0.77s/game)
+  kiyotah_dragapult vs ryotasueyoshi_alakazam: 25/40 =  62.5% [47.0,75.8]  (30.2s, 0.76s/game)
+  kiyotah_dragapult vs makthanithin_improved_prob: 19/40 =  47.5% [32.9,62.5]  (18.7s, 0.47s/game)
+  kiyotah_dragapult vs mechi22_alakazam: 28/40 =  70.0% [54.6,81.9]  (19.5s, 0.49s/game)
+  kiyotah_dragapult vs random_legal: 39/40 =  97.5% [87.1,99.6]  (19.7s, 0.49s/game)
+  kiyotah_iono vs ryotasueyoshi_alakazam: 29/40 =  72.5% [57.2,83.9]  (25.1s, 0.63s/game)
+  kiyotah_iono vs makthanithin_improved_prob: 7/40 =  17.5% [ 8.7,32.0]  (21.6s, 0.54s/game)
+  kiyotah_iono vs mechi22_alakazam: 15/40 =  37.5% [24.2,53.0]  (36.3s, 0.91s/game)
+  kiyotah_iono vs random_legal: 40/40 = 100.0% [91.2,100.0]  (12.5s, 0.31s/game)
+  kiyotah_abomasnow vs kiyotah_dragapult: 17/40 =  42.5% [28.5,57.8]  (17.8s, 0.45s/game)
+  kiyotah_abomasnow vs kiyotah_iono: 11/40 =  27.5% [16.1,42.8]  (17.2s, 0.43s/game)
+  kiyotah_abomasnow vs ryotasueyoshi_alakazam: 9/40 =  22.5% [12.3,37.5]  (13.0s, 0.32s/game)
+  kiyotah_abomasnow vs makthanithin_improved_prob: 20/40 =  50.0% [35.2,64.8]  (12.1s, 0.30s/game)
+  kiyotah_abomasnow vs mechi22_alakazam: 7/40 =  17.5% [ 8.7,32.0]  (11.1s, 0.28s/game)
+  kiyotah_abomasnow vs random_legal: 40/40 = 100.0% [91.2,100.0]  (5.7s, 0.14s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@mega_lucario_ex: 2/40 =   5.0% [ 1.4,16.5]  (23.2s, 0.58s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@marnies_grimmsnarl_ex: 0/40 =   0.0% [ 0.0, 8.8]  (32.7s, 0.82s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@team_rockets_spidops: 0/40 =   0.0% [ 0.0, 8.8]  (25.4s, 0.64s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@cynthias_garchomp_ex: 0/40 =   0.0% [ 0.0, 8.8]  (25.1s, 0.63s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@alakazam: 3/40 =   7.5% [ 2.6,19.9]  (25.9s, 0.65s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@dragapult_ex: 4/40 =  10.0% [ 4.0,23.1]  (39.9s, 1.00s/game)
+  dedquoc_rule_engine vs il_bc_alldays52_final@mega_kangaskhan_ex: 2/40 =   5.0% [ 1.4,16.5]  (32.1s, 0.80s/game)
+  dedquoc_rule_engine vs kiyotah_dragapult: 3/40 =   7.5% [ 2.6,19.9]  (11.2s, 0.28s/game)
+  dedquoc_rule_engine vs kiyotah_iono: 5/40 =  12.5% [ 5.5,26.1]  (16.5s, 0.41s/game)
+  dedquoc_rule_engine vs kiyotah_abomasnow: 1/40 =   2.5% [ 0.4,12.9]  (5.2s, 0.13s/game)
+  dedquoc_rule_engine vs ryotasueyoshi_alakazam: 5/40 =  12.5% [ 5.5,26.1]  (10.8s, 0.27s/game)
+  dedquoc_rule_engine vs makthanithin_improved_prob: 1/40 =   2.5% [ 0.4,12.9]  (8.7s, 0.22s/game)
+  dedquoc_rule_engine vs mechi22_alakazam: 4/40 =  10.0% [ 4.0,23.1]  (9.1s, 0.23s/game)
+  dedquoc_rule_engine vs random_legal: 26/40 =  65.0% [49.5,77.9]  (9.6s, 0.24s/game)
+  makthanithin_improved_prob vs ryotasueyoshi_alakazam: 22/40 =  55.0% [39.8,69.3]  (20.8s, 0.52s/game)
+  makthanithin_improved_prob vs mechi22_alakazam: 13/40 =  32.5% [20.1,48.0]  (16.8s, 0.42s/game)
+  makthanithin_improved_prob vs random_legal: 40/40 = 100.0% [91.2,100.0]  (8.5s, 0.21s/game)
+  mechi22_alakazam vs ryotasueyoshi_alakazam: 37/40 =  92.5% [80.1,97.4]  (20.7s, 0.52s/game)
+  mechi22_alakazam vs random_legal: 40/40 = 100.0% [91.2,100.0]  (10.0s, 0.25s/game)
+  random_legal vs ryotasueyoshi_alakazam: 4/40 =  10.0% [ 4.0,23.1]  (10.4s, 0.26s/game)
+
+=== Overall win rate (all games), Wilson 95% CI ===
+  il_bc_alldays52_final@marnies_grimmsnarl_ex  76.3%  [72.8,79.6]  (458/600)
+  il_bc_alldays52_final@cynthias_garchomp_ex  74.2%  [70.5,77.5]  (445/600)
+  il_bc_alldays52_final@team_rockets_spidops  70.2%  [66.4,73.7]  (421/600)
+  makthanithin_improved_prob  60.7%  [56.7,64.5]  (364/600)
+  kiyotah_dragapult       58.5%  [54.5,62.4]  (351/600)
+  il_bc_alldays52_final@mega_lucario_ex  57.0%  [53.0,60.9]  (342/600)
+  mechi22_alakazam        56.3%  [52.3,60.2]  (338/600)
+  kiyotah_iono            52.8%  [48.8,56.8]  (317/600)
+  kiyotah_abomasnow       49.5%  [45.5,53.5]  (297/600)
+  il_bc_alldays52_final@alakazam  48.8%  [44.9,52.8]  (293/600)
+  ryotasueyoshi_alakazam  43.7%  [39.8,47.7]  (262/600)
+  il_bc_alldays52_final@mega_kangaskhan_ex  41.2%  [37.3,45.1]  (247/600)
+  il_bc_alldays52_final@dragapult_ex  41.0%  [37.1,45.0]  (246/600)
+  dedquoc_rule_engine     12.7%  [10.2,15.6]  (76/600)
+  random_legal             7.2%  [ 5.4, 9.5]  (43/600)  (floor)
+
+=== Glicko-1 ratings (persisted across runs, higher = stronger) ===
+  il_bc_alldays52_final@marnies_grimmsnarl_ex  1791.9  (RD  30.0, 95% CI +/- 60.0)  GXE  75.4%
+  il_bc_alldays52_final@cynthias_garchomp_ex  1767.9  (RD  30.0, 95% CI +/- 60.0)  GXE  73.7%
+  il_bc_alldays52_final@team_rockets_spidops  1723.5  (RD  30.0, 95% CI +/- 60.0)  GXE  70.2%
+  makthanithin_improved_prob  1618.2  (RD  30.0, 95% CI +/- 60.0)  GXE  61.2%
+  kiyotah_dragapult       1594.2  (RD  30.0, 95% CI +/- 60.0)  GXE  59.0%
+  il_bc_alldays52_final@mega_lucario_ex  1577.6  (RD  30.0, 95% CI +/- 60.0)  GXE  57.4%
+  mechi22_alakazam        1570.2  (RD  30.0, 95% CI +/- 60.0)  GXE  56.7%
+  kiyotah_iono            1531.4  (RD  30.0, 95% CI +/- 60.0)  GXE  53.0%
+  kiyotah_abomasnow       1494.5  (RD  30.0, 95% CI +/- 60.0)  GXE  49.5%
+  il_bc_alldays52_final@alakazam  1487.1  (RD  30.0, 95% CI +/- 60.0)  GXE  48.8%
+  ryotasueyoshi_alakazam  1429.8  (RD  30.0, 95% CI +/- 60.0)  GXE  43.3%
+  il_bc_alldays52_final@mega_kangaskhan_ex  1402.1  (RD  30.0, 95% CI +/- 60.0)  GXE  40.7%
+  il_bc_alldays52_final@dragapult_ex  1400.2  (RD  30.0, 95% CI +/- 60.0)  GXE  40.5%
+  dedquoc_rule_engine     1086.2  (RD  30.0, 95% CI +/- 60.0)  GXE  16.9%
+  random_legal            1025.2  (RD  30.0, 95% CI +/- 60.0)  GXE  13.9%  (floor)
+  note: rows marked (anchor)/(floor)/(hand-written) are calibration only -- do not quote them as a comparison against a trained model.
+
+=== Fallback diagnostics (fraction of decisions that hit a fallback layer) ===
+  il_bc_alldays52_final@mega_lucario_ex fallback_rate= 0.00%  decisions=36813  raw={'decisions': 36813, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  il_bc_alldays52_final@marnies_grimmsnarl_ex fallback_rate= 0.00%  decisions=49199  raw={'decisions': 49199, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  il_bc_alldays52_final@team_rockets_spidops fallback_rate= 0.01%  decisions=38395  raw={'decisions': 38395, 'too_many_options': 5, 'enabled': True, 'fallbacks': 5, 'fallback_rate': 0.0001302252897512697}
+  il_bc_alldays52_final@cynthias_garchomp_ex fallback_rate= 0.00%  decisions=45221  raw={'decisions': 45221, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  il_bc_alldays52_final@alakazam fallback_rate= 0.00%  decisions=40986  raw={'decisions': 40986, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  il_bc_alldays52_final@dragapult_ex fallback_rate= 0.00%  decisions=52422  raw={'decisions': 52422, 'enabled': True, 'fallbacks': 0, 'fallback_rate': 0.0}
+  il_bc_alldays52_final@mega_kangaskhan_ex fallback_rate= 0.12%  decisions=39742  raw={'decisions': 39742, 'too_many_options': 47, 'enabled': True, 'fallbacks': 47, 'fallback_rate': 0.0011826279502793015}
+  mechi22_alakazam       fallback_rate= 0.00%  decisions=39654  raw={'deck_returns': 600, 'decisions': 39654, 'policy_ok': 39654, 'fallback_rate': 0.0}
+[fallback-diag] end-of-run summary (fallbacks/decisions; first occurrences in the result JSON):
+[fallback-diag] il_bc_alldays52_final@mega_lucario_ex: 0/36813 = 0.00%  by_reason={}
+[fallback-diag] il_bc_alldays52_final@marnies_grimmsnarl_ex: 0/49199 = 0.00%  by_reason={}
+[fallback-diag] il_bc_alldays52_final@team_rockets_spidops: 5/38395 = 0.01%  by_reason={'too_many_options': 5}
+[fallback-diag] il_bc_alldays52_final@cynthias_garchomp_ex: 0/45221 = 0.00%  by_reason={}
+[fallback-diag] il_bc_alldays52_final@alakazam: 0/40986 = 0.00%  by_reason={}
+[fallback-diag] il_bc_alldays52_final@dragapult_ex: 0/52422 = 0.00%  by_reason={}
+[fallback-diag] il_bc_alldays52_final@mega_kangaskhan_ex: 47/39742 = 0.12%  by_reason={'too_many_options': 47}
+[fallback-diag] mechi22_alakazam: 0/39654 = 0.00%  by_reason={'deck_returns': 600, 'policy_ok': 39654}
+[fallback-diag] TensorBoard scalars -> /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/things-running-now-204bef/runs/benchmark_fallbacks
+
+total wall clock: 4256.4s
+saved: reports/deck_selection_benchmark_bc_alldays52_final.json
+glicko: not persisted (isolated run)
