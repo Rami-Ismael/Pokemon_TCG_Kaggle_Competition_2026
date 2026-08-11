@@ -1,0 +1,2682 @@
+{
+  "agents": [
+    "il_bc_alldays52_final@mega_lucario_ex",
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex",
+    "il_bc_alldays52_final@team_rockets_spidops",
+    "il_bc_alldays52_final@cynthias_garchomp_ex",
+    "il_bc_alldays52_final@alakazam",
+    "il_bc_alldays52_final@dragapult_ex",
+    "il_bc_alldays52_final@mega_kangaskhan_ex",
+    "kiyotah_dragapult",
+    "kiyotah_iono",
+    "kiyotah_abomasnow",
+    "dedquoc_rule_engine",
+    "ryotasueyoshi_alakazam",
+    "makthanithin_improved_prob",
+    "mechi22_alakazam",
+    "random_legal"
+  ],
+  "games_per_pair": 20,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 20,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 10,
+      "il_bc_alldays52_final@team_rockets_spidops": 14,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 13,
+      "il_bc_alldays52_final@alakazam": 16,
+      "il_bc_alldays52_final@dragapult_ex": 33,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 32,
+      "kiyotah_dragapult": 23,
+      "kiyotah_iono": 32,
+      "kiyotah_abomasnow": 21,
+      "dedquoc_rule_engine": 38,
+      "ryotasueyoshi_alakazam": 16,
+      "makthanithin_improved_prob": 16,
+      "mechi22_alakazam": 18,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 30,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 20,
+      "il_bc_alldays52_final@team_rockets_spidops": 26,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 20,
+      "il_bc_alldays52_final@alakazam": 20,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 31,
+      "kiyotah_dragapult": 33,
+      "kiyotah_iono": 30,
+      "kiyotah_abomasnow": 21,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 36,
+      "makthanithin_improved_prob": 36,
+      "mechi22_alakazam": 35,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "il_bc_alldays52_final@mega_lucario_ex": 26,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 14,
+      "il_bc_alldays52_final@team_rockets_spidops": 20,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 15,
+      "il_bc_alldays52_final@alakazam": 39,
+      "il_bc_alldays52_final@dragapult_ex": 26,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 32,
+      "kiyotah_dragapult": 24,
+      "kiyotah_iono": 19,
+      "kiyotah_abomasnow": 22,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 24,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 27,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 20,
+      "il_bc_alldays52_final@team_rockets_spidops": 25,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 20,
+      "il_bc_alldays52_final@alakazam": 32,
+      "il_bc_alldays52_final@dragapult_ex": 35,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 35,
+      "kiyotah_dragapult": 29,
+      "kiyotah_iono": 31,
+      "kiyotah_abomasnow": 29,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 33,
+      "makthanithin_improved_prob": 23,
+      "mechi22_alakazam": 26,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 24,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 20,
+      "il_bc_alldays52_final@team_rockets_spidops": 1,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 8,
+      "il_bc_alldays52_final@alakazam": 20,
+      "il_bc_alldays52_final@dragapult_ex": 26,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 18,
+      "kiyotah_dragapult": 17,
+      "kiyotah_iono": 14,
+      "kiyotah_abomasnow": 27,
+      "dedquoc_rule_engine": 37,
+      "ryotasueyoshi_alakazam": 17,
+      "makthanithin_improved_prob": 19,
+      "mechi22_alakazam": 6,
+      "random_legal": 39
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 7,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 0,
+      "il_bc_alldays52_final@team_rockets_spidops": 14,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 5,
+      "il_bc_alldays52_final@alakazam": 14,
+      "il_bc_alldays52_final@dragapult_ex": 20,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 20,
+      "kiyotah_dragapult": 13,
+      "kiyotah_iono": 19,
+      "kiyotah_abomasnow": 12,
+      "dedquoc_rule_engine": 36,
+      "ryotasueyoshi_alakazam": 17,
+      "makthanithin_improved_prob": 5,
+      "mechi22_alakazam": 25,
+      "random_legal": 39
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 8,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 9,
+      "il_bc_alldays52_final@team_rockets_spidops": 8,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 5,
+      "il_bc_alldays52_final@alakazam": 22,
+      "il_bc_alldays52_final@dragapult_ex": 20,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 20,
+      "kiyotah_dragapult": 7,
+      "kiyotah_iono": 7,
+      "kiyotah_abomasnow": 14,
+      "dedquoc_rule_engine": 38,
+      "ryotasueyoshi_alakazam": 28,
+      "makthanithin_improved_prob": 1,
+      "mechi22_alakazam": 22,
+      "random_legal": 38
+    },
+    "kiyotah_dragapult": {
+      "il_bc_alldays52_final@mega_lucario_ex": 17,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 7,
+      "il_bc_alldays52_final@team_rockets_spidops": 16,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 11,
+      "il_bc_alldays52_final@alakazam": 23,
+      "il_bc_alldays52_final@dragapult_ex": 27,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 33,
+      "kiyotah_dragapult": 20,
+      "kiyotah_iono": 26,
+      "kiyotah_abomasnow": 23,
+      "dedquoc_rule_engine": 37,
+      "ryotasueyoshi_alakazam": 25,
+      "makthanithin_improved_prob": 19,
+      "mechi22_alakazam": 28,
+      "random_legal": 39
+    },
+    "kiyotah_iono": {
+      "il_bc_alldays52_final@mega_lucario_ex": 8,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 10,
+      "il_bc_alldays52_final@team_rockets_spidops": 21,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 9,
+      "il_bc_alldays52_final@alakazam": 26,
+      "il_bc_alldays52_final@dragapult_ex": 21,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 33,
+      "kiyotah_dragapult": 14,
+      "kiyotah_iono": 20,
+      "kiyotah_abomasnow": 29,
+      "dedquoc_rule_engine": 35,
+      "ryotasueyoshi_alakazam": 29,
+      "makthanithin_improved_prob": 7,
+      "mechi22_alakazam": 15,
+      "random_legal": 40
+    },
+    "kiyotah_abomasnow": {
+      "il_bc_alldays52_final@mega_lucario_ex": 19,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 19,
+      "il_bc_alldays52_final@team_rockets_spidops": 18,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 11,
+      "il_bc_alldays52_final@alakazam": 13,
+      "il_bc_alldays52_final@dragapult_ex": 28,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 26,
+      "kiyotah_dragapult": 17,
+      "kiyotah_iono": 11,
+      "kiyotah_abomasnow": 20,
+      "dedquoc_rule_engine": 39,
+      "ryotasueyoshi_alakazam": 9,
+      "makthanithin_improved_prob": 20,
+      "mechi22_alakazam": 7,
+      "random_legal": 40
+    },
+    "dedquoc_rule_engine": {
+      "il_bc_alldays52_final@mega_lucario_ex": 2,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 0,
+      "il_bc_alldays52_final@team_rockets_spidops": 0,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 0,
+      "il_bc_alldays52_final@alakazam": 3,
+      "il_bc_alldays52_final@dragapult_ex": 4,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 2,
+      "kiyotah_dragapult": 3,
+      "kiyotah_iono": 5,
+      "kiyotah_abomasnow": 1,
+      "dedquoc_rule_engine": 20,
+      "ryotasueyoshi_alakazam": 5,
+      "makthanithin_improved_prob": 1,
+      "mechi22_alakazam": 4,
+      "random_legal": 26
+    },
+    "ryotasueyoshi_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 24,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 4,
+      "il_bc_alldays52_final@team_rockets_spidops": 0,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 7,
+      "il_bc_alldays52_final@alakazam": 23,
+      "il_bc_alldays52_final@dragapult_ex": 23,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 12,
+      "kiyotah_dragapult": 15,
+      "kiyotah_iono": 11,
+      "kiyotah_abomasnow": 31,
+      "dedquoc_rule_engine": 35,
+      "ryotasueyoshi_alakazam": 20,
+      "makthanithin_improved_prob": 18,
+      "mechi22_alakazam": 3,
+      "random_legal": 36
+    },
+    "makthanithin_improved_prob": {
+      "il_bc_alldays52_final@mega_lucario_ex": 24,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 4,
+      "il_bc_alldays52_final@team_rockets_spidops": 16,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 17,
+      "il_bc_alldays52_final@alakazam": 21,
+      "il_bc_alldays52_final@dragapult_ex": 35,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 39,
+      "kiyotah_dragapult": 21,
+      "kiyotah_iono": 33,
+      "kiyotah_abomasnow": 20,
+      "dedquoc_rule_engine": 39,
+      "ryotasueyoshi_alakazam": 22,
+      "makthanithin_improved_prob": 20,
+      "mechi22_alakazam": 13,
+      "random_legal": 40
+    },
+    "mechi22_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 22,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 5,
+      "il_bc_alldays52_final@team_rockets_spidops": 0,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 14,
+      "il_bc_alldays52_final@alakazam": 34,
+      "il_bc_alldays52_final@dragapult_ex": 15,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 18,
+      "kiyotah_dragapult": 12,
+      "kiyotah_iono": 25,
+      "kiyotah_abomasnow": 33,
+      "dedquoc_rule_engine": 36,
+      "ryotasueyoshi_alakazam": 37,
+      "makthanithin_improved_prob": 27,
+      "mechi22_alakazam": 20,
+      "random_legal": 40
+    },
+    "random_legal": {
+      "il_bc_alldays52_final@mega_lucario_ex": 0,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 0,
+      "il_bc_alldays52_final@team_rockets_spidops": 0,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 0,
+      "il_bc_alldays52_final@alakazam": 1,
+      "il_bc_alldays52_final@dragapult_ex": 1,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 2,
+      "kiyotah_dragapult": 1,
+      "kiyotah_iono": 0,
+      "kiyotah_abomasnow": 0,
+      "dedquoc_rule_engine": 14,
+      "ryotasueyoshi_alakazam": 4,
+      "makthanithin_improved_prob": 0,
+      "mechi22_alakazam": 0,
+      "random_legal": 20
+    }
+  },
+  "games": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "kiyotah_dragapult": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "kiyotah_iono": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "kiyotah_abomasnow": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "dedquoc_rule_engine": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "ryotasueyoshi_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "makthanithin_improved_prob": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "mechi22_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    },
+    "random_legal": {
+      "il_bc_alldays52_final@mega_lucario_ex": 40,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 40,
+      "il_bc_alldays52_final@team_rockets_spidops": 40,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 40,
+      "il_bc_alldays52_final@alakazam": 40,
+      "il_bc_alldays52_final@dragapult_ex": 40,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 40,
+      "kiyotah_dragapult": 40,
+      "kiyotah_iono": 40,
+      "kiyotah_abomasnow": 40,
+      "dedquoc_rule_engine": 40,
+      "ryotasueyoshi_alakazam": 40,
+      "makthanithin_improved_prob": 40,
+      "mechi22_alakazam": 40,
+      "random_legal": 40
+    }
+  },
+  "wall_clock_sec": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 37.21922016143799,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 44.01313090324402,
+      "il_bc_alldays52_final@team_rockets_spidops": 39.804149866104126,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 41.65630078315735,
+      "il_bc_alldays52_final@alakazam": 47.006338119506836,
+      "il_bc_alldays52_final@dragapult_ex": 46.56081223487854,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 37.8036150932312,
+      "kiyotah_dragapult": 32.08073592185974,
+      "kiyotah_iono": 34.03560495376587,
+      "kiyotah_abomasnow": 18.973191022872925,
+      "dedquoc_rule_engine": 23.17576503753662,
+      "ryotasueyoshi_alakazam": 29.054576873779297,
+      "makthanithin_improved_prob": 38.56399726867676,
+      "mechi22_alakazam": 26.026618242263794,
+      "random_legal": 21.080103874206543
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 44.01313090324402,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 58.065566062927246,
+      "il_bc_alldays52_final@team_rockets_spidops": 44.84047508239746,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 56.78118014335632,
+      "il_bc_alldays52_final@alakazam": 53.17840623855591,
+      "il_bc_alldays52_final@dragapult_ex": 65.14187693595886,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 58.567739725112915,
+      "kiyotah_dragapult": 64.32599711418152,
+      "kiyotah_iono": 50.37369179725647,
+      "kiyotah_abomasnow": 31.32418918609619,
+      "dedquoc_rule_engine": 32.699081897735596,
+      "ryotasueyoshi_alakazam": 41.32904887199402,
+      "makthanithin_improved_prob": 53.42490005493164,
+      "mechi22_alakazam": 49.67511224746704,
+      "random_legal": 23.684754848480225
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "il_bc_alldays52_final@mega_lucario_ex": 39.804149866104126,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 44.84047508239746,
+      "il_bc_alldays52_final@team_rockets_spidops": 76.09957027435303,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 82.41815090179443,
+      "il_bc_alldays52_final@alakazam": 79.34439015388489,
+      "il_bc_alldays52_final@dragapult_ex": 108.8043897151947,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 92.8497109413147,
+      "kiyotah_dragapult": 57.07163691520691,
+      "kiyotah_iono": 62.63525986671448,
+      "kiyotah_abomasnow": 31.366233825683594,
+      "dedquoc_rule_engine": 25.420300722122192,
+      "ryotasueyoshi_alakazam": 42.62119698524475,
+      "makthanithin_improved_prob": 39.156311988830566,
+      "mechi22_alakazam": 42.34973382949829,
+      "random_legal": 21.289040088653564
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 41.65630078315735,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 56.78118014335632,
+      "il_bc_alldays52_final@team_rockets_spidops": 82.41815090179443,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 71.79316186904907,
+      "il_bc_alldays52_final@alakazam": 67.78319525718689,
+      "il_bc_alldays52_final@dragapult_ex": 66.63463807106018,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 55.00786781311035,
+      "kiyotah_dragapult": 37.03376007080078,
+      "kiyotah_iono": 51.986334800720215,
+      "kiyotah_abomasnow": 32.4839129447937,
+      "dedquoc_rule_engine": 25.102180004119873,
+      "ryotasueyoshi_alakazam": 42.59125089645386,
+      "makthanithin_improved_prob": 35.84445309638977,
+      "mechi22_alakazam": 48.90529704093933,
+      "random_legal": 28.28553605079651
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 47.006338119506836,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 53.17840623855591,
+      "il_bc_alldays52_final@team_rockets_spidops": 79.34439015388489,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 67.78319525718689,
+      "il_bc_alldays52_final@alakazam": 51.03811454772949,
+      "il_bc_alldays52_final@dragapult_ex": 67.08298707008362,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 62.805113077163696,
+      "kiyotah_dragapult": 42.51418209075928,
+      "kiyotah_iono": 50.98379921913147,
+      "kiyotah_abomasnow": 24.485997676849365,
+      "dedquoc_rule_engine": 25.890339851379395,
+      "ryotasueyoshi_alakazam": 34.06256675720215,
+      "makthanithin_improved_prob": 38.00005292892456,
+      "mechi22_alakazam": 44.867192029953,
+      "random_legal": 25.08108401298523
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 46.56081223487854,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 65.14187693595886,
+      "il_bc_alldays52_final@team_rockets_spidops": 108.8043897151947,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 66.63463807106018,
+      "il_bc_alldays52_final@alakazam": 67.08298707008362,
+      "il_bc_alldays52_final@dragapult_ex": 64.53145170211792,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 71.82168793678284,
+      "kiyotah_dragapult": 44.413418769836426,
+      "kiyotah_iono": 56.95014524459839,
+      "kiyotah_abomasnow": 38.59104299545288,
+      "dedquoc_rule_engine": 39.932833671569824,
+      "ryotasueyoshi_alakazam": 46.274893045425415,
+      "makthanithin_improved_prob": 42.2695848941803,
+      "mechi22_alakazam": 42.01845598220825,
+      "random_legal": 59.48426604270935
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "il_bc_alldays52_final@mega_lucario_ex": 37.8036150932312,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 58.567739725112915,
+      "il_bc_alldays52_final@team_rockets_spidops": 92.8497109413147,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 55.00786781311035,
+      "il_bc_alldays52_final@alakazam": 62.805113077163696,
+      "il_bc_alldays52_final@dragapult_ex": 71.82168793678284,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 140.81228590011597,
+      "kiyotah_dragapult": 41.77588486671448,
+      "kiyotah_iono": 60.05427289009094,
+      "kiyotah_abomasnow": 28.591306924819946,
+      "dedquoc_rule_engine": 32.088765144348145,
+      "ryotasueyoshi_alakazam": 58.13499212265015,
+      "makthanithin_improved_prob": 32.21579027175903,
+      "mechi22_alakazam": 55.975492000579834,
+      "random_legal": 26.609939098358154
+    },
+    "kiyotah_dragapult": {
+      "il_bc_alldays52_final@mega_lucario_ex": 32.08073592185974,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 64.32599711418152,
+      "il_bc_alldays52_final@team_rockets_spidops": 57.07163691520691,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 37.03376007080078,
+      "il_bc_alldays52_final@alakazam": 42.51418209075928,
+      "il_bc_alldays52_final@dragapult_ex": 44.413418769836426,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 41.77588486671448,
+      "kiyotah_dragapult": 17.889017581939697,
+      "kiyotah_iono": 30.644006967544556,
+      "kiyotah_abomasnow": 17.84284234046936,
+      "dedquoc_rule_engine": 11.15642499923706,
+      "ryotasueyoshi_alakazam": 30.225008964538574,
+      "makthanithin_improved_prob": 18.74161982536316,
+      "mechi22_alakazam": 19.478416919708252,
+      "random_legal": 19.672112226486206
+    },
+    "kiyotah_iono": {
+      "il_bc_alldays52_final@mega_lucario_ex": 34.03560495376587,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 50.37369179725647,
+      "il_bc_alldays52_final@team_rockets_spidops": 62.63525986671448,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 51.986334800720215,
+      "il_bc_alldays52_final@alakazam": 50.98379921913147,
+      "il_bc_alldays52_final@dragapult_ex": 56.95014524459839,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 60.05427289009094,
+      "kiyotah_dragapult": 30.644006967544556,
+      "kiyotah_iono": 44.73914337158203,
+      "kiyotah_abomasnow": 17.191529035568237,
+      "dedquoc_rule_engine": 16.502814292907715,
+      "ryotasueyoshi_alakazam": 25.096534967422485,
+      "makthanithin_improved_prob": 21.603296995162964,
+      "mechi22_alakazam": 36.29246997833252,
+      "random_legal": 12.45304822921753
+    },
+    "kiyotah_abomasnow": {
+      "il_bc_alldays52_final@mega_lucario_ex": 18.973191022872925,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 31.32418918609619,
+      "il_bc_alldays52_final@team_rockets_spidops": 31.366233825683594,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 32.4839129447937,
+      "il_bc_alldays52_final@alakazam": 24.485997676849365,
+      "il_bc_alldays52_final@dragapult_ex": 38.59104299545288,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 28.591306924819946,
+      "kiyotah_dragapult": 17.84284234046936,
+      "kiyotah_iono": 17.191529035568237,
+      "kiyotah_abomasnow": 6.478320121765137,
+      "dedquoc_rule_engine": 5.2316718101501465,
+      "ryotasueyoshi_alakazam": 12.955515146255493,
+      "makthanithin_improved_prob": 12.135808944702148,
+      "mechi22_alakazam": 11.051653146743774,
+      "random_legal": 5.690542221069336
+    },
+    "dedquoc_rule_engine": {
+      "il_bc_alldays52_final@mega_lucario_ex": 23.17576503753662,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 32.699081897735596,
+      "il_bc_alldays52_final@team_rockets_spidops": 25.420300722122192,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 25.102180004119873,
+      "il_bc_alldays52_final@alakazam": 25.890339851379395,
+      "il_bc_alldays52_final@dragapult_ex": 39.932833671569824,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 32.088765144348145,
+      "kiyotah_dragapult": 11.15642499923706,
+      "kiyotah_iono": 16.502814292907715,
+      "kiyotah_abomasnow": 5.2316718101501465,
+      "dedquoc_rule_engine": 15.409830093383789,
+      "ryotasueyoshi_alakazam": 10.812541961669922,
+      "makthanithin_improved_prob": 8.650536060333252,
+      "mechi22_alakazam": 9.129094123840332,
+      "random_legal": 9.597291946411133
+    },
+    "ryotasueyoshi_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 29.054576873779297,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 41.32904887199402,
+      "il_bc_alldays52_final@team_rockets_spidops": 42.62119698524475,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 42.59125089645386,
+      "il_bc_alldays52_final@alakazam": 34.06256675720215,
+      "il_bc_alldays52_final@dragapult_ex": 46.274893045425415,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 58.13499212265015,
+      "kiyotah_dragapult": 30.225008964538574,
+      "kiyotah_iono": 25.096534967422485,
+      "kiyotah_abomasnow": 12.955515146255493,
+      "dedquoc_rule_engine": 10.812541961669922,
+      "ryotasueyoshi_alakazam": 17.83035373687744,
+      "makthanithin_improved_prob": 20.822161197662354,
+      "mechi22_alakazam": 20.670947790145874,
+      "random_legal": 10.426055908203125
+    },
+    "makthanithin_improved_prob": {
+      "il_bc_alldays52_final@mega_lucario_ex": 38.56399726867676,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 53.42490005493164,
+      "il_bc_alldays52_final@team_rockets_spidops": 39.156311988830566,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 35.84445309638977,
+      "il_bc_alldays52_final@alakazam": 38.00005292892456,
+      "il_bc_alldays52_final@dragapult_ex": 42.2695848941803,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 32.21579027175903,
+      "kiyotah_dragapult": 18.74161982536316,
+      "kiyotah_iono": 21.603296995162964,
+      "kiyotah_abomasnow": 12.135808944702148,
+      "dedquoc_rule_engine": 8.650536060333252,
+      "ryotasueyoshi_alakazam": 20.822161197662354,
+      "makthanithin_improved_prob": 16.516294479370117,
+      "mechi22_alakazam": 16.83820390701294,
+      "random_legal": 8.50881314277649
+    },
+    "mechi22_alakazam": {
+      "il_bc_alldays52_final@mega_lucario_ex": 26.026618242263794,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 49.67511224746704,
+      "il_bc_alldays52_final@team_rockets_spidops": 42.34973382949829,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 48.90529704093933,
+      "il_bc_alldays52_final@alakazam": 44.867192029953,
+      "il_bc_alldays52_final@dragapult_ex": 42.01845598220825,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 55.975492000579834,
+      "kiyotah_dragapult": 19.478416919708252,
+      "kiyotah_iono": 36.29246997833252,
+      "kiyotah_abomasnow": 11.051653146743774,
+      "dedquoc_rule_engine": 9.129094123840332,
+      "ryotasueyoshi_alakazam": 20.670947790145874,
+      "makthanithin_improved_prob": 16.83820390701294,
+      "mechi22_alakazam": 26.660446166992188,
+      "random_legal": 9.950001955032349
+    },
+    "random_legal": {
+      "il_bc_alldays52_final@mega_lucario_ex": 21.080103874206543,
+      "il_bc_alldays52_final@marnies_grimmsnarl_ex": 23.684754848480225,
+      "il_bc_alldays52_final@team_rockets_spidops": 21.289040088653564,
+      "il_bc_alldays52_final@cynthias_garchomp_ex": 28.28553605079651,
+      "il_bc_alldays52_final@alakazam": 25.08108401298523,
+      "il_bc_alldays52_final@dragapult_ex": 59.48426604270935,
+      "il_bc_alldays52_final@mega_kangaskhan_ex": 26.609939098358154,
+      "kiyotah_dragapult": 19.672112226486206,
+      "kiyotah_iono": 12.45304822921753,
+      "kiyotah_abomasnow": 5.690542221069336,
+      "dedquoc_rule_engine": 9.597291946411133,
+      "ryotasueyoshi_alakazam": 10.426055908203125,
+      "makthanithin_improved_prob": 8.50881314277649,
+      "mechi22_alakazam": 9.950001955032349,
+      "random_legal": 17.10270595550537
+    }
+  },
+  "total_wall_clock_sec": 4256.433862924576,
+  "overall_win_pct": {
+    "il_bc_alldays52_final@mega_lucario_ex": 57.0,
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": 76.33333333333333,
+    "il_bc_alldays52_final@team_rockets_spidops": 70.16666666666667,
+    "il_bc_alldays52_final@cynthias_garchomp_ex": 74.16666666666667,
+    "il_bc_alldays52_final@alakazam": 48.833333333333336,
+    "il_bc_alldays52_final@dragapult_ex": 41.0,
+    "il_bc_alldays52_final@mega_kangaskhan_ex": 41.166666666666664,
+    "kiyotah_dragapult": 58.5,
+    "kiyotah_iono": 52.833333333333336,
+    "kiyotah_abomasnow": 49.5,
+    "dedquoc_rule_engine": 12.666666666666666,
+    "ryotasueyoshi_alakazam": 43.666666666666664,
+    "makthanithin_improved_prob": 60.666666666666664,
+    "mechi22_alakazam": 56.333333333333336,
+    "random_legal": 7.166666666666667
+  },
+  "overall_win_pct_wilson_ci": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "p": 56.99999999999999,
+      "lo": 53.006405588084405,
+      "hi": 60.90452734532064
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "p": 76.33333333333333,
+      "lo": 72.77150535163904,
+      "hi": 79.56009949307521
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "p": 70.16666666666667,
+      "lo": 66.38680212177496,
+      "hi": 73.68993323398722
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "p": 74.16666666666667,
+      "lo": 70.51822030210435,
+      "hi": 77.50761958703214
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "p": 48.833333333333336,
+      "lo": 44.85374805035697,
+      "hi": 52.827763127408865
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "p": 41.0,
+      "lo": 37.13389211861813,
+      "hi": 44.98062268128966
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "p": 41.16666666666667,
+      "lo": 37.29710472070691,
+      "hi": 45.14862276809149
+    },
+    "kiyotah_dragapult": {
+      "p": 58.5,
+      "lo": 54.51551545835803,
+      "hi": 62.37633167506239
+    },
+    "kiyotah_iono": {
+      "p": 52.83333333333333,
+      "lo": 48.833588873600206,
+      "hi": 56.79702683753993
+    },
+    "kiyotah_abomasnow": {
+      "p": 49.5,
+      "lo": 45.51529268390802,
+      "hi": 53.4910692494202
+    },
+    "dedquoc_rule_engine": {
+      "p": 12.666666666666668,
+      "lo": 10.24069915436168,
+      "hi": 15.567658534144716
+    },
+    "ryotasueyoshi_alakazam": {
+      "p": 43.666666666666664,
+      "lo": 39.7507899851003,
+      "hi": 47.66312783705704
+    },
+    "makthanithin_improved_prob": {
+      "p": 60.66666666666667,
+      "lo": 56.701936563991275,
+      "hi": 64.4956755250069
+    },
+    "mechi22_alakazam": {
+      "p": 56.333333333333336,
+      "lo": 52.33687216294296,
+      "hi": 60.24921001489971
+    },
+    "random_legal": {
+      "p": 7.166666666666667,
+      "lo": 5.363865314483356,
+      "hi": 9.51447364063335
+    }
+  },
+  "glicko": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "rating": 1577.5872945404694,
+      "rd": 30.0,
+      "gxe": 57.40075407189034
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "rating": 1791.8760127950966,
+      "rd": 30.0,
+      "gxe": 75.43370075514416
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "rating": 1723.5253009380178,
+      "rd": 30.0,
+      "gxe": 70.24851617514116
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "rating": 1767.8608978182851,
+      "rd": 30.0,
+      "gxe": 73.68329329901952
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "rating": 1487.068784243255,
+      "rd": 30.0,
+      "gxe": 48.75766871247311
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "rating": 1400.2449070193966,
+      "rd": 30.0,
+      "gxe": 40.53006475231483
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "rating": 1402.0922235560743,
+      "rd": 30.0,
+      "gxe": 40.70132392036526
+    },
+    "kiyotah_dragapult": {
+      "rating": 1594.21314337057,
+      "rd": 30.0,
+      "gxe": 58.95548273519585
+    },
+    "kiyotah_iono": {
+      "rating": 1531.4043811235233,
+      "rd": 30.0,
+      "gxe": 53.01405256439414
+    },
+    "kiyotah_abomasnow": {
+      "rating": 1494.4580503899665,
+      "rd": 30.0,
+      "gxe": 49.4674828349547
+    },
+    "dedquoc_rule_engine": {
+      "rating": 1086.2010957841658,
+      "rd": 30.0,
+      "gxe": 16.93119579675751
+    },
+    "ryotasueyoshi_alakazam": {
+      "rating": 1429.801971606242,
+      "rd": 30.0,
+      "gxe": 43.29515555814238
+    },
+    "makthanithin_improved_prob": {
+      "rating": 1618.2282583473818,
+      "rd": 30.0,
+      "gxe": 61.16924231172056
+    },
+    "mechi22_alakazam": {
+      "rating": 1570.198028393758,
+      "rd": 30.0,
+      "gxe": 56.70484444185761
+    },
+    "random_legal": {
+      "rating": 1025.2396500737957,
+      "rd": 30.0,
+      "gxe": 13.885558092721434
+    }
+  },
+  "fallback_diag": {
+    "il_bc_alldays52_final@mega_lucario_ex": {
+      "decisions": 36813,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_bc_alldays52_final@marnies_grimmsnarl_ex": {
+      "decisions": 49199,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "decisions": 38395,
+      "too_many_options": 5,
+      "enabled": true,
+      "fallbacks": 5,
+      "fallback_rate": 0.0001302252897512697
+    },
+    "il_bc_alldays52_final@cynthias_garchomp_ex": {
+      "decisions": 45221,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_bc_alldays52_final@alakazam": {
+      "decisions": 40986,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_bc_alldays52_final@dragapult_ex": {
+      "decisions": 52422,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "decisions": 39742,
+      "too_many_options": 47,
+      "enabled": true,
+      "fallbacks": 47,
+      "fallback_rate": 0.0011826279502793015
+    },
+    "mechi22_alakazam": {
+      "deck_returns": 600,
+      "decisions": 39654,
+      "policy_ok": 39654,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {
+    "il_bc_alldays52_final@team_rockets_spidops": {
+      "too_many_options": {
+        "reason": "too_many_options",
+        "occurrence": 1,
+        "n_opts": 53,
+        "obs": {
+          "remainingOverageTime": 599.8606090000003,
+          "step": 91,
+          "select": {
+            "type": 0,
+            "context": 0,
+            "minCount": 1,
+            "maxCount": 1,
+            "remainDamageCounter": 0,
+            "remainEnergyCost": 0,
+            "option": [
+              {
+                "type": 7,
+                "index": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 1,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 4,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 6,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 7,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 8,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 7,
+                "index": 9
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 10,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 13,
+                "attackId": 608
+              },
+              {
+                "type": 12
+              },
+              {
+                "type": 14
+              }
+            ],
+            "deck": null,
+            "contextCard": null,
+            "effect": null
+          },
+          "logs": [
+            {
+              "type": 10,
+              "playerIndex": 0,
+              "cardId": 400,
+              "serial": 18
+            }
+          ],
+          "current": {
+            "turn": 7,
+            "turnActionCount": 2,
+            "yourIndex": 0,
+            "firstPlayer": 0,
+            "supporterPlayed": false,
+            "stadiumPlayed": false,
+            "energyAttached": false,
+            "retreated": false,
+            "result": -1,
+            "stadium": [
+              {
+                "id": 1257,
+                "serial": 60,
+                "playerIndex": 0
+              }
+            ],
+            "looking": null,
+            "players": [
+              {
+                "active": [
+                  {
+                    "id": 431,
+                    "serial": 26,
+                    "playerIndex": 0,
+                    "hp": 150,
+                    "maxHp": 280,
+                    "appearThisTurn": false,
+                    "energies": [
+                      11,
+                      11,
+                      1
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 15,
+                        "serial": 12,
+                        "playerIndex": 0
+                      },
+                      {
+                        "id": 1,
+                        "serial": 8,
+                        "playerIndex": 0
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 401,
+                    "serial": 23,
+                    "playerIndex": 0,
+                    "hp": 130,
+                    "maxHp": 130,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 400,
+                        "serial": 17,
+                        "playerIndex": 0
+                      }
+                    ]
+                  },
+                  {
+                    "id": 400,
+                    "serial": 16,
+                    "playerIndex": 0,
+                    "hp": 50,
+                    "maxHp": 50,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 431,
+                    "serial": 27,
+                    "playerIndex": 0,
+                    "hp": 280,
+                    "maxHp": 280,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 414,
+                    "serial": 25,
+                    "playerIndex": 0,
+                    "hp": 120,
+                    "maxHp": 120,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 400,
+                    "serial": 18,
+                    "playerIndex": 0,
+                    "hp": 50,
+                    "maxHp": 50,
+                    "appearThisTurn": true,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 25,
+                "discard": [
+                  {
+                    "id": 1220,
+                    "serial": 53,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1094,
+                    "serial": 32,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 59,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 40,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1134,
+                    "serial": 36,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 401,
+                    "serial": 21,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 400,
+                    "serial": 19,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1216,
+                    "serial": 47,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1094,
+                    "serial": 30,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 15,
+                    "serial": 15,
+                    "playerIndex": 0
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 12,
+                "hand": [
+                  {
+                    "id": 1218,
+                    "serial": 52,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 15,
+                    "serial": 13,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 9,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1216,
+                    "serial": 48,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 10,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 7,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 4,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 3,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 6,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 39,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1,
+                    "serial": 11,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 434,
+                    "serial": 29,
+                    "playerIndex": 0
+                  }
+                ],
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              },
+              {
+                "active": [
+                  {
+                    "id": 678,
+                    "serial": 76,
+                    "playerIndex": 1,
+                    "hp": 440,
+                    "maxHp": 440,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 113,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [
+                      {
+                        "id": 1159,
+                        "serial": 96,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "preEvolution": [
+                      {
+                        "id": 677,
+                        "serial": 73,
+                        "playerIndex": 1
+                      }
+                    ]
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 675,
+                    "serial": 67,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 674,
+                    "serial": 66,
+                    "playerIndex": 1,
+                    "hp": 150,
+                    "maxHp": 150,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6,
+                      6,
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 116,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 110,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 115,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 673,
+                        "serial": 63,
+                        "playerIndex": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 676,
+                    "serial": 71,
+                    "playerIndex": 1,
+                    "hp": 110,
+                    "maxHp": 110,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 674,
+                    "serial": 65,
+                    "playerIndex": 1,
+                    "hp": 150,
+                    "maxHp": 150,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 118,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 673,
+                        "serial": 64,
+                        "playerIndex": 1
+                      }
+                    ]
+                  },
+                  {
+                    "id": 677,
+                    "serial": 72,
+                    "playerIndex": 1,
+                    "hp": 80,
+                    "maxHp": 80,
+                    "appearThisTurn": false,
+                    "energies": [
+                      6,
+                      6
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 6,
+                        "serial": 95,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 6,
+                        "serial": 111,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 15,
+                "discard": [
+                  {
+                    "id": 1102,
+                    "serial": 81,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 82,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1227,
+                    "serial": 103,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1102,
+                    "serial": 80,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 93,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 87,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 675,
+                    "serial": 68,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 97,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1192,
+                    "serial": 101,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1152,
+                    "serial": 94,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1142,
+                    "serial": 92,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1123,
+                    "serial": 83,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 678,
+                    "serial": 75,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 677,
+                    "serial": 74,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 119,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1141,
+                    "serial": 86,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 117,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 112,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1192,
+                    "serial": 100,
+                    "playerIndex": 1
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 4,
+                "hand": null,
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              }
+            ]
+          },
+          "search_begin_input": "BwAEIAKQAEEAKQAQEANBANEBAGEAEB-kC1gMAHCCAOCKABQAeTAD1gMADEACQACGgMABYABIADE8-pERoFFxABbGRIAGw-ZBMAENAB0JMABoHBABMGJwsd-FBBk-ZBCgADDUgOygkFRMvHg8-IBCAEDABg-uCQADBE-fDFMBUNCR0FIAGU-ZBB-aBP-ZBBMADBRUmdQXVdEYWVeXFNLSndWdXBkA8BwADHRuc3Ffb3Y-MBBAEY-VBMADBJP0-tCB-VEQ-VBL-+BI-UBBCw-4BEADBUABQ-UBIB-3BBAEUwE-UBCABQ-MFEADBeABQ-UBIM-3BBAEUQE-UBCABQ-3BQADBABBACCu-QBCABI-3BEAEcABQ-UBIB-3BBAETABE-UBCABQ-3BQADG0B-VBgY-3B8ADCwAErgADP///38-HBgC-3BPAEGgE-UBCABQ-MF8ADBmABQ-UBMI-2BCQABQACrQ-VBFABg-tBBAIkABEACCIBACCs-QBCgU-2BJABBACCJABQ-UBUCA2EA3EAHCQABQACSgE-UBDCg-LFJEBACBJABQ-UBME-MFkQEACKw-VBBQQ-LFCeABQACVQE-UBFABg-tBBAIrwEACK4AJ////f4IA+IIAFBABU-uBQAHK8BACCvAJP///38-HBUC-uBE-dDsgEACIgB-VBgE-2BEYEACBlABQ-UBMN-MFRgQAD8B-VBw0-2LG4EADmABQ-UBMN-hIIABEACBsABQ-UBIG-2BCABBADIQE-UBDDQ-2VwABQACFIB-VBw0-2BMABEADlABQ-UBIB-2LDCBADGQE-UBCABQ-2BxABQACKs-WBw0-hSywQACB0B-VBw0-2BOkEADeABQ-UBcC-hIKECACBzABQAC8w-PBQoF-2BChABgACdQEACPw-PBEKBQ-2BogIACPw-UBBBQI-2BKICACDz-VBQUC-2BCjABgACng-UBEFB-3BowIACDYB-TBBABwI-hIpABIACPc-UBBBQI-2BKUCACCEABQ-TBQUC-2BClABgACLgEACOI-PBEKBQ-2BpQIACGgB-TBBABwo-2BKYCACBnABQ-TBQME-2BCmABgAC4g-UBEEBQ-ABBk-0KTgQACPI-UBBABw0-2BE4EACDB-VBQMN-2BBOBAD0Q-UBEDDQ-2BYwQACEUB-TBBABw0-hIdQQACHoB-TBBABw0-2BHUEADyABQ-TBQMN-MPdgQACEMB-TBBABw0-2BIABEACD2-VBQMN-2BCABBADQABE-TBEDDQ-2BBgADIUBACCEABQ-NBBCABM-2BIcEACB4ABQAC4g-PBQkC-2BCeBADNwE-TBEDABg-gICoBADgwE-TBEDDQ-2BqABQACD0B-TBBABw0-LFDLBAD4Q-UBEDDQ-2VBgADEcBACDz-PBBCABM-3BYADCGABQAChABE-OBQgD-3BGAEfQE-TBEDABg-2BBgADHcBACDi-PBBCABI-MFGAESABEACPM-PBEIABw-2BBgADEYBACDz-PBBCABM-3BYADB8ABQ-TBQMC-3BGAEhwEACPw-PBEIABw-2BBgADG8B-TBBABwI-hcNQAEcAPgACgABBACQAHgACgABBACUAHgACgABBACUACQAEgACgABBACUACgAEgACgABBACUACwAEgACgABBACUABBAFgACgABCACQAHgACgABCACUAHgACgABCACUACQAEgACgABCACUACgAEgACgABCACUACwAEgACgABCACUABBAFgACgABEACQAHgACgABEACUAHgACgABEACUACQAEgACgABEACUACgAEgACgABEACUACwAEgACgABEACUABBAFgACgABFACQAHgACgABFACUAHgACgABFACUACQAEgACgABFACUACgAEgACgABFACUACwAEgACgABFACUABBAFgACgABGACQAHgACgABGACUAHgACgABGACUACQAEgACgABGACUACgAEgACgABGACUACwAEgACgABGACUABBAFgACgABHACQAHgACgABHACUAHgACgABHACUACQAEgACgABHACUACgAEgACgABHACUACwAEgACgABHACUABBAFgACgABIACQAHgACgABIACUAHgACgABIACUACQAEgACgABIACUACgAEgACgABIACUACwAEgACgABIACUABBAFcABCQAMgACgABKACQAHgACgABKACUAHgACgABKACUACQAEgACgABKACUACgAEgACgABKACUACwAEgACgABKACUABBAF0ABYABIACP//AGwAP4-KBQADE8AWQAI=="
+        }
+      }
+    },
+    "il_bc_alldays52_final@mega_kangaskhan_ex": {
+      "too_many_options": {
+        "reason": "too_many_options",
+        "occurrence": 1,
+        "n_opts": 50,
+        "obs": {
+          "remainingOverageTime": 599.552602,
+          "select": {
+            "type": 0,
+            "context": 0,
+            "minCount": 1,
+            "maxCount": 1,
+            "remainDamageCounter": 0,
+            "remainEnergyCost": 0,
+            "option": [
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 0,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 2,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 7,
+                "index": 3
+              },
+              {
+                "type": 7,
+                "index": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 5,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 7,
+                "index": 7
+              },
+              {
+                "type": 7,
+                "index": 8
+              },
+              {
+                "type": 7,
+                "index": 9
+              },
+              {
+                "type": 7,
+                "index": 11
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 12,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 13,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 4,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 0
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 1
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 2
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 3
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 4
+              },
+              {
+                "type": 8,
+                "area": 2,
+                "index": 14,
+                "inPlayArea": 5,
+                "inPlayIndex": 5
+              },
+              {
+                "type": 12
+              },
+              {
+                "type": 14
+              }
+            ],
+            "deck": null,
+            "contextCard": null,
+            "effect": null
+          },
+          "logs": [
+            {
+              "type": 4,
+              "playerIndex": 1,
+              "cardId": 3,
+              "serial": 72
+            },
+            {
+              "type": 4,
+              "playerIndex": 1,
+              "cardId": 3,
+              "serial": 73
+            }
+          ],
+          "current": {
+            "turn": 8,
+            "turnActionCount": 2,
+            "yourIndex": 1,
+            "firstPlayer": 0,
+            "supporterPlayed": false,
+            "stadiumPlayed": false,
+            "energyAttached": false,
+            "retreated": false,
+            "result": -1,
+            "stadium": [
+              {
+                "id": 1250,
+                "serial": 121,
+                "playerIndex": 1
+              }
+            ],
+            "looking": null,
+            "players": [
+              {
+                "active": [
+                  {
+                    "id": 401,
+                    "serial": 20,
+                    "playerIndex": 0,
+                    "hp": 130,
+                    "maxHp": 130,
+                    "appearThisTurn": false,
+                    "energies": [
+                      1,
+                      1
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 1,
+                        "serial": 11,
+                        "playerIndex": 0
+                      },
+                      {
+                        "id": 1,
+                        "serial": 4,
+                        "playerIndex": 0
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": [
+                      {
+                        "id": 400,
+                        "serial": 16,
+                        "playerIndex": 0
+                      }
+                    ]
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 434,
+                    "serial": 28,
+                    "playerIndex": 0,
+                    "hp": 60,
+                    "maxHp": 60,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 431,
+                    "serial": 26,
+                    "playerIndex": 0,
+                    "hp": 180,
+                    "maxHp": 280,
+                    "appearThisTurn": false,
+                    "energies": [
+                      1
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 1,
+                        "serial": 9,
+                        "playerIndex": 0
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 414,
+                    "serial": 25,
+                    "playerIndex": 0,
+                    "hp": 120,
+                    "maxHp": 120,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 5,
+                "deckCount": 39,
+                "discard": [
+                  {
+                    "id": 1134,
+                    "serial": 38,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1220,
+                    "serial": 54,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 431,
+                    "serial": 27,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 15,
+                    "serial": 14,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 400,
+                    "serial": 18,
+                    "playerIndex": 0
+                  },
+                  {
+                    "id": 1218,
+                    "serial": 52,
+                    "playerIndex": 0
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 3,
+                "hand": null,
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              },
+              {
+                "active": [
+                  {
+                    "id": 756,
+                    "serial": 91,
+                    "playerIndex": 1,
+                    "hp": 180,
+                    "maxHp": 300,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "bench": [
+                  {
+                    "id": 108,
+                    "serial": 84,
+                    "playerIndex": 1,
+                    "hp": 210,
+                    "maxHp": 210,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 1071,
+                    "serial": 95,
+                    "playerIndex": 1,
+                    "hp": 170,
+                    "maxHp": 170,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 96,
+                    "serial": 82,
+                    "playerIndex": 1,
+                    "hp": 210,
+                    "maxHp": 210,
+                    "appearThisTurn": false,
+                    "energies": [
+                      4,
+                      1
+                    ],
+                    "energyCards": [
+                      {
+                        "id": 4,
+                        "serial": 74,
+                        "playerIndex": 1
+                      },
+                      {
+                        "id": 1,
+                        "serial": 65,
+                        "playerIndex": 1
+                      }
+                    ],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 140,
+                    "serial": 85,
+                    "playerIndex": 1,
+                    "hp": 210,
+                    "maxHp": 210,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 184,
+                    "serial": 86,
+                    "playerIndex": 1,
+                    "hp": 210,
+                    "maxHp": 210,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  },
+                  {
+                    "id": 1071,
+                    "serial": 94,
+                    "playerIndex": 1,
+                    "hp": 170,
+                    "maxHp": 170,
+                    "appearThisTurn": false,
+                    "energies": [],
+                    "energyCards": [],
+                    "tools": [],
+                    "preEvolution": []
+                  }
+                ],
+                "benchMax": 8,
+                "deckCount": 21,
+                "discard": [
+                  {
+                    "id": 1205,
+                    "serial": 117,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1116,
+                    "serial": 104,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1198,
+                    "serial": 114,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 96,
+                    "serial": 81,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1,
+                    "serial": 67,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1,
+                    "serial": 71,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1,
+                    "serial": 63,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1,
+                    "serial": 64,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1198,
+                    "serial": 113,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1088,
+                    "serial": 96,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1116,
+                    "serial": 101,
+                    "playerIndex": 1
+                  }
+                ],
+                "prize": [
+                  null,
+                  null,
+                  null
+                ],
+                "handCount": 15,
+                "hand": [
+                  {
+                    "id": 5,
+                    "serial": 76,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1197,
+                    "serial": 111,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 78,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1182,
+                    "serial": 110,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1097,
+                    "serial": 97,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 4,
+                    "serial": 75,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1197,
+                    "serial": 112,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 272,
+                    "serial": 88,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1121,
+                    "serial": 105,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1116,
+                    "serial": 103,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 1250,
+                    "serial": 119,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 978,
+                    "serial": 92,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 6,
+                    "serial": 77,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 3,
+                    "serial": 72,
+                    "playerIndex": 1
+                  },
+                  {
+                    "id": 3,
+                    "serial": 73,
+                    "playerIndex": 1
+                  }
+                ],
+                "poisoned": false,
+                "burned": false,
+                "asleep": false,
+                "paralyzed": false,
+                "confused": false
+              }
+            ]
+          },
+          "search_begin_input": "CAFIAKQAEEAKwAQEAOwAMEBADBACEAEB-kCMABIAHB4APkABQAeFADMABIADEBABQACVABEABiAFF5-pERQDHBoZAIB-aBD-ZBCc-ZBBgADCY2Gw4SN-OBDAECwQJ-tCQADB-gDFbBlRfUlVWXgAEM-ZBDwADExvTm5hS3BYaWd3XE1ISQ-BBV-aBsADB1aHJRQ0c/QHFgZQ-HBgADEpB-jFBAgC-0DQ-VBL-+BI-UBBCw-NFBAE+gADM0-QBIABg-MPEAEgABQAC0-RBgC-NFQADPgADDN-QBCABM-hIDwADPQ-WBwg-LFCQABQAC5wADM0-QBKBQ-LFJABBADbABQ-UBMF-MFkQEACM0-VBBABU-LPCeABQAC+Q-VBFABg-tBBAIrwEACNAK////f2Q-FBBQQ-uBQAHK8BACDy-WBME-2BCyABQACzw-VBFABg-tBB-IebgQACMc-WBw0-LtDCBADHwE-UBDDQ-LFMQEACDM-WBMN-icEADD+-VBQMI-3BBAE/w-UBEDC-4BQADBEBACDg-PBBCABI-MFBAE/-VBEDC-4LQADP0-UBBABwg-3BMAEiABQ-TBQIB-3BDAEIwE-TBECABQ-2BBAEO0ADDg-PBBCABE-3BQADDf-VBQIB-3BFAEh-VBECABQ-2BBgADCEB-TBBABgE-3BYADDD-VBQIB-hIGAED7-VBQME-2BBgAE4-VBEFABg-vBQ-bDGwAEJABQ-TBQUE-vBBAGCMAEBQE-TBEFABg-vBQAGuAENU-UBBBQQ-vBE-cDQABQACBABE-TBECABQ-gID0ABgACugAOeA/eAFEEBQAHQADPQC-hBQAG0gMACBwB-TBBABgY-MFvBADCwE-TBEFABg-vBQAGLwQACNY-UBBBQI-vBEAGEABEADVABQ-TBQMN-2BBJBAD1-VBECABQ-2LXABQACBcB-TBBABw0-LFBcBADBwE-TBECABQ-2BXABQACOU-UBBABw0-2BGEEADGABQ-TBQIB-MPngQACNI-UBBABgE-2BK0EACCG-VBQIB-2BCtBAEwE-TBECABQ-2BrgQACBABB-TBBABw0-2BK4EACDu-VBQMN-hILUEACDc-VBQMN-MF4gQACBIB-TBBABgE-LFDiBADCgE-TBEHABg-2VMgAEgACgAEQAHgACgAEUAHgACgAEUACQAEgACgAEUACgAEgACgAEUACwAEgACgAEUABBAFgACgAEUABBQAEgACgABCACQAHgACgABCACUAHgACgABCACUACQAEgACgABCACUACgAEgACgABCACUACwAEgACgABCACUABBAFgACgABCACUABBQAEcACwAMcABBANgACgABFACQAHgACgABFACUAHgACgABFACUACQAEgACgABFACUACgAEgACgABFACUACwAEgACgABFACUABBAFgACgABFACUABBQAEcABBwAMcABCANcABCQAMcABCwAMgACgABMACQAHgACgABMACUAHgACgABMACUACQAEgACgABMACUACgAEgACgABMACUACwAEgACgABMACUABBAFgACgABMACUABBQAEgACgABNACQAHgACgABNACUAHgACgABNACUACQAEgACgABNACUACgAEgACgABNACUACwAEgACgABNACUABBAFgACgABNACUABBQAEgACgABOACQAHgACgABOACUAHgACgABOACUACQAEgACgABOACUACgAEgACgABOACUACwAEgACgABOACUABBAFgACgABOACUABBQAEwAP4A0BAEugAUEADBPAWEAI=",
+          "step": 92
+        }
+      }
+    }
+  }
+}

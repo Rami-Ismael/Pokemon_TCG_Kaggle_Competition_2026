@@ -384,6 +384,11 @@ AGENT_FILES = {
     "il_small_comb_2ep": REPO / "agents" / "il_arms" / "il_small_comb_2ep" / "agent_core.py",
     "il_hfstream_comb_3ep": REPO / "agents" / "il_arms" / "il_hfstream_comb_3ep" / "agent_core.py",
     "il_alldays_3ep": REPO / "agents" / "il_arms" / "il_alldays_3ep" / "agent_core.py",
+    # FINAL checkpoint (step 736,715) of the 1-epoch all-52-days BC run
+    # (models/bc_alldays52_jun16_aug07_seed42). Deliberately NOT the
+    # best-eval-at-620k snapshot (…_seed42_best) -- registered 2026-08-10 for
+    # the deck-selection rerun on the stronger policy.
+    "il_bc_alldays52_final": REPO / "agents" / "il_arms" / "il_bc_alldays52_final" / "agent_core.py",
     # Equal-steps control for il_alldays_3ep (standing rule 4: compare at equal
     # STEPS, not equal epochs). 38,562 steps vs 127,748; offline acc .7414 vs
     # .7583 but ECE .0124 -- the best calibration of any checkpoint here.
