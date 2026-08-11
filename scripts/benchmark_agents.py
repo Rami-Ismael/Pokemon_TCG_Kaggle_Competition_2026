@@ -156,6 +156,12 @@ AGENT_FILES = {
     # 8-8 vs _final, n=16/pair) -- see reports/benchmark_v3_arms.json.
     "il_agent_v3_final": REPO / "agents" / "il_agent_v3_final" / "main.py",
     "il_agent_v3_best": REPO / "agents" / "il_agent_v3_best" / "main.py",
+    # v4 = the complete 53-day hub corpus (52 train days, 260,065 eps, 1 epoch,
+    # seed 42) -- adds 07-24 + 08-05..08-07 (the newest meta days) over v3.
+    # Best checkpoint step 620k, offline .7619 (final .7606). Pool stars vs
+    # il_agent_v3_best: reports/pool_star_*.json (2026-08-10).
+    "bc_alldays52_jun16_aug07_seed42":
+        REPO / "agents" / "bc_alldays52_jun16_aug07_seed42" / "main.py",
     # IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
