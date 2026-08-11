@@ -7,9 +7,13 @@ falls back to `_safe_choice` (always-legal), never raises (INVALID = loss).
 
 Experiment wiring (budget from the search-API timing measurements):
 - policy prior: models/il_agent (or MCTS_IL_MODEL_DIR)
-- value head:  models/critic_search_prior (or MCTS_IL_CRITIC_DIR); if the
-  critic dir is missing the agent still runs prior-only (leaf value 0) —
-  that degraded mode is reported at import time, not hidden.
+- value head:  models/critic_outcome_day_2026-07-26_seed42 (or
+  MCTS_IL_CRITIC_DIR), used ONLY if the dir carries a calibration.json
+  (Platt + leaf centering, fit by scripts/fit_critic_calibration.py); a
+  missing or uncalibrated critic means prior-only search (leaf value 0),
+  reported at import time, not hidden. The old default,
+  models/critic_search_prior, is worse than a constant by its own
+  train_metadata.json and must be requested explicitly if ever needed.
 - SEARCH_COUNT: MCTS_IL_SEARCH_COUNT env, default 30 (the measured safe
   point inside the ladder's ~1 s/turn budget).
 
@@ -44,24 +48,85 @@ try:
     from pokemon_tcg.search_prior_mcts import ILPriorEvaluator, mcts_choose
 
     _ML_AVAILABLE = True
-except Exception:
+    _ML_IMPORT_ERROR = None
+except Exception as _import_exc:
     _ML_AVAILABLE = False
+    _ML_IMPORT_ERROR = _import_exc
 
 _DEVICE = "cpu"  # evaluator parity; never resolve_device() here on purpose
 SEARCH_COUNT = int(os.environ.get("MCTS_IL_SEARCH_COUNT", "30"))
 
+# STRICT LOAD — same contract as agents/il_agent/agent_core.py: fail loudly
+# everywhere EXCEPT inside the Kaggle evaluator. Outside the evaluator, a
+# silently degraded agent is a measurement hazard: it "runs", scores badly,
+# and — because benchmark_agents.py persists Glicko by default — writes a
+# _safe_choice rating into the COMPOUNDING ratings file under this agent's
+# name (the same failure shape as the 2026-08-04 deck-selection incident).
+# Inside the evaluator an uncaught exception is INVALID (= instant loss), so
+# degradation stays correct there. PTCG_STRICT_LOAD forces either way
+# (set 0 to rehearse the degraded path locally).
+_IN_EVALUATOR = (
+    Path("/kaggle_simulations/agent").exists() or (_HERE / "model").exists()
+)
+_STRICT_ENV = os.environ.get("PTCG_STRICT_LOAD")
+_STRICT_LOAD = (
+    (not _IN_EVALUATOR) if _STRICT_ENV is None
+    else _STRICT_ENV.strip().lower() not in ("0", "false", "no", "")
+)
+
 # Bundle-local first (submissions ship model/ next to this file, same pattern
-# as agents/il_agent), then the dev-repo checkpoint.
-_MODEL_DIR = os.environ.get("MCTS_IL_MODEL_DIR") or (
+# as agents/il_agent), then the dev-repo checkpoint. An EXPLICIT env override
+# that doesn't exist always fails loudly — silently resolving it to the dev
+# checkpoint would benchmark the WRONG model under this agent's name.
+_ENV_MODEL_DIR = os.environ.get("MCTS_IL_MODEL_DIR")
+_MODEL_DIR = _ENV_MODEL_DIR or (
     str(_HERE / "model")
     if (_HERE / "model").exists()
     else str(_REPO / "models" / "il_agent")
 )
-_CRITIC_DIR = os.environ.get("MCTS_IL_CRITIC_DIR") or (
+if _ENV_MODEL_DIR and not Path(_ENV_MODEL_DIR).exists():
+    raise FileNotFoundError(
+        f"MCTS_IL_MODEL_DIR={_ENV_MODEL_DIR} does not exist; refusing to fall "
+        f"back to the dev checkpoint (that would run the WRONG model). In a "
+        f"git worktree, symlink the checkpoint dir from the main checkout — "
+        f"see .claude/skills/run-fallback-diagnostic/SKILL.md."
+    )
+if _STRICT_LOAD and not Path(_MODEL_DIR).exists():
+    raise FileNotFoundError(
+        f"no checkpoint at {_MODEL_DIR} (and no bundled model/ beside "
+        f"{_HERE}). Refusing to run as a silent _safe_choice fallback, which "
+        f"would look like a weak model rather than a missing one — and would "
+        f"poison the compounding Glicko file. In a git worktree: "
+        f"ln -s <main-checkout>/models/il_agent models/il_agent  "
+        f"(see .claude/skills/run-fallback-diagnostic). To rehearse the "
+        f"degraded path on purpose, set PTCG_STRICT_LOAD=0."
+    )
+if _STRICT_LOAD and not _ML_AVAILABLE:
+    raise ImportError(
+        f"torch/pokemon_tcg imports failed ({_ML_IMPORT_ERROR!r}); refusing "
+        f"to run as _safe_choice-only under strict load. "
+        f"Set PTCG_STRICT_LOAD=0 to rehearse the degraded path."
+    )
+
+# Critic default. models/critic_search_prior — the old default — records
+# `beats_constant_baseline: false` in its own train_metadata.json (worse than
+# predicting a constant; memory `shipped-mcts-critic-worse-than-constant`),
+# and critic_trainday is LOST (dangling symlinks to a deleted worktree, no HF
+# copy). The default is now the retrained, audited outcome critic
+# (AUC 0.76, shuffled-label control clean; HF backup Rami/ptcg-s2v2-arms).
+# A missing critic dir is a legitimate, loudly-reported prior-only arm —
+# the submission bundle ships prior-only on purpose — so it does NOT raise.
+_ENV_CRITIC_DIR = os.environ.get("MCTS_IL_CRITIC_DIR")
+_CRITIC_DIR = _ENV_CRITIC_DIR or (
     str(_HERE / "critic")
     if (_HERE / "critic").exists()
-    else str(_REPO / "models" / "critic_search_prior")
+    else str(_REPO / "models" / "critic_outcome_day_2026-07-26_seed42")
 )
+if _ENV_CRITIC_DIR and not Path(_ENV_CRITIC_DIR).exists():
+    raise FileNotFoundError(
+        f"MCTS_IL_CRITIC_DIR={_ENV_CRITIC_DIR} does not exist. Unset it for "
+        f"prior-only search, or point it at a real critic dir."
+    )
 
 _EVALUATOR = None
 if _ML_AVAILABLE:
@@ -70,15 +135,33 @@ if _ML_AVAILABLE:
         _policy.to(_DEVICE).eval()
         _policy.requires_grad_(False)
         _critic = None
-        if Path(_CRITIC_DIR).exists():
-            _critic = load_critic(_CRITIC_DIR, device=_DEVICE)
-        else:
+        if not Path(_CRITIC_DIR).exists():
             print(
                 f"[mcts_il_agent] critic dir {_CRITIC_DIR} missing -> prior-only search",
                 file=sys.stderr,
             )
-        _EVALUATOR = ILPriorEvaluator(_policy, _critic, device=_DEVICE)
-    except Exception as e:  # degraded, not crashed
+        elif not (Path(_CRITIC_DIR) / "calibration.json").exists():
+            # An uncentered leaf is wrong by construction (turn-parity bias,
+            # memory `search-leaf-value-must-be-centered`) — running it
+            # silently would measure the artifact, so the critic is dropped.
+            print(
+                f"[mcts_il_agent] {_CRITIC_DIR} has no calibration.json -> "
+                f"prior-only search. Fit it with "
+                f"scripts/fit_critic_calibration.py --critic-dir {_CRITIC_DIR}",
+                file=sys.stderr,
+            )
+        else:
+            _critic = load_critic(_CRITIC_DIR, device=_DEVICE)
+        # from_critic_dir reads calibration.json (Platt + centering).
+        # MCTS_IL_CENTER_LEAF=0 keeps Platt but pins center=0.5 — the
+        # uncentered CONTROL arm, never the configuration to ship.
+        _EVALUATOR = ILPriorEvaluator.from_critic_dir(
+            _policy, _critic, _CRITIC_DIR, device=_DEVICE,
+            center_leaf=os.environ.get("MCTS_IL_CENTER_LEAF", "1") != "0",
+        )
+    except Exception as e:  # degraded, not crashed — but only where allowed
+        if _STRICT_LOAD:
+            raise
         print(f"[mcts_il_agent] model load failed ({e!r}) -> _safe_choice only", file=sys.stderr)
         _EVALUATOR = None
 

@@ -1,17 +1,18 @@
 """Build the IL-prior MCTS (prior-only) submission bundle.
 
-Configuration that won locally in the IL-prior MCTS benchmarks: official
-Search API lookahead, SEARCH_COUNT=30, PTCGImitationPolicy (models/il_agent)
-option logits as child priors, NO critic (prior-only — the seed-42 critic
-failed calibration and erased the gain, so it deliberately does not ship;
-agents/mcts_il_agent/agent_core.py falls back to prior-only when no critic
-dir is present and says so on stderr). Deck: the same Grimmsnarl list as
-il_agent (agents/mcts_il_agent/deck.csv).
+Configuration: official Search API lookahead, SEARCH_COUNT=30,
+PTCGImitationPolicy (models/il_agent) option logits as child priors, NO
+critic (prior-only; agents/mcts_il_agent/agent_core.py runs prior-only when
+no calibrated critic dir is present and says so on stderr). Deck: the same
+Grimmsnarl list as il_agent (agents/mcts_il_agent/deck.csv).
 
-Local evidence at build time: beats plain il_agent 67.2% [58.4, 75.0]
-pooled (n=119 decided, two independent runs, 0 fallbacks in 15.8K
-decisions); 209 ms/decision mean forced-CPU at N=30 vs the 600 s/match
-overage bank.
+STANDING EVIDENCE (read before submitting this): the 67.2% [58.4, 75.0]
+local reading over il_agent that motivated this bundle was later attributed
+to the DECODE RULE, not the tree — prior-only search moves only 2.7% of
+decisions, and N=30 vs N=0 measured −2.5pp at 11x cost (memory
+`prior-only-mcts-is-decoration`). On the real ladder this agent scored
+294.7 from the 600 prior (memory `il-prior-mcts-beats-il-agent-locally`).
+Do not submit it on the strength of the old local number.
 
 Run from the repo root:
     uv run python scripts/build_mcts_il_submission.py
