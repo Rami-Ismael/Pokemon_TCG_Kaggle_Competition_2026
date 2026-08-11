@@ -54,7 +54,15 @@ except Exception:
     pass
 
 # --- Tunables -------------------------------------------------------------
-USE_SEARCH = True            # master switch for the Monte-Carlo re-ranker
+# Search default-off, matching agent_core_improved: until 2026-08-11 the bandit
+# here was dead code (HeuristicPolicy.choose() truncated to maxCount=1, so it
+# never saw a second candidate), so every benchmark/Glicko number this agent
+# has ever posted is the PURE HEURISTIC's. The sibling lineage benchmarked the
+# repaired live search and it lost 35.0% vs its own pure heuristic (bandit
+# trusts evaluate_state over the domain heuristic and that trade loses), so
+# turning it on by default would silently change a pool regular. Env-var
+# override for A/B runs.
+USE_SEARCH = os.environ.get("USE_SEARCH", "0") != "0"
 SEARCH_TIME_BUDGET = 1.5     # seconds per MAIN decision (match cap is 600s)
 SEARCH_MAX_CANDIDATES = 8    # only re-rank the heuristic's top-8 moves
 LOW_DECK_COUNT = 10          # "running low on deck" threshold for card economy
@@ -244,8 +252,10 @@ class HeuristicPolicy:
 
     # ---- top-level entry ------------------------------------------------
     def choose(self) -> list[int]:
-        """Score every legal option, return indices sorted best-first,
-        truncated to how many we're allowed to pick (maxCount)."""
+        """Score every legal option, return ALL indices sorted best-first.
+        Never truncate here: maxCount is enforced at the agent() boundary,
+        and search needs the full ranking (maxCount is 1 on MAIN decisions,
+        so truncating here starves the bandit down to a single candidate)."""
         if not self.select.option or self.select.maxCount == 0:
             return []
         if self.context == SelectContext.MAIN:
@@ -253,7 +263,7 @@ class HeuristicPolicy:
         scores = [self._score_option(o) for o in self.select.option]
         ranked = [i for i, _ in sorted(enumerate(scores), key=lambda kv: kv[1], reverse=True)]
         self._remember_lunatone_ability(ranked)
-        return ranked[: self.select.maxCount]
+        return ranked
 
     # ---- board census ---------------------------------------------------
     def _count_cards(self) -> None:
