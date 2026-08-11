@@ -20,7 +20,7 @@ _DECK = os.path.join(_HERE, "deck.csv")
 
 from agent.agent import build_agent  # noqa: E402
 from agent.search_policy import SearchScorer  # noqa: E402
-_AGENT = build_agent(seed=0, deck_path=_DECK, scorer=SearchScorer())
+_AGENT = build_agent(seed=0, deck_path=_DECK, scorer=SearchScorer(deck_path=_DECK))
 
 
 def _read_deck() -> list:
