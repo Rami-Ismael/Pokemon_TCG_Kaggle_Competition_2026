@@ -29,6 +29,11 @@ from agent.agent import (
 )
 from agent.prize_tracker import PrizeTracker
 
+try:
+    from agent.finish_search import cg_search_pick
+except ImportError:  # package-less layout on Kaggle
+    from finish_search import cg_search_pick
+
 SEARCH_BUDGET_MS = 200
 HIGH_LEVERAGE_CONTEXTS = {
     CTX_TO_ACTIVE,
@@ -89,18 +94,31 @@ class _PrizeTrackerMixin:
 
 
 class _CgSearchMixin:
-    """Shared cg search_* wrapper for high-leverage card picks."""
+    """Shared cg search_* wrapper for high-leverage card picks.
+
+    History note (2026-08-11): until now this mixin called lib.SearchBegin
+    with an invented C signature; the call always failed, the bare except
+    swallowed it, and every "search" decision was the heuristic fallback.
+    It now routes through finish_search.cg_search_pick (cg.api seam). Past
+    results measured through this path never ran a search.
+    """
 
     def _init_search(
         self,
         budget_ms: float = SEARCH_BUDGET_MS,
         *,
         search_contexts: set | None = None,
+        deck_path: str | None = None,
     ) -> None:
         self._budget_ms = budget_ms
         self._search_contexts = search_contexts or HIGH_LEVERAGE_CONTEXTS
-        self._lib = None
-        self._battle_ptr = None
+        # The real search needs the 60-card list to fill hidden zones.
+        path = deck_path or os.path.join(os.path.dirname(__file__), "deck.csv")
+        try:
+            deck = load_deck(path)
+            self._search_deck = deck if len(deck) == 60 else None
+        except Exception:
+            self._search_deck = None
 
     def _audit_search(self, event: str, **payload) -> None:
         path = os.environ.get("SEARCH_AUDIT_LOG")
@@ -132,90 +150,24 @@ class _CgSearchMixin:
             )
             if eligible:
                 deadline = time.monotonic() + self._budget_ms / 1000.0
-                return self._ctypes_search(obs_dict, options, deadline)
+                return self._cg_api_search(obs_dict, options, deadline)
         except Exception:
             pass
         return None
 
-    def _ensure_engine(self) -> bool:
-        try:
-            from cg.sim import Battle, lib  # type: ignore
-
-            self._lib = lib
-            # battle_ptr changes every battle_start — never cache across games.
-            self._battle_ptr = Battle.battle_ptr
-            return self._battle_ptr is not None
-        except Exception:
-            self._lib = None
-            self._battle_ptr = None
-            return False
-
-    def _ctypes_search(self, obs_dict, options, deadline) -> list[int] | None:
-        """Best-effort wrapper around cg search_*; returns None on failure."""
-        if time.monotonic() >= deadline:
+    def _cg_api_search(self, obs_dict, options, deadline) -> list[int] | None:
+        """One-ply lookahead via finish_search.cg_search_pick; None on failure."""
+        budget_ms = (deadline - time.monotonic()) * 1000.0
+        if budget_ms <= 0:
             self._audit_search("search_result", fired=False, reason="engine_or_budget")
             return None
-        if not self._ensure_engine():
-            self._audit_search("search_result", fired=False, reason="engine_or_budget")
-            return None
-        try:
-            lib = self._lib
-            ptr = self._battle_ptr
-            if lib is None or ptr is None:
-                self._audit_search("search_result", fired=False, reason="missing_engine_ptr")
-                return None
-            begin_input = obs_dict.get("search_begin_input", "")
-            if not begin_input:
-                self._audit_search("search_result", fired=False, reason="missing_begin_input")
-                return None
-            n_opts = len(options)
-            if n_opts <= 0:
-                self._audit_search("search_result", fired=False, reason="no_options")
-                return None
-            ctypes = __import__("ctypes")
-            idx_arr = (ctypes.c_int * n_opts)(*range(n_opts))
-            out_idx = (ctypes.c_int * 1)(0)
-            out_score = (ctypes.c_int * 1)(0)
-            out_depth = (ctypes.c_int * 1)(0)
-            out_nodes = (ctypes.c_int * 1)(0)
-            out_time = (ctypes.c_int * 1)(0)
-            remaining_ms = max(1, int((deadline - time.monotonic()) * 1000))
-            search_ptr = lib.SearchBegin(
-                ptr,
-                begin_input.encode("ascii"),
-                remaining_ms,
-                idx_arr,
-                out_idx,
-                out_score,
-                out_depth,
-                out_nodes,
-                out_time,
-                n_opts,
-            )
-            if not search_ptr:
-                self._audit_search("search_result", fired=False, reason="search_begin_failed")
-                return None
-            handle = int(search_ptr, 16) if isinstance(search_ptr, str) else 0
-            try:
-                step = lib.SearchStep(ptr, handle, out_idx, 1)
-                if step:
-                    data = json.loads(step.decode()) if isinstance(step, bytes) else {}
-                    pick = data.get("index", out_idx[0])
-                    if isinstance(pick, int) and 0 <= pick < n_opts:
-                        self._audit_search("search_result", fired=True, pick=pick, source="json")
-                        return [pick]
-                if 0 <= out_idx[0] < n_opts:
-                    self._audit_search("search_result", fired=True, pick=out_idx[0], source="out_idx")
-                    return [out_idx[0]]
-            finally:
-                lib.SearchEnd(ptr)
-                if handle:
-                    lib.SearchRelease(ptr, handle)
-        except Exception:
-            self._audit_search("search_result", fired=False, reason="exception")
-            return None
-        self._audit_search("search_result", fired=False, reason="no_pick")
-        return None
+        return cg_search_pick(
+            obs_dict,
+            options,
+            self._search_deck,
+            budget_ms=budget_ms,
+            audit=self._audit_search,
+        )
 
 
 class SearchScorer(_CgSearchMixin, _PrizeTrackerMixin, HeuristicScorer):
@@ -228,7 +180,7 @@ class SearchScorer(_CgSearchMixin, _PrizeTrackerMixin, HeuristicScorer):
         deck_path: str | None = None,
     ) -> None:
         super().__init__(rng=rng)
-        self._init_search(budget_ms)
+        self._init_search(budget_ms, deck_path=deck_path)
         self._init_prize_tracker(deck_path)
         self._active_select = None
 
@@ -260,7 +212,9 @@ class LucarioSearchScorer(_CgSearchMixin, _PrizeTrackerMixin):
 
         path = deck_path
         self._lucario = LucarioScorer(rng=rng, deck_path=path)
-        self._init_search(budget_ms, search_contexts=LUCARIO_SEARCH_CONTEXTS)
+        self._init_search(
+            budget_ms, search_contexts=LUCARIO_SEARCH_CONTEXTS, deck_path=path
+        )
         self._init_prize_tracker(path)
         self._active_select = None
 

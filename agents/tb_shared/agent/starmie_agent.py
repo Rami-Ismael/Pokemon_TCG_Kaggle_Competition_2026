@@ -884,7 +884,7 @@ def choose_options(obs, obs_dict: dict):
 
     my_prize = len(my_state(obs).prize or [])
     if my_prize <= 3 and obs_dict.get("search_begin_input"):
-        finish = try_cg_search(obs_dict, options, budget_ms=400)
+        finish = try_cg_search(obs_dict, options, budget_ms=400, your_deck=my_deck)
         if finish is not None:
             _finish_line = finish
             return finish
