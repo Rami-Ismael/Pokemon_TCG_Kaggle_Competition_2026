@@ -97,7 +97,8 @@ def main() -> None:
     ap.add_argument("--opponents", default="rung2",
                     help="comma list of opponent agents or group names (default: rung2, the public field)")
     ap.add_argument("--search-count", type=int, default=None,
-                    help="MCTS_IL_SEARCH_COUNT for mcts_il_agent (env wins if already set; agent default 30)")
+                    help="MCTS_IL_SEARCH_COUNT for mcts_il_agent (overrides the env var when "
+                         "passed; unset flag leaves the env/agent default 30)")
     ap.add_argument("--out", type=Path, default=REPO / "reports" / "il_vs_mcts_strength.json")
     args = ap.parse_args()
 

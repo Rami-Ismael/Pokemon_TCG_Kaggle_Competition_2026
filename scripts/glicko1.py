@@ -17,6 +17,15 @@ This is a from-scratch, dependency-free implementation of the *batch*
 within one rating period use that opponent's rating/RD as it stood at the
 *start* of the period (standard Glicko-1 semantics -- ratings don't leak
 within a period).
+
+DELIBERATE DEVIATION from the paper: Glickman's Step 1 widens EVERY player's
+RD by c*sqrt(t) at the start of a period; here only players absent from the
+period's games get that widening (see run_rating_period). Our "players" are
+frozen checkpoints whose true strength never drifts between runs, so the
+paper's time-decay of confidence would only slow convergence. Consequence:
+active agents' RD rides the MIN_RD=30 floor after enough games, so a
+long-benchmarked agent's rating moves slowly per new game -- by design, not
+by accident. Do not "fix" either direction without rereading this.
 """
 from __future__ import annotations
 
