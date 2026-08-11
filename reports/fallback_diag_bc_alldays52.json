@@ -1,0 +1,29 @@
+{
+  "agent": "bc_alldays52_jun16_aug07_seed42",
+  "opponents": [
+    "rule_baseline"
+  ],
+  "pairs_per_opponent": 3,
+  "games": 6,
+  "record": {
+    "wins": 2,
+    "losses": 4,
+    "draws": 0
+  },
+  "per_opponent": {
+    "rule_baseline": {
+      "wins": 2,
+      "losses": 4,
+      "draws": 0,
+      "seconds": 3.1
+    }
+  },
+  "fallback": {
+    "decisions": 392,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {}
+}
