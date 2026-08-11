@@ -1,10 +1,10 @@
 {
-  "spec": "all:agents",
+  "spec": "all:decks",
   "play_out": true,
-  "probed": 33,
-  "legal": 33,
+  "probed": 29,
+  "legal": 29,
   "failed": 0,
-  "seconds": 6.3,
+  "seconds": 5.2,
   "results": [
     {
       "legal": true,
@@ -13,9 +13,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 121,
-      "name": "avikdas567_heuristic",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/avikdas567_heuristic/deck.csv"
+      "steps": 143,
+      "name": "alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/alakazam.csv"
     },
     {
       "legal": true,
@@ -24,9 +24,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 66,
-      "name": "biohack44_day2",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/biohack44_day2/deck.csv"
+      "steps": 212,
+      "name": "cynthias_garchomp_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/cynthias_garchomp_ex.csv"
     },
     {
       "legal": true,
@@ -35,9 +35,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 144,
-      "name": "daniilkrasnovvv_conservative_prob",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/daniilkrasnovvv_conservative_prob/deck.csv"
+      "steps": 214,
+      "name": "dragapult_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/dragapult_ex.csv"
     },
     {
       "legal": true,
@@ -46,9 +46,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 156,
-      "name": "kiyotah_abomasnow",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_abomasnow/deck.csv"
+      "steps": 210,
+      "name": "grimmsnarl_toplayer",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/grimmsnarl_toplayer.csv"
     },
     {
       "legal": true,
@@ -57,9 +57,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 193,
-      "name": "kiyotah_dragapult",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_dragapult/deck.csv"
+      "steps": 141,
+      "name": "marnies_grimmsnarl_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/marnies_grimmsnarl_ex.csv"
     },
     {
       "legal": true,
@@ -68,9 +68,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 155,
-      "name": "kiyotah_iono",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/kiyotah_iono/deck.csv"
+      "steps": 133,
+      "name": "mega_kangaskhan_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_kangaskhan_ex.csv"
     },
     {
       "legal": true,
@@ -79,273 +79,9 @@
         "DONE",
         "DONE"
       ],
-      "steps": 139,
-      "name": "makimakiai_rl",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/makimakiai_rl/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 204,
-      "name": "mechi22_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/mechi22_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 58,
-      "name": "pixiux_lucario_v63",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/pixiux_lucario_v63/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 80,
-      "name": "plamen06_steel",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/plamen06_steel/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 209,
-      "name": "pllinas_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/pllinas_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 95,
-      "name": "prvsiyan_control_v11",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/prvsiyan_control_v11/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 225,
-      "name": "prvsiyan_grimbelief_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/prvsiyan_grimbelief_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 207,
-      "name": "ryotasueyoshi_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/ryotasueyoshi_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 32,
-      "name": "tb_abomasnow",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_abomasnow/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 136,
-      "name": "tb_archaludon",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_archaludon/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 194,
-      "name": "tb_dragapult",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_dragapult/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 140,
-      "name": "tb_heuristic",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_heuristic/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 75,
-      "name": "tb_iono",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_iono/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 129,
-      "name": "tb_lucario",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_lucario/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 42,
-      "name": "tb_starmie",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/tb_starmie/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 195,
-      "name": "wmh_alakazam",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_alakazam/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 316,
-      "name": "wmh_bellibolt",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_bellibolt/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 114,
-      "name": "wmh_chandelure",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_chandelure/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 105,
-      "name": "wmh_froslass",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_froslass/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 204,
-      "name": "wmh_garchomp",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_garchomp/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 182,
-      "name": "wmh_grimmsnarl",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_grimmsnarl/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 165,
-      "name": "wmh_kangaskhan",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_kangaskhan/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 90,
-      "name": "wmh_megastarmie",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_megastarmie/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 183,
-      "name": "wmh_mewtwo",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_mewtwo/deck.csv"
-    },
-    {
-      "legal": true,
-      "stage": "play",
-      "statuses": [
-        "DONE",
-        "DONE"
-      ],
-      "steps": 211,
-      "name": "wmh_ogerpon",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_ogerpon/deck.csv"
+      "steps": 150,
+      "name": "mega_lucario_ex",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/mega_lucario_ex.csv"
     },
     {
       "legal": true,
@@ -355,8 +91,8 @@
         "DONE"
       ],
       "steps": 200,
-      "name": "wmh_trevenant",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_trevenant/deck.csv"
+      "name": "team_rockets_spidops",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/configs/deck_lists/team_rockets_spidops.csv"
     },
     {
       "legal": true,
@@ -365,9 +101,229 @@
         "DONE",
         "DONE"
       ],
-      "steps": 237,
+      "steps": 133,
+      "name": "avikdas567_heuristic",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/avikdas567_heuristic/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 61,
+      "name": "biohack44_day2",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/biohack44_day2/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 169,
+      "name": "kiyotah_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_abomasnow/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 197,
+      "name": "kiyotah_iono",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/kiyotah_iono/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 213,
+      "name": "mechi22_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/mechi22_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 107,
+      "name": "pixiux_lucario_v63",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pixiux_lucario_v63/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 160,
+      "name": "plamen06_steel",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/plamen06_steel/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 100,
+      "name": "pllinas_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/pllinas_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 161,
+      "name": "prvsiyan_control_v11",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/prvsiyan_control_v11/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 35,
+      "name": "tb_abomasnow",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_abomasnow/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 92,
+      "name": "tb_archaludon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_archaludon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 195,
+      "name": "tb_heuristic",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_heuristic/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 144,
+      "name": "tb_starmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/tb_starmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181,
+      "name": "wmh_alakazam",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_alakazam/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 132,
+      "name": "wmh_chandelure",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_chandelure/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 208,
+      "name": "wmh_kangaskhan",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_kangaskhan/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 21,
+      "name": "wmh_megastarmie",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_megastarmie/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 149,
+      "name": "wmh_mewtwo",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_mewtwo/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 180,
+      "name": "wmh_ogerpon",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_ogerpon/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181,
+      "name": "wmh_trevenant",
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_trevenant/deck.csv"
+    },
+    {
+      "legal": true,
+      "stage": "play",
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 161,
       "name": "wmh_typhlosion",
-      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/learning-to-beat-byterl-paper-f9365b/agents/wmh_typhlosion/deck.csv"
+      "path": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/selfplay-deck-variation-5d6466/agents/wmh_typhlosion/deck.csv"
     }
   ]
 }

@@ -1,5 +1,6 @@
 """IL-prior MCTS: the engine's official Search API guided by OUR trained
-imitation policy (Phase 3 of the kiyotah-pipeline port).
+imitation policy (the search-with-trained-prior step of the kiyotah-pipeline
+port).
 
 piKL-shaped (Jacob et al., arXiv:2112.07544): search anchored to a strong
 human-cloned prior. The scaffold (determinized `search_begin`, PUCT-like
@@ -16,11 +17,11 @@ comparability; what changes is the evaluator:
 
 Determinization legality: identical to search_api.mcts_agent — own deck
 sampled from our known 60, opponent unknowns filled with placeholders,
-only public counts read (Phase-2c report).
+only public counts read (verified in the search-API timing measurements).
 
 Per-node cost is two 3.3M-param CPU forwards (~6 ms single-thread), so
-SEARCH_COUNT=30 is ~0.2 s/decision — see reports/search_api_phase2.md for
-the budget arithmetic. Inference here must stay CPU-single-thread safe.
+SEARCH_COUNT=30 is ~0.2 s/decision, comfortably inside the ladder's ~1 s/turn
+budget. Inference here must stay CPU-single-thread safe.
 """
 
 from __future__ import annotations

@@ -57,7 +57,7 @@ import pufferlib.pufferl as pufferl  # noqa: E402
 import pufferlib.vector as pvector  # noqa: E402
 
 MIN_DISK_GB = 2.0   # snapshots + logs headroom (laptop disk budget is tight)
-
+MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
 
 def _deck_fingerprint(env_kwargs: dict) -> dict:
     """What deck(s) this run actually trained on.
@@ -115,12 +115,10 @@ def _init_chain(start: Path | str | None, _depth: int = 0) -> list[dict]:
 
 
 def _git_sha() -> str | None:
-    try:
-        return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
-                              text=True, cwd=config.PROJECT_ROOT,
-                              timeout=5).stdout.strip() or None
-    except (OSError, subprocess.SubprocessError):
-        return None
+    """Commit only. git_state() is the single implementation -- a run launched
+    from a dirty tree is not the commit it names, and only that function says
+    so, but the snapshot provenance block wants the bare sha."""
+    return git_state()["commit"]
 
 
 def _slug(text: str) -> str:
@@ -140,9 +138,9 @@ def _checkpoint_slug(path: Path) -> str:
     return _slug("-".join(parts))
 
 
-def build_run_tag(label: str | None, mix: tuple[float, float, float],
+def build_run_tag(label: str | None, mix: tuple[float, ...],
                   opponent_module: str | None, deck_pool,
-                  mirror_deck: bool, init_from: Path) -> str:
+                  mirror_deck: bool, init_from: Path, seed: int) -> str:
     """The run's name, with every axis that has burned us spelled out.
 
     ppo_puffer/u120832 trained with 20% external opponents and selfplay_g1
@@ -158,17 +156,25 @@ def build_run_tag(label: str | None, mix: tuple[float, float, float],
     if opponent_module:
         opponents = f"exploit100-{_slug(opponent_module)}"
     else:
+        # `mix` is (mirror, league) after validation -- the externals share is
+        # pinned to 0 and its bucket is deleted from the env. Still spelled out
+        # in the tag: the point of this name is that no run can hide its
+        # opponent mix, and "external0" states it rather than leaving a reader
+        # to infer it from an absence.
+        external = mix[2] if len(mix) > 2 else 0.0
         opponents = (f"mirror{pct(mix[0])}-league{pct(mix[1])}"
-                     f"-external{pct(mix[2])}")
+                     f"-external{pct(external)}")
     if deck_pool is not None:
         deck = f"deckpool{len(deck_pool)}" + ("-mirror" if mirror_deck else "")
     else:
         from pokemon_tcg import selfplay as _sp
         deck = f"deck-{_slug(_sp.DECK_PATH.parent.name)}"
+    # args.seed, NOT config.RANDOM_SEED: --seed is what actually moves the
+    # vecenv (and so every opponent/deck draw). Stamping the module constant
+    # would name three differently-seeded arms of one comparison identically.
     return "_".join([_slug(label) if label else "ppo", opponents, deck,
                      f"from-{_checkpoint_slug(init_from)}",
-                     f"seed{config.RANDOM_SEED}"])
-MIN_RAM_GB = 3.0    # 8 workers x (torch + engine + 2 policies) + MPS learner
+                     f"seed{seed}"])
 
 
 def preflight(num_workers: int) -> None:
@@ -222,6 +228,98 @@ def preflight(num_workers: int) -> None:
         "active; wait for it or pass --skip-preflight to launch anyway")
     print(f"preflight OK: disk {free_gb:.1f} GB, RAM {avail_gb:.1f} GB, "
           f"competing CPU {total:.0f}%, workers requested {num_workers}")
+
+
+def git_state() -> dict:
+    """Commit + dirtiness of the tree this run launched from.
+
+    Recorded because argparse DEFAULTS MOVE. `--mix` did not exist before
+    e8298fc (2026-08-04 20:06); runs before it drew the public pool 20% of the
+    time from PTCGGym's own default, and runs after it drew it 0%. Reading
+    today's `--mix` help text onto an 08-03 run gets the opponent distribution
+    exactly backwards, which is a wrong answer about what the run even was.
+    A commit makes the run's real configuration recoverable.
+    """
+    def _git(*a: str) -> str | None:
+        try:
+            return subprocess.run(("git", *a), cwd=config.PROJECT_ROOT,
+                                  capture_output=True, text=True,
+                                  timeout=10).stdout.strip() or None
+        except (OSError, subprocess.SubprocessError):
+            return None
+
+    return {"commit": _git("rev-parse", "HEAD"),
+            "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+            "dirty": bool(_git("status", "--porcelain"))}
+
+
+def opponent_composition(args, env_kwargs: dict) -> dict:
+    """The resolved answer to 'what did this run actually play against?'
+
+    Derived here, at launch, rather than inferred later from flags: the league
+    bucket holds a MIX of our own checkpoints ("ckpt") and external benchmark
+    agents ("module"), so the share of external opponents is not any single
+    flag -- it is mix[1] weighted by how much of the league is external. That
+    composite is the number every past post-mortem got wrong.
+
+    In normal self-play this is now provably 0.0: --mix pins the externals
+    share to zero and --league entries are validated to be our own saved
+    checkpoints. It is still computed rather than hardcoded, so if either
+    guard is ever weakened the number moves and says so.
+    """
+    mix = tuple(env_kwargs.get("mix", (0.625, 0.375)))
+    league = env_kwargs.get("league") or []
+    n_ext = sum(1 for kind, _ in league if kind == "module")
+    league_ext_frac = (n_ext / len(league)) if league else 0.0
+    # The public-pool bucket is DELETED from the env, not zeroed, and --mix
+    # pins its share to 0, so there is no third term to add and no roster to
+    # name. The league can still be all-external in exploiter mode
+    # (--opponent-module), which is the one path this must keep reporting.
+    pool_share = mix[2] if len(mix) > 2 else 0.0
+    return {
+        "mix_mirror_league": list(mix),
+        "league": [list(x) for x in league],
+        "league_external_fraction": round(league_ext_frac, 4),
+        # P(opponent is not one of our own policies) for a single draw.
+        "external_opponent_share": round(mix[1] * league_ext_frac + pool_share, 4),
+        "opp_hold_episodes": env_kwargs.get("opp_hold"),
+        "alternate_seats": bool(env_kwargs.get("alternate_seats", False)),
+    }
+
+
+def write_run_config(args, env_kwargs: dict) -> Path:
+    """Freeze the fully resolved run configuration to <out>/run_config.json.
+
+    ppo_metadata.json records where a snapshot came from; this records what the
+    run WAS -- resolved args, git state, and the opponent/deck distribution --
+    so no future reader has to reconstruct it from argparse defaults that have
+    since moved. Written before the first env spawns, so it exists even if the
+    run dies early.
+    """
+    resolved = {str(k): (str(v) if isinstance(v, Path) else v)
+                for k, v in sorted(vars(args).items())}
+    cfg = {
+        "run_tag": args.run_tag,
+        "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "started_unix": round(time.time(), 3),
+        "git": git_state(),
+        "opponents": opponent_composition(args, env_kwargs),
+        # _deck_fingerprint is the shared implementation (it also hashes the
+        # deck file, which catches an edited deck.csv that keeps its name).
+        "decks": {"deck_pool_spec": args.deck_pool, **_deck_fingerprint(env_kwargs)},
+        "args": resolved,
+    }
+    out = args.out / "run_config.json"
+    out.write_text(json.dumps(cfg, indent=2) + "\n")
+    o, d = cfg["opponents"], cfg["decks"]
+    print(f"run config -> {out}")
+    print(f"  git {cfg['git']['commit'][:9] if cfg['git']['commit'] else '?'}"
+          f"{' DIRTY' if cfg['git']['dirty'] else ''} on {cfg['git']['branch']}")
+    print(f"  opponents: mix={o['mix_mirror_league_pool']} "
+          f"external share={o['external_opponent_share']:.0%}  "
+          f"decks: {d.get('deck_source')} "
+          f"K={d.get('deck_k', 1)} mirror={d.get('mirror_deck', False)}")
+    return out
 
 
 def main() -> None:
@@ -312,32 +410,23 @@ def main() -> None:
                          "auditable (see scripts/fallback_probe_puffer_env.py)")
     ap.add_argument("--league", default=str(config.MODELS_DIR / "il_agent"),
                     help="comma-separated frozen checkpoint dirs for the env's "
-                         "league bucket (the 30%% draw)")
-    ap.add_argument("--pool-weights", default=None,
-                    help="comma-separated INITIAL draw weights for the public-"
-                         "pool trio (kiyotah,mechi22,plamen06); default uniform. "
-                         "With PFSP refresh on, these only seed the first "
-                         "refresh interval")
+                         "league bucket (our own lineage only)")
     ap.add_argument("--opp-hold", type=int, default=4,
-                    help="PFSP-lite: each env keeps its drawn opponent for "
-                         "this many consecutive episodes (stable win-rate "
-                         "runs harvested from rollouts, §3.3)")
-    ap.add_argument("--pfsp-refresh-every", type=int, default=10,
-                    help="rewrite pool_weights.json from rollout-harvested "
-                         "win-rate EMAs every N updates (0 = static weights; "
-                         "also moot when --mix zeroes the public-pool share). "
-                         "Weights follow w = max(wr*(1-wr), 0.05): peak "
-                         "learning signal near 50%% matchups, floored so no "
-                         "opponent fully disappears")
-    ap.add_argument("--pfsp-ema", type=float, default=0.15,
-                    help="EMA step for harvested per-opponent win rates")
+                    help="each env keeps its drawn opponent for this many "
+                         "consecutive episodes, so per-opponent win-rate "
+                         "estimates harvested from rollouts are runs rather "
+                         "than single samples")
     ap.add_argument("--deck-pool", default=None,
-                    help="deck-diversity sweep: pool spec sampled once per "
-                         "episode. Forms: comma-separated deck refs (a path, a "
-                         "configs/deck_lists stem, or an agents/<name>), "
+                    help="deck pool. BOTH seats draw from it, independently, "
+                         "once per episode. Forms: comma-separated deck refs (a "
+                         "path, a configs/deck_lists stem, or an agents/<name>), "
                          "'@manifest.txt' (one ref per line), 'all:decklists', "
-                         "or 'all:agents' (content-deduped). Default None keeps "
-                         "the single hardcoded deck — pre-sweep behaviour")
+                         "'all:agents', or 'all:decks' (the union, content-"
+                         "deduped). Default None keeps the single hardcoded "
+                         "deck on both seats — the pre-2026-08-05 behaviour. "
+                         "Gate any pool through scripts/probe_deck_legality.py "
+                         "first: an illegal deck is a free loss every episode "
+                         "it is drawn")
     ap.add_argument("--deck-pool-k", type=int, default=None,
                     help="take a K-sized subset of --deck-pool (the swept axis)")
     ap.add_argument("--deck-pool-seed", type=int, default=None,
@@ -349,17 +438,38 @@ def main() -> None:
                          "subset order, matched by deck CONTENT. The sweep "
                          "pins il_agent so K=1 is exactly the v1 baseline deck")
     ap.add_argument("--mirror-deck", action="store_true",
-                    help="both seats play the episode's pooled deck. Required "
-                         "for the mirror control: without it a module opponent "
-                         "keeps serving its own bundled deck and a K>1 pool "
-                         "silently becomes a cross-deck matchup")
+                    help="SAME-DECK CONTROL: one draw per episode, both seats. "
+                         "Default (off) draws the two seats' decks "
+                         "independently. Use this arm when a measurement must "
+                         "not be contaminated by deck MATCHUP — e.g. the "
+                         "exploitability sweep")
+    ap.add_argument("--field-pool", default="",
+                    help="MUST BE EMPTY. Accepted only so that a script or a "
+                         "merge carrying a field pool of external agents fails "
+                         "LOUDLY instead of silently training against them. "
+                         "Self-play means the agent plays its own lineage: the "
+                         "live mirror and our own frozen checkpoints. Rule "
+                         "baselines and other competitors' submissions are "
+                         "never training opponents — that is what keeps them "
+                         "unseen, and the local evaluation pool a real "
+                         "out-of-sample filter. For a deliberate single frozen "
+                         "external target use --opponent-module (exploiter "
+                         "mode), which is labelled as the diagnostic it is")
+    ap.add_argument("--deck-report-every", type=int, default=10,
+                    help="append per-deck and per-matchup win-rate tables to "
+                         "<out>/deck_metrics.jsonl every N updates")
     ap.add_argument("--mix", default="0.625,0.375,0",
-                    help="mirror,league,public-pool draw shares (must sum to 1). "
-                         "Default drops the public pool entirely — pure "
-                         "self-play + fictitious-self-play league, per the "
-                         "2026-08-04 decision (external decks now unseen in "
-                         "training; see notes/experiments/2026-08-04-league-"
-                         "pool-composition.md). Old behavior: '0.5,0.3,0.2'")
+                    help="mirror,league[,externals] draw shares (must sum to 1). "
+                         "THE LAST NUMBER IS ALWAYS ZERO and a nonzero value is "
+                         "a hard error, not an option: opponents are "
+                         "LINEAGE-ONLY (the live mirror and our own frozen "
+                         "checkpoints). Externals stay unseen in training so "
+                         "the local evaluation pool remains a real "
+                         "out-of-sample filter. The bucket itself is DELETED "
+                         "from the env — the third share exists only as a "
+                         "pinned zero, so there is no code path to fall into "
+                         "(extends notes/experiments/2026-08-04-league-pool-"
+                         "composition.md)")
     ap.add_argument("--init-policy-full", type=Path, default=None,
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
@@ -369,6 +479,12 @@ def main() -> None:
                          "resolve_device (PTCG_DEVICE env var, then auto)")
     ap.add_argument("--snapshot-every-s", type=float, default=300.0,
                     help="actor save_pretrained cadence (mirror hot-reload + benchmark)")
+    ap.add_argument("--seed", type=int, default=config.RANDOM_SEED,
+                    help="seeds the PPO trainer AND the vecenv (which is what "
+                         "moves the per-env opponent/deck draws). Arms of a "
+                         "controlled comparison must be run at the SAME seeds, "
+                         "since seed-to-seed spread here is large enough to "
+                         "swamp the effect being measured")
     ap.add_argument("--out", type=Path, default=None,
                     help="snapshot dir; default models/<full run tag>, so "
                          "runs stop piling into one anonymous models/ppo_puffer")
@@ -408,22 +524,60 @@ def main() -> None:
     # config, derive the full run tag from it, and only then resolve --out
     # (default models/<tag>), so every directory this run writes is named
     # after what the run actually is.
+    if args.field_pool.strip():
+        ap.error(
+            f"--field-pool {args.field_pool!r}: must be empty. Self-play trains "
+            f"the agent against its LINEAGE (the live mirror and our own frozen "
+            f"checkpoints) and nothing else. Externals as training opponents "
+            f"would stop them being unseen, which is the only thing making the "
+            f"local evaluation pool an out-of-sample read. Use "
+            f"--opponent-module for a deliberate single frozen external "
+            f"target (exploiter mode).")
     league = [("ckpt", p) for p in args.league.split(",") if p]
+    # The league is LINEAGE: our own saved checkpoints, nothing else. Without
+    # this check an entry is taken as a checkpoint path on faith, so an agent
+    # NAME lands here as ("ckpt", "wmh_grimmsnarl") and fails inside a spawned
+    # worker -- which presents as that seat crashing every episode, i.e. free
+    # wins for the learner, not as an error anyone sees.
+    not_ckpt = [p for _, p in league if not (Path(p) / "config.json").exists()]
+    if not_ckpt:
+        ap.error(
+            f"--league entries are not saved checkpoints: {not_ckpt}. The "
+            f"league holds OUR OWN frozen checkpoints (a dir with a "
+            f"config.json) — self-play trains against its own lineage. A "
+            f"benchmark agent name here is an external opponent wearing a "
+            f"checkpoint's clothes; use --opponent-module if you deliberately "
+            f"want one frozen external target (exploiter mode).")
     mix = tuple(float(x) for x in args.mix.split(","))
-    if len(mix) != 3 or abs(sum(mix) - 1.0) > 1e-6:
-        ap.error(f"--mix needs 3 shares summing to 1, got {args.mix}")
-    if mix[2] == 0 and not league:
-        # _draw_opponent falls through to the public pool when the league
-        # bucket is empty; with a zero pool share that would silently
-        # reintroduce external opponents.
-        ap.error("--mix with zero public-pool share requires a non-empty --league")
+    if len(mix) not in (2, 3) or abs(sum(mix) - 1.0) > 1e-6:
+        ap.error(f"--mix needs 2 shares (mirror,league) or 3 with a ZERO "
+                 f"externals share, all summing to 1; got {args.mix}")
+    if len(mix) == 3:
+        # The third share is accepted only as a pinned zero. Scripts and notes
+        # across the repo still write three numbers, and silently dropping a
+        # nonzero one would be worse than refusing it -- that is precisely how
+        # externals would slip back into training and quietly destroy the local
+        # evaluation pool's out-of-sample status.
+        if mix[2] != 0.0:
+            ap.error(
+                f"--mix {args.mix}: the externals share must be 0. Opponents "
+                f"are lineage-only by design (the live mirror and our own "
+                f"frozen checkpoints); the externals bucket is deleted from "
+                f"the env, so a nonzero share has nothing to draw from. Train "
+                f"against externals only via --opponent-module, which is "
+                f"exploiter mode and is labelled as such.")
+        mix = mix[:2]
+    if mix[1] > 0 and not league:
+        ap.error("--mix gives the league bucket a nonzero share but --league "
+                 "is empty")
     deck_pool = None
     if args.deck_pool:
         deck_pool = DeckPool.from_spec(
             args.deck_pool, limit=args.deck_pool_k, seed=args.deck_pool_seed,
             pin=args.deck_pool_pin.split(",") if args.deck_pool_pin else None)
     args.run_tag = build_run_tag(args.run_tag, mix, args.opponent_module,
-                                 deck_pool, args.mirror_deck, args.init_from)
+                                 deck_pool, args.mirror_deck, args.init_from,
+                                 args.seed)
     if args.out is None:
         args.out = config.MODELS_DIR / args.run_tag
     print(f"run tag: {args.run_tag}")
@@ -457,27 +611,14 @@ def main() -> None:
         "compile": False,
         "checkpoint_interval": 10_000_000,  # we snapshot ourselves (see below)
         "data_dir": str(config.PROJECT_ROOT / "runs" / "ppo_puffer"),
-        "seed": config.RANDOM_SEED,
+        "seed": args.seed,
     })
 
     mirror_root = str(args.out)  # env workers hot-reload newest snapshot from here
     args.out.mkdir(parents=True, exist_ok=True)
 
-    pool_weights = ([float(x) for x in args.pool_weights.split(",")]
-                    if args.pool_weights else None)
-    POOL_NAMES = ["kiyotah_dragapult", "mechi22_alakazam", "plamen06_steel"]
-    weights_path = None
-    if args.pfsp_refresh_every > 0:
-        # Seed the weights file BEFORE envs spawn so no worker reads a stale
-        # file left by a previous run into the same out dir. (Inert when the
-        # --mix public-pool share is zero -- no pool draws, no harvest.)
-        weights_path = args.out / "pool_weights.json"
-        init_w = pool_weights or [1.0] * len(POOL_NAMES)
-        weights_path.write_text(json.dumps(dict(zip(POOL_NAMES, init_w))))
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                  "league": league, "pool_weights": pool_weights, "mix": mix,
-                  "pool_weights_path": str(weights_path) if weights_path else None,
-                  "opp_hold": args.opp_hold}
+                  "league": league, "mix": mix, "opp_hold": args.opp_hold}
     if args.opponent_module:
         # Exploiter mode: every draw lands in the league bucket, whose single
         # entry is the frozen module agent. No mirror (the opponent must never
@@ -487,27 +628,35 @@ def main() -> None:
         os.environ.setdefault("PTCG_FALLBACK_TRACK", "1")
         env_kwargs = {"mirror_root": None, "anchor_ckpt": str(args.init_from),
                       "league": [("module", args.opponent_module)],
-                      "mix": (0.0, 1.0, 0.0), "pool_weights": None,
-                      "alternate_seats": True}
+                      "mix": (0.0, 1.0), "alternate_seats": True}
         print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
               f"(100% of episodes, seats strictly alternating)")
 
     if deck_pool is not None:
         env_kwargs["deck_pool"] = deck_pool
         env_kwargs["mirror_deck"] = args.mirror_deck
-        print(f"DECK POOL: K={len(deck_pool)} mirror={args.mirror_deck} :: "
+        mode = ("MIRROR (one draw, both seats)" if args.mirror_deck
+                else "INDEPENDENT (two draws per episode)")
+        print(f"DECK POOL: K={len(deck_pool)} mode={mode} :: "
               f"{', '.join(deck_pool.names)}")
-        if len(deck_pool) > 1 and not args.mirror_deck:
-            print("WARNING: K>1 without --mirror-deck. The opponent will keep "
-                  "playing its own bundled deck while the learner varies, so "
-                  "this measures deck MATCHUP, not policy exploitability.")
+        if len(deck_pool) == 1:
+            print("NOTE: K=1 -- both seats always play the same single deck, "
+                  "so this is the single-deck control regardless of "
+                  "--mirror-deck.")
+    else:
+        print("DECK POOL: none -- both seats play the single hardcoded deck "
+              "(selfplay.load_deck / agents/il_agent/deck.csv). This is the "
+              "single-deck CONTROL arm.")
+
+    write_run_config(args, env_kwargs)
+
     vecenv = pvector.make(
         make_puffer_env,
         env_kwargs=env_kwargs,
         backend=pvector.Multiprocessing,  # never Serial >1 env: cg singleton
         num_envs=args.num_envs,
         num_workers=args.num_workers,
-        seed=config.RANDOM_SEED,
+        seed=args.seed,
     )
     policy = PTCGPufferPolicy(str(args.init_from)).to(args.device)
     if args.init_policy_full is not None:
@@ -573,11 +722,18 @@ def main() -> None:
             "kl_coef": args.kl_coef,
             "league": [s for s in args.league.split(",") if s],
             "opponent_module": args.opponent_module,
-            "mix_mirror_league_pool": args.mix,
-            "pool_weights": args.pool_weights,
+            "mix_mirror_league": args.mix,
+            "opponents": "lineage-only (live mirror + our frozen checkpoints)",
+            "field_pool": args.field_pool or None,
+            # DERIVED, not read off a flag -- reading it off a flag is what made
+            # the 275.1-vs-254.9 gap look like a generation effect. On this
+            # branch the guards make it provably 0.0 (externals share pinned to
+            # zero, league entries validated as our own checkpoints), and it is
+            # recorded anyway so a future change that breaks that shows up here.
+            "external_opponent_share":
+                opponent_composition(args, env_kwargs)["external_opponent_share"],
             "opp_hold": args.opp_hold,
-            "pfsp_refresh_every": args.pfsp_refresh_every,
-            "pfsp_ema": args.pfsp_ema,
+            "seed": args.seed,
             "promote_every": args.promote_every,
             "promote_pairs": args.promote_pairs,
             "promote_threshold": args.promote_threshold,
@@ -634,6 +790,7 @@ def main() -> None:
                 fh.write(json.dumps(row) + "\n")
 
         metrics_path = args.out / "train_metrics.jsonl"
+        deck_metrics_path = args.out / "deck_metrics.jsonl"
         promo_path = args.out / "promotion_log.jsonl"
         # Current frozen reference ON DISK: starts as the anchor prior, moves
         # forward only when the gate promotes. Eval workers load from disk,
@@ -644,28 +801,54 @@ def main() -> None:
         # Seed snapshot so mirror opponents have something to load from step 0.
         save_actor(args.out / snap_name(0))
 
-        # PFSP-lite harvest state (§3.3): per-opponent win-rate EMAs from the
-        # wr_<slug> terminal infos, consumed-length bookkeeping because
-        # pufferl's stats lists accumulate until its throttled log clears them.
+        # Outcome harvest from the env's terminal infos. THREE separate cuts
+        # (opponent type / learner deck / full matchup), because a pooled win
+        # rate is precisely the statistic that hides a policy dominating one
+        # deck and losing on the rest. Running SUM and COUNT, not an EMA: the
+        # reportable number is a cumulative win rate with its own n attached,
+        # and a cell's n is what says whether to read it at all.
+        # Consumed-position bookkeeping, keyed on LIST IDENTITY.
+        #
+        # pufferl.train() does `self.stats = defaultdict(list)` every update, so
+        # each evaluate() hands back brand-new list objects. Tracking only a
+        # consumed LENGTH across that boundary silently drops samples: a sparse
+        # key reappears in the fresh dict with len(v)==1 while the stale count
+        # is also 1, so `v[1:]` is empty and that episode is lost. The loss
+        # scales with key sparsity -- measured on selfplay_deckpool29_seed42, 3 opponent
+        # keys captured ~100%, 29 deck keys 59%, 841 matchup keys 20%.
+        #
+        # Holding a REFERENCE to the previous list makes `is` a sound identity
+        # test (id() alone could be recycled by the allocator): same object ->
+        # take the delta, new object -> take everything.
         from collections import defaultdict as _dd
-        wr_ema: dict[str, float] = {}
-        wr_seen: dict[str, int] = _dd(int)
-        wr_games: dict[str, int] = _dd(int)
+        PREFIXES = {"wr_": "opp", "wrd_": "deck", "wrm_": "matchup"}
+        wr_sum: dict[str, dict[str, float]] = {v: _dd(float)
+                                               for v in PREFIXES.values()}
+        wr_n: dict[str, dict[str, int]] = {v: _dd(int)
+                                           for v in PREFIXES.values()}
+        prev_list: dict[str, list] = {}
+        consumed: dict[str, int] = _dd(int)
 
         def harvest(stats) -> None:
             for k, v in list(stats.items()):
-                if not k.startswith("wr_") or not isinstance(v, list):
+                # longest prefix first: 'wrd_'/'wrm_' also start with 'wr'
+                pre = next((p_ for p_ in ("wrd_", "wrm_", "wr_")
+                            if k.startswith(p_)), None)
+                if pre is None or not isinstance(v, list):
                     continue
-                if len(v) < wr_seen[k]:
-                    wr_seen[k] = 0  # upstream cleared its stats on a log tick
-                fresh, wr_seen[k] = v[wr_seen[k]:], len(v)
-                slug = k[3:]
+                fresh = v[consumed[k]:] if prev_list.get(k) is v else v[:]
+                prev_list[k] = v
+                consumed[k] = len(v)
+                fam, slug = PREFIXES[pre], k[len(pre):]
                 for x in fresh:
-                    x = float(x)
-                    wr_ema[slug] = (x if slug not in wr_ema
-                                    else (1 - args.pfsp_ema) * wr_ema[slug]
-                                    + args.pfsp_ema * x)
-                    wr_games[slug] += 1
+                    wr_sum[fam][slug] += float(x)
+                    wr_n[fam][slug] += 1
+
+        def table(fam: str) -> dict:
+            """{slug: [win_rate, n]} sorted by win rate, worst first."""
+            return {s: [round(wr_sum[fam][s] / n, 4), n]
+                    for s, n in sorted(wr_n[fam].items(),
+                                       key=lambda kv: wr_sum[fam][kv[0]] / kv[1])}
 
         total_ts = train_config["total_timesteps"]
 
@@ -690,16 +873,6 @@ def main() -> None:
             trainer.train()
             epoch += 1
 
-            if weights_path is not None and epoch % args.pfsp_refresh_every == 0:
-                # w = wr(1-wr) peaks at 50% matchups (max learning signal
-                # under terminal-only reward), floored so nobody vanishes;
-                # unseen opponents sit at the 0.25 uniform-ish default.
-                w = {n: max(round(wr_ema.get(n, 0.5) * (1 - wr_ema.get(n, 0.5)), 4),
-                            0.05) for n in POOL_NAMES}
-                tmp = weights_path.with_suffix(".json.tmp")
-                tmp.write_text(json.dumps(w))
-                os.replace(tmp, weights_path)
-
             # Per-update metrics (kl_to_prior included when the anchor is on).
             sps = trainer.global_step / max(time.time() - t_run, 1e-9)
             row = {"ts": round(time.time(), 3), "run_tag": args.run_tag,
@@ -709,9 +882,8 @@ def main() -> None:
             row.update({k: (float(v) if math.isfinite(v) else None)
                         for k, v in dict(getattr(trainer, "losses", {})).items()
                         if isinstance(v, (int, float))})
-            if wr_ema:
-                row["pool_wr"] = {s: round(v, 3) for s, v in sorted(wr_ema.items())}
-                row["pool_games"] = dict(sorted(wr_games.items()))
+            if wr_n["opp"]:
+                row["opp_wr"] = table("opp")
             pc = getattr(trainer, "per_context", None)
             if pc:
                 row["per_context"] = pc
@@ -725,6 +897,14 @@ def main() -> None:
                     getattr(trainer, "kl_refs_distinct", False))
             append_jsonl(metrics_path, row)
 
+            # Deck/matchup tables live in their own file: with K decks the
+            # matchup table is K^2 cells and would swamp every metrics row.
+            if wr_n["deck"] and epoch % args.deck_report_every == 0:
+                append_jsonl(deck_metrics_path, {
+                    "global_step": int(trainer.global_step), "epoch": epoch,
+                    "run_tag": args.run_tag,
+                    "per_deck": table("deck"), "per_matchup": table("matchup")})
+
             if gate_on and epoch % args.promote_every == 0:
                 # Promotion gate (the ratchet): mirrored pairs of live vs the
                 # frozen reference; training is paused for its duration.
@@ -735,7 +915,9 @@ def main() -> None:
                 verdict = evaluate_gate(
                     live_snap, ref_dir, pairs=args.promote_pairs,
                     workers=args.promote_workers,
-                    threshold=args.promote_threshold)
+                    threshold=args.promote_threshold,
+                    deck_pool=deck_pool, mirror_deck=args.mirror_deck,
+                    seed=args.seed + epoch)
                 run_state["gates"] += 1
                 if verdict["promote"]:
                     run_state["promotions"] += 1
@@ -763,6 +945,34 @@ def main() -> None:
                 print(f"  snapshot -> {snap}")
 
         elapsed = time.time() - t_run
+        # Per-deck / per-matchup summary. The WORST cell is printed with its n
+        # because the headline win rate is the one number that can be high
+        # while some deck is unplayable -- and a matchup cell with n in the
+        # single digits is noise, not a weakness.
+        if wr_n["deck"]:
+            deck_tbl, mu_tbl = table("deck"), table("matchup")
+            pooled_n = sum(wr_n["deck"].values())
+            pooled = sum(wr_sum["deck"].values()) / max(pooled_n, 1)
+            summary = {
+                "run_tag": args.run_tag, "global_step": int(trainer.global_step),
+                "deck_pool": args.deck_pool, "deck_pool_k": len(deck_pool) if deck_pool else 1,
+                "mirror_deck": args.mirror_deck, "mix": list(mix),
+                "pooled_win_rate": round(pooled, 4), "episodes": pooled_n,
+                "per_deck": deck_tbl, "per_matchup": mu_tbl,
+                "worst_deck": next(iter(deck_tbl.items()), None),
+                "worst_matchup": next(iter(mu_tbl.items()), None),
+            }
+            (args.out / "deck_summary.json").write_text(json.dumps(summary, indent=2))
+            print(f"pooled win rate {pooled:.3f} over {pooled_n} episodes "
+                  f"-- READ THE CELLS BELOW, NOT THIS NUMBER")
+            print("per-deck (learner side), worst first:")
+            for name, (w, n) in deck_tbl.items():
+                print(f"  {w:.3f}  n={n:<6} {name}")
+            worst = summary["worst_matchup"]
+            if worst:
+                print(f"worst matchup: {worst[0]}  wr={worst[1][0]:.3f} "
+                      f"n={worst[1][1]}")
+            print(f"deck summary -> {args.out / 'deck_summary.json'}")
         print(f"throughput: {trainer.global_step} steps in {elapsed:.0f}s = "
               f"{trainer.global_step / max(elapsed, 1e-9):.1f} steps/s "
               f"(kl_coef={args.kl_coef}, includes gate pauses)")

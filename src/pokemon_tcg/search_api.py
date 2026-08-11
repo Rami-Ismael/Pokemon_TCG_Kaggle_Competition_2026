@@ -20,7 +20,7 @@ constants (SEARCH_COUNT=10, c=0.4, prob temperature exp(p*10)) and the label
 scheme (TD(lambda=0.9) value blend, child-minus-root policy, clipped +-1) are
 kept EXACTLY as the notebook's. Deviations are limited to: device comes from
 the caller (no cuda branch), cg-lib is resolved via config paths, and
-mcts_agent takes optional search_count / step_timings for Phase-2
+mcts_agent takes optional search_count / step_timings for timing
 instrumentation. Do not "improve" this file; build on top of it.
 """
 
@@ -445,7 +445,7 @@ class Node:
 def enumerate_actions(obs: Observation) -> list[list[int]]:
     """Enumerate up to MAX_ACTION_COMBOS index combinations of size
     obs.select.maxCount from obs.select.option (the notebook's inline loop,
-    extracted so Phase-2c can probe the cap against real decisions)."""
+    extracted so the cap can be probed against real decisions)."""
     actions = []
     indices = list(range(obs.select.maxCount))
     for _ in range(MAX_ACTION_COMBOS):

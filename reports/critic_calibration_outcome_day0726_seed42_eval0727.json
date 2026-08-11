@@ -1,0 +1,165 @@
+{
+  "critic_dir": "models/critic_outcome_day_2026-07-26_seed42",
+  "critic_metadata": {
+    "step": 12900,
+    "target": "mc",
+    "td_gamma": 1.0,
+    "init_from": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/models/il_alldays_0804",
+    "data_source": "hub",
+    "hub_days": [
+      "2026-07-26"
+    ],
+    "shuffle_outcomes": false,
+    "seed": 42,
+    "eval_mse": 0.21406789012718946,
+    "constant_baseline_mse": 0.25,
+    "accuracy_at_0.5": 0.711953125,
+    "majority_base_rate": 0.523046875,
+    "n_rows": 12800,
+    "n_decisive": 12800,
+    "beats_constant_baseline": true,
+    "beats_majority_accuracy": true
+  },
+  "eval_split": "eval-2026-07-27",
+  "data_source": "hub",
+  "n_rows": 128000,
+  "n_tie_rows": 0,
+  "base_rate": 0.5383203029632568,
+  "clip_fraction": 0.1690234375,
+  "mse": {
+    "model_clipped": 0.232878178358078,
+    "model_raw": 0.238145112991333,
+    "const_0.5": 0.25,
+    "const_base_rate": 0.2485315501689911,
+    "rel_gain_vs_base_rate": 0.0629834393269967
+  },
+  "auc_win_loss": 0.7313360756659789,
+  "ece_10bin": 0.1367974704358494,
+  "reliability_bins": [
+    {
+      "bin": [
+        0.0,
+        0.1
+      ],
+      "n": 27128,
+      "mean_pred": 0.031047673895955086,
+      "frac_win": 0.2974786162376404
+    },
+    {
+      "bin": [
+        0.1,
+        0.2
+      ],
+      "n": 12148,
+      "mean_pred": 0.14452394843101501,
+      "frac_win": 0.33610472083091736
+    },
+    {
+      "bin": [
+        0.2,
+        0.30000000000000004
+      ],
+      "n": 8840,
+      "mean_pred": 0.2512489855289459,
+      "frac_win": 0.395361989736557
+    },
+    {
+      "bin": [
+        0.30000000000000004,
+        0.4
+      ],
+      "n": 8318,
+      "mean_pred": 0.35039520263671875,
+      "frac_win": 0.4572012424468994
+    },
+    {
+      "bin": [
+        0.4,
+        0.5
+      ],
+      "n": 8779,
+      "mean_pred": 0.4510015547275543,
+      "frac_win": 0.5221551656723022
+    },
+    {
+      "bin": [
+        0.5,
+        0.6000000000000001
+      ],
+      "n": 10075,
+      "mean_pred": 0.5498356819152832,
+      "frac_win": 0.5723077058792114
+    },
+    {
+      "bin": [
+        0.6000000000000001,
+        0.7000000000000001
+      ],
+      "n": 10114,
+      "mean_pred": 0.6515460014343262,
+      "frac_win": 0.6040142178535461
+    },
+    {
+      "bin": [
+        0.7000000000000001,
+        0.8
+      ],
+      "n": 11487,
+      "mean_pred": 0.75229811668396,
+      "frac_win": 0.655958890914917
+    },
+    {
+      "bin": [
+        0.8,
+        0.9
+      ],
+      "n": 12368,
+      "mean_pred": 0.8485310077667236,
+      "frac_win": 0.7291396856307983
+    },
+    {
+      "bin": [
+        0.9,
+        1.0
+      ],
+      "n": 18743,
+      "mean_pred": 0.977408230304718,
+      "frac_win": 0.877234160900116
+    }
+  ],
+  "phase_by_turn_quartile": {
+    "turn<= 4": {
+      "n": 35791,
+      "auc": 0.5785484307825804,
+      "sharpness_mean_abs_dev_from_half": 0.2409130036830902,
+      "ece": 0.18728219888231512,
+      "base_rate": 0.5313067436218262
+    },
+    "turn 4-7": {
+      "n": 35838,
+      "auc": 0.7054415160807904,
+      "sharpness_mean_abs_dev_from_half": 0.3129618763923645,
+      "ece": 0.16394107036102953,
+      "base_rate": 0.5331491827964783
+    },
+    "turn 7-10": {
+      "n": 31383,
+      "auc": 0.7998166721830321,
+      "sharpness_mean_abs_dev_from_half": 0.34256723523139954,
+      "ece": 0.10937377014757246,
+      "base_rate": 0.5404518246650696
+    },
+    "turn > 10": {
+      "n": 24988,
+      "auc": 0.8404166158613319,
+      "sharpness_mean_abs_dev_from_half": 0.3408048748970032,
+      "ece": 0.08838864408109329,
+      "base_rate": 0.5531054735183716
+    }
+  },
+  "verdict": {
+    "useful": true,
+    "calibrated": false,
+    "drop": false
+  }
+}

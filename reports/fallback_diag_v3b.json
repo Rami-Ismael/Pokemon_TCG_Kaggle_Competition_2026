@@ -1,0 +1,29 @@
+{
+  "agent": "il_agent_v3_best",
+  "opponents": [
+    "random_legal"
+  ],
+  "pairs_per_opponent": 1,
+  "games": 2,
+  "record": {
+    "wins": 2,
+    "losses": 0,
+    "draws": 0
+  },
+  "per_opponent": {
+    "random_legal": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "seconds": 0.7
+    }
+  },
+  "fallback": {
+    "decisions": 119,
+    "enabled": true,
+    "fallbacks": 0,
+    "fallback_rate": 0.0
+  },
+  "fallback_first": {},
+  "opponent_diag": {}
+}

@@ -150,9 +150,10 @@ AGENT_FILES = {
     # 17,622 eps, offline eval 0.7583). il_agent-vs-this is checkpoint-vs-
     # checkpoint, code and deck held fixed.
     "il_agent_v2": REPO / "agents" / "il_agent_v2" / "main.py",
-    # v3 = alldays (48 days, 210,512 eps, 1 epoch, trained 08-07/08):
-    # _final is the annealed end (.7342), _best the step-520k peak (.7528).
-    # Same wrapper/deck as il_agent_v2; only the bundled weights differ.
+    # v3 corpus-scaling arms (46 Hub days, 210,512 eps, 1 epoch/596k steps):
+    # _final = annealed end (offline .7342), _best = step-520k peak (.7528).
+    # Local verdict vs il_agent_v2: indistinguishable (v2 10-6 over _best,
+    # 8-8 vs _final, n=16/pair) -- see reports/benchmark_v3_arms.json.
     "il_agent_v3_final": REPO / "agents" / "il_agent_v3_final" / "main.py",
     "il_agent_v3_best": REPO / "agents" / "il_agent_v3_best" / "main.py",
     # v4 = the complete 53-day hub corpus (52 train days, 260,065 eps, 1 epoch,
@@ -161,7 +162,7 @@ AGENT_FILES = {
     # il_agent_v3_best: reports/pool_star_*.json (2026-08-10).
     "bc_alldays52_jun16_aug07_seed42":
         REPO / "agents" / "bc_alldays52_jun16_aug07_seed42" / "main.py",
-    # Phase-3 IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
+    # IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
     "mcts_il_agent": REPO / "agents" / "mcts_il_agent" / "agent_core.py",
@@ -186,8 +187,8 @@ AGENT_FILES = {
     # frozen deck. If a trained policy doesn't beat this decisively, its
     # offline accuracy isn't credible evidence it learned anything.
     "random_legal": REPO / "agents" / "random_legal" / "agent_core.py",
-    # Public opponent-pool vetted batch (Q25 / notes/phase0_discovery_report.md
-    # gap: benchmarking only against our own agents was never evidence about
+    # Public opponent-pool vetted batch (closes the discovery-pass gap:
+    # benchmarking only against our own agents was never evidence about
     # the ladder). Pulled from Kaggle's competition Code tab, individually
     # reviewed for safety before wiring in -- see notebooks/reference/INDEX.md.
     "kiyotah_dragapult": REPO / "agents" / "kiyotah_dragapult" / "agent_core.py",
@@ -207,7 +208,7 @@ AGENT_FILES = {
     # encrypted) to deter forking -- decoded to plain source for this repo's
     # review; see notebooks/reference/mechi22-alakazam/main_decoded.py.
     "mechi22_alakazam": REPO / "agents" / "mechi22_alakazam" / "agent_core.py",
-    # Phase 1 archetype-coverage recruitment (notes/phase1_gate1_report.md):
+    # Archetype-coverage recruitment for the opponent pool:
     # the pool was 9/14 agents on the exact frozen Mega Lucario ex deck before
     # this. Archaludon ex / Cinderace metal-tempo -- a genuinely different
     # archetype (Metal-type, not Fighting/Psychic/Dragon/Electric/Grass-Ice
@@ -368,7 +369,11 @@ AGENT_FILES = {
     # deck. The 4th cell is il_agent itself (Small @ 07-26, the PRIOR).
     "grid_medium": REPO / "agents" / "grid_cells" / "medium_prior" / "agent_core.py",
     "grid_small_comb": REPO / "agents" / "grid_cells" / "small_combined" / "agent_core.py",
-    "grid_medium_comb": REPO / "agents" / "grid_cells" / "medium_combined" / "agent_core.py",
+    # grid_medium_comb DEREGISTERED 2026-08-10: models/il_agent_medium_combined
+    # has been an empty dir since 2026-08-03 (see the il_arms comment below), so
+    # the arm never ran its model -- every game was _safe_choice. The strict
+    # loader (PR #53) now refuses that instead of degrading, which crashed the
+    # whole pool at load time. No weights exist locally or on the HF backup.
     # IL checkpoint sweep (reports/il_model_deck_selection.md): every DISTINCT
     # BC checkpoint in models/, one identical wrapper each so the only thing
     # varying across the model axis is the weights. Deduped by sha256 --
@@ -385,11 +390,21 @@ AGENT_FILES = {
     "il_small_comb_2ep": REPO / "agents" / "il_arms" / "il_small_comb_2ep" / "agent_core.py",
     "il_hfstream_comb_3ep": REPO / "agents" / "il_arms" / "il_hfstream_comb_3ep" / "agent_core.py",
     "il_alldays_3ep": REPO / "agents" / "il_arms" / "il_alldays_3ep" / "agent_core.py",
+    # FINAL checkpoint (step 736,715) of the 1-epoch all-52-days BC run
+    # (models/bc_alldays52_jun16_aug07_seed42). Deliberately NOT the
+    # best-eval-at-620k snapshot (…_seed42_best) -- registered 2026-08-10 for
+    # the deck-selection rerun on the stronger policy.
+    "il_bc_alldays52_final": REPO / "agents" / "il_arms" / "il_bc_alldays52_final" / "agent_core.py",
     # Equal-steps control for il_alldays_3ep (standing rule 4: compare at equal
     # STEPS, not equal epochs). 38,562 steps vs 127,748; offline acc .7414 vs
     # .7583 but ECE .0124 -- the best calibration of any checkpoint here.
-    # Trained by a concurrent session; lives in that worktree, symlinked in.
-    "il_alldays_equalsteps": REPO / "agents" / "il_arms" / "il_alldays_equalsteps" / "agent_core.py",
+    # Trained by a concurrent session; lived only in that worktree.
+    # il_alldays_equalsteps DEREGISTERED 2026-08-10: its checkpoint
+    # (models/il_alldays_equalsteps_0804) lived in worktree
+    # rewrite-kaggle-pokemon-tcg-prompt-c69997, which was deleted. Every
+    # surviving reference is a dangling symlink and the HF backup repo
+    # (Rami/ptcg-s2v2-arms) has no copy -- the weights are LOST. Its offline
+    # numbers (acc .7414, ECE .0124) remain in the registry history above.
 }
 
 # Where each agent's real competition entry point (main.py) lives, if any.
@@ -433,7 +448,7 @@ AGENT_MAIN = {
 #
 # Caveat when reading mcts_il_agent: it spends unbudgeted local think time,
 # which flatters it relative to the ladder (see memory `anchored-pool-rho-0.93`).
-OUR_TRAINED = ["il_agent", "il_agent_v2", "mcts_il_agent"]
+OUR_TRAINED = ["il_agent", "il_agent_v2", "il_agent_v3_final", "il_agent_v3_best", "mcts_il_agent"]
 OUR_HEURISTICS = ["rule_baseline", "improved_prob_main", "agent_core_improved",
                   "proto", "grunt"]
 
