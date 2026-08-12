@@ -105,12 +105,110 @@ def _critic_leaf(obs) -> float:
     return max(-1.0, min(1.0, 2.0 * (v01 - _CENTER)))
 
 
-# Patch the private search instance's leaf. evaluate_state is called in
-# exactly one live place (simulate_action, post-rollout) so this swap is the
-# whole leaf change; terminal states are also fine through the critic (it
-# was trained on terminal-adjacent states) and the perspective negation
-# still applies downstream of this call.
-_imp.evaluate_state = _critic_leaf
+# --- leaf wiring ------------------------------------------------------------
+# LEAF_MODE (env):
+#   'final'    -> critic on the rollout's final observation, negated on
+#                 perspective flip by simulate_action. MEASURED BROKEN
+#                 2026-08-12: post-turn observations are rendered for the
+#                 opponent, whose hand is our determinization FILLER — the
+#                 critic collapses to a near-constant (−0.637 ± 0.037) on
+#                 those states, so every turn-ending line gets the same flat
+#                 bonus and candidate comparisons carry no board signal.
+#                 Kept only as the measured-broken control.
+#   'lastview' -> (default) critic on the LAST ROOT-VIEW observation of the
+#                 rollout (in-distribution, no fabricated zones visible, no
+#                 negation), plus the objective view-independent facts from
+#                 the true end state: terminal result and prize deltas
+#                 (players[] is seat-indexed, so prize counts are valid in
+#                 any view). One prize of net progress = +0.5 in leaf units.
+LEAF_MODE = os.environ.get("LEAF_MODE", "lastview")
+PRIZE_WEIGHT = 0.5
+
+import random as _random  # noqa: E402
+
+
+def _simulate_lastview(obs, action) -> float:
+    """Determinize + roll out one root action; score from the ROOT player's
+    perspective without ever encoding a filler-visible observation."""
+    st = obs.current
+    r = st.yourIndex
+    my_p = st.players[r]
+    n_deck = getattr(my_p, "deckCount", 0)
+    your_deck = _random.sample(_imp.my_deck, n_deck) if n_deck else []
+    od, op, oh, oa = _imp._plausible_opponent(obs)
+    try:
+        root = _imp.search_begin(
+            obs, your_deck=your_deck,
+            your_prize=[6] * len(my_p.prize),
+            opponent_deck=od, opponent_prize=op,
+            opponent_hand=oh, opponent_active=oa,
+        )
+        step = _imp.search_step(root.searchId, [action])
+    except Exception:
+        return -float("inf")
+    if step is None or step.observation is None:
+        return -float("inf")
+
+    # rollout (same policy/guards as _imp.rollout_turn) tracking the last
+    # observation rendered for the ROOT player
+    cur, sid = step.observation, step.searchId
+    last_view = cur if (cur.current and cur.current.yourIndex == r) else None
+    steps = 0
+    while steps < 20 and cur.current is not None:
+        if cur.current.result is not None and cur.current.result != -1:
+            break
+        if cur.current.yourIndex != r:
+            break
+        if cur.select.context != _base.SelectContext.MAIN:
+            sub = _imp.HeuristicPolicy(cur).choose()
+            sel = sub[: max(1, cur.select.minCount)]
+        else:
+            nxt = _imp.HeuristicPolicy(cur).choose()
+            if not nxt:
+                break
+            sel = [nxt[0]]
+            if cur.select.option[nxt[0]].type == _imp.OptionType.END:
+                try:
+                    _imp.search_step(sid, sel)
+                except Exception:
+                    pass
+                break
+        try:
+            nstep = _imp.search_step(sid, sel)
+        except Exception:
+            break
+        if nstep is None or nstep.observation is None:
+            break
+        cur, sid = nstep.observation, nstep.searchId
+        if cur.current is not None and cur.current.yourIndex == r:
+            last_view = cur
+        steps += 1
+
+    fin = cur.current
+    if fin is None:
+        return -float("inf")
+    # objective terminal check: an empty prize pool means that seat won
+    if len(fin.players[r].prize) == 0:
+        return 10.0
+    if len(fin.players[1 - r].prize) == 0:
+        return -10.0
+    # critic on the last root-view state (root obs if the very first action
+    # already ended the turn — then prizes carry the action's whole effect)
+    base_obs = last_view if last_view is not None else obs
+    v = _critic_leaf(base_obs)
+    net_prizes = (
+        (len(st.players[r].prize) - len(fin.players[r].prize))
+        - (len(st.players[1 - r].prize) - len(fin.players[1 - r].prize))
+    )
+    return v + PRIZE_WEIGHT * net_prizes
+
+
+if LEAF_MODE == "lastview":
+    _imp.simulate_action = _simulate_lastview
+else:
+    # measured-broken control: critic on the final (possibly filler-visible)
+    # observation, sign-corrected by simulate_action's perspective negation
+    _imp.evaluate_state = _critic_leaf
 
 ARM_DIAG = _base.ARM_DIAG  # searched/changed_top1/etc. live in the base arm
 

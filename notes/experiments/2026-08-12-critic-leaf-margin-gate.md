@@ -58,10 +58,49 @@ of the critic itself is pending; battles here are provisional until it clears.
 - **Deck scope:** Mega Lucario ex mirror throughout, as before.
 
 ## Results
-- **evaluate_state sign-fixed δ=0 rerun:** (pending — appended on completion)
-- **critic leaf δ=0:**
-- **critic leaf δ=0.1:**
-- **critic leaf δ=0.25:**
+- **evaluate_state sign-fixed δ=0 rerun:** **2/10** (Wilson 95% [5.7, 51.0]),
+  67.6 s/game (vs 15.3 s/game for the inverted version — it plays real games
+  now), fallbacks 0.00% both sides
+  (`reports/ucb1_rerank_stage2_signfixed.json`). CI upper bound 51.0 does not
+  quite exclude >50%, so per the rule this arm is "extend to 25 pairs before
+  judging" — queued at LOW priority behind the critic-leaf arms; at 2/10 the
+  posterior for pool candidacy (≥60%) is negligible. Directional read: the
+  sign bug was a large part of the 0/10, and the sign-FIXED hand leaf still
+  loses most disagreements it forces.
+- **critic leaf δ=0:** **0/6** (Wilson 95% [0, 39.0] — excludes 50% → dropped
+  at chunk A per the early-stop rule; no chunk B). 47 s/game, fallbacks 0.00%
+  (`reports/criticleaf_d0_chunkA.json`). Read jointly with the sign-fixed
+  evaluate_state 2/10: with a one-turn-rollout depth-1 bandit, EVERY leaf
+  tried so far loses when it may override the IL top-1 unconditionally —
+  the leaf's identity (hand vs calibrated critic) is not the deciding factor
+  at δ=0. Two candidate mechanisms, distinguishable by the δ arms:
+  (a) coin-flip overrides — leaf noise beats signal on close calls (margin
+  should rescue); (b) plan mismatch — the heuristic rollout completes the
+  turn differently than the IL policy would, so candidates are scored on
+  lines the agent then doesn't play (margin only mutes, never fixes).
+- **critic leaf δ=0.1:** **0/6** (`reports/criticleaf_d010_chunkA.json`).
+  Margin verified live (override rate 67%→14.9% on-policy, 50%→1.7%
+  off-policy) — the overrides that survive a 0.1 margin are *confidently*
+  wrong, killing hypothesis (a) coin-flips.
+- **critic leaf δ=0.25 (final-obs leaf, measured-broken):** pending.
+- **MECHANISM FOUND (2026-08-12): the leaf was scoring our own
+  determinization filler.** Post-turn observations are rendered for the
+  opponent, whose "hand" is the Riolu filler we fabricated for
+  `search_begin`. On those states the critic collapses to a near-constant:
+  real root states mean +0.467 std 0.178, filler-visible post-attack states
+  mean −0.637 **std 0.037**. After negation every turn-ending line gets the
+  same flat +0.637 — candidate comparisons carried ~zero board signal, which
+  explains 0/6 at any δ that lets overrides through. This applies to ANY
+  learned leaf evaluated on post-turn search states, not just this critic —
+  exportable to the tree-wrapper experiment.
+- **Leaf redesign (`LEAF_MODE=lastview`, now the arm default):** critic
+  scores the LAST ROOT-VIEW observation of the rollout (in-distribution, no
+  fabricated zones visible, no negation) + objective view-independent end
+  facts: terminal result (±10) and net prize delta (seat-indexed, ±0.5 per
+  prize). Verified: attack-sim leaf std restored 0.037→0.179, live game
+  clean (24/24 searched, 0 encode failures). The final-obs mode is kept as
+  the measured-broken control. Battles: chunked runs
+  `reports/criticleaf_lastview_*.json`.
 - **Decision:**
 - **What we learned:**
 - **Belief update:** <Rami's one-liner>
