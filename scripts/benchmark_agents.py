@@ -92,6 +92,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import importlib.util
 import json
 import os
@@ -601,6 +602,52 @@ def _write_fallback_tb(fallback_diag: dict, tb_dir: Path, step: int) -> None:
 _LOADED_MODULES: dict[str, object] = {}
 
 
+# Top-level .py module names seen across loaded agent dirs this run.
+# Python's sys.modules caches by bare name, so if two agents both ship e.g.
+# a `policy_base.py` with DIFFERENT contents, whichever agent imports it
+# first wins and the second agent silently runs the first one's code.
+# (Checked byte-identical for the wmh family; unverified in general — hence
+# this warning rather than an assumption.)
+_TOP_LEVEL_PY: dict[str, tuple[str, str]] = {}  # stem -> (first agent, sha256)
+
+
+def _warn_module_shadowing(agent_name: str, mod_dir: Path) -> None:
+    for f in sorted(mod_dir.glob("*.py")):
+        digest = hashlib.sha256(f.read_bytes()).hexdigest()
+        seen = _TOP_LEVEL_PY.get(f.stem)
+        if seen is None:
+            _TOP_LEVEL_PY[f.stem] = (agent_name, digest)
+        elif seen[1] != digest:
+            print(f"[module-shadowing] {agent_name} ships {f.name} but a "
+                  f"DIFFERENT {f.stem}.py was already loaded for {seen[0]} -- "
+                  f"if either agent does `import {f.stem}`, sys.modules serves "
+                  f"the first copy to both. Rename the module or verify it is "
+                  f"never imported by bare name.", file=sys.stderr)
+
+
+def warn_unregistered_agent_dirs() -> None:
+    """Drift alarm for the CLAUDE.md rule that pool comparisons cover EVERY
+    agent in agents/. AGENT_FILES is hand-maintained, so an agents/<dir>
+    nobody registered silently drops out of every group (incl. `all`)
+    forever. Top-level granularity: a registered family dir (s2_arms/...)
+    counts as covered even if individual arms inside it are not."""
+    agents_root = REPO / "agents"
+    if not agents_root.is_dir():
+        return
+    covered = {"tb_shared"}  # vendored shared package for the tb_* shims, not an agent
+    for p in list(AGENT_FILES.values()) + list(AGENT_MAIN.values()):
+        try:
+            covered.add(p.relative_to(agents_root).parts[0])
+        except ValueError:
+            continue  # lives outside agents/ (scripts/, submissions/)
+    missing = sorted(d.name for d in agents_root.iterdir()
+                     if d.is_dir() and d.name not in covered)
+    if missing:
+        print(f"[registry-drift] agents/ dirs with NO AGENT_FILES entry -- "
+              f"excluded from every group and every pool number until "
+              f"registered or deleted: {missing}", file=sys.stderr)
+
+
 DECK_LISTS_DIR = REPO / "configs" / "deck_lists"
 
 
@@ -621,6 +668,9 @@ def load_agent(name: str):
     """
     base_name, _, deck_tag = name.partition("@")
     main_py = AGENT_MAIN.get(base_name)
+    _warn_module_shadowing(
+        name, (main_py.parent if main_py and main_py.exists()
+               else AGENT_FILES[base_name].parent))
     if main_py and main_py.exists():
         spec = importlib.util.spec_from_file_location(f"_bench_{name}", main_py)
         mod = importlib.util.module_from_spec(spec)
@@ -782,10 +832,15 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
             games[b][a] += aw + bw + dr
             wall_clock[a][b] += secs
             wall_clock[b][a] += secs
-            totals[a]["w"] += aw
-            totals[b]["w"] += bw
-            totals[a]["g"] += aw + bw + dr
-            totals[b]["g"] += aw + bw + dr
+            # Self-play stays in the matrix/JSON but NOT in the overall
+            # totals: an agent's games against itself are ~50/50 by
+            # construction and were diluting every overall win% toward 50 by
+            # an amount that depended on pool size.
+            if a != b:
+                totals[a]["w"] += aw
+                totals[b]["w"] += bw
+                totals[a]["g"] += aw + bw + dr
+                totals[b]["g"] += aw + bw + dr
             if a != b:
                 glicko_games += [(a, b, 1.0)] * aw
                 glicko_games += [(a, b, 0.0)] * bw
@@ -833,7 +888,7 @@ def run_benchmark(agents: list[str], games_per_pair: int = 8,
             print(f"  {a} vs {b}: {wins[a][b]}/{n_ab} = {p*100:5.1f}% [{lo*100:4.1f},{hi*100:4.1f}]  "
                   f"({wall_clock[a][b]:.1f}s, {wall_clock[a][b]/n_ab:.2f}s/game)")
 
-    print("\n=== Overall win rate (all games), Wilson 95% CI ===")
+    print("\n=== Overall win rate (all games, self-play excluded), Wilson 95% CI ===")
     for a in sorted(agents, key=lambda x: -overall[x]):
         lo, hi = overall_ci[a][1] * 100, overall_ci[a][2] * 100
         print(f"  {a:22s} {overall[a]:5.1f}%  [{lo:4.1f},{hi:4.1f}]  "
@@ -972,6 +1027,7 @@ def main():
     if args.list_pool:
         print_pool_report()
         return
+    warn_unregistered_agent_dirs()
     # Expand group names (ours/rung2/floor/all); deck-arm tokens like
     # `il_agent@dragapult_ex` aren't groups and pass through untouched.
     tokens = [a.strip() for a in args.agents.split(",") if a.strip()]

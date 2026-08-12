@@ -1,7 +1,11 @@
 """TomBombadyl Starmie / Froslass spread rule pilot (mu 277.5).
 
-Thin shim into the vendored `agents/tb_shared/agent` package. The real, byte-verbatim
-source is `agent/starmie_agent.py` from github.com/TomBombadyl/kaggle_pokemon (PrizeTracker + finish search + R7 bench guard).
+Thin shim into the vendored `agents/tb_shared/agent` package. The source is
+`agent/starmie_agent.py` from github.com/TomBombadyl/kaggle_pokemon (PrizeTracker +
+finish search + R7 bench guard). No longer byte-verbatim: on 2026-08-11 the
+finish-search call site was fixed to pass the deck into the repaired
+`finish_search.try_cg_search` (the vendored version called lib.SearchBegin with an
+invented C signature and never actually searched).
 We only (a) point the agent's own deck resolver at *this* dir's deck.csv via the
 STARMIE_DECK env override it already checks first -- our benchmark harness runs from the
 repo root, which ships a decoy deck.csv -- and (b) put tb_shared on sys.path so its

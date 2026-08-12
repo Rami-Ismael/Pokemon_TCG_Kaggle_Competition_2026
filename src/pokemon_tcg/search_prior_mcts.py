@@ -11,9 +11,10 @@ comparability; what changes is the evaluator:
 - child priors: softmax over PTCGImitationPolicy option logits (mean of
   member logits for multi-select combos; the DECLINE logit for the legal
   empty selection, a child the notebook scheme lacks entirely);
-- leaf values: the S2-E4-style offline critic (PTCGImitationPolicy trunk +
-  scalar head, outcome scale [0,1]) mapped to [-1,1] from the searching
-  player's perspective.
+- leaf values: the offline critic (PTCGImitationPolicy trunk + scalar head,
+  outcome scale [0,1]) put through a calibrated, CENTERED transform to
+  [-1,1] from the searching player's perspective — see ILPriorEvaluator's
+  docstring for why centering is mandatory, not cosmetic.
 
 Determinization legality: identical to search_api.mcts_agent — own deck
 sampled from our known 60, opponent unknowns filled with placeholders,
@@ -62,12 +63,70 @@ class ILPriorEvaluator:
     `critic` is an OfflineValueModel (same trunk family, scalar outcome head)
     or None — with None, non-terminal leaves evaluate to 0.0 (prior-only
     search; used as an ablation arm, not the main configuration).
+
+    LEAF VALUE TRANSFORM. The critic emits a raw scalar on the outcome scale;
+    the tree needs a *centered* value in [-1, 1]. `_node_children` negates the
+    leaf at opponent-to-move nodes, so a constant component `b` enters as `+b`
+    on our plies and `-b` on theirs and never cancels — it becomes a
+    preference for lines ending on one turn parity. A constant +0.084 leaf was
+    measured moving 10.5% of decisions here (memory
+    `search-leaf-value-must-be-centered`). The transform is therefore
+
+        p        = sigmoid(platt_a * logit(clip(v_raw)) + platt_b)
+        v_leaf   = clamp(2 * (p - center), -1, 1)
+
+    with (platt_a, platt_b, center) fitted by
+    `scripts/fit_critic_calibration.py` and stored as `calibration.json` in
+    the critic directory. The defaults (1, 0, 0.5) reproduce the previous
+    mapping `2*v01 - 1` byte for byte, so an uncalibrated critic behaves
+    exactly as before and the change is auditable. Caveat from the E2b
+    manipulation check: the honest centre is fitted on LEAF states, not root
+    decision states — record `leaf_value_in_play` and require |mean| <= 0.01
+    before quoting any arm that uses the critic.
     """
 
-    def __init__(self, policy, critic, device: str = "cpu"):
+    def __init__(self, policy, critic, device: str = "cpu",
+                 platt_a: float = 1.0, platt_b: float = 0.0,
+                 center: float = 0.5):
         self.policy = policy
         self.critic = critic
         self.device = device
+        self.platt_a = float(platt_a)
+        self.platt_b = float(platt_b)
+        self.center = float(center)
+
+    @classmethod
+    def from_critic_dir(cls, policy, critic, critic_dir, device: str = "cpu",
+                        center_leaf: bool = True):
+        """Build an evaluator, reading `calibration.json` from `critic_dir`.
+
+        Missing file -> identity transform (platt 1/0, center 0.5), i.e. the
+        historical behaviour. `center_leaf=False` keeps the Platt scaling but
+        pins `center=0.5` — the uncentered control arm.
+        """
+        import json
+        from pathlib import Path
+
+        a, b, c = 1.0, 0.0, 0.5
+        p = Path(critic_dir) / "calibration.json" if critic_dir else None
+        if p is not None and p.exists():
+            cal = json.loads(p.read_text())
+            a = float(cal.get("platt_a", 1.0))
+            b = float(cal.get("platt_b", 0.0))
+            if center_leaf:
+                c = float(cal.get("center", 0.5))
+        return cls(policy, critic, device=device, platt_a=a, platt_b=b, center=c)
+
+    def _leaf_value(self, v_raw: float) -> float:
+        """Raw critic output -> centered leaf value in [-1, 1]."""
+        v01 = v_raw
+        if self.platt_a != 1.0 or self.platt_b != 0.0:
+            # clip only where the logit needs it, so the identity transform
+            # stays EXACTLY the historical 2*v-1 mapping (incl. at 0 and 1)
+            v01 = min(1.0 - 1e-6, max(1e-6, v01))
+            z = math.log(v01 / (1.0 - v01))
+            v01 = 1.0 / (1.0 + math.exp(-(self.platt_a * z + self.platt_b)))
+        return max(-1.0, min(1.0, 2.0 * (v01 - self.center)))
 
     @torch.inference_mode()
     def evaluate(self, obs_dict: dict, actions: list[list[int]]) -> tuple[float, list[float]]:
@@ -88,12 +147,15 @@ class ILPriorEvaluator:
         logits = self.policy(**batch)["logits"][0]
         if bool(torch.isnan(logits[: n_real + 1]).any()):
             return 0.0, uniform
-        # DECLINE slot exists at index n_real whenever minCount==0 AND the
-        # option list didn't fill MAX_OPTIONS (>=48 options leave no room for
-        # it -- reading logits[n_real] there is out of bounds, the 12.76%
-        # IndexError-fallback bug of the first critic benchmark). When the
-        # slot is unavailable, give the empty selection a NEUTRAL prior (mean
-        # of real-option logits), not an extreme one.
+        # DECLINE slot: whenever minCount==0 the encoder RESERVES a slot for
+        # it at index n_real (with >=48 options the real-option budget shrinks
+        # to MAX_OPTIONS-1 so the slot still fits — see _encode_options), so
+        # any time a [] child exists its logit is at logits[n_real].
+        # n_real == logits.shape[0] can only happen when minCount>=1, where no
+        # [] child is enumerated and decline_logit goes unused; the mean
+        # branch below is a belt-and-suspenders guard kept because reading
+        # logits[n_real] blindly was the 12.76% IndexError-fallback bug of the
+        # first critic benchmark.
         real = logits[:n_real]
         if n_real < logits.shape[0]:
             decline_logit = float(logits[n_real])
@@ -113,7 +175,7 @@ class ILPriorEvaluator:
         value = 0.0
         if self.critic is not None:
             v01 = float(self.critic(**batch).view(-1)[0])  # outcome scale [0,1]
-            value = max(-1.0, min(1.0, 2.0 * v01 - 1.0))
+            value = self._leaf_value(v01)
         return value, priors
 
 
@@ -167,7 +229,11 @@ def mcts_choose(
     # cannot change the outcome, skip it (a large share of real decisions).
     sel = obs.select
     n_opts = len(sel.option)
-    max_count = sel.maxCount if sel.maxCount is not None else 1
+    # maxCount=None means "no cap" — normalize to n_opts, matching what
+    # _safe_choice does in the agents. (It previously normalized to 1 here,
+    # a silent inconsistency; never observed live, but if the engine ever
+    # emits None the two paths must agree.)
+    max_count = sel.maxCount if sel.maxCount is not None else n_opts
     min_count = sel.minCount or 0
     if min_count >= 1 and n_opts == max_count:
         return list(range(n_opts))
