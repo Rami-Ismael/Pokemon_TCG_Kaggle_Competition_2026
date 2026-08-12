@@ -876,6 +876,15 @@ def simulate_action(obs, action):
             return -float("inf")
         cur = rollout_turn(ar_state.searchId, ar_state.observation, obs.current.yourIndex)
         result = evaluate_state(cur)
+        # PERSPECTIVE FIX (2026-08-12): rollout_turn exits on yourIndex flip
+        # (turn-ending actions, e.g. attacks), and the engine renders that
+        # final observation for the OPPONENT. evaluate_state is view-relative,
+        # so without negation every turn-ending line was scored as the
+        # opponent's advantage. The 2026-08-11 "live search lost 35% to its
+        # own heuristic" benchmark was measured WITH this inversion — treat
+        # that number as void, not as evidence about the leaf's quality.
+        if cur.current is not None and cur.current.yourIndex != obs.current.yourIndex:
+            result = -result
         search_end()
         return result
     finally:

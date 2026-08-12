@@ -1,5 +1,15 @@
 # IL policy + UCB1 depth-1 re-rank (controlled comparison, add-one-in)
 
+> [!warning] 2026-08-12: the Result below is VOID — implementation bug.
+> `simulate_action` scored turn-ending rollouts (attacks — the common case)
+> from the OPPONENT's perspective without negation: the engine flips
+> `yourIndex` when the turn passes and `evaluate_state` is view-relative.
+> The 0/10 measured an inverted leaf, so it attributes to the sign bug, not
+> to leaf quality. The same bug sat in `agent_core_improved.py`, so the
+> sibling's "repaired live search lost 35.0%" datum is void too. Both fixed
+> 2026-08-12 (negamax negation on perspective flip); sign-fixed rerun:
+> `reports/ucb1_rerank_stage2_signfixed.json`, verdict appended below.
+
 - **Hypothesis:** Re-ranking the IL policy's top-8 MAIN-decision candidates with
   the repaired UCB1 depth-1 bandit (real-engine one-turn rollouts scored by
   `evaluate_state`) beats the same IL policy without search, because the engine

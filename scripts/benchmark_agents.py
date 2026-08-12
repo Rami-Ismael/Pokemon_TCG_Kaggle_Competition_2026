@@ -180,6 +180,12 @@ AGENT_FILES = {
     # search). Card: notes/experiments/2026-08-11-il-ucb1-depth1-rerank.md.
     "bc_alldays52_ucb1_rerank":
         REPO / "agents" / "search_arms" / "bc_alldays52_ucb1_rerank" / "agent_core.py",
+    # Same bandit + IL ranker, but the leaf is the retrained outcome critic
+    # (Platt-scaled + centered per its calibration.json) and overrides can be
+    # margin-gated via OVERRIDE_MARGIN. Card:
+    # notes/experiments/2026-08-12-critic-leaf-margin-gate.md.
+    "bc_alldays52_ucb1_criticleaf":
+        REPO / "agents" / "search_arms" / "bc_alldays52_ucb1_criticleaf" / "agent_core.py",
     # Standing regression opponent (BENCHMARK_ONLY_AGENTS). The PPO exploiter
     # trained against frozen il_agent. NEVER SUBMIT IT -- it loses to
     # rule_baseline (0.440) and improved_prob_main (0.230); it beats only its
