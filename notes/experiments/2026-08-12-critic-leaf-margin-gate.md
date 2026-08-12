@@ -82,7 +82,11 @@ of the critic itself is pending; battles here are provisional until it clears.
   Margin verified live (override rate 67%→14.9% on-policy, 50%→1.7%
   off-policy) — the overrides that survive a 0.1 margin are *confidently*
   wrong, killing hypothesis (a) coin-flips.
-- **critic leaf δ=0.25 (final-obs leaf, measured-broken):** pending.
+- **critic leaf δ=0.25 (final-obs leaf, measured-broken):** **1/6**
+  (`reports/criticleaf_d025_chunkA.json`). Broken-leaf δ sweep complete:
+  0/6, 0/6, 1/6 — raising δ only dilutes toward the control; it cannot make
+  a signal-free leaf's overrides good. Margin gating is a noise dampener,
+  not a fix, exactly as hypothesis (b) predicted.
 - **MECHANISM FOUND (2026-08-12): the leaf was scoring our own
   determinization filler.** Post-turn observations are rendered for the
   opponent, whose "hand" is the Riolu filler we fabricated for
@@ -101,6 +105,31 @@ of the critic itself is pending; battles here are provisional until it clears.
   clean (24/24 searched, 0 encode failures). The final-obs mode is kept as
   the measured-broken control. Battles: chunked runs
   `reports/criticleaf_lastview_*.json`.
-- **Decision:**
-- **What we learned:**
-- **Belief update:** <Rami's one-liner>
+- **critic lastview leaf δ=0:** **2/10** (1/6 + 1/4, Wilson 95% [5.7, 51.0]),
+  fallbacks 0.00%, ~50 s/game
+  (`reports/criticleaf_lastview_d0_chunk{A,B}.json`). Identical tally to the
+  sign-fixed evaluate_state arm.
+- **Decision:** **dropped — the whole depth-1-override family, not just one
+  leaf.** Formal note: at n=10 the CI upper bound (51.0) grazes 50%, and the
+  rule says "extend to 25 pairs before judging" — but the adopt bar (≥60%)
+  would require 28/40 from here, so extension cannot change the candidacy
+  outcome and the games are not spent. Family tally across all corrected
+  variants: evaluate_state sign-fixed 2/10; critic final-obs 0/6, 0/6, 1/6
+  (δ=0/0.1/0.25); critic lastview 2/10. Every leaf loses ~80% when allowed
+  to override the IL top-1 through this mechanism.
+- **What we learned:** the leaf was never the only problem, and by the end it
+  was not the problem at all. Three defects were found stacked on one another
+  (dead bandit → sign inversion → filler-visible leaf states), each masking
+  the next, and each invisible to offline calibration. With all three fixed
+  and a leaf that is healthy offline AND in-distribution at eval time, the
+  mechanism still loses — the remaining suspects are the two things the
+  967.7 teardown itself listed as follow-ups: candidates are completed by
+  the HAND HEURISTIC rather than the IL policy (values compare lines the
+  agent will not play), and the one-turn horizon prices no opponent reply.
+  Those are separate, pre-registerable experiments; neither was run here.
+- **Scale confound:** inference-time mechanism on a full-corpus checkpoint —
+  the verdict survives it. The critic's 7-day window is a residual caveat,
+  but three leaf variants of very different character producing the same
+  ~20% argues the mechanism, not the leaf, binds. All numbers are
+  Lucario-mirror head-to-head, local only — no ladder claims.
+- **Belief update:** <Rami's one-liner — pending>
