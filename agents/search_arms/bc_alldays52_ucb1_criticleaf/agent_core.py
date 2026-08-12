@@ -129,13 +129,18 @@ import random as _random  # noqa: E402
 
 def _simulate_lastview(obs, action) -> float:
     """Determinize + roll out one root action; score from the ROOT player's
-    perspective without ever encoding a filler-visible observation."""
+    perspective without ever encoding a filler-visible observation.
+
+    LEAK NOTE: search_end() in the finally is what lets the native engine
+    reuse this simulation's states; without it every sim leaks engine memory
+    permanently (fine on a laptop, an OOM on the evaluator's ~197 MiB)."""
     st = obs.current
     r = st.yourIndex
     my_p = st.players[r]
     n_deck = getattr(my_p, "deckCount", 0)
     your_deck = _random.sample(_imp.my_deck, n_deck) if n_deck else []
     od, op, oh, oa = _imp._plausible_opponent(obs)
+    began = False
     try:
         root = _imp.search_begin(
             obs, your_deck=your_deck,
@@ -143,12 +148,23 @@ def _simulate_lastview(obs, action) -> float:
             opponent_deck=od, opponent_prize=op,
             opponent_hand=oh, opponent_active=oa,
         )
+        began = True
         step = _imp.search_step(root.searchId, [action])
+        if step is None or step.observation is None:
+            return -float("inf")
+        return _rollout_and_score(obs, step, r)
     except Exception:
         return -float("inf")
-    if step is None or step.observation is None:
-        return -float("inf")
+    finally:
+        if began:
+            try:
+                _imp.search_end()
+            except Exception:
+                pass
 
+
+def _rollout_and_score(obs, step, r) -> float:
+    st = obs.current
     # rollout (same policy/guards as _imp.rollout_turn) tracking the last
     # observation rendered for the ROOT player
     cur, sid = step.observation, step.searchId

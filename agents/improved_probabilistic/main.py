@@ -770,6 +770,7 @@ def simulate_action(obs, action) -> float:
     # SearchState directly (fields: .observation, .searchId); there is no
     # ApiResult wrapper and no .error field — failures raise exceptions. The
     # original code assumed a `.state.searchId` wrapper, which no longer exists.
+    began = False
     try:
         root = search_begin(
             obs,
@@ -780,24 +781,37 @@ def simulate_action(obs, action) -> float:
             opponent_hand=op_hand,
             opponent_active=op_active,
         )
+        began = True
         step = search_step(root.searchId, [action])
+        if step is None or step.observation is None:
+            return -float("inf")
+        cur = rollout_turn(step.searchId, step.observation, st.yourIndex)
+        val = evaluate_state(cur)
+        # PERSPECTIVE FIX (2026-08-12): when the rollout ends because the turn
+        # passed (e.g. an attack), the engine renders the final observation for
+        # the OPPONENT — yourIndex flips — and evaluate_state is view-relative.
+        # Without negation every turn-ending line is scored as the opponent's
+        # advantage, inverting the leaf on exactly the most common rollouts.
+        # evaluate_state is not perfectly antisymmetric (hand/deck economy terms
+        # differ), but its dominant tiers (terminal 1e7, prizes 1e4) are, so
+        # negation restores the sign of what actually decides comparisons.
+        if cur.current is not None and cur.current.yourIndex != st.yourIndex:
+            val = -val
+        return val
     except Exception:
         return -float("inf")
-    if step is None or step.observation is None:
-        return -float("inf")
-    cur = rollout_turn(step.searchId, step.observation, st.yourIndex)
-    val = evaluate_state(cur)
-    # PERSPECTIVE FIX (2026-08-12): when the rollout ends because the turn
-    # passed (e.g. an attack), the engine renders the final observation for
-    # the OPPONENT — yourIndex flips — and evaluate_state is view-relative.
-    # Without negation every turn-ending line is scored as the opponent's
-    # advantage, inverting the leaf on exactly the most common rollouts.
-    # evaluate_state is not perfectly antisymmetric (hand/deck economy terms
-    # differ), but its dominant tiers (terminal 1e7, prizes 1e4) are, so
-    # negation restores the sign of what actually decides comparisons.
-    if cur.current is not None and cur.current.yourIndex != st.yourIndex:
-        val = -val
-    return val
+    finally:
+        # LEAK FIX (2026-08-12): search_end() is what lets the native engine
+        # reuse the states this simulation allocated ("Memory used during the
+        # search will be reused in the next search"). Without it every sim
+        # leaks engine states permanently — invisible on a laptop, an OOM on
+        # the evaluator's ~197 MiB envelope. agent_core_improved always did
+        # this; this lineage never did.
+        if began:
+            try:
+                search_end()
+            except Exception:
+                pass
 
 
 # =========================================================================
@@ -885,10 +899,14 @@ def flat_monte_carlo_search(obs, base_order=None, override_margin=0.0):
         mean = lambda a: total_val[a] / visits[a] if visits[a] > 0 else -float("inf")
         best_action = max(candidates, key=mean)
         base_top = base_order[0]
-        if (override_margin > 0.0 and best_action != base_top
-                and visits.get(base_top, 0) > 0
-                and mean(best_action) - mean(base_top) < override_margin):
-            best_action = base_top
+        if override_margin > 0.0 and best_action != base_top:
+            # An override must DEMONSTRATE the margin. If the base policy's
+            # top action was never successfully simulated, the gap cannot be
+            # measured — defer to the base policy rather than overriding on
+            # one-sided evidence.
+            if (visits.get(base_top, 0) == 0
+                    or mean(best_action) - mean(base_top) < override_margin):
+                best_action = base_top
         return [best_action] + [i for i in base_order if i != best_action]
     except Exception:
         return None
