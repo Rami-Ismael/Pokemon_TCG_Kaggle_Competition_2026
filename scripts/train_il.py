@@ -302,6 +302,12 @@ def main() -> None:
                           "splits.json)")
     ap.add_argument("--hub-repo", default=None,
                      help=f"dataset repo id (default {config.HF_EPISODES_REPO})")
+    ap.add_argument("--selfplay-shards", type=Path, default=None,
+                    help="directory of self-play parquet shards (rl_pipeline_v6 "
+                         "§1.2, written by scripts/run_lineage_selfplay.py); "
+                         "every shard-*.parquet under it is UNIONED with the "
+                         "hub human corpus for training. Requires --data-source "
+                         "hub. Eval stays human-only.")
     ap.add_argument("--episode-ids-file", type=Path, default=None,
                      help="text file of episode_ids (one per line): restrict TRAIN "
                           "episodes to this allowlist (hub source only). Used for "
@@ -415,6 +421,15 @@ def main() -> None:
 
     if args.episode_ids_file is not None and source != "hub":
         sys.exit("--episode-ids-file requires --data-source hub")
+    selfplay_files: list[Path] = []
+    if args.selfplay_shards is not None:
+        if source != "hub":
+            sys.exit("--selfplay-shards requires --data-source hub (the union "
+                     "rides ShardILDataset)")
+        selfplay_files = sorted(args.selfplay_shards.rglob("shard-*.parquet"))
+        if not selfplay_files:
+            sys.exit(f"--selfplay-shards {args.selfplay_shards}: no "
+                     f"shard-*.parquet found")
     weighted = args.weight_arm != "none"
     critic = None
     if args.weight_arm.startswith("adv-"):
@@ -441,7 +456,16 @@ def main() -> None:
             max_episodes=args.max_train_episodes, seed=args.seed,
             winner_only=args.winner_only, with_meta=weighted,
             episode_ids=episode_ids,
+            extra_local_files=selfplay_files or None,
         )
+        if selfplay_files:
+            # Dataset composition (rl_pipeline_v6 §5): human vs self-play.
+            import pyarrow.parquet as pq
+            n_selfplay = sum(
+                pq.ParquetFile(str(f)).metadata.num_rows for f in selfplay_files
+            )
+            print(f"self-play union: {len(selfplay_files)} shards, "
+                  f"{n_selfplay} episodes from {args.selfplay_shards}")
         eval_ds = ShardILDataset(
             eval_kind, days=eval_days, repo_id=args.hub_repo,
             max_episodes=args.max_eval_episodes, shuffle_buffer=1,

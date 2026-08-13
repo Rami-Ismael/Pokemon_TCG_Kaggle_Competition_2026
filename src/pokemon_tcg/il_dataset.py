@@ -49,6 +49,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import random
 import re
 import sys
@@ -1112,6 +1113,7 @@ class ShardILDataset(IterableDataset):
         winner_only: bool = False,
         with_meta: bool = False,
         episode_ids: set[int] | None = None,
+        extra_local_files: list[str | Path] | None = None,
     ) -> None:
         self.split = split
         self.repo_id = repo_id or config.HF_EPISODES_REPO
@@ -1134,6 +1136,16 @@ class ShardILDataset(IterableDataset):
             )
         else:
             self.files = _resolve_hub_shards(self.repo_id, split, days)
+        # Union support (rl_pipeline_v6 §1.2, human ∪ self-play): extra shard
+        # files by ABSOLUTE path, appended to the same worker-sharded list.
+        # They ride every existing mechanism (strided worker split, shuffle,
+        # max_episodes) because they are just more entries in self.files.
+        if extra_local_files:
+            extras = [str(Path(p).resolve()) for p in extra_local_files]
+            missing = [p for p in extras if not Path(p).exists()]
+            if missing:
+                raise FileNotFoundError(f"extra shard files not found: {missing}")
+            self.files = self.files + sorted(extras)
         if not self.files:
             raise FileNotFoundError(
                 f"no parquet shards for split {split!r}"
@@ -1149,6 +1161,8 @@ class ShardILDataset(IterableDataset):
         self._epoch = int(epoch)
 
     def _local_path(self, rel: str) -> str:
+        if os.path.isabs(rel):  # extra_local_files entry, already on disk
+            return rel
         if self.local_root is not None:
             return str(self.local_root / rel)
         from huggingface_hub import hf_hub_download  # lazy: only the Hub path needs it
@@ -1195,6 +1209,9 @@ class ShardILDataset(IterableDataset):
         fs = HfFileSystem()
         total = 0
         for f in self.files:
+            if os.path.isabs(f):  # extra_local_files entry
+                total += count(pq.ParquetFile(f))
+                continue
             with fs.open(f"datasets/{self.repo_id}/{f}", "rb") as fh:
                 total += count(pq.ParquetFile(fh))
         return total
