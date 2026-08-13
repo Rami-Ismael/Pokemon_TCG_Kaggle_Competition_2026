@@ -21,6 +21,15 @@ the policy masking from the packed opt_mask, and the env still guards by
 falling back to the lowest legal pick (never crash, counted in infos).
 
 Reward: terminal only, {0, 0.5, 1} (win/draw/loss remap; never -1).
+
+Engine backends (measured 2026-08-13, probe under machine load):
+  direct  (default) cg.game.battle_start/battle_select/battle_finish through
+          ctypes -- ~25x less engine overhead per game than the kaggle wrapper
+          (0.011 vs 0.273 s/game, random-legal agents both ways). Decks are
+          handed to battle_start, so the deck-submission pseudo-step never
+          surfaces; the observation dict is the same current+select schema.
+  kaggle  the pre-2026-08-13 path (kaggle_environments.make("cabt") driven
+          step-wise). Kept as the fallback / A-B control for the engine swap.
 """
 
 from __future__ import annotations
@@ -41,9 +50,15 @@ from .il_dataset import MAX_OPTIONS, encode_observation
 from .deck_pool import DeckPool, deck_override_agent
 from .selfplay import SamplingPolicy, _safe_choice, as_env_agent, load_deck
 
-_CG_DIR = config.PROJECT_ROOT / "data" / "external" / "cg-lib"
-if (_CG_DIR / "cg" / "api.py").exists() and str(_CG_DIR) not in sys.path:
-    sys.path.insert(0, str(_CG_DIR))
+# cg-lib for the direct engine. A worktree may lack data/external/cg-lib, so
+# walk up to the primary checkout's copy (the benchmark_agents.py pattern).
+for _cand in [config.PROJECT_ROOT / "data" / "external" / "cg-lib",
+              *(p / "data" / "external" / "cg-lib"
+                for p in config.PROJECT_ROOT.parents)]:
+    if (_cand / "cg" / "api.py").exists():
+        if str(_cand) not in sys.path:
+            sys.path.insert(0, str(_cand))
+        break
 
 # (key, shape, is_integer) — must match encode_observation()'s output exactly.
 # Probed at import time from a dummy encode is tempting but circular; these are
@@ -161,8 +176,11 @@ class PTCGGym(gymnasium.Env):
                  alternate_seats: bool = False,
                  deck_pool: DeckPool | None = None,
                  mirror_deck: bool = False,
+                 engine: str = "direct",
                  seed: int = 0) -> None:
         super().__init__()
+        assert engine in ("direct", "kaggle"), f"unknown engine {engine!r}"
+        self.engine = engine
         self.observation_space = gymnasium.spaces.Box(
             low=-np.inf, high=np.inf, shape=(OBS_SIZE,), dtype=np.float32)
         self.action_space = gymnasium.spaces.Discrete(MAX_OPTIONS)
@@ -203,9 +221,23 @@ class PTCGGym(gymnasium.Env):
         self._opp_cache: dict = {}
         self._env = None
         self._illegal = 0
-        # kaggle env is created lazily; import cost paid once per worker proc
-        from kaggle_environments import make as kaggle_make
-        self._make = kaggle_make
+        # Terminal outcome for the CURRENT episode, set by whichever engine
+        # path detects the end: learner-perspective {0.0, 0.5, 1.0}, or None
+        # while the episode is live.
+        self._terminal_reward: float | None = None
+        if engine == "kaggle":
+            # kaggle env is created lazily; import cost paid once per worker
+            from kaggle_environments import make as kaggle_make
+            self._make = kaggle_make
+        else:
+            # ctypes battle API: ONE battle per process (module-global ptr in
+            # cg.game.Battle) -- same singleton constraint the kaggle path has.
+            from cg.game import battle_finish, battle_select, battle_start
+            self._battle_start = battle_start
+            self._battle_select = battle_select
+            self._battle_finish = battle_finish
+            self._battle_live = False
+            self._raw_obs: dict | None = None
 
     # -- opponent plumbing ---------------------------------------------------
     def _draw_opponent(self):
@@ -245,7 +277,13 @@ class PTCGGym(gymnasium.Env):
 
     def _advance_until_learner(self):
         """Submit opponent/deck actions until the learner faces a real select,
-        or the game ends. Returns (obs_feats, done)."""
+        or the game ends. Returns (obs_feats, done); on done the episode's
+        outcome is in self._terminal_reward."""
+        if self.engine == "direct":
+            return self._advance_direct()
+        return self._advance_kaggle()
+
+    def _advance_kaggle(self):
         while not self._env.done:
             sts = self._statuses()
             actions = [None, None]
@@ -272,7 +310,70 @@ class PTCGGym(gymnasium.Env):
                 self._pending_actions = actions  # opponent slot already filled
                 return self._begin_select(self._obs_of(self.learner_seat))
             self._env.step(actions)
+        r = [self._env.state[i]["reward"] for i in range(2)]
+        scored = [float("-inf") if x is None else x for x in r]
+        mine, theirs = scored[self.learner_seat], scored[1 - self.learner_seat]
+        self._terminal_reward = (0.5 if mine == theirs
+                                 else (1.0 if mine > theirs else 0.0))
         return None, True
+
+    # direct-engine episode cap: the engine ends real games itself (result 2 on
+    # its internal turn limit); this is a runaway-loop safety net only.
+    MAX_SELECTS = 5000
+
+    def _advance_direct(self):
+        while True:
+            cur = self._raw_obs["current"]
+            if cur["result"] >= 0:
+                self._end_direct(cur["result"])
+                return None, True
+            if self._n_selects >= self.MAX_SELECTS:
+                self._end_direct(2)  # cap hit: score it a draw, loudly countable
+                return None, True
+            sel = self._raw_obs.get("select")
+            if cur["yourIndex"] == self.learner_seat:
+                if sel and (sel.get("option") or []):
+                    return self._begin_select(self._raw_obs)
+                if self._select_direct([]):  # no real decision: pass through
+                    return None, True
+            else:
+                try:
+                    act = self.opponent(self._raw_obs)
+                except Exception:
+                    act = _safe_choice(sel) if sel else []
+                if self._select_direct(act):
+                    return None, True
+
+    def _select_direct(self, action_list: list[int]) -> bool:
+        """battle_select with the never-crash guarantee. Returns True when the
+        episode ENDED here (unrecoverable rejection = the acting seat forfeits,
+        the same crash-equals-loss convention as play_match)."""
+        acting = self._raw_obs["current"]["yourIndex"]
+        self._n_selects += 1
+        try:
+            self._raw_obs = self._battle_select(action_list)
+            return False
+        except Exception:
+            self._engine_rejects += 1
+            sel = self._raw_obs.get("select")
+            try:
+                self._raw_obs = self._battle_select(
+                    _safe_choice(sel) if sel else [])
+                return False
+            except Exception:
+                self._end_direct(1 - acting)
+                return True
+
+    def _end_direct(self, result: int) -> None:
+        """result: winner seat index, or 2 for a draw (cg convention)."""
+        if self._battle_live:
+            try:
+                self._battle_finish()
+            except Exception:
+                pass
+            self._battle_live = False
+        self._terminal_reward = (0.5 if result == 2 else
+                                 1.0 if result == self.learner_seat else 0.0)
 
     def _begin_select(self, obs: dict):
         sel = obs["select"]
@@ -289,17 +390,19 @@ class PTCGGym(gymnasium.Env):
         return pack_obs(feats), False
 
     def _submit(self, action_list: list[int]):
+        if self.engine == "direct":
+            if self._select_direct(action_list):
+                return None, True
+            return self._advance_direct()
         acts = self._pending_actions
         acts[self.learner_seat] = action_list
         self._env.step(acts)
-        return self._advance_until_learner()
+        return self._advance_kaggle()
 
     # -- gym API -------------------------------------------------------------
     def reset(self, seed=None, options=None):
         if seed is not None:
             self.rng.seed(seed)
-        self._env = self._make("cabt")
-        self._env.reset(2)
         if self.alternate_seats:
             self.learner_seat = self._next_seat
             self._next_seat = 1 - self._next_seat
@@ -330,6 +433,36 @@ class PTCGGym(gymnasium.Env):
             self._opp_left = self.opp_hold
         self._opp_left -= 1
         self._illegal = 0
+        self._engine_rejects = 0
+        self._n_selects = 0
+        self._terminal_reward = None
+        if self.engine == "direct":
+            # decks are handed to the engine up front; there is no
+            # deck-submission pseudo-step in the direct stream.
+            if self._battle_live:
+                try:
+                    self._battle_finish()
+                except Exception:
+                    pass
+                self._battle_live = False
+            decks = [None, None]
+            decks[self.learner_seat] = self.deck
+            decks[1 - self.learner_seat] = self.opp_deck
+            raw, start = self._battle_start(list(decks[0]), list(decks[1]))
+            if raw is None:
+                # Pool decks are gated legal (probe_deck_legality). A rejected
+                # deck here is a real bug: fail loudly instead of feeding the
+                # learner an endless stream of instant losses.
+                raise RuntimeError(
+                    f"battle_start rejected a deck: errorPlayer="
+                    f"{start.errorPlayer} errorType={start.errorType} "
+                    f"(learner deck {self.deck_name!r}, opponent deck "
+                    f"{self.opp_deck_name!r})")
+            self._battle_live = True
+            self._raw_obs = raw
+        else:
+            self._env = self._make("cabt")
+            self._env.reset(2)
         obs, done = self._advance_until_learner()
         if done:  # pathological instant end; hand back a zero obs, will reset
             obs = np.zeros(OBS_SIZE, dtype=np.float32)
@@ -371,10 +504,11 @@ class PTCGGym(gymnasium.Env):
 
         obs, done = self._submit(self._picked)
         if done:
-            r = [self._env.state[i]["reward"] for i in range(2)]
-            scored = [float("-inf") if x is None else x for x in r]
-            mine, theirs = scored[self.learner_seat], scored[1 - self.learner_seat]
-            reward = 0.5 if mine == theirs else (1.0 if mine > theirs else 0.0)
+            # Set by the engine path that detected the end (see
+            # _advance_kaggle / _end_direct); None can only mean a bug.
+            assert self._terminal_reward is not None, \
+                "episode ended without a terminal reward"
+            reward = self._terminal_reward
             # Free outcome harvest through pufferl's info->stats aggregation.
             # Three cuts, because a POOLED win rate is exactly the number that
             # hides a policy dominating one deck and losing the rest:
@@ -383,6 +517,10 @@ class PTCGGym(gymnasium.Env):
             #   wrm_<a>~<b>     the full matchup, learner deck ~ opponent deck
             info = {"illegal_picks": self._illegal,
                     f"wr_{self._opp_slug}": reward}
+            if self.engine == "direct":
+                # engine-side select rejections (should be ~0; nonzero says
+                # the action plumbing and the engine disagree about legality)
+                info["engine_rejects"] = self._engine_rejects
             if self.deck_pool is not None:
                 info[f"wrd_{self.deck_name}"] = reward
                 info[f"wrm_{self.deck_name}~{self.opp_deck_name}"] = reward
@@ -390,11 +528,20 @@ class PTCGGym(gymnasium.Env):
                     info)
         return obs, 0.0, False, False, {}
 
+    def close(self):
+        if self.engine == "direct" and getattr(self, "_battle_live", False):
+            try:
+                self._battle_finish()
+            except Exception:
+                pass
+            self._battle_live = False
+        super().close()
+
 
 def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
                     opp_hold=4, mix=(0.625, 0.375),
                     alternate_seats=False, deck_pool=None, mirror_deck=False,
-                    seed=0, buf=None):
+                    engine="direct", seed=0, buf=None):
     """Creator for pufferlib.vector.make — one GymnasiumPufferEnv per call.
 
     `deck_pool` is a built DeckPool, passed by value so every spawned worker
@@ -407,5 +554,6 @@ def make_puffer_env(league=None, mirror_root=None, anchor_ckpt=None,
     env = PTCGGym(league=league, mirror_root=mirror_root,
                   anchor_ckpt=anchor_ckpt, opp_hold=opp_hold,
                   mix=mix, alternate_seats=alternate_seats,
-                  deck_pool=deck_pool, mirror_deck=mirror_deck, seed=seed)
+                  deck_pool=deck_pool, mirror_deck=mirror_deck,
+                  engine=engine, seed=seed)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)

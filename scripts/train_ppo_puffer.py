@@ -315,7 +315,7 @@ def write_run_config(args, env_kwargs: dict) -> Path:
     print(f"run config -> {out}")
     print(f"  git {cfg['git']['commit'][:9] if cfg['git']['commit'] else '?'}"
           f"{' DIRTY' if cfg['git']['dirty'] else ''} on {cfg['git']['branch']}")
-    print(f"  opponents: mix={o['mix_mirror_league_pool']} "
+    print(f"  opponents: mix={o['mix_mirror_league']} "
           f"external share={o['external_opponent_share']:.0%}  "
           f"decks: {d.get('deck_source')} "
           f"K={d.get('deck_k', 1)} mirror={d.get('mirror_deck', False)}")
@@ -474,6 +474,14 @@ def main() -> None:
                     help="policy_full.pt from a prior run: restores actor AND "
                          "warmed value head (overrides --init-from for weights; "
                          "--init-from still sets the KL prior/architecture)")
+    ap.add_argument("--engine", choices=("direct", "kaggle"), default="direct",
+                    help="battle engine for env workers AND the promotion "
+                         "gate. 'direct' drives cg.game (battle_start/"
+                         "battle_select) through ctypes -- measured ~25x less "
+                         "engine overhead per game than the kaggle_"
+                         "environments wrapper (2026-08-13 probe). 'kaggle' "
+                         "is the pre-2026-08-13 path, kept as the A/B "
+                         "control for the engine swap")
     ap.add_argument("--device", default=None,
                     help="mps|cpu; default resolves via pokemon_tcg.device."
                          "resolve_device (PTCG_DEVICE env var, then auto)")
@@ -618,7 +626,8 @@ def main() -> None:
     args.out.mkdir(parents=True, exist_ok=True)
 
     env_kwargs = {"mirror_root": mirror_root, "anchor_ckpt": str(args.init_from),
-                  "league": league, "mix": mix, "opp_hold": args.opp_hold}
+                  "league": league, "mix": mix, "opp_hold": args.opp_hold,
+                  "engine": args.engine}
     if args.opponent_module:
         # Exploiter mode: every draw lands in the league bucket, whose single
         # entry is the frozen module agent. No mirror (the opponent must never
@@ -628,7 +637,8 @@ def main() -> None:
         os.environ.setdefault("PTCG_FALLBACK_TRACK", "1")
         env_kwargs = {"mirror_root": None, "anchor_ckpt": str(args.init_from),
                       "league": [("module", args.opponent_module)],
-                      "mix": (0.0, 1.0), "alternate_seats": True}
+                      "mix": (0.0, 1.0), "alternate_seats": True,
+                      "engine": args.engine}
         print(f"EXPLOITER MODE: frozen opponent = module '{args.opponent_module}' "
               f"(100% of episodes, seats strictly alternating)")
 
@@ -715,6 +725,7 @@ def main() -> None:
         chain = _init_chain(args.init_from)
         provenance = {
             "trainer": "pufferl-3.0",
+            "engine": args.engine,
             "git_sha": _git_sha(),
             "init_from": str(args.init_from),
             "init_policy_full": str(args.init_policy_full) if args.init_policy_full else None,
@@ -917,7 +928,7 @@ def main() -> None:
                     workers=args.promote_workers,
                     threshold=args.promote_threshold,
                     deck_pool=deck_pool, mirror_deck=args.mirror_deck,
-                    seed=args.seed + epoch)
+                    seed=args.seed + epoch, engine=args.engine)
                 run_state["gates"] += 1
                 if verdict["promote"]:
                     run_state["promotions"] += 1
