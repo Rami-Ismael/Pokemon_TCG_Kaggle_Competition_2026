@@ -11,9 +11,10 @@ because v5 deviated from the paper in two places, and both were mistakes:
 1. **v5 picked the wrong weighting scheme for the offline RL step.** It ran the
    exponential-advantage weighting (`w = exp(β·(outcome − V(s)))`), the one
    variant from the paper's menu that our runs had already shown does not beat
-   the plain imitation checkpoint. v6 runs the paper's variants we have never
-   tried: **Binary** (`w = 1[advantage > 0]`) and **Binary+MaxQ** (binary
-   weighting plus a value-maximization term).
+   the plain imitation checkpoint. v6 runs the recipe the paper's strongest
+   model (SynRL-V2) actually uses: **Binary** weighting (`w = 1[advantage >
+   0]`) with the calibrated critic, and — as the one follow-on — the paper's
+   **two-hot critic** upgrade (§1.1).
 2. **v5's self-play was not real OSFP.** OSFP (optimistic smooth fictitious
    play, ByteRL, arXiv:2303.04096) is by definition played against the
    learner's *own* population — its lineage. v5 put external agents in the
@@ -60,8 +61,31 @@ L_actor = E[ −w(h,a)·log π(a|h) − λ·E_{a~π}[Q(h,a)] ]
 with a menu of weightings: `w = 1` (imitation), exponential advantage (what we
 ran as `adv-exp` — the AWR/MARWIL corner), **Binary** `w = 1[A > 0]`, and
 **Binary+MaxQ** (binary weighting with `λ > 0`). The critic behind `A` is
-trained with one-step TD; the paper's final SynRL-V2 model switches the value
-head to two-hot classification targets.
+trained with one-step TD.
+
+**Verified against the paper, 2026-08-13.** The paper's own reads: "RL updates
+significantly outperform the pure-BC Transformers, but there is little
+difference between the many RL variants considered" — and its strongest model,
+**SynRL-V2, uses binary-weighted BC with the value head switched to two-hot
+classification targets, no MaxQ term**. So the paper's most powerful offline
+recipe is: binary weighting, plus a *more accurate critic* (the two-hot head
+tightens the filter — the paper credits it with "entirely new levels of
+pessimism in the binary BC filter"). The differentiator is critic quality, not
+extra loss terms. v6's step is exactly that recipe at our scale: `adv-binary`
+with the calibrated critic now, the two-hot critic as the one follow-on that
+the paper's results actually rank above it.
+
+**How win/loss becomes a per-decision label.** The raw label is one bit per
+*game*; used directly (the `outcome` arm) it boosts every blunder in a won
+game and buries every good move in a lost one — measured null. The critic is
+the credit-assignment device that localizes it: `V(s)` is the expected
+win probability at each state, so `A = outcome − V(s)` grades each decision
+against expectation — a win from a losing position marks those moves as
+better-than-expected; coasting on a won position carries no signal. The
+mandatory `calibration.json` maps the critic's raw output onto a real
+probability scale so the *sign* of `A` is trustworthy, and binary weighting
+consumes only that sign. That is the whole chain: one bit per game → calibrated
+per-state expectation → per-decision keep/drop.
 
 Why binary:
 
@@ -83,14 +107,16 @@ Concretely:
 - Critic: `critic_outcome_day_2026-07-26_seed42` **with its mandatory
   `calibration.json`** — the uncalibrated shipped critic is worse than a
   constant.
-- **Binary+MaxQ is registered, not runnable.** The `λ·E_{a~π}[Q]` term needs a
-  per-action Q head; our critic is state-value only. Build it only if the
-  plain Binary run finishes with schedule left. The two-hot value target is
-  likewise the paper's refinement, optional here.
-- Before launching, verify the variant choice against the paper's results
-  table (which weighting its SynRL agents actually use) — audit the
-  implementation against the paper line by line, per the standing rule that
-  the first suspect in any bad Metamon-style result is our own implementation.
+- **Binary+MaxQ is dropped, not deferred.** The paper's strongest model does
+  not use the MaxQ term, and the `λ·E_{a~π}[Q]` term needs a per-action Q head
+  our critic doesn't have. If the plain Binary run finishes with schedule
+  left, the follow-on the paper's results rank first is the **two-hot
+  critic**: retrain the outcome critic with two-hot classification targets,
+  re-fit `calibration.json`, rerun `adv-binary` with it. Better sign accuracy
+  feeds the filter directly; no trainer change needed.
+- Variant choice verified against the paper 2026-08-13 (see §1.1 above). The
+  standing rule stands: if the run scores badly, audit our implementation
+  against the paper line by line before any verdict about the method.
 - Corpus: `--train-split train_combined_v4` (all 53 days, includes 07-27),
   streamed with `--data-source auto --num-workers 4`. Holdout day is
   **2026-08-09**; never evaluate a v4-corpus checkpoint on 07-27.
