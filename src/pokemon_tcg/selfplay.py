@@ -32,9 +32,15 @@ from . import config
 from .il_dataset import MAX_OPTIONS, encode_observation
 from .il_model import PTCGImitationPolicy
 
-_CG_DIR = config.PROJECT_ROOT / "data" / "external" / "cg-lib"
-if (_CG_DIR / "cg" / "api.py").exists() and str(_CG_DIR) not in sys.path:
-    sys.path.insert(0, str(_CG_DIR))
+# cg-lib for the direct engine. A worktree may lack data/external/cg-lib, so
+# walk up to the primary checkout's copy (the benchmark_agents.py pattern).
+for _cand in [config.PROJECT_ROOT / "data" / "external" / "cg-lib",
+              *(p / "data" / "external" / "cg-lib"
+                for p in config.PROJECT_ROOT.parents)]:
+    if (_cand / "cg" / "api.py").exists():
+        if str(_cand) not in sys.path:
+            sys.path.insert(0, str(_cand))
+        break
 
 DECK_PATH = config.PROJECT_ROOT / "agents" / "il_agent" / "deck.csv"
 
