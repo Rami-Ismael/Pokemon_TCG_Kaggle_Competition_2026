@@ -41,7 +41,7 @@ conditions, and the standing rules (v5 §2). Cited, not re-derived.
 |---|---|---|---|---|
 | **`imitation`** | nothing — reuse the finished 53-day checkpoint | — | `bc_alldays52_jun16_aug07_seed42` (main repo, `agents/`) | done; do not retrain |
 | **`binary_advantage`** | `train_il.py --weight-arm adv-binary --critic-dir <calibrated critic>` on the streamed HF corpus | `imitation` | `models/binaryadv_alldays_jun16-aug07_seed42` | flag already exists; runnable today |
-| **`lineage_selfplay`** | new driver: play games against lineage checkpoints via the direct battle API, write episodes in corpus format, resume `train_il.py` over human ∪ self-play episodes with the same binary-advantage loss | `binary_advantage` | `models/lineage_selfplay_gen<N>_seed42` | **new build** — driver + episode writer do not exist |
+| **`lineage_selfplay`** | `scripts/run_lineage_selfplay.py`: play games against lineage checkpoints via the direct battle API, write episodes in corpus format, resume `train_il.py` over human ∪ self-play episodes with the same binary-advantage loss | `binary_advantage` | `models/lineage_selfplay_<mint-rule>_gen<N>_seed42` | **built + smoke-tested 2026-08-13** (driver, episode writer, `--selfplay-shards` union in `train_il.py`); waiting on the `binary_advantage` checkpoint to launch |
 
 No step waits on a performance read. The next step starts when the previous
 process exits 0. Halting conditions stay removed (v5 §0); the diagnostics in §5
@@ -140,6 +140,19 @@ The v6 design, mapped to our stack:
   fictitious-play mixture). Start `p_opt = 0.5`; log it per game. Lineage =
   `binary_advantage` + every generation checkpoint this run produces. The
   imitation checkpoint is in the lineage (it is this model's ancestor).
+- **When a generation checkpoint joins the lineage — open question, now an
+  experiment (2026-08-13).** Rami's design: a copy is minted into the lineage
+  (and becomes the tryout reference) only when the live policy wins >70% of
+  decisive tryout games against the newest lineage member; the v4/v5
+  precedent is that this trigger fired 0/31 under PPO+KL, but the v6 offline
+  loop is a different regime. The driver carries both rules behind one flag
+  (`--mint-rule tryout|cadence`); either way the new checkpoint becomes the
+  current policy — the rules differ only in lineage membership. Arms,
+  metrics, and the committed decision rule live in
+  `notes/experiments/2026-08-13-lineage-minting-rule.md`: adopt tryout only
+  if its final agent beats the cadence arm's on the anchored 8-agent pool
+  with non-overlapping Glicko intervals; overlap, or a tryout that never
+  fires, ships cadence.
 - **Deck diversity carries the paper's team-diversity role.** `--opp-deck
   sample` stays, and the *learner's* deck is sampled too — both sides draw from
   the full legal deck pool every game. This is the analogue of the Variety Team
@@ -157,10 +170,17 @@ The v6 design, mapped to our stack:
   only. The paper's light damage/health shaping is flagged, not adopted —
   consistent with our terminal-only rule to date; adopting it would be a
   separate experiment.
-- **What must be built:** the driver (suggested name
-  `scripts/run_lineage_selfplay.py`) — lineage checkpoint registry, OSFP
-  sampler, deck sampler for both seats, episode writer in corpus format, and
-  the resume call into `train_il.py`. Nothing else in this step is new code.
+- **Built 2026-08-13:** `scripts/run_lineage_selfplay.py` (driver: lineage
+  registry, OSFP sampler, deck sampler for both seats, mint rules, resume
+  call), `src/pokemon_tcg/lineage_selfplay.py` (recording game workers +
+  corpus-format episode assembly), `--selfplay-shards` in `train_il.py` /
+  `extra_local_files` in `ShardILDataset` (the human ∪ self-play union).
+  Episodes stream straight into zstd parquet shards — no raw JSON on disk
+  unless `--keep-raw`. Smoke-verified: episodes round-trip exactly through
+  `iter_episode_decisions` (the round-trip caught and fixed a reward-
+  convention bug: loser must be −1, not 0 — 0 reads as a draw), and the full
+  generate → resume → tryout loop runs clean. Illegal pool decks are dropped
+  loudly on first engine rejection.
 - Disk: one episode day is ~20 GiB raw and the laptop has ~45–49 GB free.
   Self-play episodes are ours to regenerate, so they may live locally and be
   deleted after training — but **never** delete or overwrite the human raw
@@ -229,6 +249,7 @@ what may be submitted.
 |---|---|---|
 | `binary_advantage` vs `imitation` | local tournament vs the anchored 8-agent pool, ≥50 games each, Glicko with RD | overlap = "no measurable gain", write it that way |
 | `lineage_selfplay_gen1` vs `binary_advantage` | same battery, paired decks | same |
+| mint rule: `tryout` vs `cadence` | anchored 8-agent pool, ≥50 games, Glicko with RD (card: `notes/experiments/2026-08-13-lineage-minting-rule.md`) | adopt tryout only on non-overlapping intervals in its favor; overlap or a never-firing tryout ships cadence |
 | Any "better/beats/improves" claim | settled ladder read via the `leaderboard-check` skill | local numbers alone never support the claim — five inversions on record |
 
 Submission rules unchanged from v5 §2: never submit without asking first;
@@ -266,3 +287,9 @@ reporting both counts.
   exactly like weak-opponent farming did.
 - Dataset composition per generation: human vs self-play episode counts.
 - `p_opt` and the realized opponent-sampling histogram.
+
+The driver already writes the raw material for these: per-game rows in
+`<out>/selfplay_log.jsonl`, per-generation summaries (opponent histogram,
+per-opponent win rates, fallback rate, deck rejections) in
+`<out>/generation_log.jsonl`, every mint decision in `<out>/mint_log.jsonl`,
+and the human-vs-self-play episode counts in the resume step's stdout.
