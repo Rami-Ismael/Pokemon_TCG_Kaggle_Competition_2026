@@ -54,7 +54,17 @@ except Exception:
     pass
 
 # --- Tunables -------------------------------------------------------------
-USE_SEARCH = True            # master switch for the Monte-Carlo re-ranker
+# Search default-off, matching agent_core_improved: until 2026-08-11 the bandit
+# here was dead code (HeuristicPolicy.choose() truncated to maxCount=1, so it
+# never saw a second candidate), so every benchmark/Glicko number this agent
+# has ever posted is the PURE HEURISTIC's. Turning search on by default would
+# silently change a pool regular, so it stays an env-var override for A/B
+# runs. (An earlier version of this comment cited the sibling's "live search
+# lost 35.0%" as evidence the search path is weak — that number is VOID: it
+# was measured with the perspective-inversion bug fixed 2026-08-12 in
+# simulate_action. Live-search strength at the fixed sign is an open
+# question, not a settled negative.)
+USE_SEARCH = os.environ.get("USE_SEARCH", "0") != "0"
 SEARCH_TIME_BUDGET = 1.5     # seconds per MAIN decision (match cap is 600s)
 SEARCH_MAX_CANDIDATES = 8    # only re-rank the heuristic's top-8 moves
 LOW_DECK_COUNT = 10          # "running low on deck" threshold for card economy
@@ -244,8 +254,10 @@ class HeuristicPolicy:
 
     # ---- top-level entry ------------------------------------------------
     def choose(self) -> list[int]:
-        """Score every legal option, return indices sorted best-first,
-        truncated to how many we're allowed to pick (maxCount)."""
+        """Score every legal option, return ALL indices sorted best-first.
+        Never truncate here: maxCount is enforced at the agent() boundary,
+        and search needs the full ranking (maxCount is 1 on MAIN decisions,
+        so truncating here starves the bandit down to a single candidate)."""
         if not self.select.option or self.select.maxCount == 0:
             return []
         if self.context == SelectContext.MAIN:
@@ -253,7 +265,7 @@ class HeuristicPolicy:
         scores = [self._score_option(o) for o in self.select.option]
         ranked = [i for i, _ in sorted(enumerate(scores), key=lambda kv: kv[1], reverse=True)]
         self._remember_lunatone_ability(ranked)
-        return ranked[: self.select.maxCount]
+        return ranked
 
     # ---- board census ---------------------------------------------------
     def _count_cards(self) -> None:
@@ -758,6 +770,7 @@ def simulate_action(obs, action) -> float:
     # SearchState directly (fields: .observation, .searchId); there is no
     # ApiResult wrapper and no .error field — failures raise exceptions. The
     # original code assumed a `.state.searchId` wrapper, which no longer exists.
+    began = False
     try:
         root = search_begin(
             obs,
@@ -768,24 +781,59 @@ def simulate_action(obs, action) -> float:
             opponent_hand=op_hand,
             opponent_active=op_active,
         )
+        began = True
         step = search_step(root.searchId, [action])
+        if step is None or step.observation is None:
+            return -float("inf")
+        cur = rollout_turn(step.searchId, step.observation, st.yourIndex)
+        val = evaluate_state(cur)
+        # PERSPECTIVE FIX (2026-08-12): when the rollout ends because the turn
+        # passed (e.g. an attack), the engine renders the final observation for
+        # the OPPONENT — yourIndex flips — and evaluate_state is view-relative.
+        # Without negation every turn-ending line is scored as the opponent's
+        # advantage, inverting the leaf on exactly the most common rollouts.
+        # evaluate_state is not perfectly antisymmetric (hand/deck economy terms
+        # differ), but its dominant tiers (terminal 1e7, prizes 1e4) are, so
+        # negation restores the sign of what actually decides comparisons.
+        if cur.current is not None and cur.current.yourIndex != st.yourIndex:
+            val = -val
+        return val
     except Exception:
         return -float("inf")
-    if step is None or step.observation is None:
-        return -float("inf")
-    cur = rollout_turn(step.searchId, step.observation, st.yourIndex)
-    return evaluate_state(cur)
+    finally:
+        # LEAK FIX (2026-08-12): search_end() is what lets the native engine
+        # reuse the states this simulation allocated ("Memory used during the
+        # search will be reused in the next search"). Without it every sim
+        # leaks engine states permanently — invisible on a laptop, an OOM on
+        # the evaluator's ~197 MiB envelope. agent_core_improved always did
+        # this; this lineage never did.
+        if began:
+            try:
+                search_end()
+            except Exception:
+                pass
 
 
 # =========================================================================
 # LAYER: flat_monte_carlo_search — UCB1 bandit over the top-K root actions
 # =========================================================================
-def flat_monte_carlo_search(obs):
-    """Re-rank the heuristic's top-K MAIN moves by Monte-Carlo simulation.
+def flat_monte_carlo_search(obs, base_order=None, override_margin=0.0):
+    """Re-rank the top-K MAIN moves of a base ranking by Monte-Carlo simulation.
 
     This is MCTS with the expansion step removed: SELECT the next candidate to
     try with UCB1, SIMULATE it with a determinized one-turn rollout, and
     BACKPROP the value into a running mean. No tree is built beyond the root.
+
+    `base_order` is the candidate-ranking seam: a full best-first list of
+    option indices. Defaults to this file's own heuristic; external arms
+    (e.g. an IL policy) may pass their own ranking and reuse the bandit,
+    rollout, and evaluator unchanged.
+
+    `override_margin` is the veto seam: search may displace the base
+    ranking's top action only if its mean simulated value beats that
+    action's mean by at least this much (in leaf-value units). 0.0 (the
+    default) reproduces the unconditional-override behavior; large values
+    turn search into a blunder veto that mostly defers to the base policy.
 
     Returns a full permutation of option indices (best first), or None if
     search is unavailable / not applicable so the caller can fall back."""
@@ -796,7 +844,8 @@ def flat_monte_carlo_search(obs):
         return None
     t0 = time.time()
 
-    base_order = HeuristicPolicy(obs).choose()
+    if base_order is None:
+        base_order = HeuristicPolicy(obs).choose()
     candidates = base_order[:SEARCH_MAX_CANDIDATES]
     if not candidates:
         return None
@@ -847,8 +896,17 @@ def flat_monte_carlo_search(obs):
                 total_val[best_a] += val
 
         # winner = highest empirical mean; keep the rest of the heuristic order
-        best_action = max(candidates,
-                          key=lambda a: total_val[a] / visits[a] if visits[a] > 0 else -float("inf"))
+        mean = lambda a: total_val[a] / visits[a] if visits[a] > 0 else -float("inf")
+        best_action = max(candidates, key=mean)
+        base_top = base_order[0]
+        if override_margin > 0.0 and best_action != base_top:
+            # An override must DEMONSTRATE the margin. If the base policy's
+            # top action was never successfully simulated, the gap cannot be
+            # measured — defer to the base policy rather than overriding on
+            # one-sided evidence.
+            if (visits.get(base_top, 0) == 0
+                    or mean(best_action) - mean(base_top) < override_margin):
+                best_action = base_top
         return [best_action] + [i for i in base_order if i != best_action]
     except Exception:
         return None

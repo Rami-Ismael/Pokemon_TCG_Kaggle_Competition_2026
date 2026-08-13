@@ -1,0 +1,83 @@
+{
+  "agents": [
+    "bc_alldays52_ucb1_rerank",
+    "bc_alldays52_jun16_aug07_seed42"
+  ],
+  "games_per_pair": 5,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "bc_alldays52_ucb1_rerank": {
+      "bc_alldays52_ucb1_rerank": 0,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_rerank": 10,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "games": {
+    "bc_alldays52_ucb1_rerank": {
+      "bc_alldays52_ucb1_rerank": 0,
+      "bc_alldays52_jun16_aug07_seed42": 10
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_rerank": 10,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "wall_clock_sec": {
+    "bc_alldays52_ucb1_rerank": {
+      "bc_alldays52_ucb1_rerank": 0.0,
+      "bc_alldays52_jun16_aug07_seed42": 153.3663830757141
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_rerank": 153.3663830757141,
+      "bc_alldays52_jun16_aug07_seed42": 0.0
+    }
+  },
+  "total_wall_clock_sec": 153.36732482910156,
+  "overall_win_pct": {
+    "bc_alldays52_ucb1_rerank": 0.0,
+    "bc_alldays52_jun16_aug07_seed42": 100.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "bc_alldays52_ucb1_rerank": {
+      "p": 0.0,
+      "lo": 0.0,
+      "hi": 27.75401687666166
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "p": 100.0,
+      "lo": 72.24598312333835,
+      "hi": 100.0
+    }
+  },
+  "glicko": {
+    "bc_alldays52_ucb1_rerank": {
+      "rating": 1074.402899099795,
+      "rd": 148.66231677760138,
+      "gxe": 17.319632219271586
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "rating": 1925.597100900205,
+      "rd": 148.66231677760138,
+      "gxe": 82.68036778072842
+    }
+  },
+  "fallback_diag": {
+    "bc_alldays52_ucb1_rerank": {
+      "decisions": 76,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "decisions": 501,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

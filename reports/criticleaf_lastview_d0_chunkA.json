@@ -1,0 +1,83 @@
+{
+  "agents": [
+    "bc_alldays52_ucb1_criticleaf",
+    "bc_alldays52_jun16_aug07_seed42"
+  ],
+  "games_per_pair": 3,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0,
+      "bc_alldays52_jun16_aug07_seed42": 1
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 5,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "games": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0,
+      "bc_alldays52_jun16_aug07_seed42": 6
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 6,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "wall_clock_sec": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0.0,
+      "bc_alldays52_jun16_aug07_seed42": 214.0672001838684
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 214.0672001838684,
+      "bc_alldays52_jun16_aug07_seed42": 0.0
+    }
+  },
+  "total_wall_clock_sec": 214.0698480606079,
+  "overall_win_pct": {
+    "bc_alldays52_ucb1_criticleaf": 16.666666666666668,
+    "bc_alldays52_jun16_aug07_seed42": 83.33333333333333
+  },
+  "overall_win_pct_wilson_ci": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "p": 16.666666666666664,
+      "lo": 3.005258587173032,
+      "hi": 56.350943656364606
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "p": 83.33333333333334,
+      "lo": 43.649056343635394,
+      "hi": 96.99474141282697
+    }
+  },
+  "glicko": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "rating": 1246.7305214038297,
+      "rd": 181.327218071054,
+      "gxe": 28.693565217825725
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "rating": 1753.2694785961703,
+      "rd": 181.327218071054,
+      "gxe": 71.30643478217428
+    }
+  },
+  "fallback_diag": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "decisions": 108,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "decisions": 333,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}
