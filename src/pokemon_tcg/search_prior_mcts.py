@@ -14,7 +14,12 @@ comparability; what changes is the evaluator:
 - leaf values: the offline critic (PTCGImitationPolicy trunk + scalar head,
   outcome scale [0,1]) put through a calibrated, CENTERED transform to
   [-1,1] from the searching player's perspective — see ILPriorEvaluator's
-  docstring for why centering is mandatory, not cosmetic.
+  docstring for why centering is mandatory, not cosmetic. The critic is only
+  ever run on ROOT-VIEW observations: opponent-view nodes show our own
+  determinization filler as the mover's hand, where the critic measurably
+  collapses to a near-constant (2026-08-12), so those nodes inherit the
+  nearest root-view ancestor's value plus objective prize progress instead
+  (see _create_node / _inherited_value).
 
 Determinization legality: identical to search_api.mcts_agent — own deck
 sampled from our known 60, opponent unknowns filled with placeholders,
@@ -129,24 +134,38 @@ class ILPriorEvaluator:
         return max(-1.0, min(1.0, 2.0 * (v01 - self.center)))
 
     @torch.inference_mode()
-    def evaluate(self, obs_dict: dict, actions: list[list[int]]) -> tuple[float, list[float]]:
-        """Return (to-act-player value in [-1,1], prior prob per action).
+    def evaluate(self, obs_dict: dict, actions: list[list[int]],
+                 want_value: bool = True) -> tuple[float | None, list[float]]:
+        """Return (to-act-player value in [-1,1] or None, prior prob per action).
 
         `actions` are option-index combinations (the node's children).
         Falls back to (0, uniform) if the observation cannot be encoded —
         never raises into the search.
+
+        `want_value=False` skips the critic forward and returns value=None —
+        used on OPPONENT-VIEW nodes, whose observations show our own
+        determinization filler as the mover's hand. Measured 2026-08-12
+        (flat-bandit line, same critic family): on filler-visible states the
+        critic collapses to a near-constant (std 0.037 vs 0.178 on real
+        states), so its value there is bias, not signal. Those nodes get an
+        inherited value instead (see _create_node). The policy PRIORS are
+        still computed from this observation — the mover's legal options and
+        the board are real; only the hand channel is fabricated — and that
+        half was not measured broken. If opponent-ply priors are ever
+        suspected, measure before changing.
         """
         n_actions = len(actions)
         uniform = [1.0 / n_actions] * n_actions if n_actions else []
+        fallback_value = None if not want_value else 0.0
         feats = encode_observation(obs_dict)
         if feats is None:
-            return 0.0, uniform
+            return fallback_value, uniform
         n_real = feats.pop("n_real_options")
         batch = {k: v.unsqueeze(0).to(self.device) for k, v in feats.items()}
 
         logits = self.policy(**batch)["logits"][0]
         if bool(torch.isnan(logits[: n_real + 1]).any()):
-            return 0.0, uniform
+            return fallback_value, uniform
         # DECLINE slot: whenever minCount==0 the encoder RESERVES a slot for
         # it at index n_real (with >=48 options the real-option budget shrinks
         # to MAX_OPTIONS-1 so the slot still fits — see _encode_options), so
@@ -172,6 +191,8 @@ class ILPriorEvaluator:
         t = torch.tensor(child_logits, dtype=torch.float32)
         priors = torch.softmax(t, dim=0).tolist()
 
+        if not want_value:
+            return None, priors
         value = 0.0
         if self.critic is not None:
             v01 = float(self.critic(**batch).view(-1)[0])  # outcome scale [0,1]
@@ -179,19 +200,43 @@ class ILPriorEvaluator:
         return value, priors
 
 
-def _node_children(obs, evaluator: ILPriorEvaluator, your_index: int) -> tuple[float, list[Child]]:
-    """Build children + priors for a non-terminal search observation."""
+# One net prize of progress in inherited-value units (leaf range is [-1, 1]).
+# Matches the flat-bandit lastview leaf's weight.
+PRIZE_WEIGHT = 0.5
+
+
+def _node_children(obs, evaluator: ILPriorEvaluator, your_index: int,
+                   want_value: bool = True) -> tuple[float | None, list[Child]]:
+    """Build children + priors for a non-terminal search observation.
+
+    The returned value is from the ROOT player's perspective, or None when
+    `want_value=False` (opponent-view nodes; see evaluate())."""
     actions = enumerate_actions(obs)
     # The legal empty selection (minCount==0, maxCount>=1) is a real move the
     # notebook scheme never enumerates (14.5% of corpus decisions allow
     # sub-max selections; the empty one is the case our DECLINE head scores).
     if (obs.select.minCount or 0) == 0 and (obs.select.maxCount or 0) >= 1:
         actions = actions + [[]]
-    value, priors = evaluator.evaluate(_obs_to_dict(obs), actions)
+    value, priors = evaluator.evaluate(_obs_to_dict(obs), actions,
+                                       want_value=want_value)
     state = obs.current
-    v = value if state.yourIndex == your_index else -value
+    v = None
+    if value is not None:
+        v = value if state.yourIndex == your_index else -value
     children = [Child(a, p) for a, p in zip(actions, priors)]
     return v, children
+
+
+def _inherited_value(lv_value: float, lv_state, state, your_index: int) -> float:
+    """Root-perspective value for a filler-visible node: the nearest
+    root-view ancestor's critic value plus the OBJECTIVE progress since it —
+    net prize delta (players[] is seat-indexed, valid in any view)."""
+    r = your_index
+    net_prizes = (
+        (len(lv_state.players[r].prize) - len(state.players[r].prize))
+        - (len(lv_state.players[1 - r].prize) - len(state.players[1 - r].prize))
+    )
+    return max(-1.0, min(1.0, lv_value + PRIZE_WEIGHT * net_prizes))
 
 
 def _create_node(parent, search_state, your_index, evaluator) -> Node:
@@ -205,8 +250,27 @@ def _create_node(parent, search_state, your_index, evaluator) -> Node:
             node.value = 1.0
         else:
             node.value = -1.0
-    else:
+    elif state.yourIndex == your_index:
+        # Root-view node: the critic sees a real-shaped observation (our own
+        # hand is genuine; determinized zones stay hidden). Its value seeds
+        # the inherited value of any opponent-view descendants.
         node.value, node.children = _node_children(obs, evaluator, your_index)
+        node._lv_state, node._lv_value = state, node.value
+    else:
+        # Opponent-view node: the observation shows our determinization
+        # filler as the mover's hand — measured to collapse the critic to a
+        # near-constant (see evaluate()). Priors still come from this
+        # observation; the VALUE is inherited from the nearest root-view
+        # ancestor plus objective prize progress.
+        _, node.children = _node_children(obs, evaluator, your_index,
+                                          want_value=False)
+        lv_state = getattr(parent, "_lv_state", None) if parent else None
+        if lv_state is not None:
+            node.value = _inherited_value(parent._lv_value, lv_state, state,
+                                          your_index)
+            node._lv_state, node._lv_value = lv_state, parent._lv_value
+        else:
+            node.value = 0.0  # unreachable in practice: the root is our turn
     node.backprop(node.value)
     return node
 

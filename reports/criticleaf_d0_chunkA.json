@@ -1,0 +1,83 @@
+{
+  "agents": [
+    "bc_alldays52_ucb1_criticleaf",
+    "bc_alldays52_jun16_aug07_seed42"
+  ],
+  "games_per_pair": 3,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 6,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "games": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0,
+      "bc_alldays52_jun16_aug07_seed42": 6
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 6,
+      "bc_alldays52_jun16_aug07_seed42": 0
+    }
+  },
+  "wall_clock_sec": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "bc_alldays52_ucb1_criticleaf": 0.0,
+      "bc_alldays52_jun16_aug07_seed42": 282.89518690109253
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "bc_alldays52_ucb1_criticleaf": 282.89518690109253,
+      "bc_alldays52_jun16_aug07_seed42": 0.0
+    }
+  },
+  "total_wall_clock_sec": 282.8991069793701,
+  "overall_win_pct": {
+    "bc_alldays52_ucb1_criticleaf": 0.0,
+    "bc_alldays52_jun16_aug07_seed42": 100.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "p": 0.0,
+      "lo": 0.0,
+      "hi": 39.03430336530645
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "p": 100.0,
+      "lo": 60.96569663469354,
+      "hi": 99.99999999999999
+    }
+  },
+  "glicko": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "rating": 1120.0957821057445,
+      "rd": 181.327218071054,
+      "gxe": 20.3352637003835
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "rating": 1879.9042178942555,
+      "rd": 181.327218071054,
+      "gxe": 79.6647362996165
+    }
+  },
+  "fallback_diag": {
+    "bc_alldays52_ucb1_criticleaf": {
+      "decisions": 132,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "bc_alldays52_jun16_aug07_seed42": {
+      "decisions": 406,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

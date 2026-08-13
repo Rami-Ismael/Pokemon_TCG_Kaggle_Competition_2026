@@ -70,7 +70,7 @@ def install_probe():
             ctx["root"] = node
         return node
 
-    def evaluate(self, obs_dict, actions):
+    def evaluate(self, obs_dict, actions, want_value=True):
         # Directly separate the two silent-degradation causes from a
         # legitimately flat prior. encode_observation returning None and NaN
         # logits both yield (0.0, uniform) with no counter anywhere.
@@ -93,7 +93,7 @@ def install_probe():
         if cause:
             STATS[f"degraded:{cause}"] += 1
             ctx["uniform"] += 1
-        value, priors = orig_eval(self, obs_dict, actions)
+        value, priors = orig_eval(self, obs_dict, actions, want_value=want_value)
         if len(actions) >= 2 and len(set(round(p, 9) for p in priors)) == 1:
             STATS["flat_prior_ge2_actions"] += 1
         STATS["eval_calls"] += 1
@@ -101,7 +101,14 @@ def install_probe():
         # the mean leaf value over the states search ACTUALLY visits is the
         # bias that the turn-parity sign flip turns into a systematic
         # preference. It must be ~0.
-        LEAF_VALUES.append(float(value))
+        # 2026-08-12 evaluator fix: opponent-view nodes no longer consult the
+        # critic (want_value=False -> value None, inherited value computed in
+        # _create_node instead) -- count them separately so the critic-leaf
+        # distribution stays comparable to the pre-fix probe.
+        if value is None:
+            STATS["value_skipped_opponent_view"] += 1
+        else:
+            LEAF_VALUES.append(float(value))
         return value, priors
 
     def choose(obs_dict, my_deck, evaluator, search_count=30, rng=None):
@@ -205,6 +212,7 @@ def main():
     d["pairs"] = args.pairs
     d["search_count"] = int(os.environ.get("MCTS_IL_SEARCH_COUNT", "30"))
     d["critic_dir"] = os.environ.get("MCTS_IL_CRITIC_DIR")
+    d["model_dir"] = os.environ.get("MCTS_IL_MODEL_DIR")  # policy the wrapper serves
     d["center_leaf"] = os.environ.get("MCTS_IL_CENTER_LEAF", "1")
     if LEAF_VALUES:
         n = len(LEAF_VALUES)
