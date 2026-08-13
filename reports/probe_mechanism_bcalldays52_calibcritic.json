@@ -1,0 +1,49 @@
+{
+ "decisions": 615,
+ "nopts_ge48:False": 0,
+ "eval_calls": 17368,
+ "searched": 591,
+ "terminal_nodes_total": 66,
+ "changed_vs_prior": 11,
+ "changed_vs_confident_prior": 9,
+ "root_children_expanded_total": 776,
+ "forced_fastpath": 24,
+ "submax_gap": 26,
+ "top2_visit_margin_le1": 4,
+ "terminal_seen": 58,
+ "combo_capped": 2,
+ "agent": "mcts_il_agent",
+ "opponent": "il_bc_alldays52_final",
+ "pairs": 5,
+ "search_count": 30,
+ "critic_dir": "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/dataviz-search-il-bc-comparison-d1d279/models/critic_outcome_bcalldays52trunk_2026-08-01_to_2026-08-07_seed42",
+ "center_leaf": "1",
+ "leaf_value": {
+  "n": 17368,
+  "mean": -0.11621,
+  "std": 0.55516,
+  "frac_nonzero": 1.0
+ },
+ "changed_vs_prior_rate_of_searched": 0.0186,
+ "changed_vs_prior_rate_of_all_decisions": 0.0179,
+ "wall_sec": 263.9,
+ "match_result": [
+  5,
+  5,
+  0,
+  263.8940680027008
+ ],
+ "nodes_per_searched_decision_mean": 29.5,
+ "maxdepth_mean": 17.7,
+ "maxdepth_max": 30,
+ "root_children_mean": 9.27,
+ "ms_mean": 428.1,
+ "ms_p95": 620.4,
+ "ms_max": 1011.8,
+ "agent_diag": {
+  "enabled": true,
+  "decisions": 615,
+  "fallbacks": 0,
+  "fallback_rate": 0.0
+ }
+}

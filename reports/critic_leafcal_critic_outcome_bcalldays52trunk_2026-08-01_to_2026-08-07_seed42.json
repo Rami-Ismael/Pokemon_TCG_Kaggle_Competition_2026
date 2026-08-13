@@ -1,0 +1,71 @@
+{
+  "critic_dir": "models/critic_outcome_bcalldays52trunk_2026-08-01_to_2026-08-07_seed42",
+  "critic_metadata": {
+    "step": 92477,
+    "target": "mc",
+    "td_gamma": 1.0,
+    "init_from": "models/bc_alldays52_jun16_aug07_seed42",
+    "data_source": "hub",
+    "hub_days": [
+      "2026-08-01",
+      "2026-08-02",
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07"
+    ],
+    "shuffle_outcomes": false,
+    "seed": 42,
+    "eval_mse": 0.23631822569761426,
+    "constant_baseline_mse": 0.25,
+    "accuracy_at_0.5": 0.6328125,
+    "majority_base_rate": 0.523046875,
+    "n_rows": 12800,
+    "n_decisive": 12800,
+    "beats_constant_baseline": true,
+    "beats_majority_accuracy": true
+  },
+  "eval_split": "train-2026-08-10",
+  "data_source": "hub",
+  "n_rows_total": 128000,
+  "n_rows_fit": 68102,
+  "n_rows_report": 59898,
+  "base_rate_report_half": 0.5304017066955566,
+  "platt": {
+    "a": 0.49009518657026974,
+    "b": 0.14683614323599647
+  },
+  "center": 0.5163270831108093,
+  "raw": {
+    "mse": 0.2056967318058014,
+    "mse_const_base_rate": 0.2490757703781128,
+    "mse_const_half": 0.25,
+    "rel_gain_vs_base_rate": 0.1741600096487076,
+    "auc": 0.7675297022281881,
+    "ece_10bin": 0.09905607664986937,
+    "mean_pred": 0.5182863473892212,
+    "mean_leaf_uncentered": 0.03657277673482895
+  },
+  "platt_scaled": {
+    "mse": 0.1962655782699585,
+    "mse_const_base_rate": 0.2490757703781128,
+    "mse_const_half": 0.25,
+    "rel_gain_vs_base_rate": 0.212024606118793,
+    "auc": 0.767529708942402,
+    "ece_10bin": 0.043928061620004503,
+    "mean_pred": 0.5253421068191528,
+    "mean_leaf_uncentered": 0.05068424344062805
+  },
+  "leaf": {
+    "mean_uncentered": 0.05068424344062805,
+    "mean_centered": 0.019182410091161728,
+    "std_centered": 0.4374525547027588,
+    "abs_bias_removed": 0.05068424344062805
+  },
+  "verdict": {
+    "useful": true,
+    "calibrated_after_platt": true,
+    "drop": false
+  }
+}
