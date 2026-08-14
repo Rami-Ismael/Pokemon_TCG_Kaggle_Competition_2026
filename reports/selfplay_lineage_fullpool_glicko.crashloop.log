@@ -1,0 +1,667 @@
+=== 08-13 16:24:09 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12664.71it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 9530.56it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 17606.75it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:24:16 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:24:16 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 15521.74it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 20879.10it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18903.03it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:24:21 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:24:26 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 10924.07it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18406.00it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 15168.37it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:24:31 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:24:37 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13323.57it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 15126.67it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 14882.94it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:24:40 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:24:48 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13865.09it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 16489.06it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 19986.92it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:24:51 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:24:58 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 7063.85it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 10305.83it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18760.27it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:03 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:25:09 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 19297.25it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 25243.21it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22483.64it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:12 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:25:19 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22409.79it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 24335.62it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22963.92it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:22 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:25:29 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 7984.41it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 10280.78it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 14841.93it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:35 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:25:40 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11710.30it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22414.70it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 26842.84it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:45 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:25:50 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 17386.60it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23996.67it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23079.93it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:25:53 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:26:00 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23260.38it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22993.85it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 22769.77it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:26:03 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:26:10 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18513.21it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 17327.14it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18867.49it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:26:20 :: FULL-POOL GLICKO done rc=0
+=== 08-13 16:26:21 :: FULL-POOL GLICKO: selfplay_lineage_alldays52@teal_mask_ogerpon_ex vs ALL agents
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 19899.09it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 18973.83it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 19759.24it/s]
+[mcts_il_agent] critic dir /Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/critic_search_prior missing -> prior-only search
+Traceback (most recent call last):
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 987, in <module>
+    main()
+    ~~~~^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 981, in main
+    run_benchmark(agents, args.games_per_pair, glicko_path=args.glicko_path,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  out_path=args.out, persist_glicko=persist_glicko,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  tb_dir=None if args.no_tb else args.tb_dir, focus=args.focus)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 732, in run_benchmark
+    fns = {name: load_agent(name) for name in agents}
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/scripts/benchmark_agents.py", line 623, in load_agent
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 56, in <module>
+    _bc = _load("bc_prior_alldays_search_arm", _CORE_DIR / "bc_prior.py")
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/search_arms/prior_alldays_lucario/agent_core.py", line 47, in _load
+    spec.loader.exec_module(mod)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/agents/mega_lucario/bc_prior.py", line 59, in <module>
+    raise FileNotFoundError(
+    ...<3 lines>...
+    )
+FileNotFoundError: IL_MODEL_DIR=/Users/ramiismael/projects/kaggle/Pokemon_TCG_Kaggle_Competition_2026/.claude/worktrees/rl-pipeline-v5-no-kill-gates-e4851a/models/il_alldays_0804 does not exist; refusing to fall back to the dev checkpoint. In a git worktree, symlink the checkpoint dir from the main checkout.
+=== 08-13 16:27:39 :: FULL-POOL GLICKO rerun (all checkpoints linked)
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: Successfully loaded OpenSpiel environments: 41.
+[kaggle_environments.envs.open_spiel_env.open_spiel_env] INFO: OpenSpiel games skipped: 0.
+Loading 94 agents: selfplay_lineage_alldays52@teal_mask_ogerpon_ex, rule_baseline, improved_prob_main, agent_core_improved, proto, il_agent, il_agent_v2, il_agent_v3_final, il_agent_v3_best, mcts_il_agent, search_prior_alldays, kojimar_lucario, grunt, random_legal, kiyotah_dragapult, kiyotah_iono, kiyotah_abomasnow, dedquoc_rule_engine, ryotasueyoshi_alakazam, makthanithin_improved_prob, jek1wantaufik_lucario, mechi22_alakazam, plamen06_steel, s2_e0_s42, s2_e0_s43, s2_e0_s44, s2_e1_s42, s2_e1_s43, s2_e1_s44, s2_e2_s42, s2_e2_s43, s2_e2_s44, prvsiyan_control_v11, prvsiyan_grimbelief_alakazam, prvsiyan_templates_alakazam, pllinas_alakazam, biohack44_day2, pixiux_lucario_v63, makthanithin_1084_baseline, daniilkrasnovvv_conservative_prob, romanrozen_strong_start, avikdas567_heuristic, makimakiai_rl, tb_archaludon, tb_dragapult, tb_alakazam, tb_starmie, tb_abomasnow, tb_iono, tb_search, tb_heuristic, tb_rulecore, tb_lucario, wmh_alakazam, wmh_megastarmie, wmh_bellibolt, wmh_garchomp, wmh_typhlosion, wmh_trevenant, wmh_mewtwo, wmh_grimmsnarl, wmh_kangaskhan, wmh_ogerpon, wmh_chandelure, wmh_froslass, tetsutani_grimmsnarl, s2v2_e0_s42, s2v2_e0_s43, s2v2_e0_s44, s2v2_e3_s42, s2v2_e3_s43, s2v2_e3_s44, s2v2_efb_s42, s2v2_efb_s43, s2v2_efb_s44, il_alldays_0804, selfplay_g1_final, selfplay_g1_ref430k, selfplay_g2_final, selfplay_g3_final, ppo_u60416, ppo_u120832, ppo_g2_u107520, grid_medium, grid_small_comb, wbc_outcome_alldays52, selfplay_lineage_alldays52, il_bc_2ep, il_bc_3ep, il_bc_4ep, il_medium_3ep, il_small_comb_2ep, il_hfstream_comb_3ep, il_alldays_3ep
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 9032.91it/s]
+bc_prior available: True
+AGENT RESULT (first 8): [9]
+num options: 11
+context: 0
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11268.06it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23629.88it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11979.80it/s]
+bc_prior available: True
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12175.34it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12087.62it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11547.52it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11383.87it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11212.26it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12565.81it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12770.92it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12676.64it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13165.20it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 10391.01it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11362.39it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11296.17it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12679.15it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11850.51it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11735.55it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11764.69it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11496.41it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12072.22it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 24225.02it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11494.08it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11642.10it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11536.58it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11045.50it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 12264.93it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 14066.33it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11137.34it/s]
+Loading weights:   0%|          | 0/154 [00:00<?, ?it/s]Loading weights: 100%|██████████| 154/154 [00:00<00:00, 10491.89it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13397.88it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23345.28it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23745.02it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11717.27it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23837.93it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 11623.32it/s]
+Loading weights:   0%|          | 0/154 [00:00<?, ?it/s]Loading weights: 100%|██████████| 154/154 [00:00<00:00, 21282.47it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 21954.05it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 13056.37it/s]
+Loading weights:   0%|          | 0/122 [00:00<?, ?it/s]Loading weights: 100%|██████████| 122/122 [00:00<00:00, 23474.86it/s]
+/Users/ramiismael/.local/share/uv/python/cpython-3.13-macos-aarch64-none/lib/python3.13/multiprocessing/resource_tracker.py:400: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-54268-gha4lkib'}
+  warnings.warn(

@@ -1,0 +1,440 @@
+{
+  "agents": [
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex",
+    "wmh_grimmsnarl",
+    "tetsutani_grimmsnarl",
+    "wmh_kangaskhan",
+    "mechi22_alakazam",
+    "makthanithin_improved_prob",
+    "kiyotah_dragapult",
+    "plamen06_steel",
+    "wmh_garchomp"
+  ],
+  "games_per_pair": 4,
+  "seeded": false,
+  "seed_note": "cabt exposes no RNG seed from Python (native engine, no seed param on battle_start or in cabt.json's configuration schema) -- deck shuffles and opening hands are NOT held constant across runs or pairings.",
+  "wins": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 0,
+      "wmh_grimmsnarl": 8,
+      "tetsutani_grimmsnarl": 7,
+      "wmh_kangaskhan": 7,
+      "mechi22_alakazam": 2,
+      "makthanithin_improved_prob": 4,
+      "kiyotah_dragapult": 3,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 8
+    },
+    "wmh_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 0,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "tetsutani_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 1,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "wmh_kangaskhan": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 1,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "mechi22_alakazam": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 6,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "makthanithin_improved_prob": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 4,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "kiyotah_dragapult": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 5,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "plamen06_steel": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "wmh_garchomp": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 0,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    }
+  },
+  "games": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 0,
+      "wmh_grimmsnarl": 8,
+      "tetsutani_grimmsnarl": 8,
+      "wmh_kangaskhan": 8,
+      "mechi22_alakazam": 8,
+      "makthanithin_improved_prob": 8,
+      "kiyotah_dragapult": 8,
+      "plamen06_steel": 8,
+      "wmh_garchomp": 8
+    },
+    "wmh_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "tetsutani_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "wmh_kangaskhan": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "mechi22_alakazam": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "makthanithin_improved_prob": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "kiyotah_dragapult": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "plamen06_steel": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    },
+    "wmh_garchomp": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 8,
+      "wmh_grimmsnarl": 0,
+      "tetsutani_grimmsnarl": 0,
+      "wmh_kangaskhan": 0,
+      "mechi22_alakazam": 0,
+      "makthanithin_improved_prob": 0,
+      "kiyotah_dragapult": 0,
+      "plamen06_steel": 0,
+      "wmh_garchomp": 0
+    }
+  },
+  "wall_clock_sec": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 0.0,
+      "wmh_grimmsnarl": 3.1403698921203613,
+      "tetsutani_grimmsnarl": 4.423548936843872,
+      "wmh_kangaskhan": 3.6234359741210938,
+      "mechi22_alakazam": 4.4296488761901855,
+      "makthanithin_improved_prob": 3.89886212348938,
+      "kiyotah_dragapult": 3.048529863357544,
+      "plamen06_steel": 2.870649814605713,
+      "wmh_garchomp": 3.8476479053497314
+    },
+    "wmh_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 3.1403698921203613,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "tetsutani_grimmsnarl": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 4.423548936843872,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "wmh_kangaskhan": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 3.6234359741210938,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "mechi22_alakazam": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 4.4296488761901855,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "makthanithin_improved_prob": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 3.89886212348938,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "kiyotah_dragapult": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 3.048529863357544,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "plamen06_steel": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 2.870649814605713,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    },
+    "wmh_garchomp": {
+      "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 3.8476479053497314,
+      "wmh_grimmsnarl": 0.0,
+      "tetsutani_grimmsnarl": 0.0,
+      "wmh_kangaskhan": 0.0,
+      "mechi22_alakazam": 0.0,
+      "makthanithin_improved_prob": 0.0,
+      "kiyotah_dragapult": 0.0,
+      "plamen06_steel": 0.0,
+      "wmh_garchomp": 0.0
+    }
+  },
+  "total_wall_clock_sec": 29.30923318862915,
+  "overall_win_pct": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": 60.9375,
+    "wmh_grimmsnarl": 0.0,
+    "tetsutani_grimmsnarl": 12.5,
+    "wmh_kangaskhan": 12.5,
+    "mechi22_alakazam": 75.0,
+    "makthanithin_improved_prob": 50.0,
+    "kiyotah_dragapult": 62.5,
+    "plamen06_steel": 100.0,
+    "wmh_garchomp": 0.0
+  },
+  "overall_win_pct_wilson_ci": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "p": 60.9375,
+      "lo": 48.691694294402396,
+      "hi": 71.94461145310355
+    },
+    "wmh_grimmsnarl": {
+      "p": 0.0,
+      "lo": 0.0,
+      "hi": 32.441561951087685
+    },
+    "tetsutani_grimmsnarl": {
+      "p": 12.5,
+      "lo": 2.241690886329617,
+      "hi": 47.08948057698615
+    },
+    "wmh_kangaskhan": {
+      "p": 12.5,
+      "lo": 2.241690886329617,
+      "hi": 47.08948057698615
+    },
+    "mechi22_alakazam": {
+      "p": 75.0,
+      "lo": 40.926987910258916,
+      "hi": 92.85223111419724
+    },
+    "makthanithin_improved_prob": {
+      "p": 50.0,
+      "lo": 21.521252682444185,
+      "hi": 78.47874731755581
+    },
+    "kiyotah_dragapult": {
+      "p": 62.5,
+      "lo": 30.573785458380186,
+      "hi": 86.3158240538479
+    },
+    "plamen06_steel": {
+      "p": 100.0,
+      "lo": 67.55843804891231,
+      "hi": 100.0
+    },
+    "wmh_garchomp": {
+      "p": 0.0,
+      "lo": 0.0,
+      "hi": 32.441561951087685
+    }
+  },
+  "glicko": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "rating": 1609.8158307613598,
+      "rd": 63.82194333157927,
+      "gxe": 60.32729956559528
+    },
+    "wmh_grimmsnarl": {
+      "rating": 1092.7701969011996,
+      "rd": 162.58345555332244,
+      "gxe": 18.503958473801784
+    },
+    "tetsutani_grimmsnarl": {
+      "rating": 1194.5776476758997,
+      "rd": 162.58345555332244,
+      "gxe": 24.751175003553698
+    },
+    "wmh_kangaskhan": {
+      "rating": 1194.5776476758997,
+      "rd": 162.58345555332244,
+      "gxe": 24.751175003553698
+    },
+    "mechi22_alakazam": {
+      "rating": 1703.6149015494002,
+      "rd": 162.58345555332244,
+      "gxe": 67.72767610798552
+    },
+    "makthanithin_improved_prob": {
+      "rating": 1500.0,
+      "rd": 162.58345555332244,
+      "gxe": 50.0
+    },
+    "kiyotah_dragapult": {
+      "rating": 1601.8074507747,
+      "rd": 162.58345555332244,
+      "gxe": 59.16142059484645
+    },
+    "plamen06_steel": {
+      "rating": 1907.2298030988004,
+      "rd": 162.58345555332244,
+      "gxe": 81.49604152619821
+    },
+    "wmh_garchomp": {
+      "rating": 1092.7701969011996,
+      "rd": 162.58345555332244,
+      "gxe": 18.503958473801784
+    }
+  },
+  "fallback_diag": {
+    "selfplay_lineage_alldays52@teal_mask_ogerpon_ex": {
+      "decisions": 3196,
+      "enabled": true,
+      "fallbacks": 0,
+      "fallback_rate": 0.0
+    },
+    "mechi22_alakazam": {
+      "deck_returns": 8,
+      "decisions": 675,
+      "policy_ok": 675,
+      "fallback_rate": 0.0
+    }
+  },
+  "fallback_first": {}
+}

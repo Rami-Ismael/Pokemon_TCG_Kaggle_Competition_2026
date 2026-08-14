@@ -117,6 +117,14 @@ Persuade — pushing back on build-first requests is explicitly wanted.
 
 ## Following instructions
 
+- **Never stop, kill, or displace a running training job unless Rami
+  explicitly says to stop it.** A restatement of direction ("v5 should only
+  do self-play against its own lineage") is a statement about what the NEXT
+  run should be — it is not a stop order for the CURRENT one. On 2026-08-13 a
+  session killed a 10-hour self-play run 2.7 hours before completion by
+  over-reading exactly such a message, minutes after Rami had agreed to let
+  it finish. When a new instruction might imply killing running work, ask
+  first or apply it to the next run; never infer a kill.
 - Execute Rami's prompt as written. Do not add extra steps, extra scope, or
   extra deliverables he didn't ask for. If something genuinely useful is
   missing (e.g. "these weights should be backed up to HuggingFace"), say it

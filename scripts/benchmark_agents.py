@@ -377,6 +377,8 @@ AGENT_FILES = {
     # EMPTY directory (no config.json/safetensors), which is why the older
     # `grid_medium_comb` arm above silently falls back to non-ML behaviour --
     # it is deliberately not re-wired here.
+    "wbc_outcome_alldays52": REPO / "agents" / "il_arms" / "wbc_outcome_alldays52" / "agent_core.py",
+    "selfplay_lineage_alldays52": REPO / "agents" / "il_arms" / "selfplay_lineage_alldays52" / "agent_core.py",
     "il_bc_2ep": REPO / "agents" / "il_arms" / "il_bc_2ep" / "agent_core.py",
     "il_bc_3ep": REPO / "agents" / "il_arms" / "il_bc_3ep" / "agent_core.py",
     "il_bc_4ep": REPO / "agents" / "il_arms" / "il_bc_4ep" / "agent_core.py",
