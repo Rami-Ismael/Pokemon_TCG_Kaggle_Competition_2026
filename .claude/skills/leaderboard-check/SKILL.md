@@ -118,6 +118,14 @@ Ledger gotchas (all hit for real on 2026-08-04):
    call a ladder delta inside that band an improvement or a regression without
    corroboration (repeated reads, or a margin well beyond it).
 
+   **Corollary — readings expire.** Refresh (`submission_ledger.py refresh` or
+   `check_leaderboard.py`) immediately before every message that quotes a
+   score, rank, or ordering; never reuse a reading from earlier in the session.
+   On 2026-08-14 a session told Rami "weighted BC 595.4" while the live page
+   read ~504 (it had slid 595.4→507.6 over the day), and the three v5 stages'
+   ordering reshuffled twice while their scores settled. Quote the timeline
+   (first→latest) rather than a single number whenever the drift matters.
+
 3. **The team score rests on the ACTIVE set, not best-ever.** The leaderboard
    counted 2 submissions for the team while we had 9 completed — recent
    submissions displace older ones. This is how the team fell from 804.0
