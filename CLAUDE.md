@@ -135,3 +135,20 @@ Persuade — pushing back on build-first requests is explicitly wanted.
   (see rank 804 above) makes them look better.
 - If an instruction can't be completed, say which part failed and stop —
   never report partial work in completed-work language.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues on `Rami-Ismael/Pokemon_TCG_Kaggle_Competition_2026`,
+driven by the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default labels, each string equal to its name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. Both are written
+lazily, only when a term or decision actually gets resolved — treat their absence
+as normal, not as something to fix. See `docs/agents/domain.md`.
