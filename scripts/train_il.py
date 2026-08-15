@@ -15,9 +15,11 @@ Usage:
         # 50 train / 20 eval episodes, a tiny 2-layer/32-dim model, 1 epoch.
         # Verifies the pipeline end-to-end in ~1-2 minutes on CPU.
 
-Full-split runtime: measured at ~10.86 steps/sec (hidden=192/layers=6/
-heads=6, batch=64, MPS) -- project wall-clock from that before launching;
-do not launch anything projected over 1 hour without checking the math.
+Full-split runtime: measured at ~989 rows/sec = 3.9 steps/sec at the
+default batch 256 (hidden=192/layers=6/heads=6, MPS, 4 workers, warm HF
+cache, idle machine; 2026-08-13 throughput card -- the old 10.86 steps/s
+batch-64 note predates the warm cache). Project wall-clock from that
+before launching; the 53-day corpus is ~13.5 h per epoch-equivalent.
 
 STEP-DRIVEN, NOT EPOCH-DRIVEN. `--epochs` (a float now, not int) only sets
 the SCHEDULE LENGTH (est_total_steps = n_episodes * ROWS_PER_EPISODE /
@@ -274,7 +276,11 @@ def main() -> None:
                           "truncated one -- see module docstring")
     ap.add_argument("--total-steps", type=int, default=None,
                      help="override the epochs->steps estimate directly")
-    ap.add_argument("--batch-size", type=int, default=64)
+    ap.add_argument("--batch-size", type=int, default=256,
+                     help="256 = fastest measured MPS config (989 rows/s vs 883 "
+                          "at 64; 2026-08-13 throughput card). Throughput-only "
+                          "adoption: quality at this batch was NOT re-validated, "
+                          "and lr stays 3e-4 (unscaled).")
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--warmup-steps", type=int, default=200)
     ap.add_argument("--grad-clip", type=float, default=1.0)
@@ -312,8 +318,9 @@ def main() -> None:
                      help="text file of episode_ids (one per line): restrict TRAIN "
                           "episodes to this allowlist (hub source only). Used for "
                           "skill-filtered-demonstration arms.")
-    ap.add_argument("--num-workers", type=int, default=0,
-                     help="DataLoader workers for the train stream (hub source only; "
+    ap.add_argument("--num-workers", type=int, default=4,
+                     help="DataLoader workers for the train stream (hub source only — "
+                          "pass 0 with --data-source local; "
                           "needs >= that many shards). 0 reproduces the old "
                           "single-process loader, which was 56%% data-wait on MPS")
     ap.add_argument("--eval-every-steps", type=int, default=None,
