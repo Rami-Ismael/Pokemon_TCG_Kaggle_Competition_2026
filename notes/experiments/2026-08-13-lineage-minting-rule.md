@@ -49,8 +49,39 @@
   (lineage-only league decision); selfplay-mechanism-taxonomy and
   ByteRL/OSFP (arXiv:2303.04096).
 
-## Result (fill after)
-- **Observed:**
-- **Decision:**
-- **What we learned:**
-- **Belief update:**
+## Result (filled 2026-08-15)
+- **Observed:** Both arms ran 1 generation (1000 games, p_opt 0.5, identical
+  OSFP draws: 480 mirror / 272 bc / 248 binaryadv; fallback 0.03% both) +
+  0.25-epoch binary-advantage resume (184,887 steps, LR fully annealed).
+  Arm A's tryout did NOT fire: 47W/53L = 0.470 vs the >0.70 bar, lineage
+  stayed at 2; arm B minted unconditionally, lineage 3. Anchored-pool
+  battery (50 games/pairing, 400 games/agent, same Ogerpon deck, fallback
+  tracking on): arm A 73.2% ± 2.2 field WR (fresh Glicko 1710.4, RD 90.5),
+  arm B 75.5% ± 2.2 (1671.2, RD 75.9) — intervals overlap on both metrics.
+  Neither arm separates from their shared init binaryadv (72.5% ± 2.2);
+  per §3 that reads "no measurable gain from one self-play generation".
+  bc_alldays52 baseline 62.7% ± 2.4 (its first battery row was 100%
+  fallback — missing worktree model/, caught by the diagnostic, rerun clean).
+- **Decision:** SHIP CADENCE — both pre-registered clauses fired
+  independently (overlapping intervals; tryout never fired). The cadence
+  arm's checkpoint (lineage_selfplay_cadence_gen1_seed42) is the v6
+  self-play line's ship candidate.
+- **What we learned:** The 70% bar stays unfired in the offline-resume
+  regime too (cumulative 0/94 PPO tryouts in v4/v5, now 0/1 here) — a
+  0.25-epoch resume over human ∪ 1000 self-play episodes moves the policy
+  ~nowhere relative to its own reference (47/100 decisive). At one
+  generation the rules differ by a single lineage member, so a real
+  minting-rule effect needs multi-generation budgets; this run bounds the
+  one-generation effect at < ~2σ.
+- **Belief update:** Rami's tryout design isn't wrong, it's unreachable at
+  this dose — the bar asks for a 70/30 edge that one cheap generation
+  never produces. If v7 wants a growing lineage, either mint on cadence or
+  drop the bar toward ~55%.
+- **Guardrail caveat:** KL-to-imitation-reference was never implemented in
+  the driver (grep 0 hits) — NOT computed as pre-registered. Proxy used:
+  holdout (2026-08-09) top-1 vs the human corpus: bc .7606 → binaryadv
+  .7433 → arms .726, top-3 stable ~.95 — mild monotone drift from the
+  human prior, no collapse. Gap noted; wire real KL before v7 relies on it.
+- **Scale confound:** one generation, 1000 games, laptop-scale, single
+  seed — bounds this minting rule at this dose only; the Metamon
+  replication is untouched by any read here.

@@ -163,6 +163,24 @@ AGENT_FILES = {
     # il_agent_v3_best: reports/pool_star_*.json (2026-08-10).
     "bc_alldays52_jun16_aug07_seed42":
         REPO / "agents" / "bc_alldays52_jun16_aug07_seed42" / "main.py",
+    # v6 step 2 (rl_pipeline_v6.md §1.1): binary-advantage weighted BC
+    # (w = 1[outcome - V(s) > 0], calibrated outcome critic), 1 epoch over
+    # train_combined_v4 (264,495 eps), init from bc_alldays52. Bundle-local
+    # model/ + Teal Mask Ogerpon ex deck (same deck as the 55491496 and
+    # 55478780 subs -> same-deck A/B vs bc_alldays52@ogerpon and the wbc arm).
+    "binaryadv_alldays52_jun16_aug07_seed42":
+        REPO / "agents" / "binaryadv_alldays52_jun16_aug07_seed42" / "main.py",
+    # v6 step 3 mint-rule experiment arms (rl_pipeline_v6.md §1.2, card
+    # notes/experiments/2026-08-13-lineage-minting-rule.md): one generation of
+    # lineage-only OSFP self-play (1000 games, p_opt 0.5, both decks sampled)
+    # + 0.25-epoch binary-advantage resume over human ∪ self-play, init from
+    # binaryadv_alldays52. Identical configs; the ONLY difference is the mint
+    # rule (tryout: 47W/53L, not minted / cadence: minted unconditionally).
+    # Same Ogerpon bundle as binaryadv -> deck held fixed across all our arms.
+    "lineage_selfplay_tryout_gen1_seed42":
+        REPO / "agents" / "lineage_selfplay_tryout_gen1_seed42" / "main.py",
+    "lineage_selfplay_cadence_gen1_seed42":
+        REPO / "agents" / "lineage_selfplay_cadence_gen1_seed42" / "main.py",
     # IL-prior MCTS (search_prior_mcts.py): same IL checkpoint and
     # deck as il_agent, plus Search-API lookahead. Any il_agent-vs-this
     # comparison is therefore policy-vs-policy+search, deck held fixed.
