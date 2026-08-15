@@ -63,3 +63,15 @@ agents/il_agent_v2/model/
 agents/il_agent_v3_final/model/
 agents/il_agent_v3_best/model/
 agents/bc_alldays52_jun16_aug07_seed42/model
+# v6 arm agents: code tracked, weights live in models/** + HF backup (Rami/ptcg-s2v2-arms);
+# vendored bundle libs (cg/, pokemon_tcg/) come from the submission layout, not the repo
+agents/binaryadv_alldays52_jun16_aug07_seed42/model/
+agents/binaryadv_alldays52_jun16_aug07_seed42/cg/
+agents/binaryadv_alldays52_jun16_aug07_seed42/pokemon_tcg/
+agents/lineage_selfplay_tryout_gen1_seed42/model/
+agents/lineage_selfplay_tryout_gen1_seed42/cg/
+agents/lineage_selfplay_tryout_gen1_seed42/pokemon_tcg/
+agents/lineage_selfplay_cadence_gen1_seed42/model/
+agents/lineage_selfplay_cadence_gen1_seed42/cg/
+agents/lineage_selfplay_cadence_gen1_seed42/pokemon_tcg/
+agents/*/submission.tar.gz
