@@ -963,18 +963,41 @@ def _decisions_to_features(
     decisions: Iterable[tuple[dict, int, frozenset, DecisionMeta]],
     with_meta: bool = False,
     scores: dict[int, float] | None = None,
+    with_next: bool = False,
 ) -> Iterator[dict[str, torch.Tensor]]:
     """Encode a decision stream into training examples, dropping non-decisions.
 
     ``with_meta=True`` attaches the ``ILDataset.META_KEYS`` weighting fields
     (see that docstring); ``scores`` is the ``load_manifest_scores()`` dict
     backing the ``avg_score`` field.
+
+    ``with_next=True`` additionally attaches this row's SUCCESSOR state under
+    ``next_``-prefixed encoder keys plus a ``has_next`` flag -- the s' half of
+    a one-step TD advantage (`adv-td-binary`). Pairing happens HERE, upstream
+    of ``_shuffled``, because the shuffle buffer destroys temporal order; a
+    row is paired only with the next successfully-encoded decision of the SAME
+    (episode_id, seat), so the multi-select unroll's intra-turn steps pair with
+    each other and the last decision of a seat is terminal. Terminal rows carry
+    a self-copy under ``next_`` (never consumed -- ``has_next`` is False) so
+    every row has an identical key set for the default collate.
     """
+    def _finish(row: dict, nxt: dict | None) -> dict:
+        src = nxt if nxt is not None else row
+        # list(): when nxt is None the source IS `row`, which we mutate below.
+        for k, v in list(src.items()):
+            if k in _ENCODER_ONLY_SKIP:
+                continue
+            row["next_" + k] = v
+        row["has_next"] = torch.tensor(nxt is not None)
+        return row
+
+    pending: tuple[dict, dict, int, int] | None = None
     for obs, label, exclude, meta in decisions:
-        feats = encode_observation(obs, exclude=exclude)
-        if feats is None:
+        enc = encode_observation(obs, exclude=exclude)
+        if enc is None:
             continue
-        feats.pop("n_real_options", None)
+        enc.pop("n_real_options", None)
+        feats = dict(enc)
         feats["label"] = torch.tensor(label, dtype=torch.long)
         if with_meta:
             feats["outcome"] = torch.tensor(meta.outcome, dtype=torch.float32)
@@ -984,7 +1007,24 @@ def _decisions_to_features(
             feats["avg_score"] = torch.tensor(
                 (scores or {}).get(meta.episode_id, -1.0), dtype=torch.float32
             )
-        yield feats
+        if not with_next:
+            yield feats
+            continue
+        if pending is not None:
+            prow, _, pseat, peid = pending
+            same = pseat == meta.seat and peid == meta.episode_id
+            yield _finish(prow, enc if same else None)
+        pending = (feats, enc, meta.seat, meta.episode_id)
+    if with_next and pending is not None:
+        yield _finish(pending[0], None)
+
+
+# Keys present on an encoded row that are NOT model inputs, so they must not be
+# mirrored into the `next_` half (the critic is called with the next-state keys
+# verbatim).
+_ENCODER_ONLY_SKIP = frozenset(
+    {"label", "outcome", "seat", "episode_id", "turn", "avg_score", "has_next"}
+)
 
 
 def _shuffled(examples: Iterator, buffer_size: int, rng: random.Random) -> Iterator:
@@ -1114,8 +1154,10 @@ class ShardILDataset(IterableDataset):
         with_meta: bool = False,
         episode_ids: set[int] | None = None,
         extra_local_files: list[str | Path] | None = None,
+        with_next: bool = False,
     ) -> None:
         self.split = split
+        self.with_next = with_next
         self.repo_id = repo_id or config.HF_EPISODES_REPO
         self.local_root = local_root
         self.max_episodes = max_episodes
@@ -1263,6 +1305,7 @@ class ShardILDataset(IterableDataset):
                     ),
                     with_meta=self.with_meta,
                     scores=scores,
+                    with_next=self.with_next,
                 )
 
         yield from _shuffled(features(), self.shuffle_buffer, rng)

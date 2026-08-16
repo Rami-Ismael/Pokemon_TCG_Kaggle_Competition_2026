@@ -28,7 +28,7 @@ import torch.nn as nn
 
 from .il_model import PTCGILConfig, PTCGImitationPolicy
 
-ADV_ARMS = ("adv-exp", "adv-binary")
+ADV_ARMS = ("adv-exp", "adv-binary", "adv-td-binary")
 _STATE_FILE = "critic_state.pt"
 _CONFIG_FILE = "config.json"
 
@@ -101,9 +101,74 @@ def advantage_weights(
     # Clamping at consumption bounds every adv-exp weight to e^beta by
     # construction (advantage ∈ [−1, 1]), so no artifact row can grab the
     # batch's gradient.
+    if arm == "adv-td-binary":
+        raise ValueError(
+            "adv-td-binary needs the successor state; call td_advantage_weights()"
+        )
     adv = outcome - value.clamp(0.0, 1.0)
     if arm == "adv-exp":
         w = torch.exp(beta * adv).clamp(max=clip)
     else:  # adv-binary
         w = (adv > 0).float()
     return w * known
+
+
+def load_calibration(critic_dir: str | Path) -> tuple[float, float]:
+    """(platt_a, platt_b) from the critic's mandatory calibration.json.
+
+    Raises if absent: the uncalibrated critic is measured worse than a constant
+    (memory `shipped-mcts-critic-worse-than-constant`), so silently running
+    without it is the failure mode this load exists to prevent.
+    """
+    p = Path(critic_dir) / "calibration.json"
+    if not p.exists():
+        raise FileNotFoundError(
+            f"{p} missing -- fit it with scripts/fit_critic_calibration.py before "
+            "using this critic as a training-time filter"
+        )
+    cal = json.loads(p.read_text())
+    return float(cal["platt_a"]), float(cal["platt_b"])
+
+
+def _platt(value: torch.Tensor, a: float, b: float) -> torch.Tensor:
+    """sigmoid(a * logit(clip(v,0,1)) + b) -- scripts/fit_critic_calibration.py.
+
+    Matches that module's apply_platt exactly, including the [0,1] clip, so the
+    probabilities here are the ones the calibration was fitted to produce.
+    """
+    v = value.clamp(1e-6, 1.0 - 1e-6)
+    return torch.sigmoid(a * torch.log(v / (1.0 - v)) + b)
+
+
+def td_advantage_weights(
+    outcome: torch.Tensor,
+    value: torch.Tensor,
+    value_next: torch.Tensor,
+    has_next: torch.Tensor,
+    platt_a: float,
+    platt_b: float,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Binary weights from a ONE-STEP TD advantage. Returns (weights, adv).
+
+    Why this arm exists: `adv-binary`'s advantage is `outcome - V(s)` with
+    outcome in {0, 0.5, 1} and V clamped to [0,1], so a win is ALWAYS positive
+    and a loss ALWAYS negative -- the critic can never flip the sign, and
+    binary weighting consumes only the sign. That arm is therefore winners-only
+    BC with the critic as dead code (audited 2026-08-15). The paper's filter
+    needs an advantage the critic can actually decide.
+
+    Non-terminal rows: `A = V(s') - V(s)` on the RAW critic outputs. Raw, not
+    calibrated, on purpose -- Platt is monotone so it cannot change the sign of
+    a difference, while its [0,1] clip WOULD tie every pair of out-of-range
+    values to A = 0 and silently drop those rows (the raw critic is on record
+    emitting out-of-range values on even midgames). gamma = 1: reward is
+    terminal-only, so there is nothing to discount against.
+
+    Terminal rows: `A = outcome - platt(V(s))`. Here the comparison is against
+    an absolute {0, 0.5, 1} outcome, so the critic's SCALE matters and the
+    calibration is load-bearing. These are ~1 row per seat-episode.
+    """
+    known = (outcome >= 0.0).float()
+    term_adv = outcome - _platt(value, platt_a, platt_b)
+    adv = torch.where(has_next.bool(), value_next - value, term_adv)
+    return (adv > 0).float() * known, adv

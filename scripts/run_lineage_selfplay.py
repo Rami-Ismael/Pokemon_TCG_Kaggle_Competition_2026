@@ -271,7 +271,7 @@ def run_resume_training(gen: int, current: str, out: Path, args) -> str:
     cmd = [
         sys.executable, str(Path(__file__).parent / "train_il.py"),
         "--init-from", current,
-        "--weight-arm", "adv-binary",
+        "--weight-arm", args.weight_arm,
         "--critic-dir", str(args.critic_dir),
         "--data-source", "hub",
         "--train-split", args.train_split,
@@ -334,6 +334,12 @@ def main() -> None:
     ap.add_argument("--train-workers", type=int, default=4)
     ap.add_argument("--epochs", type=float, default=1,
                     help="resume epochs per generation")
+    ap.add_argument("--weight-arm", default="adv-binary",
+                    choices=["adv-binary", "adv-td-binary"],
+                    help="resume loss weighting. adv-binary is winners-only in "
+                         "disguise (outcome fixes the advantage sign, audited "
+                         "2026-08-15); adv-td-binary uses V(s')-V(s), the one "
+                         "the critic can actually decide.")
     ap.add_argument("--train-arg", action="append", default=[],
                     help="extra raw args appended to the train_il.py resume "
                          "command (repeatable)")
