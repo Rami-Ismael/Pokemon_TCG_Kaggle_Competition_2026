@@ -293,3 +293,57 @@ The driver already writes the raw material for these: per-game rows in
 per-opponent win rates, fallback rate, deck rejections) in
 `<out>/generation_log.jsonl`, every mint decision in `<out>/mint_log.jsonl`,
 and the human-vs-self-play episode counts in the resume step's stdout.
+
+---
+
+## §6 — The 5-generation tryout run (pre-registered 2026-08-15, before launch)
+
+Supersedes §1's "one generation" scope on Rami's direction. Design settled by
+interview 2026-08-15; nothing below was written after seeing a result.
+
+**What changed since §1 was written.** `adv-binary` is degenerate. In
+`offline_critic.py` the advantage is `outcome - value.clamp(0.0, 1.0)`, so with
+`outcome` in {0,1} the sign of the advantage is the sign of the outcome and
+`w = 1[A > 0]` keeps every row of a won game and drops every row of a lost one.
+The critic never affected a single weight. **The shipped
+`binaryadv_alldays_jun16-aug07_seed42` checkpoint implements winners-only
+filtering, not the paper's binary weighting.** Every number attached to it must
+be labeled that way. `adv-td-binary` (`V(s') - V(s)`) is the corrected arm and
+is what this run uses.
+
+**Evidence state of the "binary advantage beats plain BC" claim, 2026-08-15.**
+Ladder, same deck (Ogerpon): 492.9 vs 523.7 — inside the observed +-100
+same-build spread, so unresolved. Local 8-agent battery: disqualified, 8 of 70
+agents is a subset and not a pool number. Holdout top-1: .7433 vs .7606,
+favors BC, and top-1 does not predict Glicko. **No surviving evidence either
+way.** The full 70-agent pool battery is what settles it.
+
+**Configuration.**
+
+| Knob | Value |
+|---|---|
+| generations | 5 attempts (a failed tryout still advances the current policy; it just does not join the lineage) |
+| mint rule | `tryout`, threshold lowered 0.70 -> **0.60** |
+| games/generation | 65,000 |
+| weighting | `adv-td-binary` |
+| p_opt | 0.5 |
+| resume | 0.25 epoch over human UNION self-play |
+| init / lineage | `binaryadv` / [`bc_alldays52`, `binaryadv`] |
+| seed | 42, single seed — every number from this run is labeled single-seed |
+
+**Success criterion, committed before launch.** Binary advantage beats plain
+behavior cloning on the **full ~70-agent pool, 50 games per pairing**, with
+non-overlapping Glicko intervals. Overlap reads as "no measurable gain", and
+the write-up says so in those words. The scale confound (9-day-scale training
+against ~40-day competitors) is stated either way.
+
+**Committed reads that are not stopping conditions.** All 5 generations run
+regardless of intermediate results. If the 0.60 bar fires 0/5, the finding is
+"the tryout bar is unreachable at this dose across two algorithm families
+(0/100 cumulative)" — that is a result, not a failed run. No submission before
+the full-pool battery has run.
+
+**Known and accepted at launch.** The run finishes after the ladder closes
+(2026-08-16 23:59 UTC, confirmed from the Kaggle API); it is a research result,
+not a submission. The `adv-td-binary` training path had never executed at
+launch time.

@@ -242,7 +242,9 @@ def main() -> None:
                     help="clone only the winning seat of each training episode "
                          "(drops loser-side and drawn-game decisions; ~halves rows). "
                          "Applies to the train split only; eval stays both-seats.")
-    ap.add_argument("--weight-arm", choices=["none", "outcome", "adv-exp", "adv-binary"],
+    ap.add_argument("--weight-arm",
+                    choices=["none", "outcome", "adv-exp", "adv-binary",
+                             "adv-td-binary"],
                     default="none",
                     help="per-row loss weighting (S2-E2/E4, rl_pipeline_v1.md §2.1): "
                          "'outcome' weights each row by exp(beta*(outcome-0.5)) -- "
@@ -446,6 +448,15 @@ def main() -> None:
         from pokemon_tcg.offline_critic import load_critic  # noqa: E402
         critic = load_critic(args.critic_dir, device=device)
         print(f"critic loaded from {args.critic_dir} (frozen, train-time only)")
+    # adv-td-binary needs the successor state alongside every row; the pairing
+    # happens in the dataset, upstream of the shuffle buffer.
+    td_arm = args.weight_arm == "adv-td-binary"
+    platt_a = platt_b = None
+    if td_arm:
+        from pokemon_tcg.offline_critic import load_calibration  # noqa: E402
+        platt_a, platt_b = load_calibration(args.critic_dir)
+        print(f"calibration: platt_a={platt_a:.6f} platt_b={platt_b:.6f} "
+              f"(terminal rows only; non-terminal TD uses raw values)")
     if source == "hub":
         # --train-split/--eval-split select Hub days via splits.json, exactly
         # as they select folders locally; --hub-days is an explicit override.
@@ -464,6 +475,7 @@ def main() -> None:
             winner_only=args.winner_only, with_meta=weighted,
             episode_ids=episode_ids,
             extra_local_files=selfplay_files or None,
+            with_next=td_arm,
         )
         if selfplay_files:
             # Dataset composition (rl_pipeline_v6 §5): human vs self-play.
@@ -564,6 +576,9 @@ def main() -> None:
     running_loss, running_acc, running_n = 0.0, 0.0, 0
     # E3 skill-gate accounting (only meaningful with --skill-min-score).
     skill_gated_rows, skill_rated_rows, skill_total_rows = 0, 0, 0
+    td_kept_rows = td_total_rows = td_kept_loss_rows = td_loss_rows = 0.0
+    td_nonterminal_rows = td_adv_absmean = 0.0
+    td_batches = 0
     t0 = time.time()
     pass_t0 = time.time()
 
@@ -658,6 +673,13 @@ def main() -> None:
             # Meta fields (outcome/seat/...) ride along for weighting but are
             # not model inputs -- pop them before the forward pass.
             meta = {k: batch.pop(k) for k in ILDataset.META_KEYS if k in batch}
+            # Successor-state half of the TD advantage: not a model input, so
+            # it must come off the batch before the actor forward, same as meta.
+            next_feats = {
+                k[len("next_"):]: batch.pop(k)
+                for k in [k for k in batch if k.startswith("next_")]
+            }
+            has_next = batch.pop("has_next", None)
             out = model(**batch)
             if weighted:
                 # exp(beta*(outcome-0.5)): win = e^{+b/2}, draw = 1, loss = e^{-b/2}.
@@ -671,7 +693,27 @@ def main() -> None:
                     out["logits"], batch["label"], reduction="none"
                 )
                 outcome = meta["outcome"]
-                if critic is not None:
+                if critic is not None and td_arm:
+                    from pokemon_tcg.offline_critic import td_advantage_weights
+                    with torch.no_grad():
+                        v = critic(**{k: t for k, t in batch.items() if k != "label"})
+                        v_next = critic(**next_feats)
+                    w, adv = td_advantage_weights(
+                        outcome, v, v_next, has_next, platt_a, platt_b
+                    )
+                    # Degeneracy watch: `adv-binary` kept EXACTLY zero
+                    # loss-outcome rows because its advantage sign was the
+                    # outcome bit. If this stays ~0 the filter has collapsed
+                    # to winners-only again and the run is not testing TD.
+                    lost = outcome == 0.0
+                    td_kept_rows += float(w.sum())
+                    td_total_rows += float(w.numel())
+                    td_kept_loss_rows += float((w * lost.float()).sum())
+                    td_loss_rows += float(lost.sum())
+                    td_nonterminal_rows += float(has_next.float().sum())
+                    td_adv_absmean += float(adv.abs().mean())
+                    td_batches += 1
+                elif critic is not None:
                     from pokemon_tcg.offline_critic import advantage_weights
                     with torch.no_grad():
                         v = critic(**{k: t for k, t in batch.items() if k != "label"})
@@ -716,6 +758,30 @@ def main() -> None:
                     f"lr={lr:.2e} grad_norm={grad_norm:.3f} "
                     f"({steps_per_sec:.2f} steps/s, {elapsed:.1f}s)"
                 )
+                if td_batches:
+                    print(
+                        f"  td-filter: kept {td_kept_rows / max(td_total_rows, 1):.3f} "
+                        f"overall | kept_among_losses "
+                        f"{td_kept_loss_rows / max(td_loss_rows, 1):.3f} "
+                        f"(adv-binary scored EXACTLY 0.000 here) | nonterminal "
+                        f"{td_nonterminal_rows / max(td_total_rows, 1):.3f} | "
+                        f"mean|adv| {td_adv_absmean / td_batches:.4f}"
+                    )
+                    logger.log_scalars(
+                        {
+                            "td/kept_fraction": td_kept_rows / max(td_total_rows, 1),
+                            "td/kept_fraction_among_losses":
+                                td_kept_loss_rows / max(td_loss_rows, 1),
+                            "td/nonterminal_fraction":
+                                td_nonterminal_rows / max(td_total_rows, 1),
+                            "td/mean_abs_advantage": td_adv_absmean / td_batches,
+                        },
+                        step,
+                    )
+                    td_kept_rows = td_total_rows = 0.0
+                    td_kept_loss_rows = td_loss_rows = 0.0
+                    td_nonterminal_rows = td_adv_absmean = 0.0
+                    td_batches = 0
                 logger.log_scalars(
                     {
                         "train/loss": train_loss,
