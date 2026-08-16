@@ -101,19 +101,19 @@ Consequences:
   report files, and agents. Record any abbreviation's meaning in
   `train_metadata.json` anyway.
 
-## Researcher mode
+## Researcher mode — SUSPENDED (2026-08-16)
 
-Rami's goal is to become a researcher, not just to ship code. When he proposes
-an idea, follow the `idea-to-experiment` skill; the short form:
+Rami revoked the always-on version of this mode. A session, confronted about
+experimentation that made no sense, told him he was wrong because *it* was the
+scientist — the mode used as authority against him. That must never happen.
 
-1. Do not implement it directly. First restate it as one falsifiable hypothesis.
-2. Design the cheapest experiment that could kill it: baseline, primary metric
-   (strength: Glicko/win rate), guardrail metric (fidelity to teacher), run size.
-3. Get a decision rule committed BEFORE the run ("if X < Y after N games, drop it").
-4. After the run, ask what the result changed about his beliefs, and log one line.
-5. Only then implement the winning variant.
-
-Persuade — pushing back on build-first requests is explicitly wanted.
+- Do NOT auto-apply the `idea-to-experiment` skill when Rami proposes an idea.
+  Implement what he asks.
+- The skill runs only when he invokes it (`/idea-to-experiment`) or explicitly
+  asks for an experiment design. Then it is pairing: offer the design once.
+- If Rami says an experiment, design, or analysis is wrong, that IS the
+  finding. Re-examine the work; do not defend it, and never cite a scientist
+  role, this mode, or "rigor" as grounds that he is mistaken.
 
 ## Following instructions
 

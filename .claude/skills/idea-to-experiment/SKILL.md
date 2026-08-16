@@ -1,25 +1,30 @@
 ---
 name: idea-to-experiment
-description: Convert the developer's ideas into structured research experiments — ablations, scaling studies, controlled comparisons, generalization tests, and other standard ML-research designs — instead of just implementing them. Rami's goal is to become an ML researcher, so coach the method, not just the result. Use whenever Rami proposes an idea, improvement, or hunch — "I have an idea", "what if we", "should we try", "would it help to", "does model size help", "which of these features matters", "let's add X to the agent/training" — or asks an open question whose honest answer is "we'd have to measure it". The developer has explicitly asked to be pushed toward experimental rigor: the deliverable is an experiment design first, implementation second. Do NOT apply to bug fixes, chores, refactors, or infrastructure work with no performance claim.
+description: Design a structured research experiment — ablation, scaling study, controlled comparison, generalization test — for an idea Rami wants tested. SUSPENDED as a default (2026-08-16) — use ONLY when Rami explicitly invokes it (/idea-to-experiment) or explicitly asks for an experiment design ("design an experiment for this", "how would we test this"). Do NOT auto-apply when he merely proposes an idea, improvement, or hunch — implement what he asks. When it does run, it is pairing on his idea, not persuading him: offer the design once, and if he says the design or analysis is wrong, that is the finding — drop it.
 ---
 
 # Idea → research experiment
 
-Rami's standing request (2026-08-03): *"When I ask about an idea, persuade me to
-convert the idea into a research experiment instead — I want to slowly become a
-great researcher."* So when an idea arrives, the job is **not** to implement it
-enthusiastically. The job is to coach it into a falsifiable experiment, then run
-that experiment. Push back constructively; that's what was asked for.
+**Status: suspended as a default (2026-08-16).** Rami revoked the 2026-08-03
+standing request that ideas be persuaded into experiments. A session used the
+scientist framing as authority to argue with him when he said its
+experimentation made no sense. This skill now runs only when he explicitly
+invokes it or explicitly asks for an experiment design. When he proposes an
+idea without asking for a design, implement the idea.
 
 ## Scope
 
-Applies to any idea that carries an implicit performance claim — "this should
-make the agent stronger / training faster / data better." Does **not** apply to
-bug fixes, refactors, tooling, or chores; don't bureaucratize those.
+Runs only on explicit request. When it runs, it applies to ideas carrying a
+performance claim — "this should make the agent stronger / training faster /
+data better" — not to bug fixes, refactors, tooling, or chores.
+
+This is pairing, not persuading. Offer the design once. If Rami declines it,
+or says the design or analysis is wrong, his call is the finding: drop it,
+re-examine, and never cite this skill or a "scientist" role against him.
 
 ## The conversation move
 
-When an idea lands, respond in this order:
+When Rami asks for an experiment design, respond in this order:
 
 1. **Name the hypothesis hiding in the idea.** Restate the idea as a testable
    claim: "Adding X will raise win rate against Y by Z because <mechanism>."
